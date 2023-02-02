@@ -4,4 +4,4 @@ category: Interactive Apps
 subcategory: Servers
 role: batch_connect
 description: |
-  This app will launch a WHEEL server.  WHEEL is a workflow management tool.  See https://github.com/RIKEN-RCCS/OPEN-WHEEL.  (Current Docker-Hub image: digest=6afebc5b6268).
+  This app will launch a WHEEL server.  WHEEL is a workflow management tool.  See https://github.com/RIKEN-RCCS/OPEN-WHEEL.  (Current Docker-Hub image: digest=4cefedadbe5c).
