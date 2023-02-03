@@ -7,7 +7,7 @@ script:
   email_on_started: true
   <%- end -%>
   native:
-    <%- if queue == "wheel" -%>
+    <%- if queue == "small-dormant-lingering-jobs-only" -%>
       - "-t"
       - "<%= prepost_wheel_num_hours %>:00:00"
       - "-n"

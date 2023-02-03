@@ -44,7 +44,7 @@ script:
       - <%= mem2_num_cores.to_i %>
       - "--mem"
       - "<%= mem2_required_memory %>G"
-    <%- elsif queue == "wheel" then -%>
+    <%- elsif queue == "small-dormant-lingering-jobs-only" then -%>
       - "-t"
       - "<%= prepost_wheel_num_hours %>:00:00"
       - "-n"
@@ -55,4 +55,3 @@ script:
   <%- end -%>
 batch_connect:
   template: "basic"
-  
