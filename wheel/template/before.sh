@@ -26,15 +26,6 @@
 # Find available port to run server on
 port=$(find_port)
 
-# prepare config directory
-config_dir=${HOME}/.wheel
-mkdir ${config_dir} 2>/dev/null
-cd ${config_dir}
-
-#download server.json and jobScheduler.json from github
-wget -nc https://raw.githubusercontent.com/RIKEN-RCCS/OPEN-WHEEL/master/server/app/config/server.json
-wget -nc https://raw.githubusercontent.com/RIKEN-RCCS/OPEN-WHEEL/master/server/app/config/jobScheduler.json
-
 ######################
 # When /home directory is nfs-mounted with lookupcache=none option,
 # the error "/usr/bin/env: bad interpreter: Text file busy" occurs.
@@ -43,6 +34,15 @@ wget -nc https://raw.githubusercontent.com/RIKEN-RCCS/OPEN-WHEEL/master/server/a
 ######################
 cp script.sh tmp.sh
 mv tmp.sh script.sh
+
+# prepare config directory
+config_dir=${HOME}/.wheel
+mkdir ${config_dir} 2>/dev/null
+cd ${config_dir}
+
+#download server.json and jobScheduler.json from github
+wget -nc https://raw.githubusercontent.com/RIKEN-RCCS/OPEN-WHEEL/master/server/app/config/server.json
+wget -nc https://raw.githubusercontent.com/RIKEN-RCCS/OPEN-WHEEL/master/server/app/config/jobScheduler.json
 
 #rewrite port
 sed -i -e "/port/c \"port\": ${port}," server.json
