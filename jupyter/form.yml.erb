@@ -19,11 +19,13 @@ form:
   - mem1_required_memory
   - mem2_required_memory
   - gpus_per_node
+  - boost_mode
+  - eco_mode
   - email
 attributes:
   queue:
     label: Queue
-    widget: "select"
+    widget: select
     options:
       - [ "fugaku", "fugaku", data-set-cluster: "fugaku",
           data-hide-cluster: true,
@@ -50,7 +52,9 @@ attributes:
           data-hide-mem2-num-cores: true,
           data-hide-gpu2-required-memory: true,
           data-hide-mem1-required-memory: true,
-          data-hide-mem2-required-memory: true ]
+          data-hide-mem2-required-memory: true,
+	  data-hide-boost-mode: true,
+	  data-hide-eco-mode: true ]
       - [ "prepost-gpu2", "gpu2", data-set-cluster: "prepost",
           data-hide-cluster: true,
           data-hide-group: true,
@@ -62,7 +66,9 @@ attributes:
           data-hide-mem2-num-cores: true,
           data-hide-gpu1-required-memory: true,
           data-hide-mem1-required-memory: true,
-          data-hide-mem2-required-memory: true ]
+          data-hide-mem2-required-memory: true,
+	  data-hide-boost-mode: true,
+	  data-hide-eco-mode: true ]
       - [ "prepost-mem1", "mem1", data-set-cluster: "prepost",
           data-hide-cluster: true,
           data-hide-group: true,
@@ -75,7 +81,9 @@ attributes:
           data-hide-mem2-num-cores: true,
           data-hide-gpu1-required-memory: true,
           data-hide-gpu2-required-memory: true,
-          data-hide-mem2-required-memory: true ]
+          data-hide-mem2-required-memory: true,
+	  data-hide-boost-mode: true,
+	  data-hide-eco-mode: true ]
       - [ "prepost-mem2", "mem2", data-set-cluster: "prepost",
           data-hide-cluster: true,
           data-hide-group: true,
@@ -88,7 +96,9 @@ attributes:
           data-hide-mem1-num-cores: true,
           data-hide-gpu1-required-memory: true,
           data-hide-gpu2-required-memory: true,
-          data-hide-mem1-required-memory: true ]
+          data-hide-mem1-required-memory: true,
+	  data-hide-boost-mode: true,
+	  data-hide-eco-mode: true ]
       - [ "prepost-wheel", "small-dormant-lingering-jobs-only",
           data-set-cluster: "prepost",
           data-hide-cluster: true,
@@ -101,104 +111,113 @@ attributes:
           data-hide-mem2-num-cores: true,
           data-hide-gpu2-required-memory: true,
           data-hide-mem1-required-memory: true,
-          data-hide-mem2-required-memory: true ]
+          data-hide-mem2-required-memory: true,
+	  data-hide-boost-mode: true,
+	  data-hide-eco-mode: true ]
   group:
     label: Group
-    widget: "select"
+    widget: select
     options:
     <%- groups.each do |group| -%>
       - "<%= group %>"
     <%- end -%>
   fugaku_num_hours:
-    widget: "number_field"
-    label: "Elapsed Time (1 - 72 hours)"
+    widget: number_field
+    label: Elapsed Time (1 - 72 hours)
     value: 1
     min: 1
     max: 72
     step: 1
   prepost1_num_hours:
-    widget: "number_field"
-    label: "Elapsed Time (1 - 3 hours)"
+    widget: number_field
+    label: Elapsed Time (1 - 3 hours)
     value: 1
     min: 1
     max: 3
     step: 1
   prepost2_num_hours:
-    widget: "number_field"
-    label: "Elapsed Time (1 - 24 hours)"
+    widget: number_field
+    label: Elapsed Time (1 - 24 hours)
     value: 1
     min: 1
     max: 24
     step: 1
   prepost_wheel_num_hours:
-    widget: "number_field"
-    label: "Elapsed Time (6 - 168 hours)"
+    widget: number_field
+    label: Elapsed Time (6 - 168 hours)
     value: 6
     min: 6
     max: 168
     step: 6
   gpu1_num_cores:
-    widget: "number_field"
-    label: "Number of CPU cores (1 - 72)"
+    widget: number_field
+    label: Number of CPU cores (1 - 72)
     value: 1
     min: 1
     max: 72
     step: 1
   gpu2_num_cores:
-    widget: "number_field"
-    label: "Number of CPU cores (1 - 36)"
+    widget: number_field
+    label: Number of CPU cores (1 - 36)
     value: 1
     min: 1
     max: 36
     step: 1
   mem1_num_cores:
-    widget: "number_field"
-    label: "Number of CPU cores (1 - 224)"
+    widget: number_field
+    label: Number of CPU cores (1 - 224)
     value: 1
     min: 1
     max: 224
     step: 1
   mem2_num_cores:
-    widget: "number_field"
-    label: "Number of CPU cores (1 - 56)"
+    widget: number_field
+    label: Number of CPU cores (1 - 56)
     value: 1
     min: 1
     max: 56
     step: 1
   gpu1_required_memory:
-    widget: "number_field"
-    label: "Required memory (5 - 186 GB)"
+    widget: number_field
+    label: Required memory (5 - 186 GB)
     value: 5
     min: 5
     max: 186
     step: 1
   gpu2_required_memory:
-    widget: "number_field"
-    label: "Required memory (5 - 93 GB)"
+    widget: number_field
+    label: Required memory (5 - 93 GB)
     value: 5
     min: 5
     max: 93
     step: 1
   mem1_required_memory:
-    widget: "number_field"
-    label: "Required memory (5 - 5020 GB)"
+    widget: number_field
+    label: Required memory (5 - 5020 GB)
     value: 5
     min: 5
     max: 5020
     step: 1
   mem2_required_memory:
-    widget: "number_field"
-    label: "Required memory (5 - 1500 GB)"
+    widget: number_field
+    label: Required memory (5 - 1500 GB)
     value: 5
     min: 5
     max: 1500
     step: 1
   gpus_per_node:
-    widget: "number_field"
-    label: "Number of GPUs (0-2)"
+    widget: number_field
+    label: Number of GPUs (0 - 2)
     value: 0
     min: 0
     max: 2
     step: 1
+  boost_mode:
+    widget: check_box
+    label: Boost mode
+  eco_mode:
+    widget: check_box
+    label: Eco mode
   email:
-    widget: "email_field"
+    widget: email_field
+    label: Email (You will receive an email when it starts)

@@ -10,11 +10,14 @@ script:
   <%- end -%>
   native:
   <%- if cluster == "fugaku" -%>
-    - "-L freq=2200,eco_state=2,node=1,jobenv=singularity --mpi proc=48 --no-check-directory -x PJM_LLIO_GFSCACHE=/vol0004"
-    - "-L"
-    - "\"elapse=<%= fugaku_num_hours %>:00:00\""
-    - "-g"
-    - "<%= group %>"
+    - "-L elapse=<%= fugaku_num_hours %>:00:00,node=1,jobenv=singularity --mpi proc=48 --no-check-directory -x PJM_LLIO_GFSCACHE=/vol0004 -g <%= group %>"
+    <%- if boost_mode == "1" and eco_mode == "1" -%>
+    - "-L freq=2200,eco_state=2"
+    <%- elsif boost_mode == "1" -%>
+    - "-L freq=2200"
+    <%- elsif eco_mode == "1" -%>
+    - "-L eco_state=2"
+    <%- end -%>
   <%- elsif cluster == "prepost" then -%>
     <%- if queue == "gpu1" -%>
       - "-t"
