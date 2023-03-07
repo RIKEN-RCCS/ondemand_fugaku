@@ -1,7 +1,7 @@
 ---
 name: VSCode
 category: Interactive Apps
-subcategory: Servers
+subcategory: Server
 role: batch_connect
 description: |
   This app will launch a VS Code server.
