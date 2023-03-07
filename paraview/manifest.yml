@@ -1,0 +1,6 @@
+---
+name: paraview
+icon: fa://binoculars
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
