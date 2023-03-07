@@ -11,6 +11,7 @@ From: redhat/ubi8:8.6-943
   dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   dnf --releasever=8.6 -y install xorg-x11-apps evince glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs
   dnf --releasever=8.6 -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs
+  dnf --releasever=8.6 -y install gnuplot
   dnf --releasever=8.6 -y --skip-broken groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
   pip2 install ts
   dnf -y install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python-websockify-0.8.0-1.el8.noarch.rpm
@@ -31,7 +32,7 @@ From: redhat/ubi8:8.6-943
   rm -rf 2.2.3.tar.gz turbovnc-2.2.3
   dnf remove -y python2-pip xfce4-screensaver
   update-alternatives --set python /usr/bin/python3
-  dnf --releasever=8.6 -y install paraview paraview-devel paraview-mpich-devel paraview-openmpi-devel paraview-doc qt5-devel protobuf-devel
+  dnf --releasever=8.6 -y --skip-broken install paraview paraview-devel paraview-mpich-devel paraview-openmpi-devel paraview-doc qt5-devel protobuf-devel
   #
   # For Fujitsu TCS
   cat <<EOF > /etc/yum.repos.d/Fugaku.repo
