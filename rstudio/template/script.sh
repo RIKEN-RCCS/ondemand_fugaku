@@ -70,7 +70,10 @@ fi
 for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
   SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
 done
-for i in /vol0001 /vol0003 /vol0004 /vol0005 /vol0006 /lib64/liblustreapi.so /run/psv; do
+for i in `ls -1 / | grep ^vol`; do
+      export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/$i
+done
+for i in /lib64/liblustreapi.so /run/psv; do
     [ -e $i ] && SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
 done
 
