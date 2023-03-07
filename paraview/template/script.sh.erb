@@ -9,7 +9,5 @@ cd "${HOME}"
 export SHELL="$(getent passwd $USER | cut -d: -f7)"
 # Start up desktop
 echo "Launching desktop '<%= context.desktop %>'..."
-#source "<%= session.staged_root.join("desktops", "#{context.desktop}.sh") %>"
-ls <%= context.filename %>
 /opt/ParaView/bin/paraview <%= context.filename %>
 echo "Desktop '<%= context.desktop %>' ended..."

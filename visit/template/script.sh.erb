@@ -9,8 +9,6 @@ cd "${HOME}"
 export SHELL="$(getent passwd $USER | cut -d: -f7)"
 # Start up desktop
 echo "Launching desktop '<%= context.desktop %>'..."
-#source "<%= session.staged_root.join("desktops", "#{context.desktop}.sh") %>"
-ls <%= context.filename %>
 if [ "<%= context.filename %>" = "" ]; then
   /opt/visit/bin/visit
 else
