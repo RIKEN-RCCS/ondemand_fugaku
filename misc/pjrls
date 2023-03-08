@@ -1,0 +1,2 @@
+CMD=pjrls
+ssh login.fugaku.r-ccs.riken.jp ${CMD} "$@"
