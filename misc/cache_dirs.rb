@@ -6,6 +6,11 @@ def load_cache(file)
 end
 
 def store_cache(file)
+  dir = File.dirname(file)
+  if not File.directory?(dir)
+    Dir.mkdir(dir)
+  end
+
   dirs = `sh /var/www/ood/apps/sys/ondemand_apps/misc/data_share_dir.sh`.split(" ")
   f = File.open(file, 'w')
   f.write(Marshal.dump(dirs))
