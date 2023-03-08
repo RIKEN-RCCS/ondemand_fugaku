@@ -1,12 +1,37 @@
 <%-
-  dirs=`/home/apps/singularity/ondemand/bin/data_share_dir.sh`.split(" ")
-  workdir=ENV['HOME']
-  dirs.each do |d|
-  if d.include?("/data/") and not d.include?("/f-op")
-    workdir=d
-    break
+  cache_file = ENV['HOME'] + "/ondemand/workdir.cache"
+  cache_lifetime = 3600 # 1 hours
+
+  def load_cache(file)
+    f = File.open(file, 'r')
+    workdir = Marshal.load(f.read())
+    f.close()
+
+    return workdir
   end
-end
+
+  def save_cache(file)
+    workdir  = ENV['HOME']
+    tmp_dirs = `/home/apps/singularity/ondemand/bin/data_share_dir.sh`.split(" ")
+    tmp_dirs.each do |d|
+      if d.include?("/data/") and not d.include?("/f-op")
+        workdir = d
+        break
+      end
+    end
+
+    f = File.open(file, 'w')
+    f.write(Marshal.dump(workdir))
+    f.close()
+
+    return load_cache(file)
+  end
+
+  if File.exist?(cache_file) and (Time.now - File.mtime(cache_file)) < cache_lifetime
+    workdir = load_cache(cache_file)
+  else
+    workdir = save_cache(cache_file)
+  end
 -%>
 ---
 title: Paraview
