@@ -1,37 +1,6 @@
 <%-
-  cache_file = ENV['HOME'] + "/ondemand/workdir.cache"
-  cache_lifetime = 3600 # 1 hours
-  
-  def load_cache(file)
-    f = File.open(file, 'r')
-    workdir = Marshal.load(f.read())
-    f.close()
-    
-    return workdir
-  end
-  
-  def save_cache(file)
-    workdir  = ENV['HOME']
-    tmp_dirs = `/home/apps/singularity/ondemand/bin/data_share_dir.sh`.split(" ")
-    tmp_dirs.each do |d|
-      if d.include?("/data/") and not d.include?("/f-op")
-        workdir = d
-        break
-      end
-    end
-
-    f = File.open(file, 'w')
-    f.write(Marshal.dump(workdir))
-    f.close()
-    
-    return load_cache(file)
-  end
-
-  if File.exist?(cache_file) and (Time.now - File.mtime(cache_file)) < cache_lifetime
-    workdir = load_cache(cache_file)
-  else
-    workdir = save_cache(cache_file)
-  end
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/cache_dirs.rb'
+  dirs = get_favorites_dirs(ENV['HOME'] + "/ondemand/dirs.cache", 3600)
 -%>
 ---
 title: VisIt
@@ -177,10 +146,10 @@ attributes:
     data-filepicker: true
     data-target-file-type: files  # Valid values are: files, dirs, or both
     # Optionally set a default directory
-    data-default-directory: <%= workdir %>
+    data-default-directory: <%= ENV['HOME'] %>
     # Optionally only allow editing through the file picker; defaults to false
-    cacheable: true
-    data-file_picker_favorites: '[{"title": "Home Directory", "href": "<%= ENV['HOME'] %>"}]'
+    data-file_picker_favorites: <%= dirs %>
+    #data-file_picker_favorites: '[{"title": "Home Directory", "href": "<%= ENV['HOME'] %>"}]'
   email:
     widget: email_field
     label: Email (You will receive an email when it starts)
