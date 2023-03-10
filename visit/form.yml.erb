@@ -1,6 +1,6 @@
 <%-
-  require '/var/www/ood/apps/sys/ondemand_apps/misc/cache_dirs.rb'
-  dirs = get_favorites_dirs(ENV['HOME'] + "/ondemand/dirs.cache", 3600)
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/info.rb'
+  dirs = get_favorites_dirs()
 -%>
 ---
 title: VisIt

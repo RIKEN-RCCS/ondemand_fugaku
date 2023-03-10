@@ -1,5 +1,6 @@
 <%-
-  groups = `groups`.split(" ") - ["f-op", "fugaku", "isv"]
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/info.rb'
+  groups = get_groups()
 -%>
 ---
 title: WHEEL Workflow Management Tool
@@ -88,7 +89,7 @@ attributes:
     widget: select
     options:
     <%- groups.each do |group| -%>
-      - "<%= group %>"
+      - <%= group %>
     <%- end -%>
   prepost_wheel_num_hours:
     widget: number_field

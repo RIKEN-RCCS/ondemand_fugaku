@@ -1,10 +1,12 @@
 <%-
-  groups = `groups`.split(" ") - ["f-op", "fugaku", "isv"]
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/info.rb'
+  groups = get_groups()
 -%>
 ---
 title: Jupyter
 form:
   - cluster
+  - volume
   - queue
   - group
   - fugaku_num_hours
@@ -115,12 +117,14 @@ attributes:
           data-hide-mem2-required-memory: true,
 	  data-hide-boost-mode: true,
 	  data-hide-eco-mode: true ]
+  volume:
+    widget: hidden_field
   group:
     label: Group
     widget: select
     options:
     <%- groups.each do |group| -%>
-      - "<%= group %>"
+      - <%= group %>
     <%- end -%>
   fugaku_num_hours:
     widget: number_field
