@@ -14,9 +14,11 @@ def store_cache()
   output = `sh /var/www/ood/apps/sys/ondemand_apps/misc/data_share_dir.sh`.split(" ")
   info = Array.new()
   output.each_slice(2) do |m, n|
-    info.push([m.split("/").last, m, n, "/" + File.readlink(m).split("/")[1]])  # [ group_name, data_dir, share_dir, volume ]
+    volume = "/vol000" + m.split("/")[1].split("0")[1]
+    p volume
+    info.push([m.split("/").last, m, n, volume])  # [ group_name, data_dir, share_dir, volume ]
   end
-
+  
   dir = File.dirname($CACHE_FILE)
   Dir.mkdir(dir) unless File.directory?(dir)
   f = File.open($CACHE_FILE, 'w')
