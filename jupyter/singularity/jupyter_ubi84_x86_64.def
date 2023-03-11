@@ -15,8 +15,8 @@ From: redhat/ubi8:8.4-213
   pip3.9 install packaging
   curl -fsSL https://rpm.nodesource.com/setup_18.x | bash -
   dnf --releasever=8.4 -y install nodejs
-  pip3.9 install jupyterlab
-  pip3.9 uninstall -y jupyterlab
+  # pip3.9 install jupyterlab
+  # pip3.9 uninstall -y jupyterlab
   #
   dnf clean all
   rm -f /etc/pki/entitlement/*
