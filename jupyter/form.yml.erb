@@ -1,6 +1,8 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/info.rb'
   groups = get_groups()
+  default_dir = ENV['HOME'] + "/ondemand/jupyter"
+  dirs = get_favorites_dirs()
 -%>
 ---
 title: Jupyter
@@ -24,6 +26,7 @@ form:
   - gpus_per_node
   - boost_mode
   - eco_mode
+  - base_binary_dir
   - email
 attributes:
   queue:
@@ -223,6 +226,14 @@ attributes:
   eco_mode:
     widget: check_box
     label: Eco mode
+  base_binary_dir:
+    label: Base binary directory (PYTHONUSERBASE)
+    data-filepicker: true
+    data-target-file-type: dirs  # Valid values are: files, dirs, or both
+    # Optionally set a default directory
+    data-default-directory: <%= ENV['HOME'] %>
+    data-file_picker_favorites: <%= dirs %>
+    value: <%= default_dir %>
   email:
     widget: email_field
     label: Email (You will receive an email when it starts)
