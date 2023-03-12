@@ -15,7 +15,6 @@ def store_cache()
   info = Array.new()
   output.each_slice(2) do |m, n|
     volume = "/vol000" + m.split("/")[1].split("0")[1]
-    p volume
     info.push([m.split("/").last, m, n, volume])  # [ group_name, data_dir, share_dir, volume ]
   end
   
