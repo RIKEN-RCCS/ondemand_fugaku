@@ -1,0 +1,8 @@
+---
+name: 2NVIDIA Visual Profiler
+icon: fa://chart-bar
+category: Interactive Apps
+subcategory: Profiler
+role: batch_connect
+description: |
+  NVIDIA visual profiler is a profiler for CUDA.
