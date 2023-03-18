@@ -1,7 +1,6 @@
 script:
   job_name: ood_wheel
   queue_name: <%= queue %>
-  gpus_per_node: <%= gpus_per_node %>
   <%- if email.present? -%>
   email: <%= email %>
   email_on_started: true

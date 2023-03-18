@@ -19,7 +19,6 @@ form:
   - gpu2_required_memory
   - mem1_required_memory
   - mem2_required_memory
-  - gpus_per_node
   - email
 attributes:
   queue:
@@ -65,7 +64,6 @@ attributes:
           data-hide-group: true,
           data-hide-prepost-wheel-num-hours: true,
           data-hide-prepost2-num-hours: true,
-          data-hide-gpus-per-node: true,
           data-hide-gpu1-num-cores: true,
           data-hide-gpu2-num-cores: true,
           data-hide-mem2-num-cores: true,
@@ -77,7 +75,6 @@ attributes:
           data-hide-group: true,
           data-hide-prepost-wheel-num-hours: true,
           data-hide-prepost1-num-hours: true,
-          data-hide-gpus-per-node: true,
           data-hide-gpu1-num-cores: true,
           data-hide-gpu2-num-cores: true,
           data-hide-mem1-num-cores: true,
@@ -167,13 +164,6 @@ attributes:
     value: 5
     min: 5
     max: 1500
-    step: 1
-  gpus_per_node:
-    widget: number_field
-    label: Number of GPUs (0 - 2)
-    value: 0
-    min: 0
-    max: 2
     step: 1
   email:
     widget: email_field
