@@ -65,7 +65,7 @@ echo MODULEPATH="$MODULEPATH" >> ./Renviron.site
 # Setup Bind Mounts
 NV_OPTION=""
 CUDA_PATH=/usr/local/cuda
-if [ "<%= context.gpus_per_node %>" != "0" ] && [ -e $CUDA_PATH ]; then
+if [ -e $CUDA_PATH ]; then
     NV_OPTION="--nv"
     CUDA_REAL_PATH=`readlink -f /usr/local/cuda`
     export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$CUDA_REAL_PATH:$CUDA_PATH
