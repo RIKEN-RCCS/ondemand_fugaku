@@ -1,7 +1,7 @@
 ---
-name: 2RStudio
+name: 3RStudio
 category: Interactive Apps
 subcategory: Server
 role: batch_connect
 description: |
-  This app will launch a RStudio server.
+  RStudio is an integrated development environment for R.

@@ -1,5 +1,4 @@
 title: AVS/Express
-description: This app will launch an AVS/Express.
 form:
   - cluster
   - queue

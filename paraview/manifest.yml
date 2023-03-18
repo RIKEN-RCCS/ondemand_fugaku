@@ -1,6 +1,10 @@
 ---
-name: 3Paraview
+name: 4Paraview
 #icon: fa://binoculars
 category: Interactive Apps
 subcategory: Viewer
 role: batch_connect
+description: |
+  ParaView is a multi-platform data analysis and visualization application.
+
+  

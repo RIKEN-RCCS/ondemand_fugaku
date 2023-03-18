@@ -1,7 +1,7 @@
 ---
-name: 2Jupyter
+name: 3Jupyter
 category: Interactive Apps
 subcategory: Server
 role: batch_connect
 description: |
-  This app will launch a Jupyter Notebook server.
+  Jupyter is a web-based interactive computing platform.

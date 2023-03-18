@@ -1,6 +1,9 @@
 ---
-name: 3AVS/Express
+name: 4AVS/Express
 icon: fa://truck
 category: Interactive Apps
 subcategory: Viewer
 role: batch_connect
+description: |
+  AVS/Express is visualization software operated by visual programming.
+  

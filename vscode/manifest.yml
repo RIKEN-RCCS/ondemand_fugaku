@@ -1,8 +1,8 @@
 ---
-name: 2VSCode
+name: 3VSCode
 category: Interactive Apps
 subcategory: Server
 role: batch_connect
 description: |
-  This app will launch a VS Code server.
+  Visual Studio Code is a source code editor developed by Microsoft.
 

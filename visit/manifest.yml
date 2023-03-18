@@ -1,6 +1,8 @@
 ---
-name: 3VisIt
+name: 4VisIt
 icon: fa://glasses
 category: Interactive Apps
 subcategory: Viewer
 role: batch_connect
+description: |
+  VisIt is an interactive, scalable, visualization, animation and analysis tool.
