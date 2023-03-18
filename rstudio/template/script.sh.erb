@@ -40,6 +40,8 @@ EOF
 cat <<-EOF >./rsession.conf
 	session-timeout-minutes=0
 	session-save-action-default=no
+        session-default-working-dir=<%= context.working_dir %>
+        session-default-new-project-dir=<%= context.working_dir %>
 EOF
 
 # Create Log Config File (debug, info, warn, error)

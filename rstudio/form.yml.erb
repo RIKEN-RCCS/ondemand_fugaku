@@ -1,6 +1,7 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/info.rb'
   groups = get_groups()
+  dirs = get_favorites_dirs()
 -%>
 ---
 title: RStudio
@@ -24,6 +25,7 @@ form:
   - gpus_per_node
   - boost_mode
   - eco_mode
+  - working_dir
   - email
 attributes:
   queue:
@@ -223,6 +225,14 @@ attributes:
   eco_mode:
     widget: check_box
     label: Eco mode
+  working_dir:
+    label: "Working Directory"
+    data-filepicker: true
+    data-target-file-type: dirs  # Valid values are: files, dirs, or both
+    data-default-directory: <%= ENV['HOME'] %>
+    data-file_picker_favorites: <%= dirs %>
+    value: <%= ENV['HOME'] %>
+    readonly: true
   email:
     widget: email_field
     label: Email (You will receive an email when it starts)

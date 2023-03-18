@@ -7,7 +7,7 @@ else
   IMAGE=/home/apps/singularity/ondemand/vscode_ubi84_${ARCH}.sif
 fi
 
-CODE_SERVER_DATAROOT="$HOME/ondemand/vscode/`arch`"
+CODE_SERVER_DATAROOT="$HOME/ondemand/vscode/${ARCH}"
 mkdir -p "$CODE_SERVER_DATAROOT/extensions"
 
 # Expose the password to the server.
@@ -15,10 +15,7 @@ export PASSWORD="$password"
 
 # Print compute node.
 echo "$(date): Running on compute node ${compute_node}:$port"
-
-echo "$(date): Started code-server"
 echo ""
-#export LANG=C
 export SINGULARITYENV_XDG_DATA_HOME=${CODE_SERVER_DATAROOT}
 export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
 export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
@@ -54,6 +51,8 @@ done
 #EOF
 #fi
 
+WORKING_DIR="<%= context.working_dir %>"
+mkdir -p $WORKING_DIR
 singularity run ${NV_OPTION} ${IMAGE} code-server \
     --auth="password" \
     --bind-addr="0.0.0.0:${port}" \
@@ -61,4 +60,4 @@ singularity run ${NV_OPTION} ${IMAGE} code-server \
     --extra-extensions-dir="$CODE_SERVER_DATAROOT/extensions" \
     --user-data-dir="$CODE_SERVER_DATAROOT" \
     --log debug --disable-update-check \
-    ${HOME}
+    "$WORKING_DIR"
