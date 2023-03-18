@@ -1,7 +1,7 @@
 ---
-name: 3Jupyter
+name: 2Jupyter
 category: Interactive Apps
-subcategory: Server
+subcategory: Development
 role: batch_connect
 description: |
   Jupyter is a web-based interactive computing platform.

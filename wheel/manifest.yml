@@ -1,7 +1,7 @@
 ---
-name: 3WHEEL Workflow Management Tool
+name: 2WHEEL Workflow Management Tool
 category: Interactive Apps
-subcategory: Server
+subcategory: Development
 role: batch_connect
 description: |
   WHEEL is a workflow management tool. See https://github.com/RIKEN-RCCS/OPEN-WHEEL.
