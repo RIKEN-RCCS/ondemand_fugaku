@@ -23,10 +23,13 @@ export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
 export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh
 mkdir -p $SINGULARITYENV_TMPDIR
 NV_OPTION=""
-CUDA_VERSION=11.5
-if [ -e /usr/local/cuda-$CUDA_VERSION ]; then
-    export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/usr/local/cuda-$CUDA_VERSION:/usr/local/cuda
+CUDA_PATH=/usr/local/cuda
+if [ "<%= context.gpus_per_node %>" != "0" ] && [ -e $CUDA_PATH ]; then
     NV_OPTION="--nv"
+    CUDA_REAL_PATH=`readlink -f /usr/local/cuda`
+    export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$CUDA_REAL_PATH:$CUDA_PATH
+    export SINGULARITYENV_PATH=$PATH:$CUDA_PATH/bin
+    export SINGULARITYENV_LD_LIBRARY_PATH=$CUDA_PATH/lib64:$LD_LIBRARY_PATH
 fi
 for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
     export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i

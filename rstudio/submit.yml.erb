@@ -2,7 +2,9 @@ script:
   job_name: ood_rstudio
   <%- if cluster == "prepost" then -%>
   queue_name: <%= queue %>
+  <%- if queue == "gpu1" or queue == "gpu2" then -%>
   gpus_per_node: <%= gpus_per_node %>
+  <%- end -%>
   <%- end -%>
   <%- if email.present? -%>
   email: <%= email %>

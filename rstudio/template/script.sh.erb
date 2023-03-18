@@ -62,10 +62,13 @@ echo MODULEPATH="$MODULEPATH" >> ./Renviron.site
 
 # Setup Bind Mounts
 NV_OPTION=""
-CUDA_VERSION=11.5
-if [ -e /usr/local/cuda-$CUDA_VERSION ]; then
-  SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/usr/local/cuda-$CUDA_VERSION:/usr/local/cuda
-  NV_OPTION="--nv"
+CUDA_PATH=/usr/local/cuda
+if [ "<%= context.gpus_per_node %>" != "0" ] && [ -e $CUDA_PATH ]; then
+    NV_OPTION="--nv"
+    CUDA_REAL_PATH=`readlink -f /usr/local/cuda`
+    export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$CUDA_REAL_PATH:$CUDA_PATH
+    export SINGULARITYENV_PATH=$PATH:$CUDA_PATH/bin
+    export SINGULARITYENV_LD_LIBRARY_PATH=$CUDA_PATH/lib64:$LD_LIBRARY_PATH
 fi
 for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
   SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
