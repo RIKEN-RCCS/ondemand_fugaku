@@ -15,6 +15,7 @@ form:
   - mem2_required_memory
   - gpus_per_node
   - email
+  - bc_vnc_resolution
   - desktop
 attributes:
   cluster:
@@ -138,6 +139,8 @@ attributes:
   email:
     widget: email_field
     label: Email (You will receive an email when it starts)
+  bc_vnc_resolution:
+    required: true
   desktop:
     widget: hidden_field
     value: xfce
