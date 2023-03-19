@@ -1,0 +1,8 @@
+---
+name: 3NVIDIA Nsight Compute
+icon: fa://pie-chart
+category: Interactive Apps
+subcategory: Profiler
+role: batch_connect
+description: |
+  NVIDIA Nsight Compute is an interactive profiler for CUDA.
