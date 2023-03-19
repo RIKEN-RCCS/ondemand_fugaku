@@ -18,12 +18,12 @@ script:
     <%- else -%>
     - "-x PJM_LLIO_GFSCACHE=/vol0004:<%= volume %>"
     <%- end -%>
-    <%- if boost_mode == "1" and eco_mode == "1" -%>
-    - "-L freq=2200,eco_state=2"
-    <%- elsif boost_mode == "1" -%>
+    <%- if mode == "Boost" -%>
     - "-L freq=2200"
-    <%- elsif eco_mode == "1" -%>
+    <%- elsif mode == "Eco" -%>
     - "-L eco_state=2"
+    <%- elsif mode == "Boost + Eco" -%>
+    - "-L freq=2200,eco_state=2"
     <%- end -%>
   <%- elsif cluster == "prepost" then -%>
     <%- if queue == "gpu1" -%>
