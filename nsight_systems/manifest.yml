@@ -1,0 +1,8 @@
+---
+name: 3NVIDIA Nsight Systems
+icon: fa://area-chart
+category: Interactive Apps
+subcategory: Profiler
+role: batch_connect
+description: |
+  NVIDIA Nsight Systems is a system-wide performance analysis tool.
