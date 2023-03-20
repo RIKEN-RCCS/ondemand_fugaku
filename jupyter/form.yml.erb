@@ -13,7 +13,7 @@ form:
   - group
   - fugaku_hours
   - fugaku_nodes
-  - fugaku_processes
+  - fugaku_procs
   - prepost1_hours
   - prepost2_hours
   - prepost_wheel_hours
@@ -54,7 +54,7 @@ attributes:
           data-hide-group: true,
 	  data-hide-fugaku-hours: true,
           data-hide-fugaku-nodes: true,
-          data-hide-fugaku-processes: true,
+          data-hide-fugaku-procs: true,
           data-hide-prepost2-hours: true,
           data-hide-prepost-wheel-hours: true,
           data-hide-gpu2-cores: true,
@@ -69,7 +69,7 @@ attributes:
           data-hide-group: true,
           data-hide-fugaku-hours: true,
           data-hide-fugaku-nodes: true,
-          data-hide-fugaku-processes: true,
+          data-hide-fugaku-procs: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost-wheel-hours: true,
           data-hide-gpu1-cores: true,
@@ -84,7 +84,7 @@ attributes:
           data-hide-group: true,
           data-hide-fugaku-hours: true,
           data-hide-fugaku-nodes: true,
-          data-hide-fugaku-processes: true,
+          data-hide-fugaku-procs: true,
           data-hide-prepost2-hours: true,
           data-hide-prepost-wheel-hours: true,
           data-hide-gpus-per-node: true,
@@ -100,7 +100,7 @@ attributes:
           data-hide-group: true,
           data-hide-fugaku-hours: true,
           data-hide-fugaku-nodes: true,
-          data-hide-fugaku-processes: true,
+          data-hide-fugaku-procs: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost-wheel-hours: true,
           data-hide-gpus-per-node: true,
@@ -117,7 +117,7 @@ attributes:
           data-hide-group: true,
           data-hide-fugaku-hours: true,
           data-hide-fugaku-nodes: true,
-          data-hide-fugaku-processes: true,
+          data-hide-fugaku-procs: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
           data-hide-gpu2-cores: true,
@@ -150,9 +150,9 @@ attributes:
     min: 1
     max: 384
     step: 1
-  fugaku_processes:
+  fugaku_procs:
     widget: number_field
-    label: Total number of processes (1 - 18432)
+    label: Total number of processes (1 - 18,432)
     value: 48
     min: 1
     max: 18432

@@ -12,7 +12,7 @@ script:
   <%- end -%>
   native:
   <%- if cluster == "fugaku" -%>
-    - "-L elapse=<%= fugaku_hours %>:00:00,node=<%= fugaku_nodes %>,jobenv=singularity --mpi proc=<%= fugaku_processes %> --no-check-directory -g <%= group %>"
+    - "-L elapse=<%= fugaku_hours %>:00:00,node=<%= fugaku_nodes %>,jobenv=singularity --mpi proc=<%= fugaku_procs %> --no-check-directory -g <%= group %>"
     <%- if volume == "/vol0004" -%>
     - "-x PJM_LLIO_GFSCACHE=/vol0004"
     <%- else -%>
