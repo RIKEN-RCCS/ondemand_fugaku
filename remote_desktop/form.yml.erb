@@ -120,7 +120,7 @@ attributes:
     step: 1
   fugaku_nodes:
     widget: number_field
-    label: Number of nodes (1 - 384 nodes)
+    label: Number of nodes (1 - 384)
     value: 1
     min: 1
     max: 384
@@ -133,7 +133,7 @@ attributes:
     max: 18432
     step: 1
     help: |
-      The maximum value is the number of nodes x 48.
+      Total number of processes <= Number of nodes x 48.
   prepost1_hours:
     widget: number_field
     label: Elapsed Time (1 - 3 hours)
