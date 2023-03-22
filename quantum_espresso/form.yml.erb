@@ -1,0 +1,213 @@
+<%-
+  # spack versions quantum-espresso -s
+  versions=["7.1", "6.8", "6.7", "6.6", "6.5"]
+  # spack find --paths quantum-espresso@7.1
+  bin71=`ls -1 /vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-7.1-ajuzfbp5wu63dftcmo62ju2nljcc4hyo/bin/`.split("\n")
+  bin68=`ls -1 /vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.8-ta62xwj6autfedayz3r3br7k5xscvxzx/bin/`.split("\n")
+  bin67=`ls -1 /vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.7-nei6krt2zokcj4d67apadkuh4zqlqlbb/bin/`.split("\n")
+  bin66=`ls -1 /vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.6-d2bgjxrq6wj4so7wehupzvqkg5u7nk7y/bin/`.split("\n")
+  bin65=`ls -1 /vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.5-as6kxmc5wvgscu2xqlsfb6akkbjzf3fz/bin/`.split("\n")
+
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/info.rb'
+  groups = get_groups()
+  dirs   = get_favorites_dirs()
+-%>
+---
+form:
+  - cluster
+  - queue
+  - volume
+  - group
+  - hours_in_three_days
+  - hours_in_one_day
+  - small_nodes
+  - large_nodes
+  - middle_nodes
+  - small_procs
+  - large_procs
+  - middle_procs
+  - threads
+  - mode
+  - version
+  - binary71
+  - binary68
+  - binary67
+  - binary66
+  - binary65
+  - filename
+  - options
+  - email
+attributes:
+  cluster:
+    widget: hidden_field
+    value: fugaku
+  queue:
+    label: Queue
+    widget: select
+    options:
+      - [ "fugaku-small", "small", 
+	  data-hide-hours-in-one-day: true,
+	  data-hide-large-nodes: true, data-hide-middle-nodes: true,
+	  data-hide-large-procs: true, data-hide-middle-procs: true ]
+#      - [ "fugaku-large",  "large" , 
+#	  data-hide-hours-in-three-days: true,
+#	  data-hide-small-nodes: true, data-hide-middle-nodes: true,
+#	  data-hide-small-procs: true, data-hide-middle-procs: true ]
+#      - [ "fugaku-middle", "middle", 
+#	  data-hide-hours-in-three-days: true,
+#	  data-hide-small-nodes: true, data-hide-large-nodes: true,
+#	  data-hide-small-procs: true, data-hide-large-procs: true ]
+  volume:
+    widget: hidden_field
+  group:
+    label: Group
+    widget: select
+    options:
+    <%- groups.each do |group| -%>
+      - <%= group %>
+    <%- end -%>
+  hours_in_three_days:
+    widget: number_field
+    label: Elapsed Time (1 - 72 hours)
+    value: 1
+    min: 1
+    max: 72
+    step: 1
+  hours_in_one_day:
+    widget: number_field
+    label: Elapsed Time (1 - 24 hours)
+    value: 1
+    min: 1
+    max: 24
+    step: 1
+  small_nodes:
+    widget: number_field
+    label: Number of nodes (1 - 384)
+    value: 1
+    min: 1
+    max: 384
+    step: 1
+  large_nodes:
+    widget: number_field
+    label: Number of nodes (385 - 12,288)
+    value: 385
+    min: 385
+    max: 12288
+    step: 1
+  middle_nodes:
+    widget: number_field
+    label: Number of nodes (12,289 - 55,296)
+    value: 12289
+    min: 12289
+    max: 55296
+    step: 1
+  small_procs:
+    widget: number_field
+    label: Total number of processes (1 - 18,432)
+    value: 1
+    min: 1
+    max: 18432
+    step: 1
+    help: |
+      Total number of processes <= Number of nodes x 48.
+  large_procs:
+    widget: number_field
+    label: Total number of processes (1 - 589,824)
+    value: 385
+    min: 1
+    max: 18432
+    step: 1
+    help: |
+      Total number of processes <= Number of nodes x 48.
+  middle_procs:
+    widget: number_field
+    label: Total number of processes (1 - 2,654,208)
+    value: 12289
+    min: 1
+    max: 2654208
+    step: 1
+    help: |
+      Total number of processes <= Number of nodes x 48.
+  threads:
+    widget: number_field
+    label: Number of threads (1 - 48)
+    value: 1
+    min: 1
+    max: 48
+    step: 1
+    help: |
+      Number of threads x Total number of processes <= Number of nodes x 48.
+  mode:
+    widget: select
+    label: Mode
+    options:
+    - Normal
+    - Boost
+    - Eco
+    - Boost + Eco
+  version:
+    widget: select
+    label: Version
+    options:
+    <%- str="" -%>
+    <%- versions.each do |v| -%>
+    <%- str = "[" + v + ", " + v -%>
+    <%- versions.each do |i| -%>
+      <%- str += ", data-hide-binary" + i.delete(".") + ": true" unless i == v -%>
+    <%- end -%>
+    - <%= str + "]" %>
+    <%- end -%>
+  binary71:
+    widget: select
+    label: Binary file version 7.1
+    value: pw.x
+    options:
+    <%- bin71.each do |b| -%>
+      - <%= b %>
+    <%- end -%>
+  binary68:
+    widget: select
+    label: Binary file version 6.8
+    value: pw.x
+    options:
+    <%- bin68.each do |b| -%>
+      - <%= b %>
+    <%- end -%>
+  binary67:
+    widget: select
+    label: Binary file version 6.7
+    value: pw.x
+    options:
+    <%- bin67.each do |b| -%>
+      - <%= b %>
+    <%- end -%>
+  binary66:
+    widget: select
+    label: Binary file version 6.6
+    value: pw.x
+    options:
+    <%- bin66.each do |b| -%>
+      - <%= b %>
+    <%- end -%>
+  binary65:
+    widget: select
+    label: Binary file version 6.5
+    value: pw.x
+    options:
+    <%- bin65.each do |b| -%>
+      - <%= b %>
+    <%- end -%>
+  filename:
+    label: 'Input File (-in <input>)'
+    data-filepicker: true
+    data-target-file-type: files  # Valid values are: files, dirs, or both
+    # Optionally set a default directory
+    data-default-directory: <%= ENV['HOME'] %>
+    # Optionally only allow editing through the file picker; defaults to false
+    data-file_picker_favorites: <%= dirs %>
+  options:
+    label: Options (e.g. -nk 2)
+    widget: text_field
+  email:
+    label: Email (You will receive an email when it starts and ends)
+    widget: email_field
