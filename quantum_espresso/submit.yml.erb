@@ -37,4 +37,5 @@ batch_connect:
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
     spack load quantum-espresso@<%= version %>
     cd `dirname <%= filename %>`
-    mpiexec <%= eval("binary#{version.delete(".")}") %> -in <%= filename %> <%= options %>
+    FILE=`basename <%= filename %>`
+    mpiexec <%= eval("binary#{version.delete(".")}") %> -in $FILE <%= options %>
