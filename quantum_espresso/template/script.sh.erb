@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+ARCH=`arch`
+if [ $ARCH = aarch64 ]; then
+  IMAGE=/home/apps/singularity/ondemand/jupyter_ubi86_${ARCH}.sif
+else
+  IMAGE=/home/apps/singularity/ondemand/jupyter_ubi84_${ARCH}.sif
+fi
+echo "TIMING - Starting main script at: $(date)"
+cd "${HOME}"
+echo "TIMING - Starting jupyter at: $(date)"
+
+set -x
+export LANG=C
+
+# https://qiita.com/ronin_gw/items/cdf8112b61649ca455f5
+BASE_BINARY_DIR=<%= context.base_binary_dir %>
+PYTHONUSERBASE=${BASE_BINARY_DIR%/}/`arch`
+mkdir -p $PYTHONUSERBASE
+export SINGULARITYENV_XDG_DATA_HOME=${PYTHONUSERBASE}
+export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
+export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
+export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh
+mkdir -p $SINGULARITYENV_TMPDIR
+NV_OPTION=""
+CUDA_PATH=/usr/local/cuda
+if [ -e $CUDA_PATH ]; then
+    NV_OPTION="--nv"
+    CUDA_REAL_PATH=`readlink -f /usr/local/cuda`
+    export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$CUDA_REAL_PATH:$CUDA_PATH
+    export SINGULARITYENV_PATH=$PATH:$CUDA_PATH/bin
+    export SINGULARITYENV_LD_LIBRARY_PATH=$CUDA_PATH/lib64:$LD_LIBRARY_PATH
+fi
+for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
+    export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
+done
+for i in `ls -1 / | grep ^vol`; do
+      export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/$i
+done
+for i in /lib64/liblustreapi.so /run/psv; do
+    [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
+done
+
+export SINGULARITYENV_PYTHONUSERBASE=${PYTHONUSERBASE}
+export SINGULARITYENV_JUPYTER_DATA_DIR=${PYTHONUSERBASE}/share/jupyter
+if [ ! -e ${PYTHONUSERBASE}/bin/jupyter-lab ]; then
+    time singularity run ${NV_OPTION} ${IMAGE} pip3.9 install -U jupyterlab --user --use-feature=2020-resolver
+fi
+singularity run ${NV_OPTION} ${IMAGE} ${PYTHONUSERBASE}/bin/jupyter-lab --config="${CONFIG_FILE}"
