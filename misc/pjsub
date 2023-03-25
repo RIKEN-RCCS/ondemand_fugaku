@@ -1,8 +1,7 @@
 #!/bin/bash
 
-CMD=pjsub
 if [ "$HOSTNAME" = "fn06sv04" ]; then
-    eval ${CMD}
+    cd $HOME; /usr/local/bin/pjsub $@
 else
-    ssh login.fugaku.r-ccs.riken.jp ${CMD} "$@"
+    ssh login.fugaku.r-ccs.riken.jp pjsub $@
 fi

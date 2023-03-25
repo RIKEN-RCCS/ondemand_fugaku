@@ -1,8 +1,7 @@
 #!/bin/bash
 
-CMD=pjhold
 if [ "$HOSTNAME" = "fn06sv04" ]; then
-    eval ${CMD}
+    pjhold $@
 else
-    ssh login.fugaku.r-ccs.riken.jp ${CMD} "$@"
+    ssh login.fugaku.r-ccs.riken.jp pjhold $@
 fi

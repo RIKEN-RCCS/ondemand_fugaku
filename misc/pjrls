@@ -1,8 +1,7 @@
 #!/bin/bash
 
-CMD=pjrls
 if [ "$HOSTNAME" = "fn06sv04" ]; then
-    eval ${CMD}
+    pjrls $@
 else
-    ssh login.fugaku.r-ccs.riken.jp ${CMD} "$@"
+    ssh login.fugaku.r-ccs.riken.jp pjrls $@
 fi
