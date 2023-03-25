@@ -29,8 +29,23 @@ From: redhat/ubi8:8.4-213
   ln -s visit3_3_2.linux-x86_64 visit
   rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz visit3_3_2.linux-x86_64-rhel7-wmesa.tar.gz
   #
+  dnf -y install libXmu-devel tcl-devel tk-devel libGL-devel mesa-libGLU-devel fftw-devel
+  wget https://sourceforge.net/projects/togl/files/Togl/2.0/Togl2.0-src.tar.gz
+  tar xfz Togl2.0-src.tar.gz
+  cd Togl2.0
+  ./configure --prefix=/opt/togl2.0 --libdir=/usr/lib64
+  make; make install
+  cd ../
+  wget http://www.xcrysden.org/download/xcrysden-1.6.2.tar.gz
+  tar xfz xcrysden-1.6.2.tar.gz
+  mv xcrysden-1.6.2 tmp-1.6.2; cd tmp-1.6.2
+  cp system/Make.sys-shared Make.sys
+  make all GL_INCDIR=-I/opt/Togl2.0 TOGL_LIB=/opt/Togl2.0/libTogl2.0.so
+  prefix=/opt/xcrysden-1.6.2 make install
+  cd ../
+  ln -s /opt/xcrysden-1.6.2 /opt/xcrysden
+  rm -r Togl2.0-src.tar.gz xcrysden-1.6.2.tar.gz tmp-1.6.2
+  #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo
-
-  
