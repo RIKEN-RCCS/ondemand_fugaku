@@ -1,7 +1,7 @@
 <%-
-  require '/var/www/ood/apps/sys/ondemand_apps/misc/info.rb'
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/cache.rb'
   groups = get_groups()
-  dirs = get_favorites_dirs()
+  fdirs  = get_groups_fdirs()
 -%>
 ---
 title: RStudio
@@ -254,7 +254,7 @@ attributes:
     data-filepicker: true
     data-target-file-type: dirs  # Valid values are: files, dirs, or both
     data-default-directory: <%= ENV['HOME'] %>
-    data-file_picker_favorites: <%= dirs %>
+    data-file_picker_favorites: <%= fdirs %>
     value: <%= ENV['HOME'] %>
     readonly: true
   email:

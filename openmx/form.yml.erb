@@ -1,12 +1,12 @@
 <%-
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/cache.rb'
   # spack versions openmx -s
   versions=["3.9"]
   # spack find --paths openmx@3.9
-  bin39=`ls -1 /vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openmx-3.9-j52bvdtvorjy2stvpf7ve2ygxogwjw4n/bin/`.split("\n")
+  om39 = get_bins("om39", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openmx-3.9-j52bvdtvorjy2stvpf7ve2ygxogwjw4n/bin/")
 
-  require '/var/www/ood/apps/sys/ondemand_apps/misc/info.rb'
   groups = get_groups()
-  dirs   = get_favorites_dirs()
+  fdirs  = get_groups_fdirs()
 -%>
 ---
 form:
@@ -154,7 +154,7 @@ attributes:
     label: Binary file version 3.9
     value: openmx
     options:
-    <%- bin39.each do |b| -%>
+    <%- om39.each do |b| -%>
       - <%= b %>
     <%- end -%>
   filename:
@@ -164,7 +164,7 @@ attributes:
     # Optionally set a default directory
     data-default-directory: <%= ENV['HOME'] %>
     # Optionally only allow editing through the file picker; defaults to false
-    data-file_picker_favorites: <%= dirs %>
+    data-file_picker_favorites: <%= fdirs %>
   options:
     label: Options (e.g. –nt 2)
     widget: text_field

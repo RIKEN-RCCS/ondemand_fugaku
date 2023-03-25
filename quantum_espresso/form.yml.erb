@@ -1,16 +1,17 @@
 <%-
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/cache.rb'
+  
   # spack versions quantum-espresso -s
   versions=["7.1", "6.8", "6.7", "6.6", "6.5"]
   # spack find --paths quantum-espresso@7.1
-  bin71=`ls -1 /vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-7.1-ajuzfbp5wu63dftcmo62ju2nljcc4hyo/bin/`.split("\n")
-  bin68=`ls -1 /vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.8-ta62xwj6autfedayz3r3br7k5xscvxzx/bin/`.split("\n")
-  bin67=`ls -1 /vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.7-nei6krt2zokcj4d67apadkuh4zqlqlbb/bin/`.split("\n")
-  bin66=`ls -1 /vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.6-d2bgjxrq6wj4so7wehupzvqkg5u7nk7y/bin/`.split("\n")
-  bin65=`ls -1 /vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.5-as6kxmc5wvgscu2xqlsfb6akkbjzf3fz/bin/`.split("\n")
+  qe71 = get_bins("qe71", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-7.1-ajuzfbp5wu63dftcmo62ju2nljcc4hyo/bin/")
+  qe68 = get_bins("qe68", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.8-ta62xwj6autfedayz3r3br7k5xscvxzx/bin/")
+  qe67 = get_bins("qe67", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.7-nei6krt2zokcj4d67apadkuh4zqlqlbb/bin/")
+  qe66 = get_bins("qe66", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.6-d2bgjxrq6wj4so7wehupzvqkg5u7nk7y/bin/")
+  qe65 = get_bins("qe65", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.5-as6kxmc5wvgscu2xqlsfb6akkbjzf3fz/bin/")
 
-  require '/var/www/ood/apps/sys/ondemand_apps/misc/info.rb'
   groups = get_groups()
-  dirs   = get_favorites_dirs()
+  fdirs  = get_groups_fdirs()
 -%>
 ---
 form:
@@ -162,7 +163,7 @@ attributes:
     label: Binary file version 7.1
     value: pw.x
     options:
-    <%- bin71.each do |b| -%>
+    <%- qe71.each do |b| -%>
       - <%= b %>
     <%- end -%>
   binary68:
@@ -170,7 +171,7 @@ attributes:
     label: Binary file version 6.8
     value: pw.x
     options:
-    <%- bin68.each do |b| -%>
+    <%- qe68.each do |b| -%>
       - <%= b %>
     <%- end -%>
   binary67:
@@ -178,7 +179,7 @@ attributes:
     label: Binary file version 6.7
     value: pw.x
     options:
-    <%- bin67.each do |b| -%>
+    <%- qe67.each do |b| -%>
       - <%= b %>
     <%- end -%>
   binary66:
@@ -186,7 +187,7 @@ attributes:
     label: Binary file version 6.6
     value: pw.x
     options:
-    <%- bin66.each do |b| -%>
+    <%- qe66.each do |b| -%>
       - <%= b %>
     <%- end -%>
   binary65:
@@ -194,7 +195,7 @@ attributes:
     label: Binary file version 6.5
     value: pw.x
     options:
-    <%- bin65.each do |b| -%>
+    <%- qe65.each do |b| -%>
       - <%= b %>
     <%- end -%>
   filename:
@@ -204,7 +205,7 @@ attributes:
     # Optionally set a default directory
     data-default-directory: <%= ENV['HOME'] %>
     # Optionally only allow editing through the file picker; defaults to false
-    data-file_picker_favorites: <%= dirs %>
+    data-file_picker_favorites: <%= fdirs %>
   options:
     label: Options (e.g. -nk 2)
     widget: text_field

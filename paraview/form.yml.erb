@@ -1,6 +1,6 @@
 <%-
-  require '/var/www/ood/apps/sys/ondemand_apps/misc/info.rb'
-  dirs = get_favorites_dirs()
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/cache.rb'
+  fdirs = get_groups_fdirs()
 -%>
 ---
 title: Paraview
@@ -148,7 +148,7 @@ attributes:
     # Optionally set a default directory
     data-default-directory: <%= ENV['HOME'] %>
     # Optionally only allow editing through the file picker; defaults to false
-    data-file_picker_favorites: <%= dirs %>
+    data-file_picker_favorites: <%= fdirs %>
     #data-file_picker_favorites: '[{"title": "Home Directory", "href": "<%= ENV['HOME'] %>"}]'
   email:
     widget: email_field

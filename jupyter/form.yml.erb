@@ -1,8 +1,8 @@
 <%-
-  require '/var/www/ood/apps/sys/ondemand_apps/misc/info.rb'
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/cache.rb'
   groups = get_groups()
+  fdirs  = get_groups_fdirs()
   default_dir = ENV['HOME'] + "/ondemand/jupyter"
-  dirs = get_favorites_dirs()
 -%>
 ---
 title: Jupyter
@@ -256,7 +256,7 @@ attributes:
     data-filepicker: true
     data-target-file-type: dirs  # Valid values are: files, dirs, or both
     data-default-directory: <%= ENV['HOME'] %>
-    data-file_picker_favorites: <%= dirs %>
+    data-file_picker_favorites: <%= fdirs %>
     value: <%= ENV['HOME'] %>
     readonly: true
   base_binary_dir : <%= default_dir %>
@@ -266,7 +266,7 @@ attributes:
   #    data-target-file-type: dirs  # Valid values are: files, dirs, or both
   #    # Optionally set a default directory
   #    data-default-directory: <%= ENV['HOME'] %>
-  #    data-file_picker_favorites: <%= dirs %>
+  #    data-file_picker_favorites: <%= fdirs %>
   #    value: <%= default_dir %>
   email:
     widget: email_field

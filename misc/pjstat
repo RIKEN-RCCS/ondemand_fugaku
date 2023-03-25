@@ -1,2 +1,8 @@
+#!/bin/bash
+
 CMD=pjstat
-ssh login.fugaku.r-ccs.riken.jp ${CMD} "$@"
+if [ "$HOSTNAME" = "fn06sv04" ]; then
+    eval ${CMD}
+else
+    ssh login.fugaku.r-ccs.riken.jp ${CMD} "$@"
+fi
