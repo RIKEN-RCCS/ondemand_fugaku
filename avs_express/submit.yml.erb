@@ -40,6 +40,7 @@ script:
   <%- end -%>
 batch_connect:
   template: "vnc"
+  geometry: "2560x1440"
   websockify_cmd: '/usr/bin/websockify'
   script_wrapper: |
     cat << "CTRSCRIPT" > <%= staged_root %>/container.sh
