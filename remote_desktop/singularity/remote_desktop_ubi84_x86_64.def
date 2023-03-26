@@ -17,7 +17,9 @@ From: redhat/ubi8:8.4-213
   dnf --releasever=8.4 --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
   pip2 install ts
   dnf -y install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python-websockify-0.8.0-1.el8.noarch.rpm
-  dnf -y install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-2.2.3-1.el8.x86_64.rpm
+  wget https://turbovnc.org/pmwiki/uploads/Downloads/TurboVNC.repo
+  mv TurboVNC.repo /etc/yum.repos.d
+  dnf --releasever=8.4 -y install turbovnc-3.0.3-20230227
   dnf remove -y python2-pip xfce4-screensaver
   update-alternatives --set python /usr/bin/python3
   cd /opt

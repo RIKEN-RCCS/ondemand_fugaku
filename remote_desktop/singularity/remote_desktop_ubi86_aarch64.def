@@ -17,20 +17,9 @@ From: redhat/ubi8:8.6-943
   pip2 install ts
   dnf -y install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python-websockify-0.8.0-1.el8.noarch.rpm
   dnf --releasever=8.6 -y install libX11-devel libXi-devel libXt-devel pam-devel java-1.8.0-openjdk-devel
-  wget https://github.com/libjpeg-turbo/libjpeg-turbo/archive/refs/tags/2.1.3.tar.gz
-  tar xfz 2.1.3.tar.gz
-  cd libjpeg-turbo-2.1.3
-  cmake -G"Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/libjpeg-turbo -DWITH_JAVA=1
-  make install
-  cd ../
-  rm -rf 2.1.3.tar.gz libjpeg-turbo-2.1.3
-  wget https://github.com/TurboVNC/turbovnc/archive/refs/tags/2.2.3.tar.gz
-  tar xfz 2.2.3.tar.gz
-  cd turbovnc-2.2.3
-  cmake -G"Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/TurboVNC
-  make install
-  cd ../
-  rm -rf 2.2.3.tar.gz turbovnc-2.2.3
+  wget https://turbovnc.org/pmwiki/uploads/Downloads/TurboVNC.repo
+  mv TurboVNC.repo /etc/yum.repos.d
+  dnf --releasever=8.6 -y install turbovnc-3.0.3-20230227
   dnf remove -y python2-pip xfce4-screensaver
   update-alternatives --set python /usr/bin/python3
   dnf --releasever=8.6 -y --skip-broken install paraview paraview-devel paraview-mpich-devel paraview-openmpi-devel paraview-doc qt5-devel protobuf-devel
