@@ -1,6 +1,6 @@
 ---
 name: 4AVS/Express
-icon: fa://binoculars
+#icon: fa://binoculars
 category: Interactive Apps
 subcategory: Viewer
 role: batch_connect

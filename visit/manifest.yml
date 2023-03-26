@@ -1,6 +1,6 @@
 ---
 name: 4VisIt
-icon: fa://glasses
+#icon: fa://glasses
 category: Interactive Apps
 subcategory: Viewer
 role: batch_connect
