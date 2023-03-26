@@ -48,6 +48,9 @@ From: redhat/ubi8:8.4-213
   ln -s /opt/xcrysden-1.6.2 /opt/xcrysden
   rm -r Togl2.0-src.tar.gz xcrysden-1.6.2.tar.gz tmp-1.6.2
   #
+  dnf --releasever=8.4 -y install http://jp-minerals.org/vesta/archives/3.5.8/vesta-3.5.8-1.x86_64.rpm
+  ln -s /usr/local/vesta-3.5.8 /usr/local/vesta
+  #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo
