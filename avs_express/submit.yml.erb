@@ -1,9 +1,6 @@
 script:
   job_name: ood_avs_express
   queue_name: <%= queue %>
-  <%- if queue == "gpu1" or queue == "gpu2" then -%>
-  gpus_per_node: <%= gpus_per_node %>
-  <%- end -%>
   <%- if email.present? -%>
   email: <%= email %>
   email_on_started: true

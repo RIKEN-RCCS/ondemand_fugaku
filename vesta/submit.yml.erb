@@ -1,9 +1,6 @@
 script:
   job_name: ood_vesta
   queue_name: <%= queue %>
-  <%- if queue == "gpu1" or queue == "gpu2" then -%>
-  gpus_per_node: <%= gpus_per_node %>
-  <%- end -%>
   <%- if email.present? -%>
   email: <%= email %>
   email_on_started: true
@@ -40,6 +37,7 @@ script:
   <%- end -%>
 batch_connect:
   template: "vnc"
+  geometry: "2560x1440"
   websockify_cmd: '/usr/bin/websockify'
   script_wrapper: |
     cat << "CTRSCRIPT" > <%= staged_root %>/container.sh

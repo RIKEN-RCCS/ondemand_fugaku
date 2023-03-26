@@ -1,7 +1,6 @@
 ---
 name: 4AVS/Express
-#icon: fa://truck
-icon: fa://microscope
+icon: fa://binoculars
 category: Interactive Apps
 subcategory: Viewer
 role: batch_connect
