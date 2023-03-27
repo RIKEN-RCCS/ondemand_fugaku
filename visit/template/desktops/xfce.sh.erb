@@ -54,4 +54,10 @@ fi
 eval $(dbus-launch --sh-syntax)
 
 # Start up xfce desktop (block until user logs out of desktop)
+if [ "<%= context.filename %>" = "" ]; then
+  /opt/visit/bin/visit &
+else
+  /opt/visit/bin/visit -o <%= context.filename %> &
+fi
 xfce4-session
+fg

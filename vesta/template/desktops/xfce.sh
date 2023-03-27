@@ -54,4 +54,6 @@ fi
 eval $(dbus-launch --sh-syntax)
 
 # Start up xfce desktop (block until user logs out of desktop)
+/usr/local/vesta/VESTA &
 xfce4-session
+fg
