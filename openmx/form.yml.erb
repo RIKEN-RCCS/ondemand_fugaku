@@ -3,7 +3,7 @@
   # spack versions openmx -s
   versions=["3.9"]
   # spack find --paths openmx@3.9
-  om39 = get_bins("om39", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openmx-3.9-j52bvdtvorjy2stvpf7ve2ygxogwjw4n/bin/")
+  openmx39 = get_bins("openmx39", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openmx-3.9-j52bvdtvorjy2stvpf7ve2ygxogwjw4n/bin/")
 
   groups = get_groups()
   fdirs  = get_groups_fdirs()
@@ -65,6 +65,7 @@ attributes:
     min: 1
     max: 72
     step: 1
+    required: true
   hours_in_one_day:
     widget: number_field
     label: Elapsed Time (1 - 24 hours)
@@ -72,6 +73,7 @@ attributes:
     min: 1
     max: 24
     step: 1
+    required: true
   small_nodes:
     widget: number_field
     label: Number of nodes (1 - 384)
@@ -79,6 +81,7 @@ attributes:
     min: 1
     max: 384
     step: 1
+    required: true
   large_nodes:
     widget: number_field
     label: Number of nodes (385 - 12,288)
@@ -86,6 +89,7 @@ attributes:
     min: 385
     max: 12288
     step: 1
+    required: true
   middle_nodes:
     widget: number_field
     label: Number of nodes (12,289 - 55,296)
@@ -93,6 +97,7 @@ attributes:
     min: 12289
     max: 55296
     step: 1
+    required: true
   small_procs:
     widget: number_field
     label: Total number of processes (1 - 18,432)
@@ -100,6 +105,7 @@ attributes:
     min: 1
     max: 18432
     step: 1
+    required: true
     help: |
       Total number of processes <= Number of nodes x 48.
   large_procs:
@@ -109,6 +115,7 @@ attributes:
     min: 1
     max: 18432
     step: 1
+    required: true
     help: |
       Total number of processes <= Number of nodes x 48.
   middle_procs:
@@ -118,6 +125,7 @@ attributes:
     min: 1
     max: 2654208
     step: 1
+    required: true
     help: |
       Total number of processes <= Number of nodes x 48.
   threads:
@@ -127,6 +135,7 @@ attributes:
     min: 1
     max: 48
     step: 1
+    required: true
     help: |
       Number of threads x Total number of processes <= Number of nodes x 48.
   mode:
@@ -154,7 +163,7 @@ attributes:
     label: Binary file version 3.9
     value: openmx
     options:
-    <%- om39.each do |b| -%>
+    <%- openmx39.each do |b| -%>
       - <%= b %>
     <%- end -%>
   filename:

@@ -9,10 +9,6 @@ form:
   - queue
   - prepost1_hours
   - prepost2_hours
-  - gpu1_cores
-  - gpu2_cores
-  - mem1_cores
-  - mem2_cores
   - gpu1_memory
   - gpu2_memory
   - mem1_memory
@@ -31,33 +27,21 @@ attributes:
     options:
       - [ "prepost-gpu1", "gpu1",
           data-hide-prepost2-hours: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
           data-hide-gpu2-memory: true,
           data-hide-mem1-memory: true,
           data-hide-mem2-memory: true ]
       - [ "prepost-gpu2", "gpu2",
           data-hide-prepost1-hours: true,
-          data-hide-gpu1-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
           data-hide-gpu1-memory: true,
           data-hide-mem1-memory: true,
           data-hide-mem2-memory: true ]
       - [ "prepost-mem1", "mem1",
           data-hide-prepost2-hours: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem2-cores: true,
           data-hide-gpu1-memory: true,
           data-hide-gpu2-memory: true,
           data-hide-mem2-memory: true ]
       - [ "prepost-mem2", "mem2",
           data-hide-prepost1-hours: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
           data-hide-gpu1-memory: true,
           data-hide-gpu2-memory: true,
           data-hide-mem1-memory: true ]
@@ -68,6 +52,7 @@ attributes:
     min: 1
     max: 3
     step: 1
+    required: true
   prepost2_hours:
     widget: number_field
     label: Elapsed Time (1 - 24 hours)
@@ -75,34 +60,7 @@ attributes:
     min: 1
     max: 24
     step: 1
-  gpu1_cores:
-    widget: number_field
-    label: Number of CPU cores (1 - 72)
-    value: 1
-    min: 1
-    max: 72
-    step: 1
-  gpu2_cores:
-    widget: number_field
-    label: Number of CPU cores (1 - 36)
-    value: 1
-    min: 1
-    max: 36
-    step: 1
-  mem1_cores:
-    widget: number_field
-    label: Number of CPU cores (1 - 224)
-    value: 1
-    min: 1
-    max: 224
-    step: 1
-  mem2_cores:
-    widget: number_field
-    label: Number of CPU cores (1 - 56)
-    value: 1
-    min: 1
-    max: 56
-    step: 1
+    required: true
   gpu1_memory:
     widget: number_field
     label: Required memory (5 - 186 GB)
@@ -110,6 +68,7 @@ attributes:
     min: 5
     max: 186
     step: 1
+    required: true
   gpu2_memory:
     widget: number_field
     label: Required memory (5 - 93 GB)
@@ -117,6 +76,7 @@ attributes:
     min: 5
     max: 93
     step: 1
+    required: true
   mem1_memory:
     widget: number_field
     label: Required memory (5 - 5020 GB)
@@ -124,6 +84,7 @@ attributes:
     min: 5
     max: 5020
     step: 1
+    required: true
   mem2_memory:
     widget: number_field
     label: Required memory (5 - 1500 GB)
@@ -131,6 +92,7 @@ attributes:
     min: 5
     max: 1500
     step: 1
+    required: true
   filename:
     label: 'Input File'
     data-filepicker: true

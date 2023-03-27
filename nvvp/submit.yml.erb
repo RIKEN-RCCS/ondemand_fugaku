@@ -7,18 +7,15 @@ script:
   email_on_started: true
   <%- end -%>
   native:
+    - "-n 1"
   <%- if queue == "gpu1" -%>
     - "-t"
     - "<%= prepost1_hours %>:00:00"
-    - "-n"
-    - <%= gpu1_cores.to_i %>
     - "--mem"
     - "<%= gpu1_memory %>G"
   <%- elsif queue == "gpu2" then -%>
     - "-t"
     - "<%= prepost2_hours %>:00:00"
-    - "-n"
-    - <%= gpu2_cores.to_i %>
     - "--mem"
     - "<%= gpu2_memory %>G"
   <%- end -%>

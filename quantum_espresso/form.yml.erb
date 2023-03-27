@@ -4,11 +4,11 @@
   # spack versions quantum-espresso -s
   versions=["7.1", "6.8", "6.7", "6.6", "6.5"]
   # spack find --paths quantum-espresso@7.1
-  qe71 = get_bins("qe71", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-7.1-ajuzfbp5wu63dftcmo62ju2nljcc4hyo/bin/")
-  qe68 = get_bins("qe68", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.8-ta62xwj6autfedayz3r3br7k5xscvxzx/bin/")
-  qe67 = get_bins("qe67", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.7-nei6krt2zokcj4d67apadkuh4zqlqlbb/bin/")
-  qe66 = get_bins("qe66", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.6-d2bgjxrq6wj4so7wehupzvqkg5u7nk7y/bin/")
-  qe65 = get_bins("qe65", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.5-as6kxmc5wvgscu2xqlsfb6akkbjzf3fz/bin/")
+  quantum_espresso71 = get_bins("quantum_espresso71", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-7.1-ajuzfbp5wu63dftcmo62ju2nljcc4hyo/bin/")
+  quantum_espresso68 = get_bins("quantum_espresso68", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.8-ta62xwj6autfedayz3r3br7k5xscvxzx/bin/")
+  quantum_espresso67 = get_bins("quantum_espresso67", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.7-nei6krt2zokcj4d67apadkuh4zqlqlbb/bin/")
+  quantum_espresso66 = get_bins("quantum_espresso66", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.6-d2bgjxrq6wj4so7wehupzvqkg5u7nk7y/bin/")
+  quantum_espresso65 = get_bins("quantum_espresso65", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.5-as6kxmc5wvgscu2xqlsfb6akkbjzf3fz/bin/")
 
   groups = get_groups()
   fdirs  = get_groups_fdirs()
@@ -74,6 +74,7 @@ attributes:
     min: 1
     max: 72
     step: 1
+    required: true
   hours_in_one_day:
     widget: number_field
     label: Elapsed Time (1 - 24 hours)
@@ -81,6 +82,7 @@ attributes:
     min: 1
     max: 24
     step: 1
+    required: true
   small_nodes:
     widget: number_field
     label: Number of nodes (1 - 384)
@@ -88,6 +90,7 @@ attributes:
     min: 1
     max: 384
     step: 1
+    required: true
   large_nodes:
     widget: number_field
     label: Number of nodes (385 - 12,288)
@@ -95,6 +98,7 @@ attributes:
     min: 385
     max: 12288
     step: 1
+    required: true
   middle_nodes:
     widget: number_field
     label: Number of nodes (12,289 - 55,296)
@@ -102,6 +106,7 @@ attributes:
     min: 12289
     max: 55296
     step: 1
+    required: true
   small_procs:
     widget: number_field
     label: Total number of processes (1 - 18,432)
@@ -109,6 +114,7 @@ attributes:
     min: 1
     max: 18432
     step: 1
+    required: true
     help: |
       Total number of processes <= Number of nodes x 48.
   large_procs:
@@ -118,6 +124,7 @@ attributes:
     min: 1
     max: 18432
     step: 1
+    required: true
     help: |
       Total number of processes <= Number of nodes x 48.
   middle_procs:
@@ -127,6 +134,7 @@ attributes:
     min: 1
     max: 2654208
     step: 1
+    required: true
     help: |
       Total number of processes <= Number of nodes x 48.
   threads:
@@ -136,6 +144,7 @@ attributes:
     min: 1
     max: 48
     step: 1
+    required: true
     help: |
       Number of threads x Total number of processes <= Number of nodes x 48.
   mode:
@@ -163,7 +172,7 @@ attributes:
     label: Binary file version 7.1
     value: pw.x
     options:
-    <%- qe71.each do |b| -%>
+    <%- quantum_espresso71.each do |b| -%>
       - <%= b %>
     <%- end -%>
   binary68:
@@ -171,7 +180,7 @@ attributes:
     label: Binary file version 6.8
     value: pw.x
     options:
-    <%- qe68.each do |b| -%>
+    <%- quantum_espresso68.each do |b| -%>
       - <%= b %>
     <%- end -%>
   binary67:
@@ -179,7 +188,7 @@ attributes:
     label: Binary file version 6.7
     value: pw.x
     options:
-    <%- qe67.each do |b| -%>
+    <%- quantum_espresso67.each do |b| -%>
       - <%= b %>
     <%- end -%>
   binary66:
@@ -187,7 +196,7 @@ attributes:
     label: Binary file version 6.6
     value: pw.x
     options:
-    <%- qe66.each do |b| -%>
+    <%- quantum_espresso66.each do |b| -%>
       - <%= b %>
     <%- end -%>
   binary65:
@@ -195,7 +204,7 @@ attributes:
     label: Binary file version 6.5
     value: pw.x
     options:
-    <%- qe65.each do |b| -%>
+    <%- quantum_espresso65.each do |b| -%>
       - <%= b %>
     <%- end -%>
   filename:

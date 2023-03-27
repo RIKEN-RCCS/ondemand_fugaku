@@ -118,6 +118,7 @@ attributes:
     min: 1
     max: 72
     step: 1
+    required: true
   fugaku_nodes:
     widget: number_field
     label: Number of nodes (1 - 384)
@@ -125,6 +126,7 @@ attributes:
     min: 1
     max: 384
     step: 1
+    required: true
   fugaku_procs:
     widget: number_field
     label: Total number of processes (1 - 18,432)
@@ -132,6 +134,7 @@ attributes:
     min: 1
     max: 18432
     step: 1
+    required: true
     help: |
       Total number of processes <= Number of nodes x 48.
   prepost1_hours:
@@ -141,6 +144,7 @@ attributes:
     min: 1
     max: 3
     step: 1
+    required: true
   prepost2_hours:
     widget: number_field
     label: Elapsed Time (1 - 24 hours)
@@ -148,6 +152,7 @@ attributes:
     min: 1
     max: 24
     step: 1
+    required: true
   gpu1_cores:
     widget: number_field
     label: Number of CPU cores (1 - 72)
@@ -155,6 +160,7 @@ attributes:
     min: 1
     max: 72
     step: 1
+    required: true
   gpu2_cores:
     widget: number_field
     label: Number of CPU cores (1 - 36)
@@ -162,6 +168,7 @@ attributes:
     min: 1
     max: 36
     step: 1
+    required: true
   mem1_cores:
     widget: number_field
     label: Number of CPU cores (1 - 224)
@@ -169,6 +176,7 @@ attributes:
     min: 1
     max: 224
     step: 1
+    required: true
   mem2_cores:
     widget: number_field
     label: Number of CPU cores (1 - 56)
@@ -176,6 +184,7 @@ attributes:
     min: 1
     max: 56
     step: 1
+    required: true
   gpu1_memory:
     widget: number_field
     label: Required memory (10 - 186 GB)
@@ -183,6 +192,7 @@ attributes:
     min: 10
     max: 186
     step: 1
+    required: true
   gpu2_memory:
     widget: number_field
     label: Required memory (10 - 93 GB)
@@ -190,6 +200,7 @@ attributes:
     min: 10
     max: 93
     step: 1
+    required: true
   mem1_memory:
     widget: number_field
     label: Required memory (10 - 5020 GB)
@@ -197,6 +208,7 @@ attributes:
     min: 10
     max: 5020
     step: 1
+    required: true
   mem2_memory:
     widget: number_field
     label: Required memory (10 - 1500 GB)
@@ -204,6 +216,7 @@ attributes:
     min: 10
     max: 1500
     step: 1
+    required: true
   gpus_per_node:
     widget: number_field
     label: Number of GPUs (0 - 2)
@@ -211,6 +224,7 @@ attributes:
     min: 0
     max: 2
     step: 1
+    required: true
   mode:
     widget: select
     label: Mode

@@ -4,8 +4,6 @@ form:
   - queue
   - prepost1_hours
   - prepost2_hours
-  - gpu1_cores
-  - gpu2_cores
   - gpu1_memory
   - gpu2_memory
   - gpus_per_node
@@ -22,11 +20,9 @@ attributes:
     options:
       - [ "prepost-gpu1", "gpu1",
           data-hide-prepost2-hours: true,
-          data-hide-gpu2-cores: true,
           data-hide-gpu2-memory: true ]
       - [ "prepost-gpu2", "gpu2",
           data-hide-prepost1-hours: true,
-          data-hide-gpu1-cores: true,
           data-hide-gpu1-memory: true ]
   prepost1_hours:
     widget: number_field
@@ -35,6 +31,7 @@ attributes:
     min: 1
     max: 3
     step: 1
+    required: true
   prepost2_hours:
     widget: number_field
     label: Elapsed Time (1 - 24 hours)
@@ -42,20 +39,7 @@ attributes:
     min: 1
     max: 24
     step: 1
-  gpu1_cores:
-    widget: number_field
-    label: Number of CPU cores (1 - 72)
-    value: 1
-    min: 1
-    max: 72
-    step: 1
-  gpu2_cores:
-    widget: number_field
-    label: Number of CPU cores (1 - 36)
-    value: 1
-    min: 1
-    max: 36
-    step: 1
+    required: true
   gpu1_memory:
     widget: number_field
     label: Required memory (10 - 186 GB)
@@ -63,6 +47,7 @@ attributes:
     min: 10
     max: 186
     step: 1
+    required: true
   gpu2_memory:
     widget: number_field
     label: Required memory (10 - 93 GB)
@@ -70,6 +55,7 @@ attributes:
     min: 10
     max: 93
     step: 1
+    required: true
   gpus_per_node:
     widget: number_field
     label: Number of GPUs (1 - 2)
@@ -77,6 +63,7 @@ attributes:
     min: 1
     max: 2
     step: 1
+    required: true
     # The mouse cannot be seen unless the number of GPUs is 1 or more
   email:
     widget: email_field
