@@ -16,7 +16,6 @@ form:
   - fugaku_procs
   - prepost1_hours
   - prepost2_hours
-  - prepost_wheel_hours
   - gpu1_cores
   - gpu2_cores
   - mem1_cores
@@ -39,7 +38,6 @@ attributes:
           data-hide-cluster: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
-          data-hide-prepost-wheel-hours: true,
           data-hide-gpus-per-node: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
@@ -56,7 +54,6 @@ attributes:
           data-hide-fugaku-nodes: true,
           data-hide-fugaku-procs: true,
           data-hide-prepost2-hours: true,
-          data-hide-prepost-wheel-hours: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
           data-hide-mem2-cores: true,
@@ -71,7 +68,6 @@ attributes:
           data-hide-fugaku-nodes: true,
           data-hide-fugaku-procs: true,
           data-hide-prepost1-hours: true,
-          data-hide-prepost-wheel-hours: true,
           data-hide-gpu1-cores: true,
           data-hide-mem1-cores: true,
           data-hide-mem2-cores: true,
@@ -86,7 +82,6 @@ attributes:
           data-hide-fugaku-nodes: true,
           data-hide-fugaku-procs: true,
           data-hide-prepost2-hours: true,
-          data-hide-prepost-wheel-hours: true,
           data-hide-gpus-per-node: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
@@ -102,7 +97,6 @@ attributes:
           data-hide-fugaku-nodes: true,
           data-hide-fugaku-procs: true,
           data-hide-prepost1-hours: true,
-          data-hide-prepost-wheel-hours: true,
           data-hide-gpus-per-node: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
@@ -110,22 +104,6 @@ attributes:
           data-hide-gpu1-memory: true,
           data-hide-gpu2-memory: true,
           data-hide-mem1-memory: true,
-	  data-hide-mode: true ]
-      - [ "prepost-wheel", "small-dormant-lingering-jobs-only",
-          data-set-cluster: "prepost",
-          data-hide-cluster: true,
-          data-hide-group: true,
-          data-hide-fugaku-hours: true,
-          data-hide-fugaku-nodes: true,
-          data-hide-fugaku-procs: true,
-          data-hide-prepost1-hours: true,
-          data-hide-prepost2-hours: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
 	  data-hide-mode: true ]
   volume:
     widget: hidden_field
@@ -177,14 +155,6 @@ attributes:
     min: 1
     max: 24
     step: 1
-    required: true
-  prepost_wheel_hours:
-    widget: number_field
-    label: Elapsed Time (6 - 168 hours)
-    value: 6
-    min: 6
-    max: 168
-    step: 6
     required: true
   gpu1_cores:
     widget: number_field

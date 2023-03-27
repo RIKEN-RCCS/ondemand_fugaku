@@ -54,13 +54,6 @@ script:
       - <%= mem2_cores.to_i %>
       - "--mem"
       - "<%= mem2_memory %>G"
-    <%- elsif queue == "small-dormant-lingering-jobs-only" then -%>
-      - "-t"
-      - "<%= prepost_wheel_hours %>:00:00"
-      - "-n"
-      - <%= gpu1_cores.to_i %>
-      - "--mem"
-      - "<%= gpu1_memory %>G"
     <%- end -%>
   <%- end -%>
 batch_connect:
