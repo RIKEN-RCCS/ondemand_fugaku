@@ -1,4 +1,4 @@
-$BASE_DIR = ENV['HOME'] + "/ondemand/"
+$BASE_DIR = ENV['HOME'] + "/ondemand/cache/"
 $GROUPS_CACHE = $BASE_DIR + "groups.cache"
 $LIFE_TIME = 3600
 $EXC_DIRS = ["f-op", "fugaku", "isv"]
