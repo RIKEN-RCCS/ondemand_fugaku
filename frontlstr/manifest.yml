@@ -1,0 +1,6 @@
+---
+name: FrontISTR
+category: Batch Jobs
+role: batch_connect
+description: |
+  Large-Scale Parallel FEM Program for Nonlinear Structural Analysis.
