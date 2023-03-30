@@ -1,0 +1,7 @@
+---
+name: OpenFOAM
+category: Batch Jobs
+role: batch_connect
+description: |
+  OpenFOAM is a computational fluid dynamics software package.
+

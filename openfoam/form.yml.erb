@@ -1,0 +1,219 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/cache.rb'
+
+  versions=["2212", "2206", "2112", "2106", "2012"]
+  # spack find --paths quantum-espresso@7.1
+  openfoam2212 = get_bins("openfoam2212", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openfoam-2212-kyhx6v3qmjtmtbpvxbynbsh4b2oay35j/bin/")
+  openfoam2206 = get_bins("openfoam2206", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openfoam-2206-xqjr5n7qxgnm7qqvnua3k6l4lmzmyoof/bin/")
+  openfoam2112 = get_bins("openfoam2112", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openfoam-2112-x6lfofn2zdwpfc76y4wkt7kh6khelokj/bin/")
+  openfoam2106 = get_bins("openfoam2106", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openfoam-2106-opklcountjllz53uqjeh6aiaueablsua/bin/")
+  openfoam2012 = get_bins("openfoam2012", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openfoam-2012-duyz7j4eb2dfcpmj7tmdfogxslgn3gdd/bin/")
+
+  groups = get_groups()
+  fdirs  = get_groups_fdirs()
+-%>
+---
+form:
+  - cluster
+  - queue
+  - volume
+  - group
+  - hours_in_three_days
+  - hours_in_one_day
+  - small_nodes
+  - large_nodes
+  - middle_nodes
+  - small_procs
+  - large_procs
+  - middle_procs
+  - threads
+  - mode
+  - version
+  - binary2212
+  - binary2206
+  - binary2112
+  - binary2106
+  - binary2012
+  - working_dir
+  - email
+attributes:
+  cluster:
+    widget: hidden_field
+    value: fugaku
+  queue:
+    label: Queue
+    widget: select
+    options:
+      - [ "fugaku-small", "small", 
+	  data-hide-hours-in-one-day: true,
+	  data-hide-large-nodes: true, data-hide-middle-nodes: true,
+	  data-hide-large-procs: true, data-hide-middle-procs: true ]
+#      - [ "fugaku-large",  "large" , 
+#	  data-hide-hours-in-three-days: true,
+#	  data-hide-small-nodes: true, data-hide-middle-nodes: true,
+#	  data-hide-small-procs: true, data-hide-middle-procs: true ]
+#      - [ "fugaku-middle", "middle", 
+#	  data-hide-hours-in-three-days: true,
+#	  data-hide-small-nodes: true, data-hide-large-nodes: true,
+#	  data-hide-small-procs: true, data-hide-large-procs: true ]
+  volume:
+    widget: hidden_field
+  group:
+    label: Group
+    widget: select
+    options:
+    <%- groups.each do |group| -%>
+      - <%= group %>
+    <%- end -%>
+  hours_in_three_days:
+    widget: number_field
+    label: Elapsed time (1 - 72 hours)
+    value: 1
+    min: 1
+    max: 72
+    step: 1
+    required: true
+  hours_in_one_day:
+    widget: number_field
+    label: Elapsed time (1 - 24 hours)
+    value: 1
+    min: 1
+    max: 24
+    step: 1
+    required: true
+  small_nodes:
+    widget: number_field
+    label: Number of nodes (1 - 384)
+    value: 1
+    min: 1
+    max: 384
+    step: 1
+    required: true
+  large_nodes:
+    widget: number_field
+    label: Number of nodes (385 - 12,288)
+    value: 385
+    min: 385
+    max: 12288
+    step: 1
+    required: true
+  middle_nodes:
+    widget: number_field
+    label: Number of nodes (12,289 - 55,296)
+    value: 12289
+    min: 12289
+    max: 55296
+    step: 1
+    required: true
+  small_procs:
+    widget: number_field
+    label: Total number of processes (1 - 18,432)
+    value: 1
+    min: 1
+    max: 18432
+    step: 1
+    required: true
+    help: |
+      Total number of processes <= Number of nodes x 48.
+  large_procs:
+    widget: number_field
+    label: Total number of processes (1 - 589,824)
+    value: 385
+    min: 1
+    max: 18432
+    step: 1
+    required: true
+    help: |
+      Total number of processes <= Number of nodes x 48.
+  middle_procs:
+    widget: number_field
+    label: Total number of processes (1 - 2,654,208)
+    value: 12289
+    min: 1
+    max: 2654208
+    step: 1
+    required: true
+    help: |
+      Total number of processes <= Number of nodes x 48.
+  threads:
+    widget: number_field
+    label: Number of threads (1 - 48)
+    value: 1
+    min: 1
+    max: 48
+    step: 1
+    required: true
+    help: |
+      Number of threads x Total number of processes <= Number of nodes x 48.
+  mode:
+    widget: select
+    label: Mode
+    options:
+    - Normal
+    - Boost
+    - Eco
+    - Boost + Eco
+  version:
+    widget: select
+    label: Version
+    options:
+    <%- str="" -%>
+    <%- versions.each do |v| -%>
+    <%- str = "[" + v + ", " + v -%>
+    <%- versions.each do |i| -%>
+      <%- str += ", data-hide-binary" + i.delete(".") + ": true" unless i == v -%>
+    <%- end -%>
+    - <%= str + "]" %>
+    <%- end -%>
+  binary2212:
+    widget: select
+    label: Binary file version 2212
+    value: interFoam
+    options:
+    <%- openfoam2212.each do |b| -%>
+      - <%= b %>
+    <%- end -%>
+  binary2206:
+    widget: select
+    label: Binary file version 2206
+    value: interFoam
+    options:
+    <%- openfoam2206.each do |b| -%>
+      - <%= b %>
+    <%- end -%>
+  binary2112:
+    widget: select
+    label: Binary file version 2112
+    value: interFoam
+    options:
+    <%- openfoam2112.each do |b| -%>
+      - <%= b %>
+    <%- end -%>
+  binary2106:
+    widget: select
+    label: Binary file version 2106
+    value: interFoam
+    options:
+    <%- openfoam2106.each do |b| -%>
+      - <%= b %>
+    <%- end -%>
+  binary2012:
+    widget: select
+    label: Binary file version 2012
+    value: interFoam
+    options:
+    <%- openfoam2012.each do |b| -%>
+      - <%= b %>
+    <%- end -%>
+  working_dir:
+    label: Working directory
+    data-filepicker: true
+    data-target-file-type: dirs  # Valid values are: files, dirs, or both
+    data-default-directory: <%= ENV['HOME'] %>
+    data-file_picker_favorites: <%= fdirs %>
+    value: <%= ENV['HOME'] %>
+    readonly: true
+    required: true
+  email:
+    label: Email (You will receive an email when it starts and ends)
+    widget: email_field
