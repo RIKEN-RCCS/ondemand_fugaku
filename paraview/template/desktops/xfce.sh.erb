@@ -54,6 +54,22 @@ fi
 eval $(dbus-launch --sh-syntax)
 
 # Start up xfce desktop (block until user logs out of desktop)
-/opt/ParaView/bin/paraview <%= context.filename %> &
+ARCH=`arch`
+if [ "$ARCH" = "aarch64" ]; then
+  #. /vol0004/apps/oss/spack/share/spack/setup-env.sh
+  #spack load paraview@5.10.1%fj@4.8.1
+  #export LD_LIBRARY_PATH=/lib64:$LD_LIBRARY_PATH
+  #echo AAA
+  #WORKING_DIR=`dirname $0`
+  #mpiexec pvserver &
+  #while(1){
+  # sleep 5
+  # [ -e ${WORKING_DIR}/output.${PJM_JOBID} ] && break
+  #}
+  #echo BBB
+  /usr/bin/paraview <%= context.filename %> &
+else
+  /opt/ParaView/bin/paraview <%= context.filename %> &
+fi
 xfce4-session
 fg
