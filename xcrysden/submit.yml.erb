@@ -35,7 +35,13 @@ batch_connect:
     cat << "CTRSCRIPT" > <%= staged_root %>/container.sh
     #!/bin/bash
     export PATH="$PATH:/opt/TurboVNC/bin"
+    export PATH="$PATH:/opt/ParaView/bin"
+    export PATH="$PATH:/opt/visit/bin"
+    export PATH="$PATH:/vol0004/apps/avs_xp851/bin/linux_64_el8"
+    export XP_LICENSE_SERVER=fn01sv02
     export PATH="$PATH:/opt/xcrysden/bin"
+    export PATH="$PATH:/usr/local/vesta/"
+    
     %s
     CTRSCRIPT
 

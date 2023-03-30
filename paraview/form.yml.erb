@@ -1,5 +1,6 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/cache.rb'
+  groups = get_groups()
   fdirs = get_groups_fdirs()
 -%>
 ---
@@ -7,6 +8,11 @@ title: Paraview
 form:
   - cluster
   - queue
+  - volume
+  - group
+  - fugaku_hours
+  - fugaku_nodes
+  - fugaku_procs
   - prepost1_hours
   - prepost2_hours
   - gpu1_cores
@@ -18,35 +24,63 @@ form:
   - mem1_memory
   - mem2_memory
   - gpus_per_node
+  - mode
   - filename
   - email
   - bc_vnc_resolution
   - desktop
 attributes:
-  cluster:
-    widget: hidden_field
-    value: prepost
   queue:
     label: Queue
     widget: select
     options:
-      - [ "prepost-gpu1", "gpu1",
+      - [ "fugaku-small", "fugaku", data-set-cluster: "fugaku",
+          data-hide-cluster: true,
+          data-hide-prepost1-hours: true,
+          data-hide-prepost2-hours: true,
+          data-hide-gpus-per-node: true,
+          data-hide-gpu1-cores: true,
+          data-hide-gpu2-cores: true,
+          data-hide-mem1-cores: true,
+          data-hide-mem2-cores: true,
+          data-hide-gpu1-memory: true,
+          data-hide-gpu2-memory: true,
+          data-hide-mem1-memory: true,
+          data-hide-mem2-memory: true ]
+      - [ "prepost-gpu1", "gpu1", data-set-cluster: "prepost",
+          data-hide-cluster: true,
+          data-hide-group: true,
+	  data-hide-fugaku-hours: true,
+	  data-hide-fugaku-nodes: true,
+	  data-hide-fugaku-procs: true,
           data-hide-prepost2-hours: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
           data-hide-mem2-cores: true,
           data-hide-gpu2-memory: true,
           data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true ]
-      - [ "prepost-gpu2", "gpu2",
+          data-hide-mem2-memory: true,
+	  data-hide-mode: true ]
+      - [ "prepost-gpu2", "gpu2", data-set-cluster: "prepost",
+          data-hide-cluster: true,
+          data-hide-group: true,
+          data-hide-fugaku-hours: true,
+	  data-hide-fugaku-nodes: true,
+	  data-hide-fugaku-procs: true,
           data-hide-prepost1-hours: true,
           data-hide-gpu1-cores: true,
           data-hide-mem1-cores: true,
           data-hide-mem2-cores: true,
           data-hide-gpu1-memory: true,
           data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true ]
-      - [ "prepost-mem1", "mem1",
+          data-hide-mem2-memory: true,
+	  data-hide-mode: true ]
+      - [ "prepost-mem1", "mem1", data-set-cluster: "prepost",
+          data-hide-cluster: true,
+          data-hide-group: true,
+          data-hide-fugaku-hours: true,
+	  data-hide-fugaku-nodes: true,
+	  data-hide-fugaku-procs: true,
           data-hide-prepost2-hours: true,
           data-hide-gpus-per-node: true,
           data-hide-gpu1-cores: true,
@@ -54,8 +88,14 @@ attributes:
           data-hide-mem2-cores: true,
           data-hide-gpu1-memory: true,
           data-hide-gpu2-memory: true,
-          data-hide-mem2-memory: true ]
-      - [ "prepost-mem2", "mem2",
+          data-hide-mem2-memory: true,
+	  data-hide-mode: true ]
+      - [ "prepost-mem2", "mem2", data-set-cluster: "prepost",
+          data-hide-cluster: true,
+          data-hide-group: true,
+          data-hide-fugaku-hours: true,
+	  data-hide-fugaku-nodes: true,
+	  data-hide-fugaku-procs: true,
           data-hide-prepost1-hours: true,
           data-hide-gpus-per-node: true,
           data-hide-gpu1-cores: true,
@@ -63,7 +103,43 @@ attributes:
           data-hide-mem1-cores: true,
           data-hide-gpu1-memory: true,
           data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true ]
+          data-hide-mem1-memory: true,
+	  data-hide-mode: true ]
+  volume:
+    widget: hidden_field
+  group:
+    label: Group
+    widget: select
+    options:
+    <%- groups.each do |group| -%>
+      - <%= group %>
+    <%- end -%>
+  fugaku_hours:
+    widget: number_field
+    label: Elapsed time (1 - 72 hours)
+    value: 1
+    min: 1
+    max: 72
+    step: 1
+    required: true
+  fugaku_nodes:
+    widget: number_field
+    label: Number of nodes (1 - 384)
+    value: 1
+    min: 1
+    max: 384
+    step: 1
+    required: true
+  fugaku_procs:
+    widget: number_field
+    label: Total number of processes (1 - 18,432)
+    value: 48
+    min: 1
+    max: 18432
+    step: 1
+    required: true
+    help: |
+      Total number of processes <= Number of nodes x 48.
   prepost1_hours:
     widget: number_field
     label: Elapsed time (1 - 3 hours)
@@ -152,6 +228,14 @@ attributes:
     max: 2
     step: 1
     required: true
+  mode:
+    widget: select
+    label: Mode
+    options:
+    - Normal
+    - Boost
+    - Eco
+    - Boost + Eco
   filename:
     label: Input file
     data-filepicker: true
