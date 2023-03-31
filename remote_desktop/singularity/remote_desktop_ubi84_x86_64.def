@@ -11,7 +11,7 @@ From: redhat/ubi8:8.4-213
   dnf --releasever=8.4 -y install libatomic # for pre-post environment
   dnf --releasever=8.4 -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs
   dnf --releasever=8.4 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  dnf --releasever=8.4 -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs
+  dnf --releasever=8.4 -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs libevent
   dnf --releasever=8.4 -y install gnuplot ImageMagick ncview
   dnf --releasever=8.4 -y install vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts
   dnf --releasever=8.4 --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
