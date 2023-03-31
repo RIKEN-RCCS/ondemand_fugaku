@@ -1,9 +1,8 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/cache.rb'
-  # spack versions openmx -s
-  versions=["3.9"]
-  # spack find --paths openmx@3.9
-  openmx39 = get_bins("openmx39", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openmx-3.9-j52bvdtvorjy2stvpf7ve2ygxogwjw4n/bin/")
+  
+  # spack versions lammps -s
+  versions=["20220623.2", "20201029"]
 
   groups = get_groups()
   fdirs  = get_groups_fdirs()
@@ -25,9 +24,7 @@ form:
   - threads
   - mode
   - version
-  - binary39
   - filename
-  - options
   - email
 attributes:
   cluster:
@@ -150,33 +147,19 @@ attributes:
     widget: select
     label: Version
     options:
-    <%- str="" -%>
     <%- versions.each do |v| -%>
-    <%- str = "[" + v + ", " + v -%>
-    <%- versions.each do |i| -%>
-      <%- str += ", data-hide-binary" + i.delete(".") + ": true" unless i == v -%>
-    <%- end -%>
-    - <%= str + "]" %>
-    <%- end -%>
-  binary39:
-    widget: select
-    label: Binary file version 3.9
-    value: openmx
-    options:
-    <%- openmx39.each do |b| -%>
-      - <%= b %>
+    - <%= str = "[" + v + ", " + v + "]" %>
     <%- end -%>
   filename:
-    label: Input file (mpiexec openmx <input>)
+    label: Input file (mpiexec lmp -in <input>)
     data-filepicker: true
     data-target-file-type: files  # Valid values are: files, dirs, or both
     # Optionally set a default directory
     data-default-directory: <%= ENV['HOME'] %>
     # Optionally only allow editing through the file picker; defaults to false
     data-file_picker_favorites: <%= fdirs %>
-  options:
-    label: Options (e.g. –nt 2)
-    widget: text_field
+    readonly: true
+    required: true
   email:
     label: Email (You will receive an email when it starts and ends)
     widget: email_field

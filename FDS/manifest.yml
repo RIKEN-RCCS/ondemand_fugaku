@@ -1,0 +1,8 @@
+---
+name: FDS
+category: Batch Jobs
+role: batch_connect
+description: |
+  [Fire Dynamics Simulator (FDS)](https://pages.nist.gov/fds-smv/index.html) is a large-eddy simulation code.
+
+

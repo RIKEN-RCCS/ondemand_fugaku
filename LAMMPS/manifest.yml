@@ -1,0 +1,6 @@
+---
+name: LAMMPS
+category: Batch Jobs
+role: batch_connect
+description: |
+  LAMMPS is a classical molecular dynamics code for materials modeling.

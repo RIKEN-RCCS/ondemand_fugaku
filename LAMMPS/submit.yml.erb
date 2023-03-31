@@ -1,5 +1,5 @@
 script:
-  job_name: ood_openfoam
+  job_name: ood_lammps
   queue_name: <%= queue %>
   <%- if email.present? -%>
   email: <%= email %>
@@ -35,6 +35,7 @@ batch_connect:
     export LANG=C
     export OMP_NUM_THREADS=<%= threads %>
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
-    spack load openfoam@<%= version %>
-    cd <%= working_dir %>
-    mpiexec <%= eval("binary#{version.delete(".")}") %> -paralell
+    spack load lammps@<%= version %>
+    cd `dirname <%= filename %>`
+    FILE=`basename <%= filename %>`
+    mpiexec lmp -in $FILE

@@ -1,0 +1,184 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/cache.rb'
+  
+  # spack versions modylas-new -s
+  versions=["1.1.0b"]
+  # spack find --paths modylas-new@1.1.0b
+  modylas110b = get_bins("modylas110b", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/modylas-new-1.1.0b-sjr6ygmvjq32hkctieja7j6wgl3d7l7p/bin/")
+
+  groups = get_groups()
+  fdirs  = get_groups_fdirs()
+-%>
+---
+form:
+  - cluster
+  - queue
+  - volume
+  - group
+  - hours_in_three_days
+  - hours_in_one_day
+  - small_nodes
+  - large_nodes
+  - middle_nodes
+  - small_procs
+  - large_procs
+  - middle_procs
+  - threads
+  - mode
+  - version
+  - binary110b
+  - working_dir
+  - session_name
+  - email
+attributes:
+  cluster:
+    widget: hidden_field
+    value: fugaku
+  queue:
+    label: Queue
+    widget: select
+    options:
+      - [ "fugaku-small", "small", 
+	  data-hide-hours-in-one-day: true,
+	  data-hide-large-nodes: true, data-hide-middle-nodes: true,
+	  data-hide-large-procs: true, data-hide-middle-procs: true ]
+#      - [ "fugaku-large",  "large" , 
+#	  data-hide-hours-in-three-days: true,
+#	  data-hide-small-nodes: true, data-hide-middle-nodes: true,
+#	  data-hide-small-procs: true, data-hide-middle-procs: true ]
+#      - [ "fugaku-middle", "middle", 
+#	  data-hide-hours-in-three-days: true,
+#	  data-hide-small-nodes: true, data-hide-large-nodes: true,
+#	  data-hide-small-procs: true, data-hide-large-procs: true ]
+  volume:
+    widget: hidden_field
+  group:
+    label: Group
+    widget: select
+    options:
+    <%- groups.each do |group| -%>
+      - <%= group %>
+    <%- end -%>
+  hours_in_three_days:
+    widget: number_field
+    label: Elapsed time (1 - 72 hours)
+    value: 1
+    min: 1
+    max: 72
+    step: 1
+    required: true
+  hours_in_one_day:
+    widget: number_field
+    label: Elapsed time (1 - 24 hours)
+    value: 1
+    min: 1
+    max: 24
+    step: 1
+    required: true
+  small_nodes:
+    widget: number_field
+    label: Number of nodes (1 - 384)
+    value: 1
+    min: 1
+    max: 384
+    step: 1
+    required: true
+  large_nodes:
+    widget: number_field
+    label: Number of nodes (385 - 12,288)
+    value: 385
+    min: 385
+    max: 12288
+    step: 1
+    required: true
+  middle_nodes:
+    widget: number_field
+    label: Number of nodes (12,289 - 55,296)
+    value: 12289
+    min: 12289
+    max: 55296
+    step: 1
+    required: true
+  small_procs:
+    widget: number_field
+    label: Total number of processes (1 - 18,432)
+    value: 1
+    min: 1
+    max: 18432
+    step: 1
+    required: true
+    help: |
+      Total number of processes <= Number of nodes x 48.
+  large_procs:
+    widget: number_field
+    label: Total number of processes (1 - 589,824)
+    value: 385
+    min: 1
+    max: 18432
+    step: 1
+    required: true
+    help: |
+      Total number of processes <= Number of nodes x 48.
+  middle_procs:
+    widget: number_field
+    label: Total number of processes (1 - 2,654,208)
+    value: 12289
+    min: 1
+    max: 2654208
+    step: 1
+    required: true
+    help: |
+      Total number of processes <= Number of nodes x 48.
+  threads:
+    widget: number_field
+    label: Number of threads (1 - 48)
+    value: 1
+    min: 1
+    max: 48
+    step: 1
+    required: true
+    help: |
+      Number of threads x Total number of processes <= Number of nodes x 48.
+  mode:
+    widget: select
+    label: Mode
+    options:
+    - Normal
+    - Boost
+    - Eco
+    - Boost + Eco
+  version:
+    widget: select
+    label: Version
+    options:
+    <%- str="" -%>
+    <%- versions.each do |v| -%>
+    <%- str = "[" + v + ", " + v -%>
+    <%- versions.each do |i| -%>
+      <%- str += ", data-hide-binary" + i.delete(".") + ": true" unless i == v -%>
+    <%- end -%>
+    - <%= str + "]" %>
+    <%- end -%>
+  binary110b:
+    widget: select
+    label: Binary file version 1.1.0b
+    value: modylas
+    options:
+    <%- modylas110b.each do |b| -%>
+      - <%= b %>
+    <%- end -%>
+  working_dir:
+    label: Working directory
+    data-filepicker: true
+    data-target-file-type: dirs  # Valid values are: files, dirs, or both
+    data-default-directory: <%= ENV['HOME'] %>
+    data-file_picker_favorites: <%= fdirs %>
+    value: <%= ENV['HOME'] %>
+    readonly: true
+    required: true
+  session_name:
+    label: Session name
+    required: true
+  email:
+    label: Email (You will receive an email when it starts and ends)
+    widget: email_field

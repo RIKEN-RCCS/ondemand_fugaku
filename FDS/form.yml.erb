@@ -1,14 +1,8 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/cache.rb'
-
-  versions=["2212", "2206", "2112", "2106", "2012"]
-  # spack find --paths quantum-espresso@7.1
-  openfoam2212 = get_bins("openfoam2212", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openfoam-2212-kyhx6v3qmjtmtbpvxbynbsh4b2oay35j/bin/")
-  openfoam2206 = get_bins("openfoam2206", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openfoam-2206-xqjr5n7qxgnm7qqvnua3k6l4lmzmyoof/bin/")
-  openfoam2112 = get_bins("openfoam2112", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openfoam-2112-x6lfofn2zdwpfc76y4wkt7kh6khelokj/bin/")
-  openfoam2106 = get_bins("openfoam2106", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openfoam-2106-opklcountjllz53uqjeh6aiaueablsua/bin/")
-  openfoam2012 = get_bins("openfoam2012", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openfoam-2012-duyz7j4eb2dfcpmj7tmdfogxslgn3gdd/bin/")
-
+  
+  # spack versions quantum-espresso -s
+  versions = ["6.7.9"]
   groups = get_groups()
   fdirs  = get_groups_fdirs()
 -%>
@@ -29,11 +23,7 @@ form:
   - threads
   - mode
   - version
-  - binary2212
-  - binary2206
-  - binary2112
-  - binary2106
-  - binary2012
+  - binary679
   - working_dir
   - email
 attributes:
@@ -157,54 +147,15 @@ attributes:
     widget: select
     label: Version
     options:
-    <%- str="" -%>
     <%- versions.each do |v| -%>
-    <%- str = "[" + v + ", " + v -%>
-    <%- versions.each do |i| -%>
-      <%- str += ", data-hide-binary" + i.delete(".") + ": true" unless i == v -%>
+    - <%= "[" + v + ", " + v + "]" %>
     <%- end -%>
-    - <%= str + "]" %>
-    <%- end -%>
-  binary2212:
+  binary679:
     widget: select
-    label: Binary file version 2212
-    value: interFoam
+    label: Binary file version 6.7.9
+    value: fds_mpi_fugaku
     options:
-    <%- openfoam2212.each do |b| -%>
-      - <%= b %>
-    <%- end -%>
-  binary2206:
-    widget: select
-    label: Binary file version 2206
-    value: interFoam
-    options:
-    <%- openfoam2206.each do |b| -%>
-      - <%= b %>
-    <%- end -%>
-  binary2112:
-    widget: select
-    label: Binary file version 2112
-    value: interFoam
-    options:
-    <%- openfoam2112.each do |b| -%>
-      - <%= b %>
-    <%- end -%>
-  binary2106:
-    widget: select
-    label: Binary file version 2106
-    value: interFoam
-    options:
-    <%- openfoam2106.each do |b| -%>
-      - <%= b %>
-    <%- end -%>
-  binary2012:
-    widget: select
-    label: Binary file version 2012
-    value: interFoam
-    options:
-    <%- openfoam2012.each do |b| -%>
-      - <%= b %>
-    <%- end -%>
+      - fds_mpi_fugaku
   working_dir:
     label: Working directory
     data-filepicker: true

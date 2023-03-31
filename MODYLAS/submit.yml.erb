@@ -1,5 +1,5 @@
 script:
-  job_name: ood_openmx
+  job_name: ood_modylas
   queue_name: <%= queue %>
   <%- if email.present? -%>
   email: <%= email %>
@@ -35,7 +35,6 @@ batch_connect:
 
     export OMP_NUM_THREADS=<%= threads %>
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
-    spack load openmx@<%= version %>
-    cd `dirname <%= filename %>`
-    FILE=`basename <%= filename %>`  # Full path doesn't work.
-    mpiexec <%= eval("binary#{version.delete(".")}") %> $FILE <%= options %>
+    spack load modylas-new@<%= version %>
+    cd <%= working_dir %>
+    mpiexec <%= binary110b %> <%= session_name %>
