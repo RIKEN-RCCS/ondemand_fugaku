@@ -23,8 +23,7 @@ form:
   - threads
   - mode
   - version
-  - binary679
-  - working_dir
+  - filename
   - email
 attributes:
   cluster:
@@ -150,21 +149,14 @@ attributes:
     <%- versions.each do |v| -%>
     - <%= "[" + v + ", " + v + "]" %>
     <%- end -%>
-  binary679:
-    widget: select
-    label: Binary file version 6.7.9
-    value: fds_mpi_fugaku
-    options:
-      - fds_mpi_fugaku
-  working_dir:
-    label: Working directory
+  filename:
+    label: Input file
     data-filepicker: true
-    data-target-file-type: dirs  # Valid values are: files, dirs, or both
+    data-target-file-type: files  # Valid values are: files, dirs, or both
+    # Optionally set a default directory
     data-default-directory: <%= ENV['HOME'] %>
+    # Optionally only allow editing through the file picker; defaults to false
     data-file_picker_favorites: <%= fdirs %>
-    value: <%= ENV['HOME'] %>
-    readonly: true
-    required: true
   email:
     label: Email (You will receive an email when it starts and ends)
     widget: email_field

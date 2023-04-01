@@ -1,5 +1,5 @@
 script:
-  job_name: ood_fds_smv
+  job_name: ood_fds
   queue_name: <%= queue %>
   <%- if email.present? -%>
   email: <%= email %>
@@ -36,5 +36,6 @@ batch_connect:
     export OMP_NUM_THREADS=<%= threads %>
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
     spack load fds@<%= version %>
-    cd <%= working_dir %>
-    time mpiexec <%= binary679 %> 
+    cd `dirname <%= filename %>`
+    FILE=`basename <%= filename %>`
+    mpiexec fds_mpi_fugaku $FILE

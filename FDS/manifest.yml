@@ -1,5 +1,5 @@
 ---
-name: FDS
+name: Fire Dynamics Simulator
 category: Batch Jobs
 role: batch_connect
 description: |

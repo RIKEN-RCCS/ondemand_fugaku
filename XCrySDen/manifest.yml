@@ -1,6 +1,5 @@
 ---
-name: 4XCrySDen
-#icon: fa://microscope
+name: XCrySDen
 category: Interactive Apps
 subcategory: Viewer
 role: batch_connect

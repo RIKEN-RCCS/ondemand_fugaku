@@ -32,7 +32,6 @@ batch_connect:
   script_wrapper: |
     #!/bin/bash
     set -x
-    export LANG=C
     export OMP_NUM_THREADS=<%= threads %>
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
     spack load lammps@<%= version %>
