@@ -51,6 +51,16 @@ From: redhat/ubi8:8.4-213
   dnf --releasever=8.4 -y install http://jp-minerals.org/vesta/archives/3.5.8/vesta-3.5.8-1.x86_64.rpm
   ln -s /usr/local/vesta-3.5.8 /usr/local/vesta
   #
+  dnf --releasever=8.4 -y install libXi-devel freeglut-devel
+  wget https://github.com/firemodels/smv/archive/refs/tags/SMV6.7.21.tar.gz
+  tar xfz SMV6.7.21.tar.gz
+  cd smv-SMV6.7.21/Build/smokeview/gnu_linux_64
+  bash make_smokeview.sh
+  mkdir /opt/smokeview-6.7.21
+  mv smokeview_linux_64	/opt/smokeview-6.7.21/
+  ln -s /opt/smokeview-6.7.21/smokeview_linux_64 /opt/smokeview-6.7.21/smokeview
+  ln -s /opt/smokeview-6.7.21 /opt/smokeview
+  #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo
