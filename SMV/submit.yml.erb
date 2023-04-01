@@ -1,0 +1,83 @@
+script:
+  job_name: ood_smv
+  queue_name: <%= queue %>
+  <%- if email.present? -%>
+  email: <%= email %>
+  email_on_started: true
+  <%- end -%>
+  native:
+    - "-n 1"
+  <%- if queue == "gpu1" -%>
+    - "-t"
+    - "<%= prepost1_hours %>:00:00"
+    - "--mem"
+    - "<%= gpu1_memory %>G"
+  <%- elsif queue == "gpu2" then -%>
+    - "-t"
+    - "<%= prepost2_hours %>:00:00"
+    - "--mem"
+    - "<%= gpu2_memory %>G"
+  <%- elsif queue == "mem1" then -%>
+    - "-t"
+    - "<%= prepost1_hours %>:00:00"
+    - "--mem"
+    - "<%= mem1_memory %>G"
+  <%- elsif queue == "mem2" then -%>
+    - "-t"
+    - "<%= prepost2_hours %>:00:00"
+    - "--mem"
+    - "<%= mem2_memory %>G"
+  <%- end -%>
+batch_connect:
+  template: "vnc"
+  websockify_cmd: '/usr/bin/websockify'
+  script_wrapper: |
+    cat << "CTRSCRIPT" > <%= staged_root %>/container.sh
+    #!/bin/bash
+    export PATH="$PATH:/opt/TurboVNC/bin"
+    export PATH="$PATH:/opt/ParaView/bin"
+    export PATH="$PATH:/opt/visit/bin"
+    export PATH="$PATH:/vol0004/apps/avs_xp851/bin/linux_64_el8"
+    export XP_LICENSE_SERVER=fn01sv02
+    export PATH="$PATH:/opt/xcrysden/bin"
+    export PATH="$PATH:/usr/local/vesta"
+    export PATH="$PATH:/opt/smokeview"
+    %s
+    CTRSCRIPT
+
+    export LANG=C
+    ARCH=`arch`
+    if [ $ARCH = aarch64 ]; then
+      IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi86_${ARCH}.sif
+    else
+      IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi84_${ARCH}.sif
+    fi
+
+    export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/remote_desktop/`arch`
+    export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
+    export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
+    export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh
+    mkdir -p $SINGULARITYENV_TMPDIR
+    NV_OPTION=""
+    CUDA_PATH=/usr/local/cuda
+    if [ -e $CUDA_PATH ]; then
+        NV_OPTION="--nv"
+        CUDA_REAL_PATH=`readlink -f /usr/local/cuda`
+        export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$CUDA_REAL_PATH:$CUDA_PATH
+        export SINGULARITYENV_PATH=$PATH:$CUDA_PATH/bin
+        export SINGULARITYENV_LD_LIBRARY_PATH=$CUDA_PATH/lib64:$LD_LIBRARY_PATH
+    fi
+    
+    for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
+        export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
+    done
+    for i in `ls -1 / | grep ^vol`; do
+      export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/$i
+    done
+    for i in /lib64/liblustreapi.so /run/psv; do
+      [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
+    done
+
+    chmod +x <%= staged_root %>/container.sh
+    singularity run ${NV_OPTION} ${IMAGE} <%= staged_root %>/container.sh
+    
