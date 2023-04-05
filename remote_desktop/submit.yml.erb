@@ -54,13 +54,13 @@ script:
       - <%= mem2_cores.to_i %>
       - "--mem"
       - "<%= mem2_memory %>G"
-    <%- elsif queue == "ondemand_reserved" then -%>
+    <%- elsif queue == "ondemand-reserved" then -%>
       - "-t"
-      - "<%= reserved_hours %>:00:00"
+      - "<%= prepost_reserved_hours %>:00:00"
       - "-n"
       - <%= reserved_cores.to_i %>
       - "--mem"
-      - "<%= mem2_memory %>G"
+      - "<%= reserved_memory %>G"
     <%- end -%>
   <%- end -%>
 batch_connect:
@@ -83,7 +83,7 @@ batch_connect:
     export LANG=C
     ARCH=`arch`
     if [ $ARCH = aarch64 ]; then
-      IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi86_${ARCH}.sif
+      IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi87_${ARCH}.sif
     else
       IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi86_${ARCH}.sif
     fi
