@@ -54,6 +54,13 @@ script:
       - <%= mem2_cores.to_i %>
       - "--mem"
       - "<%= mem2_memory %>G"
+    <%- elsif queue == "ondemand-reserved" then -%>
+      - "-t"
+      - "<%= prepost_reserved_hours %>:00:00"
+      - "-n"
+      - <%= reserved_cores.to_i %>
+      - "--mem"
+      - "<%= reserved_memory %>G"
     <%- end -%>
   <%- end -%>
 batch_connect:

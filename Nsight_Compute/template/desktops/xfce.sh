@@ -54,6 +54,6 @@ fi
 eval $(dbus-launch --sh-syntax)
 
 # Start up xfce desktop (block until user logs out of desktop)
-/usr/local/cuda/bin/nv-nsight-cu &
+/usr/local/cuda/bin/ncu-ui &
 xfce4-session
 fg

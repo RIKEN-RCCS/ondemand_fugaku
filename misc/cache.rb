@@ -14,7 +14,7 @@ end
 def store_bins_cache(file, bin_path)
   output = `ls -1 #{bin_path}`.split("\n")
   dir = File.dirname(file)
-  Dir.mkdir(dir) unless File.directory?(dir)
+  FileUtils.mkdir_p(dir) unless File.directory?(dir)
   f = File.open(file, 'w')
   f.write(Marshal.dump(output))
   f.close()
@@ -29,7 +29,7 @@ def store_groups_cache()
   end
   
   dir = File.dirname($GROUPS_CACHE)
-  Dir.mkdir(dir) unless File.directory?(dir)
+  FileUtils.mkdir_p(dir) unless File.directory?(dir)
   f = File.open($GROUPS_CACHE, 'w')
   f.write(Marshal.dump(info))
   f.close()

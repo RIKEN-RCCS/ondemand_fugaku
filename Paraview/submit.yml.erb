@@ -12,7 +12,7 @@ script:
   <%- end -%>
   native:
   <%- if cluster == "fugaku" -%>
-    - "-L elapse=<%= fugaku_hours %>:00:00,node=<%= fugaku_nodes %>,jobenv=singularity --no-check-directory -g <%= group %>"
+    - "-L elapse=<%= fugaku_hours %>:00:00,node=<%= fugaku_nodes %>,jobenv=singularity --mpi proc=<%= fugaku_procs %> --no-check-directory -g <%= group %>"
     <%- if volume == "/vol0004" -%>
     - "-x PJM_LLIO_GFSCACHE=/vol0004"
     <%- else -%>
@@ -54,6 +54,13 @@ script:
       - <%= mem2_cores.to_i %>
       - "--mem"
       - "<%= mem2_memory %>G"
+    <%- elsif queue == "ondemand-reserved" then -%>
+      - "-t"
+      - "<%= prepost_reserved_hours %>:00:00"
+      - "-n"
+      - <%= reserved_cores.to_i %>
+      - "--mem"
+      - "<%= reserved_memory %>G"
     <%- end -%>
   <%- end -%>
 batch_connect:
@@ -75,9 +82,9 @@ batch_connect:
     export LANG=C
     ARCH=`arch`
     if [ $ARCH = aarch64 ]; then
-      IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi86_${ARCH}.sif
+      IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi87_${ARCH}.sif
     else
-      IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi84_${ARCH}.sif
+      IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi86_${ARCH}.sif
     fi
 
     export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/remote_desktop/`arch`

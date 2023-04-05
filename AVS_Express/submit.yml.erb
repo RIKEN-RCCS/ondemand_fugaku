@@ -27,6 +27,11 @@ script:
     - "<%= prepost2_hours %>:00:00"
     - "--mem"
     - "<%= mem2_memory %>G"
+  <%- elsif queue == "ondemand-reserved" then -%>
+    - "-t"
+    - "<%= prepost_reserved_hours %>:00:00"
+    - "--mem"
+    - "<%= reserved_memory %>G"
   <%- end -%>
 batch_connect:
   template: "vnc"
@@ -46,12 +51,7 @@ batch_connect:
     CTRSCRIPT
 
     export LANG=C
-    ARCH=`arch`
-    if [ $ARCH = aarch64 ]; then
-      IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi86_${ARCH}.sif
-    else
-      IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi84_${ARCH}.sif
-    fi
+    IMAGE=/home/apps/singularity/ondemand/remote_desktop_ubi86_x86_64.sif
 
     export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/remote_desktop/`arch`
     export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
