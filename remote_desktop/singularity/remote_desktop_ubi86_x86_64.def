@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: redhat/ubi8:8.4-213
+From: redhat/ubi8:8.6-990
 
 %files
   /etc/pki/entitlement /etc/pki/
@@ -7,19 +7,19 @@ From: redhat/ubi8:8.4-213
 
 %post
   rm -f /etc/yum.repos.d/ubi.repo
-  dnf --releasever=8.4 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
-  dnf --releasever=8.4 -y install libatomic # for pre-post environment
-  dnf --releasever=8.4 -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs
-  dnf --releasever=8.4 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  dnf --releasever=8.4 -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs libevent
-  dnf --releasever=8.4 -y install gnuplot ImageMagick ncview
-  dnf --releasever=8.4 -y install vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts
-  dnf --releasever=8.4 --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
+  dnf --releasever=8.6 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh ksh tcsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
+  dnf --releasever=8.6 -y install libatomic # for pre-post environment
+  dnf --releasever=8.6 -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs
+  dnf --releasever=8.6 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  dnf --releasever=8.6 -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs libevent
+  dnf --releasever=8.6 -y install gnuplot ImageMagick ncview
+  dnf --releasever=8.6 -y install vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts
+  dnf --releasever=8.6 --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
   pip2 install ts
   dnf -y install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python-websockify-0.8.0-1.el8.noarch.rpm
   wget https://turbovnc.org/pmwiki/uploads/Downloads/TurboVNC.repo
   mv TurboVNC.repo /etc/yum.repos.d
-  dnf --releasever=8.4 -y install turbovnc-3.0.3-20230227
+  dnf --releasever=8.6 -y install turbovnc-3.0.3-20230227
   dnf remove -y python2-pip xfce4-screensaver
   update-alternatives --set python /usr/bin/python3
   cd /opt
@@ -48,10 +48,10 @@ From: redhat/ubi8:8.4-213
   ln -s /opt/xcrysden-1.6.2 /opt/xcrysden
   rm -r Togl2.0-src.tar.gz xcrysden-1.6.2.tar.gz tmp-1.6.2
   #
-  dnf --releasever=8.4 -y install http://jp-minerals.org/vesta/archives/3.5.8/vesta-3.5.8-1.x86_64.rpm
+  dnf --releasever=8.6 -y install http://jp-minerals.org/vesta/archives/3.5.8/vesta-3.5.8-1.x86_64.rpm
   ln -s /usr/local/vesta-3.5.8 /usr/local/vesta
   #
-  dnf --releasever=8.4 -y install libXi-devel freeglut-devel
+  dnf --releasever=8.6 -y install libXi-devel freeglut-devel
   wget https://github.com/firemodels/smv/archive/refs/tags/SMV6.7.21.tar.gz
   tar xfz SMV6.7.21.tar.gz
   cd smv-SMV6.7.21/Build/smokeview/gnu_linux_64
