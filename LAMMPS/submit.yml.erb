@@ -20,21 +20,15 @@ script:
     <%- elsif mode == "Boost + Eco" -%>
     - "-L freq=2200,eco_state=2"
     <%- end -%>
-    <%- if queue == "small" -%>
-    - "-L elapse=<%= hours_in_three_days %>:00:00 -L node=<%= small_nodes %> --mpi proc=<%= small_procs %>"
-    <%- elsif queue == "large" -%>
-    - "-L elapse=<%= hours_in_one_day %>:00:00 -L node=<%= large_nodes %> --mpi proc=<%= large_procs %>"
-    <%- else -%>
-    - "-L elapse=<%= hours_in_one_day %>:00:00 -L node=<%= middle_nodes %> --mpi proc=<%= middle_procs %>"
-    <%- end -%>
+    - "-L elapse=<%= fugaku_hours %>:00:00 -L node=<%= fugaku_nodes %> --mpi proc=<%= fugaku_procs %>"
 batch_connect:
   template: "basic"
   script_wrapper: |
     #!/bin/bash
-    set -x
-    export OMP_NUM_THREADS=<%= threads %>
+    export OMP_NUM_THREADS=<%= fugaku_threads %>
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
     spack load lammps@<%= version %>
+    
     cd `dirname <%= filename %>`
     FILE=`basename <%= filename %>`
     mpiexec lmp -in $FILE

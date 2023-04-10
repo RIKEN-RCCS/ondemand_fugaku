@@ -6,41 +6,41 @@ script:
   email_on_started: true
   <%- end -%>
   native:
-    <%- if queue == "ondemand-reserved" -%>
-      - "-t"
-      - "<%= prepost_reserved_hours %>:00:00"
-      - "-n"
-      - <%= cores.to_i %>
-      - "--mem"
-      - "<%= memory %>G"
-    <%- elsif queue == "gpu1" -%>
+    <%- if queue == "gpu1" -%>
       - "-t"
       - "<%= prepost1_hours %>:00:00"
       - "-n"
-      - <%= cores.to_i %>
+      - <%= gpu1_cores.to_i %>
       - "--mem"
-      - "<%= memory %>G"
+      - "<%= gpu1_memory %>G"
     <%- elsif queue == "gpu2" then -%>
       - "-t"
       - "<%= prepost2_hours %>:00:00"
       - "-n"
-      - <%= cores.to_i %>
+      - <%= gpu2_cores.to_i %>
       - "--mem"
-      - "<%= memory %>G"
+      - "<%= gpu2_memory %>G"
     <%- elsif queue == "mem1" then -%>
       - "-t"
       - "<%= prepost1_hours %>:00:00"
       - "-n"
-      - <%= cores.to_i %>
+      - <%= mem1_cores.to_i %>
       - "--mem"
       - "<%= mem1_memory %>G"
     <%- elsif queue == "mem2" then -%>
       - "-t"
       - "<%= prepost2_hours %>:00:00"
       - "-n"
-      - <%= cores.to_i %>
+      - <%= mem2_cores.to_i %>
       - "--mem"
-      - "<%= memory %>G"
+      - "<%= mem2_memory %>G"
+    <%- elsif queue == "ondemand-reserved" then -%>
+      - "-t"
+      - "<%= reserved_hours %>:00:00"
+      - "-n"
+      - <%= reserved_cores.to_i %>
+      - "--mem"
+      - "<%= reserved_memory %>G"
     <%- end -%>
 batch_connect:
   template: "basic"

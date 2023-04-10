@@ -29,7 +29,7 @@ script:
     - "<%= mem2_memory %>G"
   <%- elsif queue == "ondemand-reserved" then -%>
     - "-t"
-    - "<%= prepost_reserved_hours %>:00:00"
+    - "<%= reserved_hours %>:00:00"
     - "--mem"
     - "<%= reserved_memory %>G"
   <%- end -%>
@@ -67,6 +67,7 @@ batch_connect:
         export SINGULARITYENV_PATH=$PATH:$CUDA_PATH/bin
         export SINGULARITYENV_LD_LIBRARY_PATH=$CUDA_PATH/lib64:$LD_LIBRARY_PATH
     fi
+    
     for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
         export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
     done

@@ -1,6 +1,6 @@
 ---
 name: Job Submitter
-category: Passenger Apps
+category: Batch Jobs
 role: batch_connect
 description: |
   Simple form for the submission of batch jobs.

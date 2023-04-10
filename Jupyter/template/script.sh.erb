@@ -14,7 +14,7 @@ set -x
 export LANG=C
 
 # https://qiita.com/ronin_gw/items/cdf8112b61649ca455f5
-BASE_BINARY_DIR=<%= context.base_binary_dir %>
+BASE_BINARY_DIR=${HOME}/ondemand/jupyter
 PYTHONUSERBASE=${BASE_BINARY_DIR%/}/`arch`
 mkdir -p $PYTHONUSERBASE
 export SINGULARITYENV_XDG_DATA_HOME=${PYTHONUSERBASE}

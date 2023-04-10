@@ -1,11 +1,7 @@
 <%-
-  require '/var/www/ood/apps/sys/ondemand_apps/misc/cache.rb'
-  
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
   # spack versions lammps -s
   versions=["20220623.2"]
-
-  groups = get_groups()
-  fdirs  = get_groups_fdirs()
 -%>
 ---
 form:
@@ -13,153 +9,24 @@ form:
   - queue
   - volume
   - group
-  - hours_in_three_days
-  - hours_in_one_day
-  - small_nodes
-  - large_nodes
-  - middle_nodes
-  - small_procs
-  - large_procs
-  - middle_procs
-  - threads
+  - fugaku_hours
+  - fugaku_nodes
+  - fugaku_procs
+  - fugaku_threads
   - mode
   - version
   - filename
   - email
 attributes:
-  cluster:
-    widget: hidden_field
-    value: fugaku
-  queue:
-    label: Queue
-    widget: select
-    options:
-      - [ "fugaku-small", "small", 
-	  data-hide-hours-in-one-day: true,
-	  data-hide-large-nodes: true, data-hide-middle-nodes: true,
-	  data-hide-large-procs: true, data-hide-middle-procs: true ]
-#      - [ "fugaku-large",  "large" , 
-#	  data-hide-hours-in-three-days: true,
-#	  data-hide-small-nodes: true, data-hide-middle-nodes: true,
-#	  data-hide-small-procs: true, data-hide-middle-procs: true ]
-#      - [ "fugaku-middle", "middle", 
-#	  data-hide-hours-in-three-days: true,
-#	  data-hide-small-nodes: true, data-hide-large-nodes: true,
-#	  data-hide-small-procs: true, data-hide-large-procs: true ]
-  volume:
-    widget: hidden_field
-  group:
-    label: Group
-    widget: select
-    options:
-    <%- groups.each do |group| -%>
-      - <%= group %>
-    <%- end -%>
-  hours_in_three_days:
-    widget: number_field
-    label: Elapsed time (1 - 72 hours)
-    value: 1
-    min: 1
-    max: 72
-    step: 1
-    required: true
-  hours_in_one_day:
-    widget: number_field
-    label: Elapsed time (1 - 24 hours)
-    value: 1
-    min: 1
-    max: 24
-    step: 1
-    required: true
-  small_nodes:
-    widget: number_field
-    label: Number of nodes (1 - 384)
-    value: 1
-    min: 1
-    max: 384
-    step: 1
-    required: true
-  large_nodes:
-    widget: number_field
-    label: Number of nodes (385 - 12,288)
-    value: 385
-    min: 385
-    max: 12288
-    step: 1
-    required: true
-  middle_nodes:
-    widget: number_field
-    label: Number of nodes (12,289 - 55,296)
-    value: 12289
-    min: 12289
-    max: 55296
-    step: 1
-    required: true
-  small_procs:
-    widget: number_field
-    label: Total number of processes (1 - 18,432)
-    value: 1
-    min: 1
-    max: 18432
-    step: 1
-    required: true
-    help: |
-      Total number of processes <= Number of nodes x 48.
-  large_procs:
-    widget: number_field
-    label: Total number of processes (1 - 589,824)
-    value: 385
-    min: 1
-    max: 18432
-    step: 1
-    required: true
-    help: |
-      Total number of processes <= Number of nodes x 48.
-  middle_procs:
-    widget: number_field
-    label: Total number of processes (1 - 2,654,208)
-    value: 12289
-    min: 1
-    max: 2654208
-    step: 1
-    required: true
-    help: |
-      Total number of processes <= Number of nodes x 48.
-  threads:
-    widget: number_field
-    label: Number of threads (1 - 48)
-    value: 1
-    min: 1
-    max: 48
-    step: 1
-    required: true
-    help: |
-      Number of threads x Total number of processes <= Number of nodes x 48.
-  mode:
-    widget: select
-    label: Mode
-    options:
-    - Normal
-    - Boost
-    - Eco
-    - Boost + Eco
-  version:
-    widget: select
-    label: Version
-    options:
-    <%- versions.each do |v| -%>
-    - <%= str = "[" + v + ", " + v + "]" %>
-    <%- end -%>
-  filename:
-    label: Input file (mpiexec lmp -in <input>)
-    data-filepicker: true
-    data-target-file-type: files  # Valid values are: files, dirs, or both
-    # Optionally set a default directory
-    data-default-directory: <%= ENV['HOME'] %>
-    # Optionally only allow editing through the file picker; defaults to false
-    data-file_picker_favorites: <%= fdirs %>
-    readonly: true
-    required: true
-  email:
-    label: Email (You will receive an email when it starts and ends)
-    widget: email_field
+  <%= get_cluster("fugaku") %>
+  <%= get_queue("fugaku_small") %>
+  <%= get_volume() %>
+  <%= get_group() %>
+  <%= get_fugaku_hours() %>
+  <%= get_fugaku_nodes() %>
+  <%= get_fugaku_procs() %>
+  <%= get_fugaku_threads() %>
+  <%= get_mode() %>
+  <%= get_version(versions) %>
+  <%= get_filename() %>
+  <%= get_email(1) %>

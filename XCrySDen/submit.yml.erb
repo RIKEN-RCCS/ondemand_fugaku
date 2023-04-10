@@ -29,7 +29,7 @@ script:
     - "<%= mem2_memory %>G"
   <%- elsif queue == "ondemand-reserved" then -%>
     - "-t"
-    - "<%= prepost_reserved_hours %>:00:00"
+    - "<%= reserved_hours %>:00:00"
     - "--mem"
     - "<%= reserved_memory %>G"
   <%- end -%>

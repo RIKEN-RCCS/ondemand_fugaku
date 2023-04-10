@@ -53,5 +53,9 @@ fi
 # see https://github.com/OSC/ondemand/issues/700
 eval $(dbus-launch --sh-syntax)
 
+# For some reason the lang module information disappears, so reload it.
+module remove lang
+module load lang
+
 # Start up xfce desktop (block until user logs out of desktop)
 xfce4-session
