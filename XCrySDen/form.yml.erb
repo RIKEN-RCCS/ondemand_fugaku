@@ -1,33 +1,22 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
+  attr = ""
 -%>
 ---
 title: XCrySDen
 form:
-  - cluster
-  - queue
-  - prepost1_hours
-  - prepost2_hours
-  - reserved_hours
-  - gpu1_memory
-  - gpu2_memory
-  - mem1_memory
-  - mem2_memory
-  - reserved_memory
-  - email
-  - bc_vnc_resolution
-  - desktop
+  <%= form_cluster(attr, "prepost") %>
+  <%= form_queue(attr, "prepost") %>
+  <%= form_prepost1_hours(attr) %>
+  <%= form_prepost2_hours(attr) %>
+  <%= form_reserved_hours(attr) %>
+  <%= form_gpu1_memory(attr) %>
+  <%= form_gpu2_memory(attr) %>
+  <%= form_mem1_memory(attr) %>
+  <%= form_mem2_memory(attr) %>
+  <%= form_reserved_memory(attr) %>
+  <%= form_email(attr) %>
+  <%= form_desktop(attr) %>
 attributes:
-  <%= get_cluster("prepost") %>
-  <%= get_queue("prepost") %>
-  <%= get_prepost1_hours() %>
-  <%= get_prepost2_hours() %>
-  <%= get_reserved_hours() %>
-  <%= get_gpu1_memory() %>
-  <%= get_gpu2_memory() %>
-  <%= get_mem1_memory() %>
-  <%= get_mem2_memory() %>
-  <%= get_reserved_memory() %>
-  <%= get_email() %>
-  <%= get_desktop() %>
-  
+<%= attr %>
+

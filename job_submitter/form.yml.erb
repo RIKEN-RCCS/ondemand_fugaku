@@ -1,57 +1,35 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
+  attr = ""
 -%>
 ---
 title: Job Submitter
 form:
-  - cluster
-  - queue
-  - volume
-  - group
-  - fugaku_hours
-  - fugaku_nodes
-  - fugaku_procs
-  - prepost1_hours
-  - prepost2_hours
-  - reserved_hours
-  - gpu1_cores
-  - gpu2_cores
-  - mem1_cores
-  - mem2_cores
-  - reserved_cores
-  - gpu1_memory
-  - gpu2_memory
-  - mem1_memory
-  - mem2_memory
-  - reserved_memory
-  - gpus_per_node
-  - mode
-  - working_dir
-  - commands
-  - email
+  <%= form_cluster(attr) %>
+  <%= form_queue(attr) %>
+  <%= form_volume(attr) %>
+  <%= form_group(attr) %>
+  <%= form_fugaku_hours(attr) %>
+  <%= form_fugaku_nodes(attr) %>
+  <%= form_fugaku_procs(attr) %>
+  <%= form_prepost1_hours(attr) %>
+  <%= form_prepost2_hours(attr) %>
+  <%= form_reserved_hours(attr) %>
+  <%= form_gpu1_cores(attr) %>
+  <%= form_gpu2_cores(attr) %>
+  <%= form_mem1_cores(attr) %>
+  <%= form_mem2_cores(attr) %>
+  <%= form_reserved_cores(attr) %>
+  <%= form_gpu1_memory(attr) %>
+  <%= form_gpu2_memory(attr) %>
+  <%= form_mem1_memory(attr) %>
+  <%= form_mem2_memory(attr) %>
+  <%= form_reserved_memory(attr) %>
+  <%= form_gpus_per_node(attr) %>
+  <%= form_mode(attr) %>
+  <%= form_working_dir(attr) %>
+  <%= form_commands(attr) %>
+  <%= form_email(attr, false) %>
 attributes:
-  <%= get_cluster() %>
-  <%= get_queue() %>
-  <%= get_volume() %>
-  <%= get_group() %>
-  <%= get_fugaku_hours() %>
-  <%= get_fugaku_nodes() %>
-  <%= get_fugaku_procs() %>
-  <%= get_prepost1_hours() %>
-  <%= get_prepost2_hours() %>
-  <%= get_reserved_hours() %>
-  <%= get_gpu1_cores() %>
-  <%= get_gpu2_cores() %>
-  <%= get_mem1_cores() %>
-  <%= get_mem2_cores() %>
-  <%= get_reserved_cores() %>
-  <%= get_gpu1_memory() %>
-  <%= get_gpu2_memory() %>
-  <%= get_mem1_memory() %>
-  <%= get_mem2_memory() %>
-  <%= get_reserved_memory() %>
-  <%= get_gpus_per_node() %>
-  <%= get_mode() %>
-  <%= get_working_dir() %>
-  <%= get_commands() %>
-  <%= get_email(1) %>
+<%= attr %>
+

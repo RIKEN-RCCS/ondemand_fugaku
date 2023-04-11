@@ -1,9 +1,126 @@
 require 'fileutils'
 
-$BASE_DIR = ENV['HOME'] + "/ondemand/cache/"
-$GROUPS_CACHE = $BASE_DIR + "groups.cache"
-$LIFE_TIME = 3600
-$EXC_DIRS = ["f-op", "fugaku", "isv"]
+BASE_DIR      = ENV['HOME'] + "/ondemand/cache/"
+GROUPS_CACHE  = BASE_DIR + "groups.cache"
+EXCLUDED_DIRS = ["f-op", "fugaku", "isv"]
+LIFE_TIME     = 3600
+
+FUGAKU_SMALL =<<"EOF"
+      - [ "fugaku-small", "small",
+          data-set-cluster: fugaku,
+          data-hide-prepost1-hours: true,
+          data-hide-prepost2-hours: true,
+          data-hide-reserved-hours: true,
+          data-hide-gpus-per-node: true,
+          data-hide-gpu1-cores: true,
+          data-hide-gpu2-cores: true,
+          data-hide-mem1-cores: true,
+          data-hide-mem2-cores: true,
+          data-hide-reserved-cores: true,
+          data-hide-gpu1-memory: true,
+          data-hide-gpu2-memory: true,
+          data-hide-mem1-memory: true,
+          data-hide-mem2-memory: true,
+          data-hide-reserved-memory: true ]
+EOF
+PREPOST_GPU1 =<<"EOF"
+      - [ "prepost-gpu1", "gpu1", 
+          data-set-cluster: prepost,
+          data-hide-group: true,
+          data-hide-fugaku-hours: true,
+          data-hide-fugaku-nodes: true,
+          data-hide-fugaku-procs: true,
+          data-hide-prepost2-hours: true,
+          data-hide-reserved-hours: true,
+          data-hide-gpu2-cores: true,
+          data-hide-mem1-cores: true,
+          data-hide-mem2-cores: true,
+          data-hide-reserved-cores: true,
+          data-hide-gpu2-memory: true,
+          data-hide-mem1-memory: true,
+          data-hide-mem2-memory: true,
+          data-hide-reserved-memory: true,
+          data-hide-mode: true ]
+EOF
+PREPOST_GPU2 =<<"EOF"
+      - [ "prepost-gpu2", "gpu2", 
+          data-set-cluster: prepost,
+          data-hide-group: true,
+          data-hide-fugaku-hours: true,
+          data-hide-fugaku-nodes: true,
+          data-hide-fugaku-procs: true,
+          data-hide-prepost1-hours: true,
+          data-hide-reserved-hours: true,
+          data-hide-gpu1-cores: true,
+          data-hide-mem1-cores: true,
+          data-hide-mem2-cores: true,
+          data-hide-reserved-cores: true,
+          data-hide-gpu1-memory: true,
+          data-hide-mem1-memory: true,
+          data-hide-mem2-memory: true,
+          data-hide-reserved-memory: true,
+          data-hide-mode: true ]
+EOF
+PREPOST_MEM1 =<<"EOF"
+      - [ "prepost-mem1", "mem1",
+          data-set-cluster: prepost,
+          data-hide-group: true,
+          data-hide-fugaku-hours: true,
+          data-hide-fugaku-nodes: true,
+          data-hide-fugaku-procs: true,
+          data-hide-prepost2-hours: true,
+          data-hide-reserved-hours: true,
+          data-hide-gpus-per-node: true,
+          data-hide-gpu1-cores: true,
+          data-hide-gpu2-cores: true,
+          data-hide-mem2-cores: true,
+          data-hide-reserved-cores: true,
+          data-hide-gpu1-memory: true,
+          data-hide-gpu2-memory: true,
+          data-hide-mem2-memory: true,
+          data-hide-reserved-memory: true,
+          data-hide-mode: true ]
+EOF
+PREPOST_MEM2 =<<"EOF"
+      - [ "prepost-mem2", "mem2",
+          data-set-cluster: prepost,
+          data-hide-group: true,
+          data-hide-fugaku-hours: true,
+          data-hide-fugaku-nodes: true,
+          data-hide-fugaku-procs: true,
+          data-hide-prepost1-hours: true,
+          data-hide-reserved-hours: true,
+          data-hide-gpus-per-node: true,
+          data-hide-gpu1-cores: true,
+          data-hide-gpu2-cores: true,
+          data-hide-mem1-cores: true,
+          data-hide-reserved-cores: true,
+          data-hide-gpu1-memory: true,
+          data-hide-gpu2-memory: true,
+          data-hide-mem1-memory: true,
+          data-hide-reserved-memory: true,
+          data-hide-mode: true ]
+EOF
+PREPOST_RESERVED =<<"EOF"
+      - [ "prepost-ondemand-reserved", "ondemand-reserved", 
+          data-set-cluster: prepost,
+          data-hide-group: true,
+          data-hide-fugaku-hours: true,
+          data-hide-fugaku-nodes: true,
+          data-hide-fugaku-procs: true,
+          data-hide-prepost1-hours: true,
+          data-hide-prepost2-hours: true,
+          data-hide-gpus-per-node: true,
+          data-hide-gpu1-cores: true,
+          data-hide-gpu2-cores: true,
+          data-hide-mem1-cores: true,
+          data-hide-mem2-cores: true,
+          data-hide-gpu1-memory: true,
+          data-hide-gpu2-memory: true,
+          data-hide-mem1-memory: true,
+          data-hide-mem2-memory: true,
+          data-hide-mode: true ]
+EOF
 
 def load_cache(file)
   f = File.open(file, 'r')
@@ -29,31 +146,29 @@ def store_groups_cache()
     volume = "/vol000" + m.split("/")[1].split("0")[1]
     info.push([m.split("/").last, m, n, volume])  # [ group_name, data_dir, share_dir, volume ]
   end
-  
-  dir = File.dirname($GROUPS_CACHE)
+
+  dir = File.dirname(GROUPS_CACHE)
   FileUtils.mkdir_p(dir) unless File.directory?(dir)
-  f = File.open($GROUPS_CACHE, 'w')
+  f = File.open(GROUPS_CACHE, 'w')
   f.write(Marshal.dump(info))
   f.close()
 end
 
 def get_groups_cache()
-  if File.exist?($GROUPS_CACHE) and (Time.now - File.mtime($GROUPS_CACHE)) < $LIFE_TIME
-    return load_cache($GROUPS_CACHE)
-  else
+  unless File.exist?(GROUPS_CACHE) and (Time.now - File.mtime(GROUPS_CACHE)) < LIFE_TIME
     store_groups_cache()
-    return load_cache($GROUPS_CACHE)
   end
+
+  return load_cache(GROUPS_CACHE)
 end
 
 def get_bins(fname, bin_path)
-  file = $BASE_DIR + fname + ".cache"
-  if File.exist?(file) and (Time.now - File.mtime(file)) < $LIFE_TIME
-    return load_cache(file)
-  else
+  file = BASE_DIR + fname + ".cache"
+  unless File.exist?(file) and (Time.now - File.mtime(file)) < LIFE_TIME
     store_bins_cache(file, bin_path)
-    return load_cache(file)
   end
+
+  return load_cache(file)
 end
 
 def get_groups_dirs()
@@ -75,197 +190,82 @@ def get_groups_fdirs()
   return "'[" + dirs.chop + "]'"
 end
 
-def get_cluster(queue = "")
-  s =<<"EOF"
-cluster:
+def form_cluster(attr, name = "")
+  attr <<<<"EOF"
+  cluster:
     widget: hidden_field
 EOF
-  s += "    value: #{queue}" if queue != ""
+  attr << "    value: #{name}\n" if name != ""
 
-  return s
+  return "- cluster"
 end
 
-$FUGAKU_SMALL =<<"EOF"
-      - [ "fugaku-small", "small", data-set-cluster: fugaku,
-          data-hide-prepost1-hours: true,
-          data-hide-prepost2-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpus-per-node: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-reserved-memory: true ]
-EOF
-
-$PREPOST_GPU1 =<<"EOF"
-      - [ "prepost-gpu1", "gpu1", data-set-cluster: prepost,
-          data-hide-group: true,
-          data-hide-fugaku-hours: true,
-          data-hide-fugaku-nodes: true,
-          data-hide-fugaku-procs: true,
-          data-hide-prepost2-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-reserved-memory: true,
-          data-hide-mode: true ]
-EOF
-
-$PREPOST_GPU2 =<<"EOF"
-      - [ "prepost-gpu2", "gpu2", data-set-cluster: prepost,
-          data-hide-group: true,
-          data-hide-fugaku-hours: true,
-          data-hide-fugaku-nodes: true,
-          data-hide-fugaku-procs: true,
-          data-hide-prepost1-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpu1-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-reserved-memory: true,
-          data-hide-mode: true ]
-EOF
-
-$PREPOST_MEM1 =<<"EOF"
-      - [ "prepost-mem1", "mem1", data-set-cluster: prepost,
-          data-hide-group: true,
-          data-hide-fugaku-hours: true,
-          data-hide-fugaku-nodes: true,
-          data-hide-fugaku-procs: true,
-          data-hide-prepost2-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpus-per-node: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-reserved-memory: true,
-          data-hide-mode: true ]
-EOF
-
-$PREPOST_MEM2 =<<"EOF"
-      - [ "prepost-mem2", "mem2", data-set-cluster: prepost,
-          data-hide-group: true,
-          data-hide-fugaku-hours: true,
-          data-hide-fugaku-nodes: true,
-          data-hide-fugaku-procs: true,
-          data-hide-prepost1-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpus-per-node: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-reserved-memory: true,
-          data-hide-mode: true ]
-EOF
-
-$PREPOST_RESERVED =<<"EOF"
-      - [ "prepost-ondemand-reserved", "ondemand-reserved", data-set-cluster: prepost,
-          data-hide-group: true,
-          data-hide-fugaku-hours: true,
-          data-hide-fugaku-nodes: true,
-          data-hide-fugaku-procs: true,
-          data-hide-prepost1-hours: true,
-          data-hide-prepost2-hours: true,
-          data-hide-gpus-per-node: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-mode: true ]
-EOF
-
-def get_queue(queue = "")
-  s =<<"EOF"
-queue:
+def form_queue(attr, name = "")
+  attr <<<<"EOF"
+  queue:
     label: Queue
     widget: select
     options:
 EOF
 
-  if queue == ""
-    s << $FUGAKU_SMALL
-    s << $PREPOST_GPU1
-    s << $PREPOST_GPU2
-    s << $PREPOST_MEM1
-    s << $PREPOST_MEM2
-    s << $PREPOST_RESERVED
-  elsif queue == "fugaku_small"
-    s << $FUGAKU_SMALL
-  elsif queue == "prepost"
-    s << $PREPOST_GPU1
-    s << $PREPOST_GPU2
-    s << $PREPOST_MEM1
-    s << $PREPOST_MEM2
-    s << $PREPOST_RESERVED
-  elsif queue == "gpu"
-    s << $PREPOST_GPU1
-    s << $PREPOST_GPU2
-  elsif queue == "workflow"
-    s << $PREPOST_RESERVED
-    s << $PREPOST_GPU1
-    s << $PREPOST_GPU2
-    s << $PREPOST_MEM1
-    s << $PREPOST_MEM2
+  if name == ""
+    attr << FUGAKU_SMALL
+    attr << PREPOST_GPU1
+    attr << PREPOST_GPU2
+    attr << PREPOST_MEM1
+    attr << PREPOST_MEM2
+    attr << PREPOST_RESERVED
+  elsif name == "fugaku_small"
+    attr << FUGAKU_SMALL
+  elsif name == "prepost"
+    attr << PREPOST_GPU1
+    attr << PREPOST_GPU2
+    attr << PREPOST_MEM1
+    attr << PREPOST_MEM2
+    attr << PREPOST_RESERVED
+  elsif name == "gpu"
+    attr << PREPOST_GPU1
+    attr << PREPOST_GPU2
+  elsif name == "workflow"
+    attr << PREPOST_RESERVED
+    attr << PREPOST_GPU1
+    attr << PREPOST_GPU2
+    attr << PREPOST_MEM1
+    attr << PREPOST_MEM2
   end
   
-  return s
+  return "- queue"
 end
 
-def get_volume()
-<<"EOF"
-volume:
+def form_volume(attr)
+  attr <<<<"EOF"
+  volume:
     widget: hidden_field
 EOF
+  return "- volume"
 end
 
-def get_group()
-  s = <<"EOF"
-group:
+def form_group(attr)
+  attr <<<<"EOF"
+  group:
     label: Group
     widget: select
     options:
 EOF
   get_groups_cache().each do |n|
     flag = true
-    $EXC_DIRS.each do |d|
+    EXCLUDED_DIRS.each do |d|
       flag = false if n[0] == d
     end
-    s << "      - [\"" + n[0] + "\" , \"" + n[0] + "\", " + "data-set-volume: \"" + n[3] + "\"]\n" if flag
+    attr << "      - [\"" + n[0] + "\" , \"" + n[0] + "\", " + "data-set-volume: \"" + n[3] + "\"]\n" if flag
   end
-
-  return s
+  
+  return "- group"
 end
 
-def get_fugaku_hours()
-<<"EOF"
-fugaku_hours:
+def form_fugaku_hours(attr)
+  attr <<<<"EOF"
+  fugaku_hours:
     label: Elapsed time (1 - 72 hours)
     widget: number_field
     value: 1
@@ -274,11 +274,12 @@ fugaku_hours:
     step: 1
     required: true
 EOF
+  return "- fugaku_hours"
 end
 
-def get_fugaku_nodes()
-<<"EOF"
-fugaku_nodes:
+def form_fugaku_nodes(attr)
+  attr <<<<"EOF"
+  fugaku_nodes:
     label: Number of nodes (1 - 384)
     widget: number_field
     value: 1
@@ -287,11 +288,12 @@ fugaku_nodes:
     step: 1
     required: true
 EOF
+  return "- fugaku_nodes"
 end
 
-def get_fugaku_procs()
-<<"EOF"
-fugaku_procs:
+def form_fugaku_procs(attr)
+  attr <<<<"EOF"
+  fugaku_procs:
     label: Total number of processes (1 - 18,432)
     widget: number_field
     value: 48
@@ -302,11 +304,12 @@ fugaku_procs:
     help: |
       Total number of processes <= Number of nodes x 48.
 EOF
+  return "- fugaku_procs"
 end
 
-def get_fugaku_threads()
-<<"EOF"
-fugaku_threads:
+def form_fugaku_threads(attr)
+  attr <<<<"EOF"
+  fugaku_threads:
     label: Number of threads (1 - 48)
     widget: number_field
     value: 1
@@ -317,11 +320,12 @@ fugaku_threads:
     help: |
       Number of threads x Total number of processes <= Number of nodes x 48.
 EOF
+  return "- fugaku_threads"
 end
 
-def get_prepost1_hours()
-<<"EOF"
-prepost1_hours:
+def form_prepost1_hours(attr)
+  attr <<<<"EOF"
+  prepost1_hours:
     label: Elapsed time (1 - 3 hours)
     widget: number_field
     value: 1
@@ -330,11 +334,12 @@ prepost1_hours:
     step: 1
     required: true
 EOF
+  return "- prepost1_hours"
 end
 
-def get_prepost2_hours()
-<<"EOF"
-prepost2_hours:
+def form_prepost2_hours(attr)
+  attr <<<<"EOF"
+  prepost2_hours:
     label: Elapsed time (1 - 24 hours)
     widget: number_field
     value: 1
@@ -343,11 +348,12 @@ prepost2_hours:
     step: 1
     required: true
 EOF
+  return "- prepost2_hours"
 end
 
-def get_reserved_hours()
-<<"EOF"
-reserved_hours:
+def form_reserved_hours(attr)
+  attr <<<<"EOF"
+  reserved_hours:
     label: Elapsed time (1 - 720 hours)
     widget: number_field
     value: 1
@@ -356,11 +362,12 @@ reserved_hours:
     step: 1
     required: true
 EOF
+  return "- reserved_hours"
 end
 
-def get_gpu1_cores(min = 1, max = 72)
-<<"EOF"
-gpu1_cores:
+def form_gpu1_cores(attr, min = 1, max = 72)
+  attr <<<<"EOF"
+  gpu1_cores:
     label: Number of CPU cores (#{min} - #{max})
     widget: number_field
     value: #{min}
@@ -369,11 +376,12 @@ gpu1_cores:
     step: 1
     required: true
 EOF
+  return "- gpu1_cores"
 end
 
-def get_gpu2_cores(min = 1, max = 36)
-<<"EOF"
-gpu2_cores:
+def form_gpu2_cores(attr, min = 1, max = 36)
+  attr <<<<"EOF"
+  gpu2_cores:
     label: Number of CPU cores (#{min} - #{max})
     widget: number_field
     value: #{min}
@@ -382,11 +390,12 @@ gpu2_cores:
     step: 1
     required: true
 EOF
+  return "- gpu2_cores"
 end
 
-def get_mem1_cores(min = 1, max = 224)
-<<"EOF"
-mem1_cores:
+def form_mem1_cores(attr, min = 1, max = 224)
+  attr <<<<"EOF"
+  mem1_cores:
     label: Number of CPU cores (#{min} - #{max})
     widget: number_field
     value: #{min}
@@ -395,11 +404,12 @@ mem1_cores:
     step: 1
     required: true
 EOF
+  return "- mem1_cores"
 end
 
-def get_mem2_cores(min = 1, max = 56)
-<<"EOF"
-mem2_cores:
+def form_mem2_cores(attr, min = 1, max = 56)
+  attr <<<<"EOF"
+  mem2_cores:
     label: Number of CPU cores (#{min} - #{max})
     widget: number_field
     value: #{min}
@@ -408,11 +418,12 @@ mem2_cores:
     step: 1
     required: true
 EOF
+  return "- mem2_cores"
 end
 
-def get_reserved_cores(min = 1, max = 8)
-<<"EOF"
-reserved_cores:
+def form_reserved_cores(attr, min = 1, max = 8)
+  attr <<<<"EOF"
+  reserved_cores:
     label: Number of CPU cores (#{min} - #{max})
     widget: number_field
     value: #{min}
@@ -421,11 +432,12 @@ reserved_cores:
     step: 1
     required: true
 EOF
+  return "- reserved_cores"
 end
 
-def get_gpu1_memory(min = 5, max = 186)
-<<"EOF"
-gpu1_memory:
+def form_gpu1_memory(attr, min = 5, max = 186)
+  attr <<<<"EOF"
+  gpu1_memory:
     label: Required memory (#{min} - #{max} GB)
     widget: number_field
     value: #{min}
@@ -434,11 +446,12 @@ gpu1_memory:
     step: 1
     required: true
 EOF
+  return "- gpu1_memory"
 end
 
-def get_gpu2_memory(min = 5, max = 93)
-<<"EOF"
-gpu2_memory:
+def form_gpu2_memory(attr, min = 5, max = 93)
+  attr <<<<"EOF"
+  gpu2_memory:
     label: Required memory (#{min} - #{max} GB)
     widget: number_field
     value: #{min}
@@ -447,11 +460,12 @@ gpu2_memory:
     step: 1
     required: true
 EOF
+  return "- gpu2_memory"
 end
 
-def get_mem1_memory(min = 5, max = 5020)
-<<"EOF"
-mem1_memory:
+def form_mem1_memory(attr, min = 5, max = 5020)
+  attr <<<<"EOF"
+  mem1_memory:
     label: Required memory (#{min} - #{max} GB)
     widget: number_field
     value: #{min}
@@ -460,11 +474,12 @@ mem1_memory:
     step: 1
     required: true
 EOF
+  return "- mem1_memory"
 end
 
-def get_mem2_memory(min = 5, max = 1500)
-<<"EOF"
-mem2_memory:
+def form_mem2_memory(attr, min = 5, max = 1500)
+  attr <<<<"EOF"
+  mem2_memory:
     label: Required memory (#{min} - #{max} GB)
     widget: number_field
     value: #{min}
@@ -473,11 +488,12 @@ mem2_memory:
     step: 1
     required: true
 EOF
+  return "- mem2_memory"
 end
 
-def get_reserved_memory(min = 5, max = 32)
-<<"EOF"
-reserved_memory:
+def form_reserved_memory(attr, min = 5, max = 32)
+  attr <<<<"EOF"
+  reserved_memory:
     label: Required memory (#{min} - #{max} GB)
     widget: number_field
     value: #{min}
@@ -486,11 +502,12 @@ reserved_memory:
     step: 1
     required: true
 EOF
+  return "- reserved_memory"
 end
 
-def get_gpus_per_node(min = 0, max = 2)
-<<"EOF"
-gpus_per_node:
+def form_gpus_per_node(attr, min = 0, max = 2)
+  attr <<<<"EOF"
+  gpus_per_node:
     label: Number of GPUs (#{min} - #{max})
     widget: number_field
     value: #{min}
@@ -499,11 +516,12 @@ gpus_per_node:
     step: 1
     required: true
 EOF
+  return "- gpus_per_node"
 end
 
-def get_mode()
-<<"EOF"
-mode:
+def form_mode(attr)
+  attr <<<<"EOF"
+  mode:
     label: Mode
     widget: select
     options:
@@ -512,11 +530,66 @@ mode:
     - Eco
     - Boost + Eco
 EOF
+  return "- mode"
 end
 
-def get_working_dir()
-<<"EOF"
-working_dir:
+def form_version(attr, versions)
+  attr <<<<"EOF"
+  version:
+    label: Version
+    widget: select
+    options:
+EOF
+  versions.each do |v|
+    attr << "    - [" + v + ", " + v
+    versions.each do |i|
+      attr << ", data-hide-binary-" + i.delete(".") + ": true " unless i == v
+    end
+    attr << "]\n"
+  end
+  
+  return "- version"
+end
+
+def form_binary(attr, version, binaries, value)
+  attr <<<<"EOF"
+  binary_#{version.delete(".")}:
+    label: Binary file version #{version}
+    widget: select
+    value: #{value}
+    options:
+EOF
+  binaries.each do |b|
+    attr << "      - " + b + "\n"
+  end
+
+  return "- binary_" + version.delete(".")
+end
+
+def form_filename(attr, memo = "", requred = false)
+  attr << "  filename:\n"
+  if memo == ""
+    attr << "    label: Input file\n"
+  else
+    attr << "    label: Input file (#{memo})\n"
+  end
+
+  attr <<<<"EOF"
+    data-filepicker: true
+    data-target-file-type: files  # Valid values are: files, dirs, or both
+    # Optionally set a default directory
+    data-default-directory: #{ENV['HOME']}
+    # Optionally only allow editing through the file picker; defaults to false
+    data-file_picker_favorites: #{get_groups_fdirs()}
+EOF
+  attr << "    required: true\n" if requred
+
+  return "- filename"
+end
+
+def form_working_dir(attr)
+  attr <<<<"EOF"
+  working_dir:
     label: Working directory
     data-filepicker: true
     data-target-file-type: dirs  # Valid values are: files, dirs, or both
@@ -525,113 +598,56 @@ working_dir:
     value: #{ENV['HOME']}
     readonly: true
 EOF
+  return "- working_dir"
 end
 
-def get_email(kind = 0)
-  r =<<"EOF"
-email:
-    widget: email_field
+def form_options(attr, memo = "")
+  attr <<<<"EOF"
+  options:
+    label: Options (#{memo})
+    widget: text_field
 EOF
-
-  if kind == 0
-    return r << "    label: Email (You will receive an email when it starts)\n"
-  else
-    return r << "    label: Email (You will receive an email when it starts and ends)\n"
-  end
+  return "- options"
 end
 
-def get_desktop()
-<<"EOF"
-desktop:
-    widget: hidden_field
-    value: xfce
-EOF
-end
-
-def get_filename(str="", requred=false)
-  s = "filename:\n"
-  if str == ""
-    s << "    label: Input file\n"
-  else
-    s << "    label: Input file (#{str})\n"
-  end
-  
-  s<<<<"EOF"
-    data-filepicker: true
-    data-target-file-type: files  # Valid values are: files, dirs, or both
-    # Optionally set a default directory
-    data-default-directory: #{ENV['HOME']}
-    # Optionally only allow editing through the file picker; defaults to false
-    data-file_picker_favorites: #{get_groups_fdirs()}
-EOF
-  s << "    required: true\n" if requred
-
-  return s
-end
-
-def get_commands()
-<<"EOF"
-commands:
+def form_commands(attr)
+  attr <<<<"EOF"
+  commands:
     label: Commands (e.g. mpiexec ./a.out)
     widget: text_area
 EOF
+  return "- commands"
 end
 
-def get_version(versions)
-  s =<<"EOF"
-version:
-    label: Version
-    widget: select
-    options:
-EOF
-  versions.each do |v|
-    s << "    - [" + v + ", " + v
-    versions.each do |i|
-      s<< ", data-hide-binary-" + i.delete(".") + ": true " unless i == v
-    end
-    s << "]\n"
-  end
-  
-  return s
-end
-
-def get_binary(version, binaries, value)
-  s =<<"EOF"
-binary_#{version.delete(".")}:
-    label: Binary file version #{version}
-    widget: select
-    value: #{value}
-    options:
-EOF
-  binaries.each do |b|
-    s << "      - " + b + "\n"
-  end
-
-  return s
-end
-
-def get_session_name()
-<<"EOF"
-session_name:
+def form_session_name(attr)
+  attr <<<<"EOF"
+  session_name:
     label: Session name
     required: true
 EOF
+  return "- session_name"
 end
 
-def get_options(str="")
-<<"EOF"
-options:
-    label: Options (#{str})
-    widget: text_field
+def form_email(attr, only_start = true)
+  attr <<<<"EOF"
+  email:
+    widget: email_field
 EOF
+
+  if only_start
+    attr << "    label: Email (You will receive an email when it starts)\n"
+  else
+    attr << "    label: Email (You will receive an email when it starts and ends)\n"
+  end
+  
+  return "- email"
 end
 
-def registor_item(attr, item)
-  attr << eval("get_" + item)
-  if item == "volume"
-    print "A"
-    print attr
-    print "B"
-  end
-  return "- " + item
+def form_desktop(attr)
+  attr <<<<"EOF"
+  desktop:
+    widget: hidden_field
+    value: xfce
+EOF
+  return "- desktop"
 end

@@ -2,31 +2,22 @@
   require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
   # spack versions quantum-espresso -s
   versions = ["6.7.9"]
+  attr = ""
 -%>
 ---
 form:
-  - cluster
-  - queue
-  - volume
-  - group
-  - fugaku_hours
-  - fugaku_nodes
-  - fugaku_procs
-  - fugaku_threads
-  - mode
-  - version
-  - filename
-  - email
+  <%= form_cluster(attr, "fugaku") %>
+  <%= form_queue(attr, "fugaku_small") %>
+  <%= form_volume(attr) %>
+  <%= form_group(attr) %>
+  <%= form_fugaku_hours(attr) %>
+  <%= form_fugaku_nodes(attr) %>
+  <%= form_fugaku_procs(attr) %>
+  <%= form_fugaku_threads(attr) %>
+  <%= form_mode(attr) %>
+  <%= form_version(attr, versions) %>
+  <%= form_filename(attr) %>
+  <%= form_email(attr, false) %>
 attributes:
-  <%= get_cluster("fugaku") %>
-  <%= get_queue("fugaku_small") %>
-  <%= get_volume() %>
-  <%= get_group() %>
-  <%= get_fugaku_hours() %>
-  <%= get_fugaku_nodes() %>
-  <%= get_fugaku_procs() %>
-  <%= get_fugaku_threads() %>
-  <%= get_mode() %>
-  <%= get_version(versions) %>
-  <%= get_filename() %>
-  <%= get_email(1) %>
+<%= attr %>
+

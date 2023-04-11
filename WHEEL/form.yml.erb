@@ -1,39 +1,26 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
+  attr = ""
 -%>
 ---
 title: WHEEL
 form:
-  - cluster
-  - queue
-  - reserved_hours
-  - prepost1_hours
-  - prepost2_hours
-  - reserved_cores
-  - gpu1_cores
-  - gpu2_cores
-  - mem1_cores
-  - mem2_cores
-  - reserved_memory
-  - gpu1_memory
-  - gpu2_memory
-  - mem1_memory
-  - mem2_memory
-  - email
+  <%= form_cluster(attr, "prepost") %>
+  <%= form_queue(attr, "workflow") %>
+  <%= form_reserved_hours(attr) %>
+  <%= form_prepost1_hours(attr) %>
+  <%= form_prepost2_hours(attr) %>
+  <%= form_reserved_cores(attr, 2, 8) %>
+  <%= form_gpu1_cores(attr, 2, 8) %>
+  <%= form_gpu2_cores(attr, 2, 8) %>
+  <%= form_mem1_cores(attr, 2, 8) %>
+  <%= form_mem2_cores(attr, 2, 8) %>
+  <%= form_reserved_memory(attr, 8, 32) %>
+  <%= form_gpu1_memory(attr, 8, 32) %>
+  <%= form_gpu2_memory(attr, 8, 32) %>
+  <%= form_mem1_memory(attr, 8, 32) %>
+  <%= form_mem2_memory(attr, 8, 32) %>
+  <%= form_email(attr) %>
 attributes:
-  <%= get_cluster("prepost") %>
-  <%= get_queue("workflow") %>
-  <%= get_reserved_hours() %>
-  <%= get_prepost1_hours() %>
-  <%= get_prepost2_hours() %>
-  <%= get_reserved_cores(2, 8) %>
-  <%= get_gpu1_cores(2, 8) %>
-  <%= get_gpu2_cores(2, 8) %>
-  <%= get_mem1_cores(2, 8) %>
-  <%= get_mem2_cores(2, 8) %>
-  <%= get_reserved_memory(8, 32) %>
-  <%= get_gpu1_memory(8, 32) %>
-  <%= get_gpu2_memory(8, 32) %>
-  <%= get_mem1_memory(8, 32) %>
-  <%= get_mem2_memory(8, 32) %>
-  <%= get_email() %>
+<%= attr %>
+

@@ -10,43 +10,29 @@
   qe.push(get_bins("quantum_espresso67", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.7-nei6krt2zokcj4d67apadkuh4zqlqlbb/bin/"))
   qe.push(get_bins("quantum_espresso66", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.6-d2bgjxrq6wj4so7wehupzvqkg5u7nk7y/bin/"))
   qe.push(get_bins("quantum_espresso65", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.5-as6kxmc5wvgscu2xqlsfb6akkbjzf3fz/bin/"))
+  attr = ""
 -%>
 ---
 form:
-  - cluster
-  - queue
-  - volume
-  - group
-  - fugaku_hours
-  - fugaku_nodes
-  - fugaku_procs
-  - fugaku_threads
-  - mode
-  - version
-  - binary_71
-  - binary_68
-  - binary_67
-  - binary_66
-  - binary_65
-  - filename
-  - options
-  - email
+  <%= form_cluster(attr, "fugaku") %>
+  <%= form_queue(attr, "fugaku_small") %>
+  <%= form_volume(attr) %>
+  <%= form_group(attr) %>
+  <%= form_fugaku_hours(attr) %>
+  <%= form_fugaku_nodes(attr) %>
+  <%= form_fugaku_procs(attr) %>
+  <%= form_fugaku_threads(attr) %>
+  <%= form_mode(attr) %>
+  <%= form_version(attr, versions) %>
+  <%= form_working_dir(attr) %>
+  <%= form_binary(attr, versions[0], qe[0], "pw.x") %>
+  <%= form_binary(attr, versions[1], qe[1], "pw.x") %>
+  <%= form_binary(attr, versions[2], qe[2], "pw.x") %>
+  <%= form_binary(attr, versions[3], qe[3], "pw.x") %>
+  <%= form_binary(attr, versions[4], qe[4], "pw.x") %>
+  <%= form_filename(attr, "-in <input>") %>
+  <%= form_options("e.g. -nk 2") %>
+  <%= form_email(attr, false) %>
 attributes:
-  <%= get_cluster("fugaku") %>
-  <%= get_queue("fugaku_small") %>
-  <%= get_volume() %>
-  <%= get_group() %>
-  <%= get_fugaku_hours() %>
-  <%= get_fugaku_nodes() %>
-  <%= get_fugaku_procs() %>
-  <%= get_fugaku_threads() %>
-  <%= get_mode() %>
-  <%= get_version(versions) %>
-  <%= get_binary(versions[0], qe[0], "pw.x") %>
-  <%= get_binary(versions[1], qe[1], "pw.x") %>
-  <%= get_binary(versions[2], qe[2], "pw.x") %>
-  <%= get_binary(versions[3], qe[3], "pw.x") %>
-  <%= get_binary(versions[4], qe[4], "pw.x") %>
-  <%= get_filename("-in <input>") %>
-  <%= get_options("e.g. -nk 2") %>
-  <%= get_email(1) %>
+<%= attr %>
+

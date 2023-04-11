@@ -4,35 +4,25 @@
   versions = ["3.9"]
   # spack find --paths openmx@3.9
   openmx39 = get_bins("openmx39", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openmx-3.9-j52bvdtvorjy2stvpf7ve2ygxogwjw4n/bin/")
+  attr = ""
 -%>
 ---
 form:
-  - cluster
-  - queue
-  - volume
-  - group
-  - fugaku_hours
-  - fugaku_nodes
-  - fugaku_procs
-  - fugaku_threads
-  - mode
-  - version
-  - binary_39
-  - filename
-  - options
-  - email
+  <%= form_cluster(attr, "fugaku") %>
+  <%= form_queue(attr, "fugaku_small") %>
+  <%= form_volume(attr) %>
+  <%= form_group(attr) %>
+  <%= form_fugaku_hours(attr) %>
+  <%= form_fugaku_nodes(attr) %>
+  <%= form_fugaku_procs(attr) %>
+  <%= form_fugaku_threads(attr) %>
+  <%= form_mode(attr) %>
+  <%= form_version(attr, versions) %>
+  <%= form_working_dir(attr) %>
+  <%= form_binary(attr, versions[0], openmx39, "openmx") %>
+  <%= form_filename(attr) %>
+  <%= form_options("e.g. –nt 2") %>
+  <%= form_email(attr, false) %>
 attributes:
-  <%= get_cluster("fugaku") %>
-  <%= get_queue("fugaku_small") %>
-  <%= get_volume() %>
-  <%= get_group() %>
-  <%= get_fugaku_hours() %>
-  <%= get_fugaku_nodes() %>
-  <%= get_fugaku_procs() %>
-  <%= get_fugaku_threads() %>
-  <%= get_mode() %>
-  <%= get_version(versions) %>
-  <%= get_binary(versions[0], openmx39, "openmx") %>
-  <%= get_filename("mpiexec openmx <input>") %>
-  <%= get_options("e.g. –nt 2") %>
-  <%= get_email(1) %>
+<%= attr %>
+

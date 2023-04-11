@@ -3,34 +3,24 @@
   # spack versions fugaku-frontistr -s  
   versions=["master"]
   # spack find --paths fugaku-frontistr@master
-  ff_master = get_bins("fugaku_frontistr_master", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/fugaku-frontistr-master-jnhpudkojwedf7jtwssi6kykadxj46ol/bin/")
+  ff_master = get_bins("fugaku-frontistr_master", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/fugaku-frontistr-master-jnhpudkojwedf7jtwssi6kykadxj46ol/bin/")
+  attr = ""
 -%>
 ---
 form:
-  - cluster
-  - queue
-  - volume
-  - group
-  - fugaku_hours
-  - fugaku_nodes
-  - fugaku_procs
-  - fugaku_threads
-  - mode
-  - version
-  - binary_master
-  - working_dir
-  - email
+  <%= form_cluster(attr, "fugaku") %>
+  <%= form_queue(attr, "fugaku_small") %>
+  <%= form_volume(attr) %>
+  <%= form_group(attr) %>
+  <%= form_fugaku_hours(attr) %>
+  <%= form_fugaku_nodes(attr) %>
+  <%= form_fugaku_procs(attr) %>
+  <%= form_fugaku_threads(attr) %>
+  <%= form_mode(attr) %>
+  <%= form_version(attr, versions) %>
+  <%= form_working_dir(attr) %>
+  <%= form_binary(attr, versions[0], ff_master, "fistr1") %>
+  <%= form_email(attr, false) %>
 attributes:
-  <%= get_cluster("fugaku") %>
-  <%= get_queue("fugaku_small") %>
-  <%= get_volume() %>
-  <%= get_group() %>
-  <%= get_fugaku_hours() %>
-  <%= get_fugaku_nodes() %>
-  <%= get_fugaku_procs() %>
-  <%= get_fugaku_threads() %>
-  <%= get_mode() %>
-  <%= get_version(versions) %>
-  <%= get_binary(versions[0], ff_master, "fistr1") %>
-  <%= get_working_dir() %>
-  <%= get_email(1) %>
+<%= attr %>
+

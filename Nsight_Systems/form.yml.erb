@@ -1,30 +1,21 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
+  attr = ""
 -%>
 ---
 title: Nsight Systems
 form:
-  - cluster
-  - queue
-  - prepost1_hours
-  - prepost2_hours
-  - gpu1_cores
-  - gpu2_cores
-  - gpu1_memory
-  - gpu2_memory
-  - gpus_per_node
-  - email
-  - desktop
+  <%= form_cluster(attr, "prepost") %>
+  <%= form_queue(attr, "gpu") %>
+  <%= form_prepost1_hours(attr) %>
+  <%= form_prepost2_hours(attr) %>
+  <%= form_gpu1_cores(attr) %>
+  <%= form_gpu2_cores(attr) %>
+  <%= form_gpu1_memory(attr, 10) %>
+  <%= form_gpu2_memory(attr, 10) %>
+  <%= form_gpus_per_node(attr, 1) %>
+  <%= form_email(attr) %>
+  <%= form_desktop(attr) %>
 attributes:
-  <%= get_cluster("prepost") %>
-  <%= get_queue("gpu") %>
-  <%= get_prepost1_hours() %>
-  <%= get_prepost2_hours() %>
-  <%= get_gpu1_cores() %>
-  <%= get_gpu2_cores() %>
-  <%= get_gpu1_memory(10) %>
-  <%= get_gpu2_memory(10) %>
-  <%= get_gpus_per_node(1) %>
-  <%= get_email() %>
-  <%= get_desktop() %>
-  
+<%= attr %>
+

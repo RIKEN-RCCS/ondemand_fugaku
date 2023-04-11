@@ -4,35 +4,24 @@
   versions = ["1.1.0b"]
   # spack find --paths modylas-new@1.1.0b
   modylas110b = get_bins("modylas110b", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/modylas-new-1.1.0b-sjr6ygmvjq32hkctieja7j6wgl3d7l7p/bin/")
+  attr = ""
 -%>
 ---
 form:
-  - cluster
-  - queue
-  - volume
-  - group
-  - fugaku_hours
-  - fugaku_nodes
-  - fugaku_procs
-  - fugaku_threads
-  - mode
-  - version
-  - working_dir
-  - binary_110b
-  - session_name
-  - email
+  <%= form_cluster(attr, "fugaku") %>
+  <%= form_queue(attr, "fugaku_small") %>
+  <%= form_volume(attr) %>
+  <%= form_group(attr) %>
+  <%= form_fugaku_hours(attr) %>
+  <%= form_fugaku_nodes(attr) %>
+  <%= form_fugaku_procs(attr) %>
+  <%= form_fugaku_threads(attr) %>
+  <%= form_mode(attr) %>
+  <%= form_version(attr, versions) %>
+  <%= form_working_dir(attr) %>
+  <%= form_binary(attr, versions[0], modylas110b, "modylas") %>
+  <%= form_session_name(attr) %>
+  <%= form_email(attr, false) %>
 attributes:
-  <%= get_cluster("fugaku") %>
-  <%= get_queue("fugaku_small") %>
-  <%= get_volume() %>
-  <%= get_group() %>
-  <%= get_fugaku_hours() %>
-  <%= get_fugaku_nodes() %>
-  <%= get_fugaku_procs() %>
-  <%= get_fugaku_threads() %>
-  <%= get_mode() %>
-  <%= get_version(versions) %>
-  <%= get_working_dir() %>
-  <%= get_binary(versions[0], modylas110b, "modylas") %>
-  <%= get_session_name() %>
-  <%= get_email(1) %>
+<%= attr %>
+
