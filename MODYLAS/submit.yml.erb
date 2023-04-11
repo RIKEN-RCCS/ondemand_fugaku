@@ -25,7 +25,7 @@ batch_connect:
   template: "basic"
   script_wrapper: |
     #!/bin/bash
-    export OMP_NUM_THREADS=<%= threads %>
+    export OMP_NUM_THREADS=<%= fugaku_threads %>
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
     spack load modylas-new@<%= version %>
     
