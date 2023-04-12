@@ -15,6 +15,8 @@ From: redhat/ubi8:8.6-990
   dnf --releasever=8.6 -y install gnuplot ImageMagick ncview
   dnf --releasever=8.6 -y install vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts
   dnf --releasever=8.6 --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
+  #
+  # VNC
   pip2 install ts
   dnf -y install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python-websockify-0.8.0-1.el8.noarch.rpm
   wget https://turbovnc.org/pmwiki/uploads/Downloads/TurboVNC.repo
@@ -23,6 +25,8 @@ From: redhat/ubi8:8.6-990
   dnf remove -y python2-pip xfce4-screensaver
   update-alternatives --set python /usr/bin/python3
   cd /opt
+  #
+  # Paraview
   wget -O ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.10&type=binary&os=Linux&downloadFile=ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz"
   tar xfz ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
   ln -s ParaView-5.10.1-MPI-Linux-Python3.9-x86_64 ParaView
@@ -31,6 +35,7 @@ From: redhat/ubi8:8.6-990
   ln -s visit3_3_2.linux-x86_64 visit
   rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz visit3_3_2.linux-x86_64-rhel7-wmesa.tar.gz
   #
+  # XCrySDen
   dnf -y install libXmu-devel tcl-devel tk-devel libGL-devel mesa-libGLU-devel fftw-devel
   wget https://sourceforge.net/projects/togl/files/Togl/2.0/Togl2.0-src.tar.gz
   tar xfz Togl2.0-src.tar.gz
@@ -48,9 +53,11 @@ From: redhat/ubi8:8.6-990
   ln -s /opt/xcrysden-1.6.2 /opt/xcrysden
   rm -r Togl2.0-src.tar.gz xcrysden-1.6.2.tar.gz tmp-1.6.2
   #
+  # VESTA
   dnf --releasever=8.6 -y install http://jp-minerals.org/vesta/archives/3.5.8/vesta-3.5.8-1.x86_64.rpm
   ln -s /usr/local/vesta-3.5.8 /usr/local/vesta
   #
+  # SmokeView
   dnf --releasever=8.6 -y install libXi-devel freeglut-devel
   wget https://github.com/firemodels/smv/archive/refs/tags/SMV6.7.21.tar.gz
   tar xfz SMV6.7.21.tar.gz
@@ -60,6 +67,10 @@ From: redhat/ubi8:8.6-990
   mv smokeview_linux_64	/opt/smokeview-6.7.21/
   ln -s /opt/smokeview-6.7.21/smokeview_linux_64 /opt/smokeview-6.7.21/smokeview
   ln -s /opt/smokeview-6.7.21 /opt/smokeview
+  #
+  # EasyISTR
+  wget -O easyistr-3.37.230306-2.noarch.rpm --trust-server-names "http://opencae.gifu-nct.ac.jp/pukiwiki/index.php?plugin=attach&refer=AboutEasyISTR&openfile=easyistr-3.37.230306-2.noarch.rpm"
+  dnf --releasever=8.6 -y install easyistr-3.37.230306-2.noarch.rpm python3-vtk
   #
   dnf clean all
   rm -f /etc/pki/entitlement/*
