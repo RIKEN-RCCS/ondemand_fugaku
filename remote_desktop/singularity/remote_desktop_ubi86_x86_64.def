@@ -72,6 +72,13 @@ From: redhat/ubi8:8.6-990
   wget -O easyistr-3.37.230306-2.noarch.rpm --trust-server-names "http://opencae.gifu-nct.ac.jp/pukiwiki/index.php?plugin=attach&refer=AboutEasyISTR&openfile=easyistr-3.37.230306-2.noarch.rpm"
   dnf --releasever=8.6 -y install easyistr-3.37.230306-2.noarch.rpm python3-vtk nautilus glibc-langpack-ja
   #
+  # OVITO
+  cd /opt
+  wget -O ovito-basic-3.8.2-x86_64.tar.xz --trust-server-names "https://www.ovito.org/download/3106/?tmstv=1681276472"
+  tar Jxfv ovito-basic-3.8.2-x86_64.tar.xz
+  rm ovito-basic-3.8.2-x86_64.tar.xz
+  ln -s ovito-basic-3.8.2-x86_64 ovito
+  #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo
