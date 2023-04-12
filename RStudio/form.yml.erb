@@ -1,34 +1,32 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
-  attr = ""
 -%>
 ---
 title: RStudio
 form:
-  <%= form_cluster(attr) %>
-  <%= form_queue(attr) %>
-  <%= form_volume(attr) %>
-  <%= form_group(attr) %>
-  <%= form_fugaku_hours(attr) %>
-  <%= form_fugaku_nodes(attr) %>
-  <%= form_fugaku_procs(attr) %>
-  <%= form_prepost1_hours(attr) %>
-  <%= form_prepost2_hours(attr) %>
-  <%= form_reserved_hours(attr) %>
-  <%= form_gpu1_cores(attr) %>
-  <%= form_gpu2_cores(attr) %>
-  <%= form_mem1_cores(attr) %>
-  <%= form_mem2_cores(attr) %>
-  <%= form_reserved_cores(attr) %>
-  <%= form_gpu1_memory(attr, 10) %>
-  <%= form_gpu2_memory(attr, 10) %>
-  <%= form_mem1_memory(attr) %>
-  <%= form_mem2_memory(attr) %>
-  <%= form_reserved_memory(attr) %>
-  <%= form_gpus_per_node(attr) %>
-  <%= form_mode(attr) %>
-  <%= form_working_dir(attr) %>
-  <%= form_email(attr) %>
+  <%= form_cluster() %>
+  <%= form_queue() %>
+  <%= form_volume() %>
+  <%= form_group() %>
+  <%= form_fugaku_hours() %>
+  <%= form_fugaku_nodes() %>
+  <%= form_fugaku_procs() %>
+  <%= form_prepost1_hours() %>
+  <%= form_prepost2_hours() %>
+  <%= form_reserved_hours() %>
+  <%= form_gpu1_cores() %>
+  <%= form_gpu2_cores() %>
+  <%= form_mem1_cores() %>
+  <%= form_mem2_cores() %>
+  <%= form_reserved_cores() %>
+  <%= form_gpu1_memory(10) %>
+  <%= form_gpu2_memory(10) %>
+  <%= form_mem1_memory() %>
+  <%= form_mem2_memory() %>
+  <%= form_reserved_memory() %>
+  <%= form_gpus_per_node() %>
+  <%= form_mode() %>
+  <%= form_working_dir() %>
+  <%= form_email() %>
 attributes:
-<%= attr %>
-
+<%= form_attr() %>

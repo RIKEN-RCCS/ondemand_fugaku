@@ -1,21 +1,19 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
-  attr = ""
 -%>
 ---
 title: NVVP
 form:
-  <%= form_cluster(attr, "prepost") %>
-  <%= form_queue(attr, "gpu") %>
-  <%= form_prepost1_hours(attr) %>
-  <%= form_prepost2_hours(attr) %>
-  <%= form_gpu1_cores(attr) %>
-  <%= form_gpu2_cores(attr) %>
-  <%= form_gpu1_memory(attr, 10) %>
-  <%= form_gpu2_memory(attr, 10) %>
-  <%= form_gpus_per_node(attr, 1) %>
-  <%= form_email(attr) %>
-  <%= form_desktop(attr) %>
+  <%= form_cluster("prepost") %>
+  <%= form_queue("gpu") %>
+  <%= form_prepost1_hours() %>
+  <%= form_prepost2_hours() %>
+  <%= form_gpu1_cores() %>
+  <%= form_gpu2_cores() %>
+  <%= form_gpu1_memory(10) %>
+  <%= form_gpu2_memory(10) %>
+  <%= form_gpus_per_node(1) %>
+  <%= form_email() %>
+  <%= form_desktop() %>
 attributes:
-<%= attr %>
-
+<%= form_attr() %>

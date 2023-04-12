@@ -4,25 +4,23 @@
   versions = ["3.9"]
   # spack find --paths openmx@3.9
   openmx39 = get_bins("openmx39", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openmx-3.9-j52bvdtvorjy2stvpf7ve2ygxogwjw4n/bin/")
-  attr = ""
 -%>
 ---
 form:
-  <%= form_cluster(attr, "fugaku") %>
-  <%= form_queue(attr, "fugaku_small") %>
-  <%= form_volume(attr) %>
-  <%= form_group(attr) %>
-  <%= form_fugaku_hours(attr) %>
-  <%= form_fugaku_nodes(attr) %>
-  <%= form_fugaku_procs(attr) %>
-  <%= form_fugaku_threads(attr) %>
-  <%= form_mode(attr) %>
-  <%= form_version(attr, versions) %>
-  <%= form_working_dir(attr) %>
-  <%= form_binary(attr, versions[0], openmx39, "openmx") %>
-  <%= form_filename(attr) %>
+  <%= form_cluster("fugaku") %>
+  <%= form_queue("fugaku_small") %>
+  <%= form_volume() %>
+  <%= form_group() %>
+  <%= form_fugaku_hours() %>
+  <%= form_fugaku_nodes() %>
+  <%= form_fugaku_procs() %>
+  <%= form_fugaku_threads() %>
+  <%= form_mode() %>
+  <%= form_version(versions) %>
+  <%= form_working_dir() %>
+  <%= form_binary(versions[0], openmx39, "openmx") %>
+  <%= form_filename() %>
   <%= form_options("e.g. –nt 2") %>
-  <%= form_email(attr, false) %>
+  <%= form_email(false) %>
 attributes:
-<%= attr %>
-
+<%= form_attr() %>

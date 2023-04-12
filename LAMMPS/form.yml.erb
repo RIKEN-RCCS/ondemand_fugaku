@@ -2,22 +2,21 @@
   require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
   # spack versions lammps -s
   versions = ["20220623.2"]
-  attr = ""
 -%>
 ---
 form:
-  <%= form_cluster(attr, "fugaku") %>
-  <%= form_queue(attr, "fugaku_small") %>
-  <%= form_volume(attr) %>
-  <%= form_group(attr) %>
-  <%= form_fugaku_hours(attr) %>
-  <%= form_fugaku_nodes(attr) %>
-  <%= form_fugaku_procs(attr) %>
-  <%= form_fugaku_threads(attr) %>
-  <%= form_mode(attr) %>
-  <%= form_version(attr, versions) %>
-  <%= form_filename(attr) %>
-  <%= form_email(attr, false) %>
+  <%= form_cluster("fugaku") %>
+  <%= form_queue("fugaku_small") %>
+  <%= form_volume() %>
+  <%= form_group() %>
+  <%= form_fugaku_hours() %>
+  <%= form_fugaku_nodes() %>
+  <%= form_fugaku_procs() %>
+  <%= form_fugaku_threads() %>
+  <%= form_mode() %>
+  <%= form_version(versions) %>
+  <%= form_filename("mpiexec lmp -in <input file>") %>
+  <%= form_options("e.g. -pk omp 2") %>
+  <%= form_email(false) %>
 attributes:
-<%= attr %>
-
+<%= form_attr() %>

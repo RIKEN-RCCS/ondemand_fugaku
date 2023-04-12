@@ -10,29 +10,27 @@
   qe.push(get_bins("quantum_espresso67", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.7-nei6krt2zokcj4d67apadkuh4zqlqlbb/bin/"))
   qe.push(get_bins("quantum_espresso66", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.6-d2bgjxrq6wj4so7wehupzvqkg5u7nk7y/bin/"))
   qe.push(get_bins("quantum_espresso65", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.5-as6kxmc5wvgscu2xqlsfb6akkbjzf3fz/bin/"))
-  attr = ""
 -%>
 ---
 form:
-  <%= form_cluster(attr, "fugaku") %>
-  <%= form_queue(attr, "fugaku_small") %>
-  <%= form_volume(attr) %>
-  <%= form_group(attr) %>
-  <%= form_fugaku_hours(attr) %>
-  <%= form_fugaku_nodes(attr) %>
-  <%= form_fugaku_procs(attr) %>
-  <%= form_fugaku_threads(attr) %>
-  <%= form_mode(attr) %>
-  <%= form_version(attr, versions) %>
-  <%= form_working_dir(attr) %>
-  <%= form_binary(attr, versions[0], qe[0], "pw.x") %>
-  <%= form_binary(attr, versions[1], qe[1], "pw.x") %>
-  <%= form_binary(attr, versions[2], qe[2], "pw.x") %>
-  <%= form_binary(attr, versions[3], qe[3], "pw.x") %>
-  <%= form_binary(attr, versions[4], qe[4], "pw.x") %>
-  <%= form_filename(attr, "-in <input>") %>
+  <%= form_cluster("fugaku") %>
+  <%= form_queue("fugaku_small") %>
+  <%= form_volume() %>
+  <%= form_group() %>
+  <%= form_fugaku_hours() %>
+  <%= form_fugaku_nodes() %>
+  <%= form_fugaku_procs() %>
+  <%= form_fugaku_threads() %>
+  <%= form_mode() %>
+  <%= form_version(versions) %>
+  <%= form_working_dir() %>
+  <%= form_binary(versions[0], qe[0], "pw.x") %>
+  <%= form_binary(versions[1], qe[1], "pw.x") %>
+  <%= form_binary(versions[2], qe[2], "pw.x") %>
+  <%= form_binary(versions[3], qe[3], "pw.x") %>
+  <%= form_binary(versions[4], qe[4], "pw.x") %>
+  <%= form_filename("-in <input>") %>
   <%= form_options("e.g. -nk 2") %>
-  <%= form_email(attr, false) %>
+  <%= form_email(false) %>
 attributes:
-<%= attr %>
-
+<%= form_attr() %>

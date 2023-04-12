@@ -1,22 +1,20 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
-  attr = ""
 -%>
 ---
 title: XCrySDen
 form:
-  <%= form_cluster(attr, "prepost") %>
-  <%= form_queue(attr, "prepost") %>
-  <%= form_prepost1_hours(attr) %>
-  <%= form_prepost2_hours(attr) %>
-  <%= form_reserved_hours(attr) %>
-  <%= form_gpu1_memory(attr) %>
-  <%= form_gpu2_memory(attr) %>
-  <%= form_mem1_memory(attr) %>
-  <%= form_mem2_memory(attr) %>
-  <%= form_reserved_memory(attr) %>
-  <%= form_email(attr) %>
-  <%= form_desktop(attr) %>
+  <%= form_cluster("prepost") %>
+  <%= form_queue("prepost") %>
+  <%= form_prepost1_hours() %>
+  <%= form_prepost2_hours() %>
+  <%= form_reserved_hours() %>
+  <%= form_gpu1_memory() %>
+  <%= form_gpu2_memory() %>
+  <%= form_mem1_memory() %>
+  <%= form_mem2_memory() %>
+  <%= form_reserved_memory() %>
+  <%= form_email() %>
+  <%= form_desktop() %>
 attributes:
-<%= attr %>
-
+<%= form_attr() %>

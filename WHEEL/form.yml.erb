@@ -1,26 +1,24 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
-  attr = ""
 -%>
 ---
 title: WHEEL
 form:
-  <%= form_cluster(attr, "prepost") %>
-  <%= form_queue(attr, "workflow") %>
-  <%= form_reserved_hours(attr) %>
-  <%= form_prepost1_hours(attr) %>
-  <%= form_prepost2_hours(attr) %>
-  <%= form_reserved_cores(attr, 2, 8) %>
-  <%= form_gpu1_cores(attr, 2, 8) %>
-  <%= form_gpu2_cores(attr, 2, 8) %>
-  <%= form_mem1_cores(attr, 2, 8) %>
-  <%= form_mem2_cores(attr, 2, 8) %>
-  <%= form_reserved_memory(attr, 8, 32) %>
-  <%= form_gpu1_memory(attr, 8, 32) %>
-  <%= form_gpu2_memory(attr, 8, 32) %>
-  <%= form_mem1_memory(attr, 8, 32) %>
-  <%= form_mem2_memory(attr, 8, 32) %>
-  <%= form_email(attr) %>
+  <%= form_cluster("prepost") %>
+  <%= form_queue("workflow") %>
+  <%= form_reserved_hours() %>
+  <%= form_prepost1_hours() %>
+  <%= form_prepost2_hours() %>
+  <%= form_reserved_cores(2, 8) %>
+  <%= form_gpu1_cores(2, 8) %>
+  <%= form_gpu2_cores(2, 8) %>
+  <%= form_mem1_cores(2, 8) %>
+  <%= form_mem2_cores(2, 8) %>
+  <%= form_reserved_memory(8, 32) %>
+  <%= form_gpu1_memory(8, 32) %>
+  <%= form_gpu2_memory(8, 32) %>
+  <%= form_mem1_memory(8, 32) %>
+  <%= form_mem2_memory(8, 32) %>
+  <%= form_email() %>
 attributes:
-<%= attr %>
-
+<%= form_attr() %>
