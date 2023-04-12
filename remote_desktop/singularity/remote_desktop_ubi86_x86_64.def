@@ -70,7 +70,7 @@ From: redhat/ubi8:8.6-990
   #
   # EasyISTR
   wget -O easyistr-3.37.230306-2.noarch.rpm --trust-server-names "http://opencae.gifu-nct.ac.jp/pukiwiki/index.php?plugin=attach&refer=AboutEasyISTR&openfile=easyistr-3.37.230306-2.noarch.rpm"
-  dnf --releasever=8.6 -y install easyistr-3.37.230306-2.noarch.rpm python3-vtk
+  dnf --releasever=8.6 -y install easyistr-3.37.230306-2.noarch.rpm python3-vtk nautilus glibc-langpack-ja
   #
   dnf clean all
   rm -f /etc/pki/entitlement/*
