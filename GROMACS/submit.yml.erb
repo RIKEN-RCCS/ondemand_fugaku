@@ -1,0 +1,33 @@
+script:
+  job_name: ood_gromacs
+  queue_name: <%= queue %>
+  <%- if email.present? -%>
+  email: <%= email %>
+  email_on_started: true
+  email_on_terminated: true
+  <%- end -%>
+  native:
+    - "--no-check-directory -g <%= group %>"
+    <%- if volume == "/vol0004" -%>
+    - "-x PJM_LLIO_GFSCACHE=/vol0004"
+    <%- else -%>
+    - "-x PJM_LLIO_GFSCACHE=/vol0004:<%= volume %>"
+    <%- end -%>
+    <%- if mode == "Boost" -%>
+    - "-L freq=2200"
+    <%- elsif mode == "Eco" -%>
+    - "-L eco_state=2"
+    <%- elsif mode == "Boost + Eco" -%>
+    - "-L freq=2200,eco_state=2"
+    <%- end -%>
+    - "-L elapse=<%= fugaku_hours %>:00:00 -L node=<%= fugaku_nodes %> --mpi proc=<%= fugaku_procs %>"
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    #!/bin/bash
+    export OMP_NUM_THREADS=<%= fugaku_threads %>
+    . /vol0004/apps/oss/spack/share/spack/setup-env.sh
+    spack load gromacs@<%= version %>
+    
+    cd <%= working_dir %>
+    mpiexec gmx_mpi <%= options %>
