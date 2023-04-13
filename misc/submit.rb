@@ -17,7 +17,8 @@ def submit_email(email = "", only_start = true)
 end
 
 def _native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode)
-  str = "    - \"-L elapse=#{fugaku_hours}:00:00,node=#{fugaku_nodes},jobenv=singularity --mpi proc=#{fugaku_procs} --no-check-directory -g #{group}"
+  str = "native:\n"
+  str << "    - \"-L elapse=#{fugaku_hours}:00:00,node=#{fugaku_nodes},jobenv=singularity --mpi proc=#{fugaku_procs} --no-check-directory -g #{group}"
 
   if volume == "/vol0004"
     str << " -x PJM_LLIO_GFSCACHE=/vol0004"
@@ -40,8 +41,9 @@ def _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory,
                     prepost2_hours, gpu2_cores, gpu2_memory,
                     mem1_cores, mem1_memory, mem2_cores, mem2_memory,
                     reserved_hours, reserved_cores, reserved_memory)
+  str = "native:\n"
   if queue == "gpu1"
-    <<"EOF"
+    str<<<<"EOF"
     - "-t"
     - "#{prepost1_hours}:00:00"
     - "-n"
@@ -50,7 +52,7 @@ def _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory,
     - "#{gpu1_memory}G"
 EOF
   elsif queue == "gpu2"
-    <<"EOF"
+    str<<<<"EOF"
     - "-t"
     - "#{prepost2_hours}:00:00"
     - "-n"
@@ -59,7 +61,7 @@ EOF
     - "#{gpu2_memory}G"
 EOF
   elsif queue == "mem1"
-    <<"EOF"
+    str<<<<"EOF"
     - "-t"
     - "#{prepost1_hours}:00:00"
     - "-n"
@@ -68,7 +70,7 @@ EOF
     - "#{mem1_memory}G"
 EOF
   elsif queue == "mem2"
-    <<"EOF"
+    str<<<<"EOF"
     - "-t"
     - "#{prepost2_hours}:00:00"
     - "-n"
@@ -77,7 +79,7 @@ EOF
     - "#{mem2_memory}G"
 EOF
   elsif queue == "ondemand-reserved"
-    <<"EOF"
+    str<<<<"EOF"
     - "-t"
     - "#{reserved_hours}:00:00"
     - "-n"
@@ -86,52 +88,44 @@ EOF
     - "#{reserved_memory}G"
 EOF
   end
+
+  return str
 end
 
 def submit_native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode)
-  str = "native:\n"
-  return str + _native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode)
+  return _native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode)
 end
 
 def submit_native_prepost_gpu(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
                               gpu2_cores, gpu2_memory)
-  str = "native:\n"
-  return str + _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
-                               gpu2_cores, gpu2_memory, -1, -1, -1, -1, -1, -1, -1)
+  return _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+                         gpu2_cores, gpu2_memory, -1, -1, -1, -1, -1, -1, -1)
 end
 
 def submit_native_prepost_core1(queue, prepost1_hours, gpu1_memory, prepost2_hours, gpu2_memory,
                                 mem1_memory, mem2_memory, reserved_hours, reserved_memory)
-  str = "native:\n"
-  return str + _native_prepost(queue, prepost1_hours, 1, gpu1_memory, prepost2_hours,
-                               1, gpu2_memory, 1, mem1_memory, 1, mem2_memory,
-                               reserved_hours, 1, reserved_memory)
+  return _native_prepost(queue, prepost1_hours, 1, gpu1_memory, prepost2_hours, 1, gpu2_memory,
+                         1, mem1_memory, 1, mem2_memory, reserved_hours, 1, reserved_memory)
 end
 
 def submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
                           gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
                           mem2_memory, reserved_hours, reserved_cores, reserved_memory)
-  str = "native:\n"
-  return str + _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
-                               gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
-                               mem2_memory, reserved_hours, reserved_cores, reserved_memory)
+  return _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+                         gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
+                         mem2_memory, reserved_hours, reserved_cores, reserved_memory)
 end
 
-def submit_native(cluster, fugaku_hours, fugaku_nodes, fugaku_procs,
-                  group, volume, mode, queue, prepost1_hours, gpu1_cores,
-                  gpu1_memory, prepost2_hours, gpu2_cores, gpu2_memory,
-                  mem1_cores, mem1_memory, mem2_cores, mem2_memory,
-                  reserved_hours, reserved_cores, reserved_memory)
-
-  str = "native:\n"
+def submit_native(cluster, fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode,
+                  queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+                  gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
+                  mem2_memory, reserved_hours, reserved_cores, reserved_memory)
   if cluster == "fugaku"
-    return str + _native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs,
-                                group, volume, mode)
+    return _native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode)
   elsif cluster == "prepost"
-    return str + _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory,
-                                 prepost2_hours, gpu2_cores, gpu2_memory,
-                                 mem1_cores, mem1_memory, mem2_cores, mem2_memory,
-                                 reserved_hours, reserved_cores, reserved_memory)
+    return _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+                           gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
+                           mem2_memory, reserved_hours, reserved_cores, reserved_memory)
   end
 end
 
