@@ -16,5 +16,5 @@ batch_connect:
     spack load fugaku-frontistr@<%= version %>
     
     cd <%= working_dir %>
-    mpiexec -n 1 hecmw_part1
+    <%= pre_execute %>
     mpiexec <%= binary_master %>

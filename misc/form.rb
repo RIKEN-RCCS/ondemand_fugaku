@@ -653,6 +653,22 @@ EOF
   return "- desktop"
 end
 
+
+def form_select(item, memo, options)
+  $attr <<<<"EOF"
+  #{item}:
+    widget: select
+    label: #{memo}
+    value: #{options[0][0]}
+    options:
+EOF
+  options.each do |i|
+    $attr << "    - [\"" + i[0] + "\", \"" + i[1] + "\"]\n"
+  end
+
+  return "- #{item}"
+end
+
 def form_attr()
   attr = $attr.dup
   $attr = ""
