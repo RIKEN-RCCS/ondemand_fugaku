@@ -1,26 +1,12 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/submit.rb'
+-%>
+---
 script:
   job_name: ood_lammps
   queue_name: <%= queue %>
-  <%- if email.present? -%>
-  email: <%= email %>
-  email_on_started: true
-  email_on_terminated: true
-  <%- end -%>
-  native:
-    - "--no-check-directory -g <%= group %>"
-    <%- if volume == "/vol0004" -%>
-    - "-x PJM_LLIO_GFSCACHE=/vol0004"
-    <%- else -%>
-    - "-x PJM_LLIO_GFSCACHE=/vol0004:<%= volume %>"
-    <%- end -%>
-    <%- if mode == "Boost" -%>
-    - "-L freq=2200"
-    <%- elsif mode == "Eco" -%>
-    - "-L eco_state=2"
-    <%- elsif mode == "Boost + Eco" -%>
-    - "-L freq=2200,eco_state=2"
-    <%- end -%>
-    - "-L elapse=<%= fugaku_hours %>:00:00 -L node=<%= fugaku_nodes %> --mpi proc=<%= fugaku_procs %>"
+  <%= submit_email(email, false) %>
+  <%= submit_native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode) %>
 batch_connect:
   template: "basic"
   script_wrapper: |
@@ -31,4 +17,4 @@ batch_connect:
     
     cd `dirname <%= filename %>`
     FILE=`basename <%= filename %>`
-    mpiexec lmp -in $FILE
+    mpiexec lmp -in $FILE <%= options %>

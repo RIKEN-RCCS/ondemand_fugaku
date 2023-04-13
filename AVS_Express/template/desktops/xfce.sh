@@ -55,5 +55,5 @@ eval $(dbus-launch --sh-syntax)
 
 # Start up xfce desktop (block until user logs out of desktop)
 /vol0004/apps/avs_xp851/bin/linux_64_el8/express.static -mavs &
-xfce4-session 
+xfce4-session
 fg
