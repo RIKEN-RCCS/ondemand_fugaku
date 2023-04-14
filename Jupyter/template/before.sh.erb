@@ -26,9 +26,6 @@
 #   - $password
 #       The plain text password used to authenticate to the web server with
 
-# Export the module function if it exists
-[[ $(type -t module) == "function" ]] && export -f module
-
 # Find available port to run server on
 port=$(find_port)
 

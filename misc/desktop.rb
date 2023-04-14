@@ -1,3 +1,5 @@
+def output_xfce()
+  <<"EOF"
 # Remove any preconfigured monitors
 if [[ -f "${HOME}/.config/monitors.xml" ]]; then
   mv "${HOME}/.config/monitors.xml" "${HOME}/.config/monitors.xml.bak"
@@ -18,7 +20,8 @@ xfconf-query -c xfce4-session -p /startup/gpg-agent/enabled -n -t bool -s false
 AUTOSTART="${HOME}/.config/autostart"
 rm -fr "${AUTOSTART}"    # clean up previous autostarts
 mkdir -p "${AUTOSTART}"
-for service in "pulseaudio" "rhsm-icon" "spice-vdagent" "tracker-extract" "tracker-miner-apps" "tracker-miner-user-guides" "xfce4-power-manager" "xfce-polkit"; do
+for service in "pulseaudio" "rhsm-icon" "spice-vdagent" "tracker-extract" "tracker-miner-apps" "tracker-miner-user-guides" "xfce4-power-manager" "xfce-polki\
+t"; do
   echo -e "[Desktop Entry]\nHidden=true" > "${AUTOSTART}/${service}.desktop"
 done
 
@@ -53,7 +56,8 @@ fi
 # see https://github.com/OSC/ondemand/issues/700
 eval $(dbus-launch --sh-syntax)
 
-# Start up xfce desktop (block until user logs out of desktop)
-/opt/xcrysden/bin/xcrysden &
-xfce4-session
-fg
+# For some reason the lang module information disappears, so reload it.
+module remove lang
+module load lang
+EOF
+end

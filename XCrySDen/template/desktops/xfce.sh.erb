@@ -1,0 +1,9 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/desktop.rb'
+-%>
+---
+<%= output_xfce() %>
+
+/opt/xcrysden/bin/xcrysden &
+xfce4-session
+fg
