@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 CMD='/usr/local/bin/accountd -E -c | grep ^\"/vol | xargs echo'
 if [ "$HOSTNAME" = "fn06sv04" ]; then

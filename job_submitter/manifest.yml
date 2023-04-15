@@ -3,6 +3,6 @@ name: Job Submitter
 category: Batch Jobs
 role: batch_connect
 description: |
-  Simple form for the submission of batch jobs.
+  Simple form for a batch job.
 icon: fa://rocket
-#icon: fas://suitcase
+

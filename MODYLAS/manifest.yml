@@ -3,4 +3,4 @@ name: MODYLAS
 category: Batch Jobs
 role: batch_connect
 description: |
-  [MODYLAS](http://www.modylas.org) is a general-purpose, molecular dynamics simulation program.
+  [MODYLAS](http://www.modylas.org) is a general-purpose molecular dynamics simulation program.

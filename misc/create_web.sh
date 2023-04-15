@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 for a in ood_desktop ood_jupyter ood_vscode ood_rstudio ood_wheel; do
     find /var/log/ondemand-nginx -name "error*" | xargs zgrep ${a} > ${a}.log

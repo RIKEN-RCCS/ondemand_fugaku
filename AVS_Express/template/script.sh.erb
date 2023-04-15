@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-# Change working directory to user's home directory
-cd "${HOME}"
-
 # Ensure that the user's configured login shell is used
 export SHELL="$(getent passwd $USER | cut -d: -f7)"
 

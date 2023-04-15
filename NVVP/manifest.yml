@@ -5,4 +5,4 @@ category: Interactive Apps
 subcategory: Profiler
 role: batch_connect
 description: |
-  NVIDIA Visual Profiler is a profiler for CUDA.
+  [NVIDIA Visual Profiler](https://developer.nvidia.com/nvidia-visual-profiler) is a profiler for CUDA.

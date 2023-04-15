@@ -3,5 +3,4 @@ name: Quantum Espresso
 category: Batch Jobs
 role: batch_connect
 description: |
-  Quantum Espresso is an integrated suite for electronic-structure calculations and materials modeling.
-
+  [Quantum Espresso](https://www.quantum-espresso.org) is an integrated suite for electronic-structure calculations and materials modeling.

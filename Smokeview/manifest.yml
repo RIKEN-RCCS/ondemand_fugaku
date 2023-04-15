@@ -4,4 +4,4 @@ category: Interactive Apps
 subcategory: Viewer
 role: batch_connect
 description: |
-  [Smokeview (SMV)](https://github.com/firemodels/smv) is a visualization program that displays output of FDS and CFAST simulations.
+  [Smokeview (SMV)](https://github.com/firemodels/smv) is a visualization program for FDS and CFAST simulations.

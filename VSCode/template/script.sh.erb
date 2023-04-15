@@ -1,11 +1,9 @@
-#!/usr/bin/bash -l
+<%-
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/submit.rb'
+-%>
+#!/usr/bin/env bash
 
-ARCH=`arch`
-if [ $ARCH = aarch64 ]; then
-  IMAGE=/home/apps/singularity/ondemand/vscode_ubi87_${ARCH}.sif
-else
-  IMAGE=/home/apps/singularity/ondemand/vscode_ubi86_${ARCH}.sif
-fi
+<%= setting_singularity("vscode") %>
 
 CODE_SERVER_DATAROOT="$HOME/ondemand/vscode/${ARCH}"
 mkdir -p "$CODE_SERVER_DATAROOT/extensions"
@@ -15,41 +13,6 @@ export PASSWORD="$password"
 
 # Print compute node.
 echo "$(date): Running on compute node ${compute_node}:$port"
-echo ""
-export SINGULARITYENV_XDG_DATA_HOME=${CODE_SERVER_DATAROOT}
-export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
-export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh
-mkdir -p $SINGULARITYENV_TMPDIR
-NV_OPTION=""
-CUDA_PATH=/usr/local/cuda
-if [ -e $CUDA_PATH ]; then
-    NV_OPTION="--nv"
-    CUDA_REAL_PATH=`readlink -f /usr/local/cuda`
-    export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$CUDA_REAL_PATH:$CUDA_PATH
-    export SINGULARITYENV_PATH=$PATH:$CUDA_PATH/bin
-    export SINGULARITYENV_LD_LIBRARY_PATH=$CUDA_PATH/lib64:$LD_LIBRARY_PATH
-fi
-for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
-    export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
-done
-for i in `ls -1 / | grep ^vol`; do
-      export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/$i
-done
-for i in /lib64/liblustreapi.so /run/psv; do
-    [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
-done
-
-# The default locale in terminal in code-server is UTF8, but Fujitsu TCS does not support UTF8.
-# Since the system setting is LANG=C, set it to take over.
-#[ ! -e ${CODE_SERVER_DATAROOT}/User ] && mkdir -p ${CODE_SERVER_DATAROOT}/User
-#if [ ! -e ${CODE_SERVER_DATAROOT}/User/settings.json ]; then
-#    cat <<EOF > ${CODE_SERVER_DATAROOT}/User/settings.json
-#{
-#"terminal.integrated.detectLocale": "off"
-#}
-#EOF
-#fi
 
 WORKING_DIR="<%= context.working_dir %>"
 mkdir -p $WORKING_DIR

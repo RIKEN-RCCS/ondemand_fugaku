@@ -5,4 +5,4 @@ category: Interactive Apps
 subcategory: Profiler
 role: batch_connect
 description: |
-  NVIDIA Nsight Compute is an interactive profiler for CUDA.
+  [NVIDIA Nsight Compute](https://developer.nvidia.com/nsight-compute) is an interactive profiler for CUDA.

@@ -10,10 +10,7 @@ script:
 batch_connect:
   template: "basic"
   script_wrapper: |
-    #!/bin/bash
-    export OMP_NUM_THREADS=<%= fugaku_threads %>
-    . /vol0004/apps/oss/spack/share/spack/setup-env.sh
-    spack load fugaku-frontistr@<%= version %>
+    <%= submit_env(fugaku_threads, "fugaku-frontistr", version) %>
     
     cd <%= working_dir %>
     <%= pre_execute %>

@@ -3,5 +3,4 @@ name: OpenMX
 category: Batch Jobs
 role: batch_connect
 description: |
-  OpenMx is an open source program for extended structural equation modeling.
-
+  [OpenMX](https://www.openmx-square.org) is a software for extended structural equation modeling.

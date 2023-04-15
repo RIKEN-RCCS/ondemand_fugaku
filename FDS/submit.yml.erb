@@ -10,10 +10,7 @@ script:
 batch_connect:
   template: "basic"
   script_wrapper: |
-    #!/bin/bash
-    export OMP_NUM_THREADS=<%= fugaku_threads %>
-    . /vol0004/apps/oss/spack/share/spack/setup-env.sh
-    spack load fds@<%= version %>
+    <%= submit_env(fugaku_threads, "fds", version) %>
     
     cd `dirname <%= filename %>`
     FILE=`basename <%= filename %>`

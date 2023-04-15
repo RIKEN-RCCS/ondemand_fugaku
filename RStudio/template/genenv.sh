@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Get R Home Etc Folder
 spath="$(Rscript -e 'R.home(component = "etc")' | grep -o '".*"' | sed 's/"//g')"

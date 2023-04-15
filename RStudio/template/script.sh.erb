@@ -1,23 +1,14 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/submit.rb'
+-%>
+
 #!/usr/bin/env bash
 # https://gitlab.com/nmsu_hpc/ood_bc_rstudio
 
-# Benchmark info
-echo "TIMING - Starting main script at: $(date)"
+<%= setting_singularity("rstudio") %>
 
-ARCH=`arch`
-if [ $ARCH = aarch64 ]; then
-  IMAGE=/home/apps/singularity/ondemand/rstudio_ubi87_${ARCH}.sif
-else
-  IMAGE=/home/apps/singularity/ondemand/rstudio_ubi86_${ARCH}.sif
-fi
-
-export PATH=$PATH:/usr/lib/rstudio-server/bin
-export SINGULARITYENV_PATH=$PATH
+export SINGULARITYENV_PATH=$PATH:/usr/lib/rstudio-server/bin
 export SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
-export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/rstudio/`arch`
-export TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
-export SINGULARITYENV_TMPDIR=${TMPDIR}
-export SINGULARITYENV_XDG_RUNTIME_DIR=${TMPDIR}
 export SINGULARITYENV_MODULEPATH=$MODULEPATH
 
 python3 -c 'from uuid import uuid4; print(uuid4())' > "${PWD}/secure-cookie-key"
@@ -29,7 +20,7 @@ cat <<-EOF >./rserver.conf
 	auth-none=0
 	auth-pam-helper-path=${PWD}/bin/auth
 	auth-encrypt-password=0
-        server-data-dir=${TMPDIR}/rstudio-server
+        server-data-dir=${SINGULARITYENV_TMPDIR}/rstudio-server
         secure-cookie-key-file=${PWD}/secure-cookie-key
         server-user=${USER}
 	auth-timeout-minutes=0
@@ -54,38 +45,15 @@ cat <<-EOF >./logging.conf
 EOF
 
 # Create RStudio Writable Directories and Helper Files
-mkdir -p "$TMPDIR/lib"
-mkdir -p "$TMPDIR/run"
+mkdir -p "$SINGULARITYENV_TMPDIR/lib"
+mkdir -p "$SINGULARITYENV_TMPDIR/run"
 
-singularity exec --bind="$TMPDIR:/tmp" $IMAGE bash ./genenv.sh
+singularity exec --bind="$SINGULARITYENV_TMPDIR:/tmp" $IMAGE bash ./genenv.sh
 
 renv_path="$(cat ./Renviron.path)"
 echo MODULEPATH="$MODULEPATH" >> ./Renviron.site
 
-# Setup Bind Mounts
-NV_OPTION=""
-CUDA_PATH=/usr/local/cuda
-if [ -e $CUDA_PATH ]; then
-    NV_OPTION="--nv"
-    CUDA_REAL_PATH=`readlink -f /usr/local/cuda`
-    export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$CUDA_REAL_PATH:$CUDA_PATH
-    export SINGULARITYENV_PATH=$PATH:$CUDA_PATH/bin
-    export SINGULARITYENV_LD_LIBRARY_PATH=$CUDA_PATH/lib64:$LD_LIBRARY_PATH
-fi
-for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
-  SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
-done
-for i in `ls -1 / | grep ^vol`; do
-      export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/$i
-done
-for i in /lib64/liblustreapi.so /run/psv; do
-    [ -e $i ] && SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
-done
+export SINGULARITY_BINDPATH=${SINGULARITY_BINDPATH},${SINGULARITYENV_TMPDIR}:/tmp,${SINGULARITYENV_TMPDIR}/lib:/var/lib/rstudio-server,${SINGULARITYENV_TMPDIR}/run:/var/run/rstudio-server,logging.conf:/etc/rstudio/logging.conf,rsession.conf:/etc/rstudio/rsession.conf,rserver.conf:/etc/rstudio/rserver.conf,Renviron.site:$renv_path
 
-export SINGULARITY_BINDPATH=${SINGULARITY_BINDPATH},${TMPDIR}:/tmp,${TMPDIR}/lib:/var/lib/rstudio-server,${TMPDIR}/run:/var/run/rstudio-server,logging.conf:/etc/rstudio/logging.conf,rsession.conf:/etc/rstudio/rsession.conf,rserver.conf:/etc/rstudio/rserver.conf,Renviron.site:$renv_path,/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh
-
-# Launch the RStudio Server
-echo "TIMING - Starting RStudio Server at: $(date)"
 singularity run $NV_OPTION $IMAGE rserver
 
-echo 'Singularity as exited...'

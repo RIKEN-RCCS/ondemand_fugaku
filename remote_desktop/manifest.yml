@@ -5,4 +5,4 @@ category: Interactive Apps
 subcategory: Desktop
 role: batch_connect
 description: |
-  This app will launch a Remote Desktop (Xfce).
+  This app will launch an [Xfce](https://xfce.org/) Remote Desktop.

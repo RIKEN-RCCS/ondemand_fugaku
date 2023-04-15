@@ -1,5 +1,12 @@
-REMOTE_DESKTOP_AARCH64 = "/home/apps/singularity/ondemand/remote_desktop_ubi87_aarch64.sif"
-REMOTE_DESKTOP_X86_64  = "/home/apps/singularity/ondemand/remote_desktop_ubi86_x86_64.sif"
+SINGULARITY_DIR        = "/home/apps/singularity/ondemand/"
+REMOTE_DESKTOP_AARCH64 = SINGULARITY_DIR + "remote_desktop_ubi87_aarch64.sif"
+REMOTE_DESKTOP_X86_64  = SINGULARITY_DIR + "remote_desktop_ubi86_x86_64.sif"
+JUPYTER_AARCH64        = SINGULARITY_DIR + "jupyter_ubi87_aarch64.sif"
+JUPYTER_X86_64         = SINGULARITY_DIR + "jupyter_ubi86_x86_64.sif"
+RSTUDIO_AARCH64        = SINGULARITY_DIR + "rstudio_ubi87_aarch64.sif"
+RSTUDIO_X86_64         = SINGULARITY_DIR + "rstudio_ubi86_x86_64.sif"
+VSCODE_AARCH64         = SINGULARITY_DIR + "vscode_ubi87_aarch64.sif"
+VSCODE_X86_64          = SINGULARITY_DIR + "vscode_ubi86_x86_64.sif"
 
 def submit_gpus_per_node(queue, gpus_per_node)
   return "gpus_per_node: #{gpus_per_node}" if queue == "gpu1" or queue == "gpu2"
@@ -16,7 +23,7 @@ def submit_email(email = "", only_start = true)
   end
 end
 
-def _native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode)
+def submit_native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode)
   str = "native:\n"
   str << "    - \"-L elapse=#{fugaku_hours}:00:00,node=#{fugaku_nodes},jobenv=singularity --mpi proc=#{fugaku_procs} --no-check-directory -g #{group}"
 
@@ -37,10 +44,9 @@ def _native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode
   return str + "\""
 end
 
-def _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory,
-                    prepost2_hours, gpu2_cores, gpu2_memory,
-                    mem1_cores, mem1_memory, mem2_cores, mem2_memory,
-                    reserved_hours, reserved_cores, reserved_memory)
+def submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+                          gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
+                          mem2_memory, reserved_hours, reserved_cores, reserved_memory)
   str = "native:\n"
   if queue == "gpu1"
     str<<<<"EOF"
@@ -92,28 +98,16 @@ EOF
   return str
 end
 
-def submit_native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode)
-  return _native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode)
-end
-
 def submit_native_prepost_gpu(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
                               gpu2_cores, gpu2_memory)
-  return _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
-                         gpu2_cores, gpu2_memory, -1, -1, -1, -1, -1, -1, -1)
+  return submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+                               gpu2_cores, gpu2_memory, -1, -1, -1, -1, -1, -1, -1)
 end
 
 def submit_native_prepost_core1(queue, prepost1_hours, gpu1_memory, prepost2_hours, gpu2_memory,
                                 mem1_memory, mem2_memory, reserved_hours, reserved_memory)
-  return _native_prepost(queue, prepost1_hours, 1, gpu1_memory, prepost2_hours, 1, gpu2_memory,
-                         1, mem1_memory, 1, mem2_memory, reserved_hours, 1, reserved_memory)
-end
-
-def submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
-                          gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
-                          mem2_memory, reserved_hours, reserved_cores, reserved_memory)
-  return _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
-                         gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
-                         mem2_memory, reserved_hours, reserved_cores, reserved_memory)
+  return submit_native_prepost(queue, prepost1_hours, 1, gpu1_memory, prepost2_hours, 1, gpu2_memory,
+                               1, mem1_memory, 1, mem2_memory, reserved_hours, 1, reserved_memory)
 end
 
 def submit_native(cluster, fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode,
@@ -121,42 +115,18 @@ def submit_native(cluster, fugaku_hours, fugaku_nodes, fugaku_procs, group, volu
                   gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
                   mem2_memory, reserved_hours, reserved_cores, reserved_memory)
   if cluster == "fugaku"
-    return _native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode)
+    return submit_native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode)
   elsif cluster == "prepost"
-    return _native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
-                           gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
-                           mem2_memory, reserved_hours, reserved_cores, reserved_memory)
+    return submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+                                 gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
+                                 mem2_memory, reserved_hours, reserved_cores, reserved_memory)
   end
 end
 
-def submit_vnc(staged_root)
+def setting_singularity(name)
   <<"EOF"
-  template: "vnc"
-  websockify_cmd: '/usr/bin/websockify'
-  script_wrapper: |
-    cat << "CTRSCRIPT" > #{staged_root}/container.sh
-    #!/bin/bash
-    export PATH="$PATH:/opt/TurboVNC/bin"
-    export PATH="$PATH:/opt/ParaView/bin"
-    export PATH="$PATH:/opt/visit/bin"
-    export PATH="$PATH:/vol0004/apps/avs_xp851/bin/linux_64_el8"
-    export XP_LICENSE_SERVER=fn01sv02
-    export PATH="$PATH:/opt/xcrysden/bin"
-    export PATH="$PATH:/usr/local/vesta"
-    export PATH="$PATH:/opt/smokeview"
-    export PATH="$PATH:/opt/ovito/bin"
-    %s
-    CTRSCRIPT
-
-    export LANG=C
-    ARCH=`arch`
-    if [ $ARCH = aarch64 ]; then
-      IMAGE=#{REMOTE_DESKTOP_AARCH64}
-    else
-      IMAGE=#{REMOTE_DESKTOP_X86_64}
-    fi
-
-    export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/remote_desktop/`arch`
+    LANG=C
+    export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/#{name}/`arch`
     export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
     export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
     export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh
@@ -181,7 +151,66 @@ def submit_vnc(staged_root)
       [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
     done
 
+    if [ #{name} = "remote_desktop" ]; then
+      if [ `arch` = aarch64 ]; then
+        IMAGE=#{REMOTE_DESKTOP_AARCH64}
+      else
+        IMAGE=#{REMOTE_DESKTOP_X86_64}
+      fi
+    elif [ #{name} = "jupyter" ]; then
+      if [ `arch` = aarch64 ]; then
+        IMAGE=#{JUPYTER_AARCH64}
+      else
+        IMAGE=#{JUPYTER_X86_64}
+      fi
+    elif [ #{name} = "rstudio" ]; then
+      if [ `arch` = aarch64 ]; then
+        IMAGE=#{RSTUDIO_AARCH64}
+      else
+        IMAGE=#{RSTUDIO_X86_64}
+      fi
+    elif [ #{name} = "vscode" ]; then
+      if [ `arch` = aarch64 ]; then
+        IMAGE=#{VSCODE_AARCH64}
+      else
+        IMAGE=#{VSCODE_X86_64}
+      fi
+    fi
+EOF
+end
+
+def submit_vnc(staged_root)
+  str =<<"EOF"
+  template: "vnc"
+  websockify_cmd: '/usr/bin/websockify'
+  script_wrapper: |
+    cat << "CTRSCRIPT" > #{staged_root}/container.sh
+    #!/usr/bin/env bash
+    export PATH="$PATH:/opt/TurboVNC/bin"
+    export PATH="$PATH:/opt/ParaView/bin"
+    export PATH="$PATH:/opt/visit/bin"
+    export PATH="$PATH:/vol0004/apps/avs_xp851/bin/linux_64_el8"
+    export XP_LICENSE_SERVER=fn01sv02
+    export PATH="$PATH:/opt/xcrysden/bin"
+    export PATH="$PATH:/usr/local/vesta"
+    export PATH="$PATH:/opt/smokeview"
+    export PATH="$PATH:/opt/ovito/bin"
+    %s
+    CTRSCRIPT
+
+    cd ${HOME}
+    #{setting_singularity("remote_desktop")}
+
     chmod +x #{staged_root}/container.sh
     singularity run ${NV_OPTION} ${IMAGE} #{staged_root}/container.sh
+EOF
+end
+
+def submit_env(threads, app_name, version)
+<<"EOF"
+#!/usr/bin/env bash
+    export OMP_NUM_THREADS=#{threads}
+    . /vol0004/apps/oss/spack/share/spack/setup-env.sh
+    spack load #{app_name}@#{version}
 EOF
 end
