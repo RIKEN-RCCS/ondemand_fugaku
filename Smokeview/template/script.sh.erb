@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cd ${HOME}
+
 # Ensure that the user's configured login shell is used
 export SHELL="$(getent passwd $USER | cut -d: -f7)"
 
