@@ -646,9 +646,7 @@ end
 
 def form_desktop()
   $attr <<<<"EOF"
-  desktop:
-    widget: hidden_field
-    value: xfce
+  desktop: xfce
 EOF
   return "- desktop"
 end
