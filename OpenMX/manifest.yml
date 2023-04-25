@@ -4,3 +4,5 @@ category: Batch Jobs
 role: batch_connect
 description: |
   [OpenMX](https://www.openmx-square.org) is a software for extended structural equation modeling.
+tile:
+  sub_caption: |

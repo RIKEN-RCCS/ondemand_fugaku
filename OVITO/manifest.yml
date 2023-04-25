@@ -5,3 +5,5 @@ subcategory: Viewer
 role: batch_connect
 description: |
   [OVITO](https://www.ovito.org) is a visualization and analysis software for molecular dynamics.
+tile:
+  sub_caption: |

@@ -6,5 +6,5 @@ subcategory: Viewer
 role: batch_connect
 description: |
   [ParaView](https://www.paraview.org) is a multi-platform data analysis and visualization application.
-
-  
+tile:
+  sub_caption: |

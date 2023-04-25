@@ -6,3 +6,5 @@ subcategory: Profiler
 role: batch_connect
 description: |
   [NVIDIA Nsight Compute](https://developer.nvidia.com/nsight-compute) is an interactive profiler for CUDA.
+tile:
+  sub_caption: |

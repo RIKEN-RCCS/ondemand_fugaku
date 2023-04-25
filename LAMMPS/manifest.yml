@@ -4,3 +4,5 @@ category: Batch Jobs
 role: batch_connect
 description: |
   [LAMMPS](https://www.lammps.org/) is a classical molecular dynamics code for materials modeling.
+tile:
+  sub_caption: |
