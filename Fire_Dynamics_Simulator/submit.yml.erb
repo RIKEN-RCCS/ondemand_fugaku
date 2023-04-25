@@ -1,0 +1,17 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/submit.rb'
+-%>
+---
+script:
+  job_name: ood_fds
+  queue_name: <%= queue %>
+  <%= submit_email(email, false) %>
+  <%= submit_native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode) %>
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    <%= submit_env(fugaku_threads, "fds", version) %>
+    
+    cd `dirname <%= filename %>`
+    FILE=`basename <%= filename %>`
+    mpiexec fds_mpi_fugaku $FILE
