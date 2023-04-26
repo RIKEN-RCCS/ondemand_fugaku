@@ -175,7 +175,7 @@ end
 def get_groups_dirs()
   groups = []
   get_groups_cache().each do |n|
-    groups.push(n[1], n[2])
+    groups.push(n[1], n[2], "/2ndfs/" + n[0])
   end
 
   return groups
@@ -186,6 +186,7 @@ def get_groups_fdirs()
   get_groups_cache().each do |n|
     dirs += "{\"title\": \"data ("  + n[0] + ")\", \"href\": \"" + n[1] + "\"},"
     dirs += "{\"title\": \"share (" + n[0] + ")\", \"href\": \"" + n[2] + "\"},"
+    dirs += "{\"title\": \"2ndfs (" + n[0] + ")\", \"href\": \"/2ndfs/" + n[0] + "\"},"
   end
 
   return "'[" + dirs.chop + "]'"
@@ -588,16 +589,16 @@ EOF
   return "- filename"
 end
 
-def form_working_dir()
+def form_working_dir(label = "Working directory", type = "dirs")
   $attr <<<<"EOF"
   working_dir:
-    label: Working directory
+    label: #{label}
     data-filepicker: true
-    data-target-file-type: dirs  # Valid values are: files, dirs, or both
+    data-target-file-type: #{type} # Valid values are: files, dirs, or both
     data-default-directory: #{ENV['HOME']}
     data-file_picker_favorites: #{get_groups_fdirs()}
     value: #{ENV['HOME']}
-    readonly: true
+    readonly: false
 EOF
   return "- working_dir"
 end

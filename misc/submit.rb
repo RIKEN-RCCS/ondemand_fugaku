@@ -129,7 +129,7 @@ def setting_singularity(name)
     export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/#{name}/`arch`
     export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
     export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
-    export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh
+    export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh,/2ndfs
     mkdir -p $SINGULARITYENV_TMPDIR
     NV_OPTION=""
     CUDA_PATH=/usr/local/cuda

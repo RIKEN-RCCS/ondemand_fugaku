@@ -22,5 +22,5 @@ singularity run ${NV_OPTION} ${IMAGE} code-server \
     --disable-telemetry \
     --extensions-dir="$CODE_SERVER_DATAROOT/extensions" \
     --user-data-dir="$CODE_SERVER_DATAROOT" \
-    --log debug --disable-update-check \
+    --log debug --disable-update-check --ignore-last-opened \
     "$WORKING_DIR"
