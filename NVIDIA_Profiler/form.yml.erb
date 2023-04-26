@@ -1,0 +1,21 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_apps/misc/form.rb'
+  apps = [["NVIDIA Visual Profiler (NVVP)", "nvvp"], ["NVIDIA Compute", "ncu-ui"], ["NVIDIA System", "nsys-ui"]]
+-%>
+---
+title: NVIDIA Profiler
+form:
+  <%= form_cluster("prepost") %>
+  <%= form_queue("gpu") %>
+  <%= form_prepost1_hours() %>
+  <%= form_prepost2_hours() %>
+  <%= form_gpu1_cores() %>
+  <%= form_gpu2_cores() %>
+  <%= form_gpu1_memory(10) %>
+  <%= form_gpu2_memory(10) %>
+  <%= form_gpus_per_node(1) %>
+  <%= form_select("app_name", "Application Name", apps) %>
+  <%= form_email() %>
+  <%= form_desktop() %>
+attributes:
+<%= form_attr() %>
