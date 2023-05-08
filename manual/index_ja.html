@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <title>Open OnDemandの利用方法</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <div id="outer">
+      <div id="header">
+        <div id="head-inner">
+          <h1>Open OnDemandの利用方法</h1>
+        </div>
+      </div>
+      <div id="contents">
+        <ul>
+          <li><a href="#overview">はじめに</a></li>
+          <li><a href="#interactive">Interactive Apps</a></li>
+          <li><a href="#passenger">Passenger Apps</a></li>
+          <li><a href="#note">補足</a></li>
+        </ul>
+        <h2><a id="overview" name="overview">はじめに</a></h2>
+        <h3>Open OnDemand</h3>
+        <p>
+          <a href="https://openondemand.org">Open OnDemand</a>は、Webブラウザから並列計算機システムを利用するためのWebポータルです。富岳のOpen OnDemandは、富岳の計算ノードとプリポスト環境の両方に対応しています。富岳のOpen OnDemand上で提供しているアプリケーションは、計算ノード上で動作する「Interactive Apps」と、Open OnDemandがインストールされているサーバで動作する「Passenger Apps」にグループ分けしています。
+        </p>
+        <p>
+          <img alt="dashboard" src="./img/dashboard.png" width="600" />
+        </p>
+
+        <h3>ログイン方法</h3>
+        <p>
+          <a href="https://ondemand-test.fugaku.r-ccs.riken.jp">https://ondemand-test.fugaku.r-ccs.riken.jp</a>にアクセスください。富岳のアカウント発行時に送付されるクライアント証明書がWebブラウザにインストールされている必要があります。
+        </p>
+
+        <h2><a id="interactive" name="interactive">Interactive Apps</a></h2>
+        <p>
+          「Remote Desktop」・「Jupyter」・「RStudio」・「VSCode」のアプリケーションを提供しています。アイコンをクリックすると、必要な計算リソースなどを入力するためのWebフォームが表示されます。「System」でfugakuもしくはprepostを選択すると、入力項目が変化します。「Email」にアドレスを記載すると、ジョブの起動時にメールで通知が行われます。「Launch」をクリックすると、「System」で選択されたシステムにジョブが投入されます。
+        </p>
+        <p>
+          <img alt="web form" src="./img/form.png" width="600" />
+        </p>
+        <p>
+          計算ノード上でジョブが起動されるとアプリケーションへのリンクが表示されます。そのリンクをクリックすると、該当のアプリケーションをWebブラウザから利用できます。
+        </p>
+        <p>
+          <img alt="launch" src="./img/launch.png" width="400" />
+        </p>
+        
+        <h2><a id="passenger" name="passenger">Passenger Apps</a></h2>
+        <h3>Active Jobs</h3>
+        <p>
+          ジョブの情報を閲覧できます。ジョブの削除も可能です。
+        </p>
+        <p>
+          <img alt="active jobs" src="./img/activejobs.png" width="600" />
+        </p>
+
+        <h3>Home Directory</h3>
+        <p>
+          ファイルのアップロード・ダウンロード・削除・編集を行えます。
+        </p>
+        <p>
+          <img alt="home directory" src="./img/homedirectory.png" width="600" />
+        </p>
+
+        <h3>Job Composer</h3>
+        <p>
+          ジョブの作成と投入を行うことができます。ジョブの作成方法は、「New Job」をクリックし、「From Template」をクリックします。
+        </p>
+        <p>
+          <img alt="job composer" src="./img/jobcomposer1.png" width="400" />
+        </p>
+        <p>
+          「Fugaku Job」か「Prepost Job」のどちらかを選択し、「Create New Job」をクリックすると、ジョブスクリプトの雛形が作成されます。
+        </p>
+        <p>
+          <img alt="job composer" src="./img/jobcomposer2.png" width="600" />
+        </p>
+        <p>
+          「Open Editor」をクリックし、作成された雛形を編集します。編集後に「Submit」をクリックすると、計算ノードにジョブが投入されます。
+        </p>
+        <p>
+          <img alt="job composer" src="./img/jobcomposer3.png" width="600" />
+        </p>
+
+        <h3>Shell Access</h3>
+        <p>
+          Webブラウザ上でコマンドラインインタフェースを用いた操作を行うことができます。
+        </p>
+        <p>
+          <img alt="shell access" src="./img/shellaccess.png" width="600" />
+        </p>
+
+        <h2><a id="note" name="note">補足</a></h2>
+        <div id="middle">
+          <div class="side">
+            <ul>
+              <li>本サービスはベータテストです。現在のOpen OnDemandのURL（https://ondemand-test.fugaku.r-ccs.riken.jp）は、正式リリース時に異なるURLで提供します。</li>
+              <li>Intaractive Appsは計算ノード上でブーストエコモードで動作します。</li>
+              <li>Open OnDemandのテンポラル用のディレクトリは<span style="background-color:#dddddd;">${HOME}/ondemand</span>です。Open OnDemandを利用すると自動生成されます。削除しても問題ありません。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div id="footer">&copy; 理化学研究所 計算科学研究センター</div>
+    </div>
+  </body>
+</html>

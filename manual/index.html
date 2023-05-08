@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <title>Open OnDemand on Fugaku</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <div id="outer">
+      <div id="header">
+        <div id="head-inner">
+          <h1>Open OnDemand on Fugaku</h1>
+        </div>
+      </div>
+      <div id="contents">
+        <ul>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#interactive">Interactive Apps</a></li>
+          <li><a href="#passenger">Passenger Apps</a></li>
+          <li><a href="#note">Note</a></li>
+        </ul>
+        <h2><a id="overview" name="overview">Overview</a></h2>
+        <h3>Open OnDemand</h3>
+        <p>
+          <a href="https://openondemand.org">Open OnDemand</a> is a web portal for using parallel computer systems from a web browser.
+          Open OnDemand on Fugaku supports both compute nodes on Fugaku and pre-post environments.
+          Applications provided on Open OnDemand on Fugaku are grouped into "Interactive Apps" that run on compute nodes and "Passenger Apps" that run on the server where Open OnDemand is installed.
+        </p>
+        <p>
+          <img alt="dashboard" src="./img/dashboard.png" width="600" />
+        </p>
+
+        <h3>How to login</h3>
+        <p>
+          Please visit <a href="https://ondemand-test.fugaku.r-ccs.riken.jp">https://ondemand-test.fugaku.r-ccs.riken.jp</a>.
+          The client certificate sent to you when your Fugaku account is created must be installed in your web browser.
+        </p>
+
+        <h2><a id="interactive" name="interactive">Interactive Apps</a></h2>
+        <p>
+          We provide Remote Desktop, Jupyter, RStudio, and VSCode applications.
+          Clicking on the icon will bring up a web form for entering resources and other information.
+          When "fugaku" or "prepost" is selected in "System" field, the input fields thereafter will change.
+          If you include your email address in "Email" field, you will be notified by email when the job starts.
+          Clicking "Launch" field will submit the job to the system selected in "System".
+        </p>
+        <p>
+          <img alt="web form" src="./img/form.png" width="600" />
+        </p>
+        <p>
+          When a job is launched on a compute node, a link to the application is displayed.
+          By clicking on the link, you can use the corresponding application from your web browser.
+        </p>
+        <p>
+          <img alt="launch" src="./img/launch.png" width="400" />
+        </p>
+        
+        <h2><a id="passenger" name="passenger">Passenger Apps</a></h2>
+        <h3>Active Jobs</h3>
+        <p>
+          You can view job information, and delete your jobs.
+        </p>
+        <p>
+          <img alt="active jobs" src="./img/activejobs.png" width="600" />
+        </p>
+
+        <h3>Home Directory</h3>
+        <p>
+          You can upload, download, delete, and edit files.
+        </p>
+        <p>
+          <img alt="home directory" src="./img/homedirectory.png" width="600" />
+        </p>
+
+        <h3>Job Composer</h3>
+        <p>
+          You can create and submit jobs.
+          To create a job, click "New Job" and then "From Template".
+        </p>
+        <p>
+          <img alt="job composer" src="./img/jobcomposer1.png" width="400" />
+        </p>
+        <p>
+          Select either "Fugaku Job" or "Prepost Job" and click "Create New Job" to create a job script template.
+        </p>
+        <p>
+          <img alt="job composer" src="./img/jobcomposer2.png" width="600" />
+        </p>
+        <p>
+          Click "Open Editor" to edit the created template.
+          After editing, click "Submit" to submit the job to a compute node.
+        </p>
+        <p>
+          <img alt="job composer" src="./img/jobcomposer3.png" width="600" />
+        </p>
+
+        <h3>Shell Access</h3>
+        <p>
+          You can perform operations using a command line interface on your web browser.
+        </p>
+        <p>
+          <img alt="shell access" src="./img/shellaccess.png" width="600" />
+        </p>
+
+        <h2><a id="note" name="note">Note</a></h2>
+        <div id="middle">
+          <div class="side">
+            <ul>
+              <li>This service is a beta test. The current Open OnDemand URL (https://ondemand-test.fugaku.r-ccs.riken.jp) will be provided with a different URL upon official release.</li>
+              <li>A job in Intaractive Apps runs with the boost-eco mode on a compute node.</li>
+              <li>The temporal directory for Open OnDemand is <span style="background-color:#dddddd;">${HOME}/ondemand</span>, which is automatically created. There is no problem to delete it.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div id="footer">&copy; RIKEN Center for Computational Science</div>
+    </div>
+  </body>
+</html>
