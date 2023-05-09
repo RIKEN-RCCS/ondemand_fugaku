@@ -44,6 +44,15 @@ EOF
   #
   dnf -y --releasever=8.7 install rclone rclone-browser
   #
+  dnf -y --releasever=8.7 install wayland-devel libxkbcommon-devel wayland-protocols-devel extra-cmake-modules
+  #
+  # GLFW
+  dnf -y install libXrandr-devel libXinerama-devel libXcursor-devel
+  wget https://github.com/glfw/glfw/releases/download/3.3.2/glfw-3.3.2.zip
+  unzip glfw-3.3.2.zip; cd glfw-3.3.2; cmake -S . -B build; cd build; make install
+  cd ../../
+  rm -rf glfw-3.3.2 glfw-3.3.2.zip
+  #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo /etc/yum.repos.d/Fugaku.repo
