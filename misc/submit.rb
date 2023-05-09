@@ -27,12 +27,13 @@ def submit_native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume
   str = "native:\n"
   str << "    - \"-L elapse=#{fugaku_hours}:00:00,node=#{fugaku_nodes},jobenv=singularity --mpi proc=#{fugaku_procs} --no-check-directory -g #{group}"
 
-  if volume == "/vol0004"
+  # volume == "" is set when a group with no data/share directory defined (e.g. rist-a) is set.
+  if volume == "/vol0004" or volume == ""
     str << " -x PJM_LLIO_GFSCACHE=/vol0004"
   else
     str << " -x PJM_LLIO_GFSCACHE=/vol0004:#{volume}"
   end
-
+  
   if mode == "Boost"
     str << " -L freq=2200"
   elsif mode == "Eco"
@@ -40,7 +41,7 @@ def submit_native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume
   elsif mode == "Boost + Eco"
     str << " -L freq=2200,eco_state=2"
   end
-  
+
   return str + "\""
 end
 
@@ -125,7 +126,6 @@ end
 
 def setting_singularity(name)
   <<"EOF"
-    LANG=C
     export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/#{name}/`arch`
     export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
     export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}

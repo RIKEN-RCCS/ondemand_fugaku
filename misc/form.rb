@@ -1,10 +1,10 @@
 require 'fileutils'
 
-$attr         = ""
-BASE_DIR      = ENV['HOME'] + "/ondemand/cache/"
-GROUPS_CACHE  = BASE_DIR + "groups.cache"
-EXCLUDED_DIRS = ["f-op", "fugaku", "isv"]
-LIFE_TIME     = 3600
+$attr           = ""
+BASE_DIR        = ENV['HOME'] + "/ondemand/cache/"
+GROUPS_CACHE    = BASE_DIR + "groups.cache"
+EXCLUDED_GROUPS = ["f-op", "fugaku", "oss-adm"]
+LIFE_TIME       = 3600
 
 FUGAKU_SMALL =<<"EOF"
       - [ "fugaku-small", "small",
@@ -141,7 +141,7 @@ def store_bins_cache(file, bin_path)
 end
 
 def store_groups_cache()
-  output = `sh /var/www/ood/apps/sys/ondemand_apps/misc/data_share_dir.sh`.split(" ")
+  output = `sh /var/www/ood/apps/sys/ondemand_apps/misc/data_share_dir.sh`.split
   info = Array.new()
   output.each_slice(2) do |m, n|
     volume = "/vol000" + m.split("/")[1].split("0")[1]
@@ -243,6 +243,7 @@ def form_volume()
   $attr <<<<"EOF"
   volume:
     widget: hidden_field
+    cacheable: false
 EOF
   return "- volume"
 end
@@ -254,12 +255,22 @@ def form_group()
     widget: select
     options:
 EOF
+  added_groups = []
   get_groups_cache().each do |n|
     flag = true
-    EXCLUDED_DIRS.each do |d|
+    EXCLUDED_GROUPS.each do |d|
       flag = false if n[0] == d
     end
-    $attr << "      - [\"" + n[0] + "\" , \"" + n[0] + "\", " + "data-set-volume: \"" + n[3] + "\"]\n" if flag
+    if flag
+      #$attr << "      - [\"" + n[0] + "\" , \"" + n[0] + "\", " + "data-set-volume: \"" + n[3] + "\"]\n"
+      $attr << "      - [\"" + n[0] + "\" , \"" + n[0] + "\"]\n"
+      added_groups.push(n[0])
+    end
+  end
+
+  extra_groups = `groups`.split - added_groups - EXCLUDED_GROUPS
+  extra_groups.each do |g|
+    $attr << "      - [\"" + g + "\" , \"" + g + "\"]\n"
   end
   
   return "- group"
