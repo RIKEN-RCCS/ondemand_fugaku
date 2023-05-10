@@ -49,7 +49,7 @@ EOF
   # GLFW
   dnf -y install libXrandr-devel libXinerama-devel libXcursor-devel
   wget https://github.com/glfw/glfw/releases/download/3.3.2/glfw-3.3.2.zip
-  unzip glfw-3.3.2.zip; cd glfw-3.3.2; cmake -S . -B build; cd build; make install
+  unzip glfw-3.3.2.zip; cd glfw-3.3.2; cmake -DBUILD_SHARED_LIBS=ON -S . -B build; cd build; make install
   cd ../../
   rm -rf glfw-3.3.2 glfw-3.3.2.zip
   #
