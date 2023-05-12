@@ -11,7 +11,7 @@ From: redhat/ubi8:8.6-990
   dnf --releasever=8.6 -y install libatomic # for pre-post environment
   dnf --releasever=8.6 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   dnf --releasever=8.6 -y install Lmod R glibc-langpack-en
-  dnf -y install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2022.02.1-461-x86_64.rpm
+  dnf -y install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2023.03.0-386-x86_64.rpm
   #
   dnf clean all
   rm -f /etc/pki/entitlement/*
