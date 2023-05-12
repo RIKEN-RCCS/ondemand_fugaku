@@ -141,7 +141,7 @@ def store_bins_cache(file, bin_path)
 end
 
 def store_groups_cache()
-  output = `sh /var/www/ood/apps/sys/ondemand_apps/misc/data_share_dir.sh`.split
+  output = `sh /var/www/ood/apps/sys/ondemand_fugaku/misc/data_share_dir.sh`.split
   info = Array.new()
   output.each_slice(2) do |m, n|
     volume = "/vol000" + m.split("/")[1].split("0")[1]
