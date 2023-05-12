@@ -102,10 +102,11 @@ h3 {
 }
 ul {
     margin: 0 0 0 1em;
-    padding: 0;
+    padding: 0px;
 }
 li {
-    list-style:disk; 
+    list-style:disk;
+    margin-left: 10px;
 }
 #footer {
     font-size:12px;

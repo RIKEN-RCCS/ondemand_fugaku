@@ -17,33 +17,57 @@
       <div id="contents">
         <ul>
           <li><a href="#overview">はじめに</a></li>
+          <li><a href="#batch">Batch Jobs</a></li>
           <li><a href="#interactive">Interactive Apps</a></li>
           <li><a href="#passenger">Passenger Apps</a></li>
           <li><a href="#note">補足</a></li>
         </ul>
         <h2><a id="overview" name="overview">はじめに</a></h2>
-        <h3>Open OnDemand</h3>
         <p>
-          <a href="https://openondemand.org">Open OnDemand</a>は、Webブラウザから並列計算機システムを利用するためのWebポータルです。富岳のOpen OnDemandは、富岳の計算ノードとプリポスト環境の両方に対応しています。富岳のOpen OnDemand上で提供しているアプリケーションは、計算ノード上で動作する「Interactive Apps」と、Open OnDemandがインストールされているサーバで動作する「Passenger Apps」にグループ分けしています。
+          <a href="https://openondemand.org">Open OnDemand</a>は、Webブラウザから並列計算機システムを利用するためのWebポータルです。富岳のOpen OnDemandで提供しているアプリケーションは下記の3つにグループ分けしています。
+          <ul>
+            <li>Batch Jobs：富岳の計算ノードに投入する実アプリケーション</li>
+            <li>Interactive Apps：富岳やプリポスト環境で動作する対話的アプリケーション</li>
+            <li>Passenger Apps：Open OnDemandがインストールされたサーバで動作するユーティリティ</li>
+          </ul>
         </p>
         <p>
           <img alt="dashboard" src="./img/dashboard.png" width="600" />
         </p>
 
-        <h3>ログイン方法</h3>
+        <h2><a id="batch" name="batch">Batch Jobs</a></h2>
         <p>
-          <a href="https://ondemand-test.fugaku.r-ccs.riken.jp">https://ondemand-test.fugaku.r-ccs.riken.jp</a>にアクセスください。富岳のアカウント発行時に送付されるクライアント証明書がWebブラウザにインストールされている必要があります。
+          <table>
+            <tr>
+              <td>
+                <img alt="web form" src="./img/batch.png" width="300" />
+              </td>
+              <td valign="top">
+                アイコンをクリックすると、計算リソースなどを入力するためのWebフォームが表示されます。入力項目はアプリケーション毎に異なります。重要なもののみ説明します。
+                <ul>
+                  <li>Queue：富岳のsmallキューのみ指定可能です</li>
+                  <li>Group：複数のグループに属している場合、選択することができます</li>
+                  <li>Elapsed Time：利用時間</li>
+                  <li>Numbner of nodes：利用ノード数</li>
+                  <li>Total number of processes：総プロセス数</li>
+                  <li>Number of threads：1プロセスにおけるスレッド数</li>
+                  <li>Mode：実行モード。詳細は<a href="https://www.fugaku.r-ccs.riken.jp/operation/20220701_01">こちら</a>を参照ください</li>
+                  <li>Version：アプリケーションのバージョン</li>
+                </ul>
+                <p>
+                  「Launch」をクリックすると、富岳にジョブが投入されます。
+                </p>
+              </td>
+            </tr>
+          </table>
         </p>
-
+        
         <h2><a id="interactive" name="interactive">Interactive Apps</a></h2>
         <p>
-          「Remote Desktop」・「Jupyter」・「RStudio」・「VSCode」のアプリケーションを提供しています。アイコンをクリックすると、必要な計算リソースなどを入力するためのWebフォームが表示されます。「System」でfugakuもしくはprepostを選択すると、入力項目が変化します。「Email」にアドレスを記載すると、ジョブの起動時にメールで通知が行われます。「Launch」をクリックすると、「System」で選択されたシステムにジョブが投入されます。
+          アイコンをクリックすると、計算リソースなどを入力するためのWebフォームが表示されます。入力項目はアプリケーション毎に異なります。「Queue」でfugakuもしくはprepostを選択すると、入力項目が変化します。「Launch」をクリックすると、「System」で選択されたシステムにジョブが投入されます。
         </p>
         <p>
-          <img alt="web form" src="./img/form.png" width="600" />
-        </p>
-        <p>
-          計算ノード上でジョブが起動されるとアプリケーションへのリンクが表示されます。そのリンクをクリックすると、該当のアプリケーションをWebブラウザから利用できます。
+          計算ノード上でジョブが起動するとアプリケーションへのリンクが表示されます。そのリンクをクリックすると、該当のアプリケーションをWebブラウザから利用できます。
         </p>
         <p>
           <img alt="launch" src="./img/launch.png" width="400" />
@@ -98,9 +122,9 @@
         <div id="middle">
           <div class="side">
             <ul>
-              <li>本サービスはベータテストです。現在のOpen OnDemandのURL（https://ondemand-test.fugaku.r-ccs.riken.jp）は、正式リリース時に異なるURLで提供します。</li>
-              <li>Intaractive Appsは計算ノード上でブーストエコモードで動作します。</li>
-              <li>Open OnDemandのテンポラル用のディレクトリは<span style="background-color:#dddddd;">${HOME}/ondemand</span>です。Open OnDemandを利用すると自動生成されます。削除しても問題ありません。</li>
+              <li>Open OnDemandのテンポラル用のディレクトリは<span style="background-color:#dddddd;">${HOME}/ondemand</span>です。Open OnDemandを利用すると自動生成されます。削除しても問題ありませんが、履歴やInteractive Appsでユーザがインストールした拡張機能も削除されます。</li>
+              <li>Internet Explorer 11はサポートしていません。</li>
+              <li>Remote Desktopでコピーアンドペーストを利用したい場合は、Chromeブラウザをご利用ください。</li>
             </ul>
           </div>
         </div>

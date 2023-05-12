@@ -17,37 +17,57 @@
       <div id="contents">
         <ul>
           <li><a href="#overview">Overview</a></li>
+          <li><a href="#batch">Batch Jobs</a></li>
           <li><a href="#interactive">Interactive Apps</a></li>
           <li><a href="#passenger">Passenger Apps</a></li>
           <li><a href="#note">Note</a></li>
         </ul>
         <h2><a id="overview" name="overview">Overview</a></h2>
-        <h3>Open OnDemand</h3>
         <p>
-          <a href="https://openondemand.org">Open OnDemand</a> is a web portal for using parallel computer systems from a web browser.
-          Open OnDemand on Fugaku supports both compute nodes on Fugaku and pre-post environments.
-          Applications provided on Open OnDemand on Fugaku are grouped into "Interactive Apps" that run on compute nodes and "Passenger Apps" that run on the server where Open OnDemand is installed.
+          <a href="https://openondemand.org">Open OnDemand</a> is a web portal for using parallel computer systems via a web browser.
+          The applications provided by Fugaku Open OnDemand are divided into the following three groups.
+          <ul>
+            <li>Batch Jobs : Real world applications that run on Fugaku</li>
+            <li>Interactive Apps : Interactive applications that run on Fugaku and pre-post environment</li>
+            <li>Passenger Apps : Utilities that run on the server where Open OnDemand is installed</li>
+          </ul>
         </p>
         <p>
           <img alt="dashboard" src="./img/dashboard.png" width="600" />
         </p>
 
-        <h3>How to login</h3>
+        <h2><a id="batch" name="batch">Batch Jobs</a></h2>
         <p>
-          Please visit <a href="https://ondemand-test.fugaku.r-ccs.riken.jp">https://ondemand-test.fugaku.r-ccs.riken.jp</a>.
-          The client certificate sent to you when your Fugaku account is created must be installed in your web browser.
+          <table>
+            <tr>
+              <td>
+                <img alt="web form" src="./img/batch.png" width="300" />
+              </td>
+              <td valign="top">
+                Click the icon to display a web form for entering computational resources.
+                Input items differ for each application.
+                Only the important ones will be explained as following.
+                <ul>
+                  <li>Queue : Only Fugaku small queue can be specified</li>
+                  <li>Group : If you belong to multiple groups, you can select</li>
+                  <li>Elapsed Time : Maximum time used by the application</li>
+                  <li>Mode : Execution mode for Fugaku. Please refer to <a href="https://www.fugaku.r-ccs.riken.jp/en/operation/20220701_01">HERE</a> for detail</li>
+                  <li>Version : Version number of the application</li>
+                </ul>
+                <p>
+                   Clicking "Launch" bottom will submit the job to Fugaku.
+                </p>
+              </td>
+            </tr>
+          </table>
         </p>
-
+        
         <h2><a id="interactive" name="interactive">Interactive Apps</a></h2>
         <p>
-          We provide Remote Desktop, Jupyter, RStudio, and VSCode applications.
-          Clicking on the icon will bring up a web form for entering resources and other information.
-          When "fugaku" or "prepost" is selected in "System" field, the input fields thereafter will change.
-          If you include your email address in "Email" field, you will be notified by email when the job starts.
-          Clicking "Launch" field will submit the job to the system selected in "System".
-        </p>
-        <p>
-          <img alt="web form" src="./img/form.png" width="600" />
+          Click the icon to display a web form for entering computational resources.
+          Input items differ for each application.
+          When "fugaku" or "prepost" is selected in "Queue" field, the input fields thereafter will change.
+          Clicking "Launch" bottom will submit the job to the system selected in "Queue" field.
         </p>
         <p>
           When a job is launched on a compute node, a link to the application is displayed.
@@ -108,9 +128,9 @@
         <div id="middle">
           <div class="side">
             <ul>
-              <li>This service is a beta test. The current Open OnDemand URL (https://ondemand-test.fugaku.r-ccs.riken.jp) will be provided with a different URL upon official release.</li>
-              <li>A job in Intaractive Apps runs with the boost-eco mode on a compute node.</li>
-              <li>The temporal directory for Open OnDemand is <span style="background-color:#dddddd;">${HOME}/ondemand</span>, which is automatically created. There is no problem to delete it.</li>
+              <li>The temporal directory for Open OnDemand is <span style="background-color:#dddddd;">${HOME}/ondemand</span>, which is automatically created. There is no problem to delete it, but it also deletes user-installed extensions in Interactive Apps and history files.</li>
+              <li>Internet Explorer 11 is not supported</li>
+              <li>If you want to use copy and paste in Remote Desktop, please use the Chrome browser.</li>
             </ul>
           </div>
         </div>
