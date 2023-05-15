@@ -14,4 +14,4 @@ batch_connect:
     
     cd `dirname <%= filename %>`
     FILE=`basename <%= filename %>`  # Full path doesn't work.
-    mpiexec <%= eval("binary#{version.delete(".")}") %> $FILE <%= options %>
+    mpiexec <%= eval("binary_#{version.delete(".")}") %> $FILE <%= options %>
