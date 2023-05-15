@@ -2,7 +2,7 @@
 name: SALMON
 category: Batch Jobs
 role: batch_connect
-icon: fa://fish
+#icon: fa://fish
 description: |
   [SALMON](https://salmon-tddft.jp) is a software for ab-initio quantum-mechanical calculations of electron dynamics.
 tile:
