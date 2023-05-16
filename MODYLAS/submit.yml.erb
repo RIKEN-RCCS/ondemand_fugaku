@@ -6,7 +6,7 @@ script:
   job_name: ood_modylas
   queue_name: <%= queue %>
   <%= submit_email(email, false) %>
-  <%= submit_native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode) %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, group, volume, mode) %>
 batch_connect:
   template: "basic"
   script_wrapper: |
