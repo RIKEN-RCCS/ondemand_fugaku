@@ -14,4 +14,4 @@ batch_connect:
     
     cd `dirname <%= filename %>`
     FILE=`basename <%= filename %>`
-    mpiexec <%= eval("binary#{version.delete(".")}") %> -in $FILE <%= options %>
+    mpiexec <%= eval("binary_#{version.delete(".")}") %> -in $FILE <%= options %>

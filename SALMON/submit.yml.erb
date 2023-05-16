@@ -3,15 +3,15 @@
 -%>
 ---
 script:
-  job_name: ood_openmx
+  job_name: ood_salmon
   queue_name: <%= queue %>
   <%= submit_email(email, false) %>
   <%= submit_native_fugaku(fugaku_hours, fugaku_nodes, fugaku_procs, group, volume, mode) %>
 batch_connect:
   template: "basic"
   script_wrapper: |
-    <%= submit_env(fugaku_threads, "openmx", version) %>
+    <%= submit_env(fugaku_threads, "salmon-tddft", version) %>
     
     cd `dirname <%= filename %>`
-    FILE=`basename <%= filename %>`  # Full path doesn't work.
-    mpiexec <%= eval("binary_#{version.delete(".")}") %> $FILE <%= options %>
+    FILE=`basename <%= filename %>`
+    mpiexec -stdin $FILE salmon

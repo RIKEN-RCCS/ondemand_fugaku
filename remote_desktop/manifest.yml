@@ -8,3 +8,4 @@ description: |
   This app will launch an [Xfce](https://xfce.org/) Remote Desktop.
 tile:
   sub_caption: |
+new_window: true
