@@ -5,13 +5,17 @@
 title: Job Submitter
 form:
   <%= form_cluster() %>
-  <%= form_queue() %>
+  <%= form_queue("all") %>
   <%= form_volume() %>
   <%= form_group() %>
   <%= form_fugaku_small_hours() %>
   <%= form_fugaku_small_free_hours() %>
   <%= form_fugaku_small_nodes() %>
   <%= form_fugaku_small_procs() %>
+  <%= form_fugaku_large_hours() %>
+  <%= form_fugaku_large_free_hours() %>
+  <%= form_fugaku_large_nodes() %>
+  <%= form_fugaku_large_procs() %>
   <%= form_prepost1_hours() %>
   <%= form_prepost2_hours() %>
   <%= form_reserved_hours() %>

@@ -23,14 +23,19 @@ def submit_email(email = "", only_start = true)
   end
 end
 
-def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, group, volume, mode)
+def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
+                         fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, group, volume, mode)
   str = "native:\n"
   if queue == "small" then
-    str << "    - \"-L elapse=#{fugaku_small_hours}:00:00,"
+    str << "    - \"-L elapse=#{fugaku_small_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}"
   elsif queue == "small-free" then
-    str << "    - \"-L elapse=#{fugaku_small_free_hours}:00:00,"
+    str << "    - \"-L elapse=#{fugaku_small_free_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}"
+  elsif queue == "large" then
+    str << "    - \"-L elapse=#{fugaku_large_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}"
+  elsif queue == "large-free" then
+    str << "    - \"-L elapse=#{fugaku_large_free_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}"
   end
-  str << "node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs} --no-check-directory -g #{group}"
+  str << " --no-check-directory -g #{group}"
 
   # volume == "" is set when a group with no data/share directory defined (e.g. rist-a) is set.
   if volume == "/vol0004" or volume == ""
@@ -117,12 +122,14 @@ def submit_native_prepost_core1(queue, prepost1_hours, gpu1_memory, prepost2_hou
 end
 
 def submit_native(cluster, queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
-                  fugaku_small_procs, group, volume, mode, prepost1_hours, gpu1_cores, gpu1_memory,
+                  fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
+                  fugaku_large_procs, group, volume, mode, prepost1_hours, gpu1_cores, gpu1_memory,
                   prepost2_hours, gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
                   mem2_memory, reserved_hours, reserved_cores, reserved_memory)
   if cluster == "fugaku"
-    return submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours,
-                                fugaku_small_nodes, fugaku_small_procs, group, volume, mode)
+    return submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
+                                fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours,
+                                fugaku_large_nodes, fugaku_large_procs, group, volume, mode)
   elsif cluster == "prepost"
     return submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
                                  gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
