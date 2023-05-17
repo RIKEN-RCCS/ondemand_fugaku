@@ -21,8 +21,8 @@ form:
   <%= form_fugaku_large_procs() %>
   <%= form_fugaku_threads() %>
   <%= form_mode() %>
-  <%= form_version(versions) %>
   <%= form_working_dir() %>
+  <%= form_version(versions) %>
   <%= form_select("pre_execute", "Execute hecmw_part1 in advance ?", [[ "mpiexec -n 1 hecmw_part1", "mpiexec -n 1 hecmw_part1" ], [ "No", "" ]]) %>
   <%= form_binary(versions[0], ff_master, "fistr1") %>
   <%= form_email(false) %>
