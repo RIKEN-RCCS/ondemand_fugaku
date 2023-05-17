@@ -8,16 +8,21 @@
 ---
 form:
   <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small") %>
+  <%= form_queue("fugaku_small_and_large") %>
   <%= form_volume() %>
   <%= form_group() %>
-  <%= form_fugaku_hours() %>
-  <%= form_fugaku_nodes() %>
-  <%= form_fugaku_procs() %>
+  <%= form_fugaku_small_hours() %>
+  <%= form_fugaku_small_free_hours() %>
+  <%= form_fugaku_small_nodes() %>
+  <%= form_fugaku_small_procs() %>
+  <%= form_fugaku_large_hours() %>
+  <%= form_fugaku_large_free_hours() %>
+  <%= form_fugaku_large_nodes() %>
+  <%= form_fugaku_large_procs() %>
   <%= form_fugaku_threads() %>
   <%= form_mode() %>
-  <%= form_version(versions) %>
   <%= form_working_dir() %>
+  <%= form_version(versions) %>
   <%= form_binary(versions[0], modylas110b, "modylas") %>
   <%= form_session_name() %>
   <%= form_email(false) %>

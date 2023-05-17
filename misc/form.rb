@@ -9,6 +9,80 @@ LIFE_TIME       = 3600
 FUGAKU_SMALL =<<"EOF"
       - [ "fugaku-small", "small",
           data-set-cluster: fugaku,
+          data-hide-fugaku-small-free-hours: true,
+          data-hide-fugaku-large-hours: true,
+          data-hide-fugaku-large-free-hours: true,
+          data-hide-fugaku-large-nodes: true,
+          data-hide-fugaku-large-procs: true,
+          data-hide-prepost1-hours: true,
+          data-hide-prepost2-hours: true,
+          data-hide-reserved-hours: true,
+          data-hide-gpus-per-node: true,
+          data-hide-gpu1-cores: true,
+          data-hide-gpu2-cores: true,
+          data-hide-mem1-cores: true,
+          data-hide-mem2-cores: true,
+          data-hide-reserved-cores: true,
+          data-hide-gpu1-memory: true,
+          data-hide-gpu2-memory: true,
+          data-hide-mem1-memory: true,
+          data-hide-mem2-memory: true,
+          data-hide-reserved-memory: true ]
+EOF
+FUGAKU_SMALL_FREE =<<"EOF"
+      - [ "fugaku-small-free", "small-free",
+          data-set-cluster: fugaku,
+          data-hide-fugaku-small-hours: true,
+          data-hide-fugaku-large-hours: true,
+          data-hide-fugaku-large-free-hours: true,
+          data-hide-fugaku-large-nodes: true,
+          data-hide-fugaku-large-procs: true,
+          data-hide-prepost1-hours: true,
+          data-hide-prepost2-hours: true,
+          data-hide-reserved-hours: true,
+          data-hide-gpus-per-node: true,
+          data-hide-gpu1-cores: true,
+          data-hide-gpu2-cores: true,
+          data-hide-mem1-cores: true,
+          data-hide-mem2-cores: true,
+          data-hide-reserved-cores: true,
+          data-hide-gpu1-memory: true,
+          data-hide-gpu2-memory: true,
+          data-hide-mem1-memory: true,
+          data-hide-mem2-memory: true,
+          data-hide-reserved-memory: true ]
+EOF
+FUGAKU_LARGE =<<"EOF"
+      - [ "fugaku-large", "large",
+          data-set-cluster: fugaku,
+          data-hide-fugaku-small-hours: true,
+          data-hide-fugaku-small-free-hours: true,
+          data-hide-fugaku-small-nodes: true,
+          data-hide-fugaku-small-procs: true,
+          data-hide-fugaku-large-free-hours: true,
+          data-hide-prepost1-hours: true,
+          data-hide-prepost2-hours: true,
+          data-hide-reserved-hours: true,
+          data-hide-gpus-per-node: true,
+          data-hide-gpu1-cores: true,
+          data-hide-gpu2-cores: true,
+          data-hide-mem1-cores: true,
+          data-hide-mem2-cores: true,
+          data-hide-reserved-cores: true,
+          data-hide-gpu1-memory: true,
+          data-hide-gpu2-memory: true,
+          data-hide-mem1-memory: true,
+          data-hide-mem2-memory: true,
+          data-hide-reserved-memory: true ]
+EOF
+FUGAKU_LARGE_FREE =<<"EOF"
+      - [ "fugaku-large-free", "large-free",
+          data-set-cluster: fugaku,
+          data-hide-fugaku-small-hours: true,
+          data-hide-fugaku-small-free-hours: true,
+          data-hide-fugaku-small-nodes: true,
+          data-hide-fugaku-small-procs: true,
+          data-hide-fugaku-large-hours: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
@@ -28,9 +102,14 @@ PREPOST_GPU1 =<<"EOF"
       - [ "prepost-gpu1", "gpu1", 
           data-set-cluster: prepost,
           data-hide-group: true,
-          data-hide-fugaku-hours: true,
-          data-hide-fugaku-nodes: true,
-          data-hide-fugaku-procs: true,
+          data-hide-fugaku-small-hours: true,
+          data-hide-fugaku-small-free-hours: true,
+          data-hide-fugaku-small-nodes: true,
+          data-hide-fugaku-small-procs: true,
+          data-hide-fugaku-large-hours: true,
+          data-hide-fugaku-large-free-hours: true,
+          data-hide-fugaku-large-nodes: true,
+          data-hide-fugaku-large-procs: true,
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpu2-cores: true,
@@ -47,9 +126,14 @@ PREPOST_GPU2 =<<"EOF"
       - [ "prepost-gpu2", "gpu2", 
           data-set-cluster: prepost,
           data-hide-group: true,
-          data-hide-fugaku-hours: true,
-          data-hide-fugaku-nodes: true,
-          data-hide-fugaku-procs: true,
+          data-hide-fugaku-small-hours: true,
+          data-hide-fugaku-small-free-hours: true,
+          data-hide-fugaku-small-nodes: true,
+          data-hide-fugaku-small-procs: true,
+          data-hide-fugaku-large-hours: true,
+          data-hide-fugaku-large-free-hours: true,
+          data-hide-fugaku-large-nodes: true,
+          data-hide-fugaku-large-procs: true,
           data-hide-prepost1-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpu1-cores: true,
@@ -66,9 +150,14 @@ PREPOST_MEM1 =<<"EOF"
       - [ "prepost-mem1", "mem1",
           data-set-cluster: prepost,
           data-hide-group: true,
-          data-hide-fugaku-hours: true,
-          data-hide-fugaku-nodes: true,
-          data-hide-fugaku-procs: true,
+          data-hide-fugaku-small-hours: true,
+          data-hide-fugaku-small-free-hours: true,
+          data-hide-fugaku-small-nodes: true,
+          data-hide-fugaku-small-procs: true,
+          data-hide-fugaku-large-hours: true,
+          data-hide-fugaku-large-free-hours: true,
+          data-hide-fugaku-large-nodes: true,
+          data-hide-fugaku-large-procs: true,
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
@@ -86,9 +175,14 @@ PREPOST_MEM2 =<<"EOF"
       - [ "prepost-mem2", "mem2",
           data-set-cluster: prepost,
           data-hide-group: true,
-          data-hide-fugaku-hours: true,
-          data-hide-fugaku-nodes: true,
-          data-hide-fugaku-procs: true,
+          data-hide-fugaku-small-hours: true,
+          data-hide-fugaku-small-free-hours: true,
+          data-hide-fugaku-small-nodes: true,
+          data-hide-fugaku-small-procs: true,
+          data-hide-fugaku-large-hours: true,
+          data-hide-fugaku-large-free-hours: true,
+          data-hide-fugaku-large-nodes: true,
+          data-hide-fugaku-large-procs: true,
           data-hide-prepost1-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
@@ -106,9 +200,14 @@ PREPOST_RESERVED =<<"EOF"
       - [ "prepost-ondemand-reserved", "ondemand-reserved", 
           data-set-cluster: prepost,
           data-hide-group: true,
-          data-hide-fugaku-hours: true,
-          data-hide-fugaku-nodes: true,
-          data-hide-fugaku-procs: true,
+          data-hide-fugaku-small-hours: true,
+          data-hide-fugaku-small-free-hours: true,
+          data-hide-fugaku-small-nodes: true,
+          data-hide-fugaku-small-procs: true,
+          data-hide-fugaku-large-hours: true,
+          data-hide-fugaku-large-free-hours: true,
+          data-hide-fugaku-large-nodes: true,
+          data-hide-fugaku-large-procs: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
           data-hide-gpus-per-node: true,
@@ -131,12 +230,20 @@ def load_cache(file)
   return info
 end
 
-def store_bins_cache(file, bin_path)
-  output = `ls -1 #{bin_path}`.split("\n")
+def store_bins_cache(file, dir_paths)
+  bins = []
+  dir_paths.split(":").each do |d|
+    d = d + '/' unless d[-1] == '/'
+    Dir.foreach(d) do |x|
+      bins.push(x) if File.file?(d + x)
+    end
+  end
+  
+  # Create cache
   dir = File.dirname(file)
   FileUtils.mkdir_p(dir) unless File.directory?(dir)
   f = File.open(file, 'w')
-  f.write(Marshal.dump(output))
+  f.write(Marshal.dump(bins.sort()))
   f.close()
 end
 
@@ -163,10 +270,10 @@ def get_groups_cache()
   return load_cache(GROUPS_CACHE)
 end
 
-def get_bins(fname, bin_path)
+def get_bins(fname, dir_paths)
   file = BASE_DIR + fname + ".cache"
   unless File.exist?(file) and (Time.now - File.mtime(file)) < LIFE_TIME
-    store_bins_cache(file, bin_path)
+    store_bins_cache(file, dir_paths)
   end
 
   return load_cache(file)
@@ -210,8 +317,9 @@ def form_queue(name = "")
     options:
 EOF
 
-  if name == ""
+  if name == "fugaku_small_and_prepost"
     $attr << FUGAKU_SMALL
+    $attr << FUGAKU_SMALL_FREE
     $attr << PREPOST_GPU1
     $attr << PREPOST_GPU2
     $attr << PREPOST_MEM1
@@ -219,6 +327,12 @@ EOF
     $attr << PREPOST_RESERVED
   elsif name == "fugaku_small"
     $attr << FUGAKU_SMALL
+    $attr << FUGAKU_SMALL_FREE
+  elsif name == "fugaku_small_and_large"
+    $attr << FUGAKU_SMALL
+    $attr << FUGAKU_SMALL_FREE
+    $attr << FUGAKU_LARGE
+    $attr << FUGAKU_LARGE_FREE
   elsif name == "prepost"
     $attr << PREPOST_GPU1
     $attr << PREPOST_GPU2
@@ -234,6 +348,16 @@ EOF
     $attr << PREPOST_GPU2
     $attr << PREPOST_MEM1
     $attr << PREPOST_MEM2
+  else name == "all"
+    $attr << FUGAKU_SMALL
+    $attr << FUGAKU_SMALL_FREE
+    $attr << FUGAKU_LARGE
+    $attr << FUGAKU_LARGE_FREE
+    $attr << PREPOST_GPU1
+    $attr << PREPOST_GPU2
+    $attr << PREPOST_MEM1
+    $attr << PREPOST_MEM2
+    $attr << PREPOST_RESERVED
   end
   
   return "- queue"
@@ -276,9 +400,9 @@ EOF
   return "- group"
 end
 
-def form_fugaku_hours()
+def form_fugaku_small_hours()
   $attr <<<<"EOF"
-  fugaku_hours:
+  fugaku_small_hours:
     label: Elapsed time (1 - 72 hours)
     widget: number_field
     value: 1
@@ -287,12 +411,54 @@ def form_fugaku_hours()
     step: 1
     required: true
 EOF
-  return "- fugaku_hours"
+  return "- fugaku_small_hours"
 end
 
-def form_fugaku_nodes()
+def form_fugaku_large_hours()
   $attr <<<<"EOF"
-  fugaku_nodes:
+  fugaku_large_hours:
+    label: Elapsed time (1 - 24 hours)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 24
+    step: 1
+    required: true
+EOF
+  return "- fugaku_large_hours"
+end
+
+def form_fugaku_small_free_hours()
+  $attr <<<<"EOF"
+  fugaku_small_free_hours:
+    label: Elapsed time (1 - 12 hours)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 12
+    step: 1
+    required: true
+EOF
+  return "- fugaku_small_free_hours"
+end
+
+def form_fugaku_large_free_hours()
+  $attr <<<<"EOF"
+  fugaku_large_free_hours:
+    label: Elapsed time (1 - 12 hours)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 12
+    step: 1
+    required: true
+EOF
+  return "- fugaku_large_free_hours"
+end
+
+def form_fugaku_small_nodes()
+  $attr <<<<"EOF"
+  fugaku_small_nodes:
     label: Number of nodes (1 - 384)
     widget: number_field
     value: 1
@@ -301,12 +467,26 @@ def form_fugaku_nodes()
     step: 1
     required: true
 EOF
-  return "- fugaku_nodes"
+  return "- fugaku_small_nodes"
 end
 
-def form_fugaku_procs()
+def form_fugaku_large_nodes()
   $attr <<<<"EOF"
-  fugaku_procs:
+  fugaku_large_nodes:
+    label: Number of nodes (385 - 7,000)
+    widget: number_field
+    value: 385
+    min: 385
+    max: 7,000
+    step: 1
+    required: true
+EOF
+  return "- fugaku_large_nodes"
+end
+
+def form_fugaku_small_procs()
+  $attr <<<<"EOF"
+  fugaku_small_procs:
     label: Total number of processes (1 - 18,432)
     widget: number_field
     value: 1
@@ -317,7 +497,23 @@ def form_fugaku_procs()
     help: |
       Total number of processes <= Number of nodes x 48.
 EOF
-  return "- fugaku_procs"
+  return "- fugaku_small_procs"
+end
+
+def form_fugaku_large_procs()
+  $attr <<<<"EOF"
+  fugaku_large_procs:
+    label: Total number of processes (385 - 28,000)
+    widget: number_field
+    value: 385
+    min: 385
+    max: 28000
+    step: 1
+    required: true
+    help: |
+      Total number of processes <= Number of nodes x 48.
+EOF
+  return "- fugaku_large_procs"
 end
 
 def form_fugaku_threads()
