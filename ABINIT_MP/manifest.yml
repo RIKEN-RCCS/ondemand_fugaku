@@ -1,0 +1,8 @@
+---
+name: ABINIT-MP
+category: Batch Jobs
+role: batch_connect
+description: |
+  [ABINIT-MP](https://www.hpci-office.jp/for_users/appli_software/appli_abinit-mp) is a software for Fragment Molecular Orbital (FMO) calculations.
+tile:
+  sub_caption: |
