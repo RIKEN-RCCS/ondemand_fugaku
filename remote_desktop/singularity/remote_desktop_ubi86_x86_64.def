@@ -98,6 +98,15 @@ From: redhat/ubi8:8.6-990
   mv C-TOOLS062/src/c-tools /usr/local/C-TOOLS062/
   rm -rf qt-everywhere-opensource-src-4.8.6.tar.gz qt-everywhere-opensource-src-4.8.6 C-TOOLS062.tgz C-TOOLS062
   #
+  # PyMOL
+  dnf --releasever=8.6 -y install glew-devel python36-devel netcdf-devel glm-devel libxml2-devel python3-tkinter
+  wget https://github.com/schrodinger/pymol-open-source/archive/refs/tags/v2.5.0.tar.gz
+  tar xfz v2.5.0.tar.gz
+  cd pymol-open-source-2.5.0
+  python setup.py build install --prefix=/usr/local/pymol-2.5.0 --glut
+  cd ../
+  rm -rf v2.5.0.tar.gz pymol-open-source-2.5.0
+  #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo
