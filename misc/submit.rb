@@ -210,6 +210,8 @@ def submit_vnc(staged_root)
     export PATH="$PATH:/opt/ovito/bin"
     export PATH="$PATH:/usr/local/C-TOOLS062"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/qt-4.8.6/lib"
+    export PATH="$PATH:/usr/local/pymol-2.5.0/bin"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/pymol-2.5.0/lib64"
     %s
     CTRSCRIPT
 

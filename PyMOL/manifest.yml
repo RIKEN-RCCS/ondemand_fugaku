@@ -1,0 +1,9 @@
+---
+name: PyMOL
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
+description: |
+  [PyMOL](https://pymol.org/) is a molecular visualization system.
+tile:
+  sub_caption: |

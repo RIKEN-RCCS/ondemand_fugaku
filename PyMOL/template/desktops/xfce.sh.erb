@@ -1,0 +1,13 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/desktop.rb'
+-%>
+
+<%= output_xfce() %>
+
+if [ "<%= context.filename %>" = "" ]; then
+  /usr/local/pymol-2.5.0/bin/pymol &
+else
+  /usr/local/pymol-2.5.0/bin/pymol <%= context.filename %> &
+fi
+xfce4-session
+fg
