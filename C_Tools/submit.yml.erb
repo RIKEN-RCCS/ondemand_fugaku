@@ -1,0 +1,12 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/submit.rb'
+-%>
+---
+script:
+  job_name: ood_ctools
+  queue_name: <%= queue %>
+  <%= submit_email(email) %>
+  <%= submit_native_prepost_core1(queue, prepost1_hours, gpu1_memory, prepost2_hours,
+  gpu2_memory, mem1_memory, mem2_memory, reserved_hours, reserved_memory) %>
+batch_connect:
+<%= submit_vnc(staged_root) %>

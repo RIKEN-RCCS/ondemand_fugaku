@@ -1,0 +1,13 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/desktop.rb'
+-%>
+
+<%= output_xfce() %>
+
+if [ "<%= context.filename %>" = "" ]; then
+  /usr/local/C-TOOLS062/c-tools &
+else
+  /usr/local/C-TOOLS062/c-tools <%= context.filename %> &
+fi
+xfce4-session
+fg
