@@ -752,7 +752,7 @@ EOF
   versions.each do |v|
     $attr << "    - [" + v + ", " + v
     versions.each do |i|
-      $attr << ", data-hide-binary-" + i.delete(".") + ": true " unless i == v
+      $attr << ", data-hide-binary-" + i.delete(".-") + ": true " unless i == v
     end
     $attr << "]\n"
   end
@@ -762,7 +762,7 @@ end
 
 def form_binary(version, binaries, value)
   $attr <<<<"EOF"
-  binary_#{version.delete(".")}:
+  binary_#{version.delete(".-")}:
     label: Binary file version #{version}
     widget: select
     value: #{value}
@@ -772,10 +772,10 @@ EOF
     $attr << "      - " + b + "\n"
   end
 
-  return "- binary_" + version.delete(".")
+  return "- binary_" + version.delete(".-")
 end
 
-def form_filename(memo = "", requred = false)
+def form_filename(memo = "", required = true)
   $attr << "  filename:\n"
   if memo == ""
     $attr << "    label: Input file\n"
@@ -791,7 +791,7 @@ def form_filename(memo = "", requred = false)
     # Optionally only allow editing through the file picker; defaults to false
     data-file_picker_favorites: #{get_groups_fdirs()}
 EOF
-  $attr << "    required: true\n" if requred
+  $attr << "    required: true\n" if required
 
   return "- filename"
 end

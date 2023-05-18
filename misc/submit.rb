@@ -208,6 +208,8 @@ def submit_vnc(staged_root)
     export PATH="$PATH:/usr/local/vesta"
     export PATH="$PATH:/opt/smokeview"
     export PATH="$PATH:/opt/ovito/bin"
+    export PATH="$PATH:/usr/local/C-TOOLS062"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/qt-4.8.6/lib"
     %s
     CTRSCRIPT
 
