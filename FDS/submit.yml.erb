@@ -12,6 +12,6 @@ batch_connect:
   script_wrapper: |
     <%= submit_env(fugaku_threads, "fds", version) %>
     
-    cd `dirname <%= filename %>`
-    FILE=`basename <%= filename %>`
+    cd `dirname <%= input_file %>`
+    FILE=`basename <%= input_file %>`
     mpiexec fds_mpi_fugaku $FILE

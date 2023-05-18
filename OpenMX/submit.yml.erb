@@ -12,6 +12,6 @@ batch_connect:
   script_wrapper: |
     <%= submit_env(fugaku_threads, "openmx", version) %>
     
-    cd `dirname <%= filename %>`
-    FILE=`basename <%= filename %>`  # Full path doesn't work.
+    cd `dirname <%= input_file %>`
+    FILE=`basename <%= input_file %>`  # Full path doesn't work.
     mpiexec <%= eval("binary_#{version.delete(".")}") %> $FILE <%= options %>

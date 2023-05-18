@@ -27,7 +27,7 @@ form:
   <%= form_version(versions) %>
   <%= form_binary(versions[0], ab[0], "abinitmp") %>
   <%= form_binary(versions[1], ab[1], "abinitmp") %>
-  <%= form_filename("mpiexec [binary file] < [input file]") %>
+  <%= form_input_file("mpiexec [binary file] < [input file]") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>

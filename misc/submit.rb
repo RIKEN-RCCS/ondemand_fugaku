@@ -224,10 +224,31 @@ EOF
 end
 
 def submit_env(threads, app_name, version)
-<<"EOF"
+str =<<"EOF"
 #!/usr/bin/env bash
-    export OMP_NUM_THREADS=#{threads}
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
     spack load #{app_name}@#{version}
 EOF
+  if threads != 0
+    return str << "    export OMP_NUM_THREADS=#{threads}"
+  else
+    return str
+  end
+end
+
+def submit_llio(flag, queue, binary, input_file, working_dir)
+  return if flag == "none"
+
+  if queue == "large" or queue == "large-free"
+    str = "/usr/bin/llio_transfer `which " + binary + "`\n"
+    if flag == "file"
+      return str << "    /usr/bin/llio_transfer " + input_file + "\n"
+    elsif flag == "dir"
+      if working_dir == ""
+        return str << "    /home/system/tool/dir_transfer " + File.dirname(input_file) + "\n"
+      else
+        return str << "    /home/system/tool/dir_transfer " + working_dir + "\n"
+      end
+    end
+  end
 end

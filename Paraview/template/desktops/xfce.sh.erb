@@ -9,10 +9,10 @@ if [ "$ARCH" = "aarch64" ]; then
 #  . /vol0004/apps/oss/spack/share/spack/setup-env.sh
 #  spack load paraview@5.10.1%fj@4.8.1/oh5qwq
 #  which paraview
-#  mpiexec paraview <%= context.filename %> &
-  paraview <%= context.filename %> &
+#  mpiexec paraview <%= context.input_file %> &
+  paraview <%= context.input_file %> &
 else
-  /opt/ParaView/bin/paraview <%= context.filename %> &
+  /opt/ParaView/bin/paraview <%= context.input_file %> &
 fi
 xfce4-session
 fg

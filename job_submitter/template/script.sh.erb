@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-cd <%= context.working_dir %>
-<% context.commands.split("\r\n").each do |c| %>
-  <%= c.strip -%>
-<% end %>

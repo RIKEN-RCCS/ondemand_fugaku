@@ -14,6 +14,7 @@ FUGAKU_SMALL =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
@@ -37,6 +38,7 @@ FUGAKU_SMALL_FREE =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
@@ -110,6 +112,7 @@ PREPOST_GPU1 =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpu2-cores: true,
@@ -134,6 +137,7 @@ PREPOST_GPU2 =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost1-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpu1-cores: true,
@@ -158,6 +162,7 @@ PREPOST_MEM1 =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
@@ -183,6 +188,7 @@ PREPOST_MEM2 =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost1-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
@@ -208,6 +214,7 @@ PREPOST_RESERVED =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
           data-hide-gpus-per-node: true,
@@ -473,11 +480,11 @@ end
 def form_fugaku_large_nodes()
   $attr <<<<"EOF"
   fugaku_large_nodes:
-    label: Number of nodes (385 - 7,000)
+    label: Number of nodes (385 - 12,288)
     widget: number_field
     value: 385
     min: 385
-    max: 7,000
+    max: 12288
     step: 1
     required: true
 EOF
@@ -487,11 +494,11 @@ end
 def form_fugaku_small_procs()
   $attr <<<<"EOF"
   fugaku_small_procs:
-    label: Total number of processes (1 - 18,432)
+    label: Total number of processes (1 - 589,824)
     widget: number_field
     value: 1
     min: 1
-    max: 18432
+    max: 589824
     step: 1
     required: true
     help: |
@@ -775,8 +782,8 @@ EOF
   return "- binary_" + version.delete(".-")
 end
 
-def form_filename(memo = "", required = true)
-  $attr << "  filename:\n"
+def form_input_file(memo = "", required = true)
+  $attr << "  input_file:\n"
   if memo == ""
     $attr << "    label: Input file\n"
   else
@@ -793,7 +800,7 @@ def form_filename(memo = "", required = true)
 EOF
   $attr << "    required: true\n" if required
 
-  return "- filename"
+  return "- input_file"
 end
 
 def form_working_dir(label = "Working directory", type = "dirs")
@@ -810,6 +817,20 @@ EOF
   return "- working_dir"
 end
 
+def form_llio()
+  $attr <<<<"EOF"
+  fugaku_llio:
+    label: "Transfer to the cache area of the second-layer storage"
+    widget: select
+    value: "file"
+    options:
+      - ["(None)", "none"]
+      - ["Binary and input files", "file"]
+      - ["Binary file and directory where input file exists", "dir"]
+EOF
+  return "- fugaku_llio"
+end
+
 def form_options(memo = "")
   $attr <<<<"EOF"
   options:
@@ -819,12 +840,18 @@ EOF
   return "- options"
 end
 
-def form_commands()
+def form_commands(memo = "")
   $attr <<<<"EOF"
   commands:
-    label: Commands (e.g. mpiexec ./a.out)
+    label: Commands (#{memo})
     widget: text_area
 EOF
+  if memo == ""
+    $attr << "    label: Commands\n"
+  else
+    $attr << "    label: Commands (#{memo})\n"
+  end
+
   return "- commands"
 end
 
