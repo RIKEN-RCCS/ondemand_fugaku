@@ -5,6 +5,7 @@
 script:
   job_name: ood_vesta
   queue_name: <%= queue %>
+  <%= submit_gpus_per_node(queue, gpus_per_node) %>
   <%= submit_email(email) %>
   <%= submit_native_prepost_core1(queue, prepost1_hours, gpu1_memory, prepost2_hours,
   gpu2_memory, mem1_memory, mem2_memory, reserved_hours, reserved_memory) %>
