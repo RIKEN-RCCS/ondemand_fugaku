@@ -74,6 +74,7 @@ From: redhat/ubi8:8.6-990
   dnf --releasever=8.6 -y install easyistr-3.37.230306-2.noarch.rpm python3-vtk nautilus glibc-langpack-ja
   #
   # OVITO
+  dnf --releasever=8.6 -y install mesa-vulkan-devel
   cd /opt
   wget -O ovito-basic.tar.xz --trust-server-names "https://www.ovito.org/download/3106/?tmstv=1681276472"
   tar Jxfv ovito-basic.tar.xz
