@@ -1,0 +1,27 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/form.rb'
+
+  versions=["2212", "2206", "2112", "2106", "2012"]
+-%>
+---
+form:
+  <%= form_cluster("fugaku") %>
+  <%= form_queue("fugaku_small_and_large") %>
+  <%= form_volume() %>
+  <%= form_group() %>
+  <%= form_fugaku_small_hours() %>
+  <%= form_fugaku_small_free_hours() %>
+  <%= form_fugaku_small_nodes() %>
+  <%= form_fugaku_small_procs() %>
+  <%= form_fugaku_large_hours() %>
+  <%= form_fugaku_large_free_hours() %>
+  <%= form_fugaku_large_nodes() %>
+  <%= form_fugaku_large_procs() %>
+  <%= form_mode() %>
+  <%= form_working_dir() %>
+  <%= form_version(versions) %>
+  <%= form_commands("e.g. mpiexec interFoam -parallel") %>
+  <%= form_llio("commands", "Please transfer the executable file yourself other than the working directory. For example, add 'lilo_transfer $(which interFoam)' in commands area.") %>
+  <%= form_email(false) %>
+attributes:
+<%= form_attr() %>
