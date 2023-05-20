@@ -28,13 +28,14 @@ form:
   <%= form_fugaku_threads() %>
   <%= form_mode() %>
   <%= form_version(versions) %>
-  <%= form_binary(versions[0], qe[0], "pw.x") %>
-  <%= form_binary(versions[1], qe[1], "pw.x") %>
-  <%= form_binary(versions[2], qe[2], "pw.x") %>
-  <%= form_binary(versions[3], qe[3], "pw.x") %>
-  <%= form_binary(versions[4], qe[4], "pw.x") %>
+  <%= form_exec(versions[0], qe[0], "pw.x") %>
+  <%= form_exec(versions[1], qe[1], "pw.x") %>
+  <%= form_exec(versions[2], qe[2], "pw.x") %>
+  <%= form_exec(versions[3], qe[3], "pw.x") %>
+  <%= form_exec(versions[4], qe[4], "pw.x") %>
   <%= form_input_file("-in <input>") %>
   <%= form_options("e.g. -nk 2") %>
+  <%= form_llio("input_file") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>

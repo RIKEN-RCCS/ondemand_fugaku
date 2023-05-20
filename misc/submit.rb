@@ -236,18 +236,22 @@ EOF
   end
 end
 
-def submit_llio(flag, queue, binary, input_file, working_dir)
+def submit_llio(flag, queue, exec_file, target) # target is a path of input_file or working_dir
   return if flag == "none"
 
   if queue == "large" or queue == "large-free"
-    str = "/usr/bin/llio_transfer `which " + binary + "`\n"
-    if flag == "file"
-      return str << "    /usr/bin/llio_transfer " + input_file + "\n"
-    elsif flag == "dir"
-      if working_dir == ""
-        return str << "    /home/system/tool/dir_transfer " + File.dirname(input_file) + "\n"
-      else
-        return str << "    /home/system/tool/dir_transfer " + working_dir + "\n"
+    if flag == "working_dir"
+      return "/home/system/tool/dir_transfer " + target
+    else
+      str = "/usr/bin/llio_transfer `which " + exec_file + "`\n"
+      if flag == "executable_and_input_file"
+        return str << "    /usr/bin/llio_transfer " + target
+      elsif flag == "executable_and_input_dir"
+        return str << "    /home/system/tool/dir_transfer " + File.dirname(target) # target is a input file.
+      elsif flag == "executable_and_working_dir"
+        return str << "    /home/system/tool/dir_transfer " + target
+      elsif flag == "executable"
+        return str
       end
     end
   end

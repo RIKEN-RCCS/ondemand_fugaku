@@ -11,6 +11,7 @@ batch_connect:
   template: "basic"
   script_wrapper: |
     <%= submit_env(fugaku_threads, "fds", version) %>
+    <%= submit_llio(fugaku_llio, queue, "fds_mpi_fugaku", input_file) %>
     
     cd `dirname <%= input_file %>`
     FILE=`basename <%= input_file %>`

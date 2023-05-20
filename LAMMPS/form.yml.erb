@@ -22,6 +22,7 @@ form:
   <%= form_version(versions) %>
   <%= form_input_file("mpiexec lmp -in <input file>") %>
   <%= form_options("e.g. -pk omp 2") %>
+  <%= form_llio("input_file") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>

@@ -11,7 +11,7 @@ batch_connect:
   template: "basic"
   script_wrapper: |
     <%= submit_env(fugaku_threads, "salmon-tddft", version) %>
-    <%= submit_llio(fugaku_llio, queue, "salmon", input_file, "") %>
+    <%= submit_llio(fugaku_llio, queue, "salmon", input_file) %>
     
     cd `dirname <%= input_file %>`
     FILE=`basename <%= input_file %>`
