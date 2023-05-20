@@ -846,7 +846,6 @@ def form_working_dir(label = "Working directory", type = "dirs")
     data-target-file-type: #{type} # Valid values are: files, dirs, or both
     data-default-directory: #{ENV['HOME']}
     data-file_picker_favorites: #{get_groups_fdirs()}
-    value: #{ENV['HOME']}
     readonly: false
 EOF
   return "- working_dir"
