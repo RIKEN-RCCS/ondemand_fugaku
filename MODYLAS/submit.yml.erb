@@ -11,6 +11,7 @@ batch_connect:
   template: "basic"
   script_wrapper: |
     <%= submit_env(fugaku_threads, "modylas-new", version) %>
+    <%= submit_llio(fugaku_llio, queue, eval("exec_110b"), working_dir) %>
     
     cd <%= working_dir %>
-    mpiexec <%= binary_110b %> <%= session_name %>
+    mpiexec <%= exec_110b %> <%= session_name %>

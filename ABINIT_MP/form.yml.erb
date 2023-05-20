@@ -1,0 +1,34 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/form.rb'
+  
+  # spack versions abinitmp -s
+  versions = ["2-4", "1-22"]
+  # spack find --paths abinitmp@2-4
+  ab = []
+  ab.push(get_bins("ab2-4",  "/vol0004/apps/opt/SPACK-Feb2023-ABINIT-MP-VER2-REV4/bin"))
+  ab.push(get_bins("ab1-22", "/vol0004/apps/opt/SPACK-Feb2023-ABINIT-MP-VER1-REV22/bin"))
+-%>
+---
+form:
+  <%= form_cluster("fugaku") %>
+  <%= form_queue("fugaku_small_and_large") %>
+  <%= form_volume() %>
+  <%= form_group() %>
+  <%= form_fugaku_small_hours() %>
+  <%= form_fugaku_small_free_hours() %>
+  <%= form_fugaku_small_nodes() %>
+  <%= form_fugaku_small_procs() %>
+  <%= form_fugaku_large_hours() %>
+  <%= form_fugaku_large_free_hours() %>
+  <%= form_fugaku_large_nodes() %>
+  <%= form_fugaku_large_procs() %>
+  <%= form_fugaku_threads() %>
+  <%= form_mode() %>
+  <%= form_version(versions) %>
+  <%= form_exec(versions[0], ab[0], "abinitmp") %>
+  <%= form_exec(versions[1], ab[1], "abinitmp") %>
+  <%= form_input_file("mpiexec [executable file] < [input file]") %>
+  <%= form_llio("input_file") %>
+  <%= form_email(false) %>
+attributes:
+<%= form_attr() %>

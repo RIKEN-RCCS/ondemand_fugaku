@@ -1,0 +1,18 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/submit.rb'
+-%>
+---
+script:
+  job_name: ood_abinitmp
+  queue_name: <%= queue %>
+  <%= submit_email(email, false) %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, group, volume, mode) %>
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    <%= submit_env(fugaku_threads, "abinitmp", version) %>
+    <%= submit_llio(fugaku_llio, queue, eval("exec_#{version.delete("-")}"), input_file) %>
+    
+    cd `dirname <%= input_file %>`
+    FILE=`basename <%= input_file %>`
+    mpiexec <%= eval("exec_#{version.delete("-")}") %> < ${FILE}

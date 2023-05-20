@@ -14,6 +14,7 @@ FUGAKU_SMALL =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
@@ -37,6 +38,7 @@ FUGAKU_SMALL_FREE =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
@@ -110,6 +112,7 @@ PREPOST_GPU1 =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpu2-cores: true,
@@ -134,6 +137,7 @@ PREPOST_GPU2 =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost1-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpu1-cores: true,
@@ -158,6 +162,7 @@ PREPOST_MEM1 =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
@@ -183,6 +188,7 @@ PREPOST_MEM2 =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost1-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
@@ -208,6 +214,7 @@ PREPOST_RESERVED =<<"EOF"
           data-hide-fugaku-large-free-hours: true,
           data-hide-fugaku-large-nodes: true,
           data-hide-fugaku-large-procs: true,
+          data-hide-fugaku-llio: true,
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
           data-hide-gpus-per-node: true,
@@ -240,8 +247,7 @@ def store_bins_cache(file, dir_paths)
   end
   
   # Create cache
-  dir = File.dirname(file)
-  FileUtils.mkdir_p(dir) unless File.directory?(dir)
+  FileUtils.mkdir_p(File.dirname(file))
   f = File.open(file, 'w')
   f.write(Marshal.dump(bins.sort()))
   f.close()
@@ -255,8 +261,7 @@ def store_groups_cache()
     info.push([m.split("/").last, m, n, volume])  # [ group_name, data_dir, share_dir, volume ]
   end
 
-  dir = File.dirname(GROUPS_CACHE)
-  FileUtils.mkdir_p(dir) unless File.directory?(dir)
+  FileUtils.mkdir_p(File.dirname(GROUPS_CACHE))
   f = File.open(GROUPS_CACHE, 'w')
   f.write(Marshal.dump(info))
   f.close()
@@ -309,6 +314,42 @@ EOF
   return "- cluster"
 end
 
+# Since the code becomes complicated when checking whether the free queue is available for each group,
+# the free queue will be displayed in the user's selection item if one group can use the free queue.
+def store_free_queue_cache(file)
+  groups = []
+  get_groups_cache().each do |n|
+    flag = true
+    EXCLUDED_GROUPS.each do |d|
+      flag = false if n[0] == d
+    end
+    groups.push(n[0]) if flag
+  end
+
+  flag = false
+  groups.each do |g|
+    output = `sh /var/www/ood/apps/sys/ondemand_fugaku/misc/free_queue.sh #{g}`.split
+    if output[0] != "0"
+      flag = true
+      break
+    end
+  end
+
+  FileUtils.mkdir_p(File.dirname(file))
+  f = File.open(file, 'w')
+  f.write(Marshal.dump(flag))
+  f.close()
+end
+
+def check_free_queue()
+  file = BASE_DIR + "free_queue.cache"
+  unless File.exist?(file) and (Time.now - File.mtime(file)) < LIFE_TIME
+    store_free_queue_cache(file)
+  end
+  
+  return load_cache(file)
+end
+
 def form_queue(name = "")
   $attr <<<<"EOF"
   queue:
@@ -316,10 +357,12 @@ def form_queue(name = "")
     widget: select
     options:
 EOF
-
+  
+  free_queue_available = check_free_queue()
+  
   if name == "fugaku_small_and_prepost"
     $attr << FUGAKU_SMALL
-    $attr << FUGAKU_SMALL_FREE
+    $attr << FUGAKU_SMALL_FREE if free_queue_available
     $attr << PREPOST_GPU1
     $attr << PREPOST_GPU2
     $attr << PREPOST_MEM1
@@ -327,12 +370,12 @@ EOF
     $attr << PREPOST_RESERVED
   elsif name == "fugaku_small"
     $attr << FUGAKU_SMALL
-    $attr << FUGAKU_SMALL_FREE
+    $attr << FUGAKU_SMALL_FREE if free_queue_available
   elsif name == "fugaku_small_and_large"
     $attr << FUGAKU_SMALL
-    $attr << FUGAKU_SMALL_FREE
+    $attr << FUGAKU_SMALL_FREE if free_queue_available
     $attr << FUGAKU_LARGE
-    $attr << FUGAKU_LARGE_FREE
+    $attr << FUGAKU_LARGE_FREE if free_queue_available
   elsif name == "prepost"
     $attr << PREPOST_GPU1
     $attr << PREPOST_GPU2
@@ -350,9 +393,9 @@ EOF
     $attr << PREPOST_MEM2
   else name == "all"
     $attr << FUGAKU_SMALL
-    $attr << FUGAKU_SMALL_FREE
+    $attr << FUGAKU_SMALL_FREE if free_queue_available
     $attr << FUGAKU_LARGE
-    $attr << FUGAKU_LARGE_FREE
+    $attr << FUGAKU_LARGE_FREE if free_queue_available
     $attr << PREPOST_GPU1
     $attr << PREPOST_GPU2
     $attr << PREPOST_MEM1
@@ -386,7 +429,6 @@ EOF
       flag = false if n[0] == d
     end
     if flag
-      #$attr << "      - [\"" + n[0] + "\" , \"" + n[0] + "\", " + "data-set-volume: \"" + n[3] + "\"]\n"
       $attr << "      - [\"" + n[0] + "\" , \"" + n[0] + "\"]\n"
       added_groups.push(n[0])
     end
@@ -473,11 +515,11 @@ end
 def form_fugaku_large_nodes()
   $attr <<<<"EOF"
   fugaku_large_nodes:
-    label: Number of nodes (385 - 7,000)
+    label: Number of nodes (385 - 12,288)
     widget: number_field
     value: 385
     min: 385
-    max: 7,000
+    max: 12288
     step: 1
     required: true
 EOF
@@ -503,11 +545,11 @@ end
 def form_fugaku_large_procs()
   $attr <<<<"EOF"
   fugaku_large_procs:
-    label: Total number of processes (385 - 28,000)
+    label: Total number of processes (385 - 589,824)
     widget: number_field
     value: 385
     min: 385
-    max: 28000
+    max: 589,824
     step: 1
     required: true
     help: |
@@ -752,7 +794,7 @@ EOF
   versions.each do |v|
     $attr << "    - [" + v + ", " + v
     versions.each do |i|
-      $attr << ", data-hide-binary-" + i.delete(".") + ": true " unless i == v
+      $attr << ", data-hide-exec-" + i.delete(".-") + ": true " unless i == v
     end
     $attr << "]\n"
   end
@@ -760,23 +802,23 @@ EOF
   return "- version"
 end
 
-def form_binary(version, binaries, value)
+def form_exec(version, exec_files, value)
   $attr <<<<"EOF"
-  binary_#{version.delete(".")}:
-    label: Binary file version #{version}
+  exec_#{version.delete(".-")}:
+    label: Executable file version #{version}
     widget: select
     value: #{value}
     options:
 EOF
-  binaries.each do |b|
-    $attr << "      - " + b + "\n"
+  exec_files.each do |e|
+    $attr << "      - " + e + "\n"
   end
 
-  return "- binary_" + version.delete(".")
+  return "- exec_" + version.delete(".-")
 end
 
-def form_filename(memo = "", requred = false)
-  $attr << "  filename:\n"
+def form_input_file(memo = "", required = true)
+  $attr << "  input_file:\n"
   if memo == ""
     $attr << "    label: Input file\n"
   else
@@ -791,9 +833,9 @@ def form_filename(memo = "", requred = false)
     # Optionally only allow editing through the file picker; defaults to false
     data-file_picker_favorites: #{get_groups_fdirs()}
 EOF
-  $attr << "    required: true\n" if requred
+  $attr << "    required: true\n" if required
 
-  return "- filename"
+  return "- input_file"
 end
 
 def form_working_dir(label = "Working directory", type = "dirs")
@@ -810,6 +852,34 @@ EOF
   return "- working_dir"
 end
 
+def form_llio(flag, add_memo = "")
+  $attr <<<<"EOF"
+  fugaku_llio:
+    label: "Targets with LLIO"
+    widget: select
+    value: "none"
+    help: "To reduce IO load, the targets are transferred to the cache area. Enable this setting when using more than 7,000 nodes or 28,000 processes. #{add_memo} [More info.](https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/use_latest/LayeredStorageAndLLIO/index.html)"
+    options:
+      - ["(None)", "none"]
+EOF
+  if flag == "input_file"
+    $attr <<<<"EOF"
+      - ["Executable file and input file", "executable_and_input_file"]
+      - ["Executable file and directory where input file exists", "executable_and_input_dir"]
+EOF
+  elsif flag == "working_dir"
+    $attr <<<<"EOF"
+      - ["Executable file", "executable"]
+      - ["Executable file and working directory", "executable_and_working_dir"]
+EOF
+  elsif flag == "commands"
+    $attr <<<<"EOF"
+      - ["Working directory", "working_dir"]
+EOF
+  end
+  return "- fugaku_llio"
+end
+
 def form_options(memo = "")
   $attr <<<<"EOF"
   options:
@@ -819,12 +889,18 @@ EOF
   return "- options"
 end
 
-def form_commands()
+def form_commands(memo = "")
   $attr <<<<"EOF"
   commands:
-    label: Commands (e.g. mpiexec ./a.out)
+    label: Commands (#{memo})
     widget: text_area
 EOF
+  if memo == ""
+    $attr << "    label: Commands\n"
+  else
+    $attr << "    label: Commands (#{memo})\n"
+  end
+
   return "- commands"
 end
 

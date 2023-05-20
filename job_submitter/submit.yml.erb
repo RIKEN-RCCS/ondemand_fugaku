@@ -14,3 +14,11 @@ script:
   mem2_cores, mem2_memory, reserved_hours, reserved_cores, reserved_memory) %>
 batch_connect:
   template: "basic"
+  script_wrapper: |
+    #!/usr/bin/env bash
+    <%= submit_llio(fugaku_llio, queue, "", working_dir) %>
+    cd <%= working_dir %>
+    <% commands.split("\r\n").each do |c| %>
+    <%= c.strip -%>
+    <% end %>
+    

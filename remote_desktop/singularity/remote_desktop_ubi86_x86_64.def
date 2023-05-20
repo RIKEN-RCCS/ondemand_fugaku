@@ -74,6 +74,7 @@ From: redhat/ubi8:8.6-990
   dnf --releasever=8.6 -y install easyistr-3.37.230306-2.noarch.rpm python3-vtk nautilus glibc-langpack-ja
   #
   # OVITO
+  dnf --releasever=8.6 -y install mesa-vulkan-devel
   cd /opt
   wget -O ovito-basic.tar.xz --trust-server-names "https://www.ovito.org/download/3106/?tmstv=1681276472"
   tar Jxfv ovito-basic.tar.xz
@@ -81,6 +82,33 @@ From: redhat/ubi8:8.6-990
   OVIT_DIRNAME=`ls -1 | grep ^ovito-basic`
   ln -s ${OVIT_DIRNAME} ovito
   #
+  # C-TOOLS
+  wget https://download.qt.io/archive/qt/4.8/4.8.6/qt-everywhere-opensource-src-4.8.6.tar.gz
+  tar xfz qt-everywhere-opensource-src-4.8.6.tar.gz
+  cd qt-everywhere-opensource-src-4.8.6
+  echo "QMAKE_CXX = g++ -std=gnu++98" >> mkspecs/common/g++-base.conf 
+  ./configure --prefix=/usr/local/qt-4.8.6 -no-openssl -no-qt3support -nomake examples -nomake demos -opensource -confirm-license
+  make -j; make install
+  cd ..
+  wget -O C-TOOLS062.tgz --trust-server-names "https://sourceforge.net/projects/c-tools/files/C-TOOLS062.tgz/download"
+  tar xfz C-TOOLS062.tgz
+  cd C-TOOLS062/src
+  make -j CFLAGS="-O3 -Wall -static" INCS="-I/usr/local/qt-4.8.6/include" LIBS="-L/usr/local/qt-4.8.6/lib -lQtCore -lQtGui -lQtOpenGL -lQtXml -lGL -lGLU" MOC=/usr/local/qt-4.8.6/bin/moc
+  cd ../../
+  mkdir /usr/local/C-TOOLS062/
+  mv C-TOOLS062/src/c-tools /usr/local/C-TOOLS062/
+  rm -rf qt-everywhere-opensource-src-4.8.6.tar.gz qt-everywhere-opensource-src-4.8.6 C-TOOLS062.tgz C-TOOLS062
+  #
+  # PyMOL
+  dnf --releasever=8.6 -y install glew-devel python36-devel netcdf-devel glm-devel libxml2-devel python3-tkinter
+  wget https://github.com/schrodinger/pymol-open-source/archive/refs/tags/v2.5.0.tar.gz
+  tar xfz v2.5.0.tar.gz
+  cd pymol-open-source-2.5.0
+  python setup.py build install --prefix=/usr/local/pymol-2.5.0 --glut
+  cd ../
+  rm -rf v2.5.0.tar.gz pymol-open-source-2.5.0
+  #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo
+  

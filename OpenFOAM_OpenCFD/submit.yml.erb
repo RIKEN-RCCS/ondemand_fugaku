@@ -1,0 +1,21 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/submit.rb'
+-%>
+---
+script:
+  job_name: ood_openfoam_opencfd
+  queue_name: <%= queue %>
+  <%= submit_email(email, false) %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, group, volume, mode) %>
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    #!/usr/bin/env bash
+    . /vol0004/apps/oss/spack/share/spack/setup-env.sh
+    spack load openfoam@<%= version %>
+    <%= submit_llio(fugaku_llio, queue, "", working_dir) %>
+    
+    cd <%= working_dir %>
+    <% commands.split("\r\n").each do |c| %>
+    <%= c.strip -%>
+    <% end %>

@@ -4,10 +4,10 @@
 
 <%= output_xfce() %>
 
-if [ "<%= context.filename %>" = "" ]; then
+if [ "<%= context.input_file %>" = "" ]; then
   /opt/ovito/bin/ovito &
 else
-  /opt/ovito/bin/ovito <%= context.filename %> &
+  /opt/ovito/bin/ovito <%= context.input_file %> &
 fi
 xfce4-session
 fg

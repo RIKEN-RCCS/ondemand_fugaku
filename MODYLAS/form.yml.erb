@@ -23,8 +23,9 @@ form:
   <%= form_mode() %>
   <%= form_working_dir() %>
   <%= form_version(versions) %>
-  <%= form_binary(versions[0], modylas110b, "modylas") %>
+  <%= form_exec(versions[0], modylas110b, "modylas") %>
   <%= form_session_name() %>
+  <%= form_llio("working_dir") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>

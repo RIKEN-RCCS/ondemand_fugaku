@@ -11,7 +11,8 @@ batch_connect:
   template: "basic"
   script_wrapper: |
     <%= submit_env(fugaku_threads, "lammps", version) %>
+    <%= submit_llio(fugaku_llio, queue, "lmp", input_file) %>
     
-    cd `dirname <%= filename %>`
-    FILE=`basename <%= filename %>`
+    cd `dirname <%= input_file %>`
+    FILE=`basename <%= input_file %>`
     mpiexec lmp -in $FILE <%= options %>

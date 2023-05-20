@@ -4,10 +4,10 @@
 
 <%= output_xfce() %>
 
-if [ "<%= context.filename %>" = "" ]; then
+if [ "<%= context.input_file %>" = "" ]; then
   /opt/visit/bin/visit &
 else
-  /opt/visit/bin/visit -o <%= context.filename %> &
+  /opt/visit/bin/visit -o <%= context.input_file %> &
 fi
 xfce4-session
 fg

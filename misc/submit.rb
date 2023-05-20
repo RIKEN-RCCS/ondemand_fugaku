@@ -208,6 +208,10 @@ def submit_vnc(staged_root)
     export PATH="$PATH:/usr/local/vesta"
     export PATH="$PATH:/opt/smokeview"
     export PATH="$PATH:/opt/ovito/bin"
+    export PATH="$PATH:/usr/local/C-TOOLS062"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/qt-4.8.6/lib"
+    export PATH="$PATH:/usr/local/pymol-2.5.0/bin"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/pymol-2.5.0/lib64"
     %s
     CTRSCRIPT
 
@@ -220,10 +224,35 @@ EOF
 end
 
 def submit_env(threads, app_name, version)
-<<"EOF"
+str =<<"EOF"
 #!/usr/bin/env bash
-    export OMP_NUM_THREADS=#{threads}
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
     spack load #{app_name}@#{version}
 EOF
+  if threads != 0
+    return str << "    export OMP_NUM_THREADS=#{threads}"
+  else
+    return str
+  end
+end
+
+def submit_llio(flag, queue, exec_file, target) # target is a path of input_file or working_dir
+  return if flag == "none"
+
+  if queue == "large" or queue == "large-free"
+    if flag == "working_dir"
+      return "/home/system/tool/dir_transfer " + target
+    else
+      str = "/usr/bin/llio_transfer `which " + exec_file + "`\n"
+      if flag == "executable_and_input_file"
+        return str << "    /usr/bin/llio_transfer " + target
+      elsif flag == "executable_and_input_dir"
+        return str << "    /home/system/tool/dir_transfer " + File.dirname(target) # target is a input file.
+      elsif flag == "executable_and_working_dir"
+        return str << "    /home/system/tool/dir_transfer " + target
+      elsif flag == "executable"
+        return str
+      end
+    end
+  end
 end
