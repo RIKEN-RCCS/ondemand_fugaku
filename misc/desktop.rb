@@ -1,4 +1,4 @@
-def output_xfce()
+def output_xfce(opengl_with_nvidia = "false", gpus_per_node = "0", queue = "unknown")
   <<"EOF"
 # Remove any preconfigured monitors
 if [[ -f "${HOME}/.config/monitors.xml" ]]; then
@@ -59,5 +59,12 @@ eval $(dbus-launch --sh-syntax)
 # For some reason the lang module information disappears, so reload it.
 module remove lang
 module load lang
+
+_OPENGL_WITH_NVIDIA_OPTION=""
+if [ "#{opengl_with_nvidia}" = "true" ] && [ "#{gpus_per_node}" != "0" ]; then
+  if [ "#{queue}" = "gpu1" ] || [ "#{queue}" = "gpu2" ]; then
+    _OPENGL_WITH_NVIDIA_OPTION="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia"
+  fi
+fi
 EOF
 end

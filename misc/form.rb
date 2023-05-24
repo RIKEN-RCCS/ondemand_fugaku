@@ -19,6 +19,7 @@ FUGAKU_SMALL =<<"EOF"
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
+          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -43,6 +44,7 @@ FUGAKU_SMALL_FREE =<<"EOF"
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
+          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -66,6 +68,7 @@ FUGAKU_LARGE =<<"EOF"
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
+          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -89,6 +92,7 @@ FUGAKU_LARGE_FREE =<<"EOF"
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
+          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -166,6 +170,7 @@ PREPOST_MEM1 =<<"EOF"
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
+          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem2-cores: true,
@@ -192,6 +197,7 @@ PREPOST_MEM2 =<<"EOF"
           data-hide-prepost1-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
+          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -218,6 +224,7 @@ PREPOST_RESERVED =<<"EOF"
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
           data-hide-gpus-per-node: true,
+          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -760,14 +767,32 @@ def form_gpus_per_node(min = 0, max = 2)
   $attr <<<<"EOF"
   gpus_per_node:
     label: Number of GPUs (#{min} - #{max})
-    widget: number_field
-    value: #{min}
-    min: #{min}
-    max: #{max}
-    step: 1
-    required: true
+    widget: select
+    options:
 EOF
+  for i in min..max
+    if i == 0 then
+      $attr << "      - [\"" + i.to_s + "\", \"" + i.to_s + "\", data-hide-opengl-with-nvidia: true ]\n"
+    else
+      $attr << "      - [\"" + i.to_s + "\", \"" + i.to_s + "\" ]\n"
+    end
+  end
+
   return "- gpus_per_node"
+end
+
+def form_opengl_with_nvidia()
+  $attr <<<<"EOF"
+  opengl_with_nvidia:
+    label: "OpenGL with NVIDIA"
+    widget: check_box
+    checked_value: "true"
+    unchecked_value: "false"
+    cacheable: true
+    help: |
+      Memory requires more than 50GB. Since this function is experimental please retry if this application does not start.
+EOF
+  return "- opengl_with_nvidia"
 end
 
 def form_mode()

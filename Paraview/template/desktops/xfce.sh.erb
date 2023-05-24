@@ -2,7 +2,7 @@
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/desktop.rb'
 -%>
 
-<%= output_xfce() %>
+<%= output_xfce(context.opengl_with_nvidia, context.gpus_per_node, context.queue) %>
 
 ARCH=`arch`
 if [ "$ARCH" = "aarch64" ]; then
@@ -12,7 +12,7 @@ if [ "$ARCH" = "aarch64" ]; then
 #  mpiexec paraview <%= context.input_file %> &
   paraview <%= context.input_file %> &
 else
-  /opt/ParaView/bin/paraview <%= context.input_file %> &
+  eval ${_OPENGL_WITH_NVIDIA_OPTION} /opt/ParaView/bin/paraview <%= context.input_file %> &
 fi
 xfce4-session
 fg
