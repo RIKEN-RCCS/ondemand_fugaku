@@ -5,8 +5,8 @@
 script:
   job_name: ood_paraview
   queue_name: <%= queue %>
-  <%= submit_gpus_per_node(queue, gpus_per_node) %>
   <%= submit_email(email) %>
+  <%= submit_gpus_per_node(queue, gpus_per_node) %>
   <%= submit_native(cluster, queue, fugaku_small_hours, fugaku_small_free_hours,
   1, 1, -1, -1, -1, -1, group, volume, mode, prepost1_hours, gpu1_cores, gpu1_memory,
   prepost2_hours, gpu2_cores, gpu2_memory, mem1_cores, mem1_memory,

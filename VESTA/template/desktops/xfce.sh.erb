@@ -2,8 +2,8 @@
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/desktop.rb'
 -%>
 
-<%= output_xfce() %>
+<%= output_xfce(context.opengl_with_nvidia, context.gpus_per_node, context.queue) %>
 
-/usr/local/vesta/VESTA &
+eval ${_OPENGL_WITH_NVIDIA_OPTION} /usr/local/vesta/VESTA <%= context.input_file %> &
 xfce4-session
 fg

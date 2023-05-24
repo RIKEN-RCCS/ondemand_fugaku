@@ -115,12 +115,6 @@ def submit_native_prepost_gpu(queue, prepost1_hours, gpu1_cores, gpu1_memory, pr
                                gpu2_cores, gpu2_memory, -1, -1, -1, -1, -1, -1, -1)
 end
 
-def submit_native_prepost_core1(queue, prepost1_hours, gpu1_memory, prepost2_hours, gpu2_memory,
-                                mem1_memory, mem2_memory, reserved_hours, reserved_memory)
-  return submit_native_prepost(queue, prepost1_hours, 1, gpu1_memory, prepost2_hours, 1, gpu2_memory,
-                               1, mem1_memory, 1, mem2_memory, reserved_hours, 1, reserved_memory)
-end
-
 def submit_native(cluster, queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
                   fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
                   fugaku_large_procs, group, volume, mode, prepost1_hours, gpu1_cores, gpu1_memory,
