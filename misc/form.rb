@@ -767,17 +767,13 @@ def form_gpus_per_node(min = 0, max = 2)
   $attr <<<<"EOF"
   gpus_per_node:
     label: Number of GPUs (#{min} - #{max})
-    widget: select
-    options:
+    widget: number_field
+    value: #{min}
+    min: #{min}
+    max: #{max}
+    step: 1
+    required: true
 EOF
-  for i in min..max
-    if i == 0 then
-      $attr << "      - [\"" + i.to_s + "\", \"" + i.to_s + "\", data-hide-opengl-with-nvidia: true ]\n"
-    else
-      $attr << "      - [\"" + i.to_s + "\", \"" + i.to_s + "\" ]\n"
-    end
-  end
-
   return "- gpus_per_node"
 end
 
@@ -790,7 +786,7 @@ def form_opengl_with_nvidia()
     unchecked_value: "false"
     cacheable: true
     help: |
-      Memory requires more than 50GB. Since this function is experimental please retry if this application does not start.
+      This option is experimental and if this app fails to start, please maximize the required memory.
 EOF
   return "- opengl_with_nvidia"
 end
