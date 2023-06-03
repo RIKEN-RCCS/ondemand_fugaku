@@ -1,0 +1,9 @@
+---
+name: Q-SMASH
+category: Batch Jobs
+subcategory: Quantum Chemistry
+role: batch_connect
+description: |
+  [Scalable Molecular Analysis Solver for High-performance computing systems (SMASH)](https://smash-qc.sourceforge.io) is a parallel software for quantum chemistry calculations.
+tile:
+  sub_caption: |

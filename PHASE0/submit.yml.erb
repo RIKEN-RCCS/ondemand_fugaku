@@ -1,0 +1,22 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/submit.rb'
+-%>
+---
+script:
+  job_name: ood_phase0_<%= version %>
+  queue_name: <%= queue %>
+  <%= submit_email(email, false) %>
+  <%= submit_native_fugaku_small(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, group, volume, mode) %>
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    <% if version == "3D" %>
+    <%= submit_env(fugaku_threads, "phase0", version, threed_version) %>
+    cd <%= working_dir %>
+    mpiexec <%= threed_exec %> <%= options %>
+    <% else %>
+    <%= submit_env(fugaku_threads, "phase0", version, twod_version) %>
+    cd <%= working_dir %>
+    mpiexec <%= twod_exec %> <%= options %>
+    <% end %>
+    

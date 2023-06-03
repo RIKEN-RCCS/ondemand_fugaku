@@ -1,8 +1,8 @@
 ---
-name: SALMON
+name: Co-SALMON
 category: Batch Jobs
+subcategory: Condensed Matter Physics
 role: batch_connect
-#icon: fa://fish
 description: |
   [SALMON](https://salmon-tddft.jp) is a software for ab-initio quantum-mechanical calculations of electron dynamics.
 tile:

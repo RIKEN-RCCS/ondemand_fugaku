@@ -23,8 +23,9 @@ def submit_email(email = "", only_start = true)
   end
 end
 
-def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
-                         fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, group, volume, mode)
+def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
+                         fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
+                         fugaku_large_procs, group, volume, mode, additional_options = "")
   str = "native:\n"
   if queue == "small" then
     str << "    - \"-L elapse=#{fugaku_small_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}"
@@ -52,7 +53,15 @@ def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fug
     str << " -L freq=2200,eco_state=2"
   end
 
+  str << " " + additional_options if additional_options != ""
+  
   return str + "\""
+end
+
+def submit_native_fugaku_small(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
+                               group, volume, mode)
+  submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
+                      "-1", "-1", "-1", "-1", group, volume, mode)
 end
 
 def submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
@@ -217,12 +226,18 @@ def submit_vnc(staged_root)
 EOF
 end
 
-def submit_env(threads, app_name, version)
-str =<<"EOF"
+def submit_env(threads, app_name, version, hash = "")
+  str =<<"EOF"
 #!/usr/bin/env bash
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
-    spack load #{app_name}@#{version}
 EOF
+
+  if hash != ""
+    str << "    spack load /#{hash}\n"
+  else
+    str << "    spack load #{app_name}@#{version}\n"
+  end
+  
   if threads != 0
     return str << "    export OMP_NUM_THREADS=#{threads}"
   else
@@ -230,23 +245,41 @@ EOF
   end
 end
 
+def submit_llio_file(flag, queue, file)
+  if flag != "none" and flag != "working_dir"
+    if queue == "large" or queue == "large-free"
+      return "/usr/bin/llio_transfer " + file
+    end
+  end
+end
+
+def submit_llio_exec_file(flag, queue, exec_file)
+  return submit_llio_file(flag, queue, "`which " + exec_file + "`\n")
+end
+
+def submit_llio_dir(flag, queue, dir)
+  if flag == "executable_and_input_dir" or flag == "executable_and_working_dir" or flag == "working_dir"
+    if queue == "large" or queue == "large-free"
+      return "/home/system/tool/dir_transfer " + dir
+    end
+  end
+end
+
 def submit_llio(flag, queue, exec_file, target) # target is a path of input_file or working_dir
   return if flag == "none"
 
-  if queue == "large" or queue == "large-free"
-    if flag == "working_dir"
-      return "/home/system/tool/dir_transfer " + target
-    else
-      str = "/usr/bin/llio_transfer `which " + exec_file + "`\n"
-      if flag == "executable_and_input_file"
-        return str << "    /usr/bin/llio_transfer " + target
-      elsif flag == "executable_and_input_dir"
-        return str << "    /home/system/tool/dir_transfer " + File.dirname(target) # target is a input file.
-      elsif flag == "executable_and_working_dir"
-        return str << "    /home/system/tool/dir_transfer " + target
-      elsif flag == "executable"
-        return str
-      end
+  if flag == "working_dir"
+    return submit_llio_dir(flag, queue, target)
+  else
+    str = submit_llio_exec_file(flag, queue, exec_file)
+    if flag == "executable_and_input_file"
+      return str << "    " + submit_llio_file(flag, queue, target)
+    elsif flag == "executable_and_input_dir"
+      return str << "    " + submit_llio_dir(flag, queue, File.dirname(target)) # target is a input file.
+    elsif flag == "executable_and_working_dir"
+      return str << "    " + submit_llio_dir(flag, queue, target)
+    elsif flag == "executable"
+      return str
     end
   end
 end

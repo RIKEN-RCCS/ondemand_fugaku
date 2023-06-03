@@ -1,7 +1,7 @@
 ---
-name: Job Submitter
-#category: Passenger Apps
+name: U-Job Submitter
 category: Batch Jobs
+subcategory: Utility
 role: batch_connect
 description: |
   Simple form for a batch job.

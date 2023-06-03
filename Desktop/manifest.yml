@@ -1,11 +1,11 @@
 ---
-name: 1Remote Desktop
+name: 1Desktop
 icon: fa://desktop
 category: Interactive Apps
-subcategory: Desktop
+subcategory: Development
 role: batch_connect
 description: |
-  This app will launch an [Xfce](https://xfce.org/) Remote Desktop.
+  This app will launch an [Xfce](https://xfce.org/) desktop.
 tile:
   sub_caption: |
 new_window: true

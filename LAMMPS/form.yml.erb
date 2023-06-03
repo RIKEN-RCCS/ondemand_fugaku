@@ -4,25 +4,21 @@
   versions = ["20220623.2"]
 -%>
 ---
+title: LAMMPS
 form:
   <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small_and_large") %>
+  <%= form_queue("fugaku_small") %>
   <%= form_volume() %>
   <%= form_group() %>
   <%= form_fugaku_small_hours() %>
   <%= form_fugaku_small_free_hours() %>
   <%= form_fugaku_small_nodes() %>
   <%= form_fugaku_small_procs() %>
-  <%= form_fugaku_large_hours() %>
-  <%= form_fugaku_large_free_hours() %>
-  <%= form_fugaku_large_nodes() %>
-  <%= form_fugaku_large_procs() %>
   <%= form_fugaku_threads() %>
   <%= form_mode() %>
   <%= form_version(versions) %>
-  <%= form_input_file("mpiexec lmp -in <input file>") %>
+  <%= form_input_file(true, "mpiexec lmp -in [input]") %>
   <%= form_options("e.g. -pk omp 2") %>
-  <%= form_llio("input_file") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>

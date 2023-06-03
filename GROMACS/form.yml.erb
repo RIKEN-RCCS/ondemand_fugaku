@@ -4,25 +4,21 @@
   versions = ["2022.4", "2021.5", "2020.6"]
 -%>
 ---
+title: GROMACS
 form:
   <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small_and_large") %>
+  <%= form_queue("fugaku_small") %>
   <%= form_volume() %>
   <%= form_group() %>
   <%= form_fugaku_small_hours() %>
   <%= form_fugaku_small_free_hours() %>
   <%= form_fugaku_small_nodes() %>
   <%= form_fugaku_small_procs() %>
-  <%= form_fugaku_large_hours() %>
-  <%= form_fugaku_large_free_hours() %>
-  <%= form_fugaku_large_nodes() %>
-  <%= form_fugaku_large_procs() %>
   <%= form_fugaku_threads() %>
   <%= form_mode() %>
   <%= form_working_dir() %>
   <%= form_version(versions) %>
   <%= form_options("mpiexec gmx_mpi <options>") %>
-  <%= form_llio("working_dir") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>

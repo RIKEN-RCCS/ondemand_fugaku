@@ -1,6 +1,7 @@
 ---
-name: OpenMX
+name: Co-OpenMX
 category: Batch Jobs
+subcategory: Condensed Matter Physics
 role: batch_connect
 description: |
   [OpenMX](https://www.openmx-square.org) is a software for extended structural equation modeling.

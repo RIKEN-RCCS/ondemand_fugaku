@@ -1,8 +1,0 @@
----
-name: OpenFOAM (OpenCFD)
-category: Batch Jobs
-role: batch_connect
-description: |
-  [OpenFOAM (OpenCFD version)](https://www.openfoam.com) is a computational fluid dynamics software package.
-tile:
-  sub_caption: |

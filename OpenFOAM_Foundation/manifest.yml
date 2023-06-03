@@ -1,8 +1,0 @@
----
-name: OpenFOAM (Foundation)
-category: Batch Jobs
-role: batch_connect
-description: |
-  [OpenFOAM (Foundation)](https://openfoam.org/) is a computational fluid dynamics software package.
-tile:
-  sub_caption: |

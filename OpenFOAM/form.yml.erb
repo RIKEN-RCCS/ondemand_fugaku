@@ -1,9 +1,12 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/form.rb'
 
-  versions=["2212", "2206", "2112", "2106", "2012"]
+  versions            = [["Foundation", "fundation", "data-hide-opencfd-version: true"], ["OpenCFD", "opencfd", "data-hide-foundation-version: true"]]
+  foundation_versions = ["10", "9", "8"]
+  opencfd_versions    = ["2212", "2206", "2112", "2106", "2012"]
 -%>
 ---
+title: OpenFOAM
 form:
   <%= form_cluster("fugaku") %>
   <%= form_queue("fugaku_small_and_large") %>
@@ -19,7 +22,9 @@ form:
   <%= form_fugaku_large_procs() %>
   <%= form_mode() %>
   <%= form_working_dir() %>
-  <%= form_version(versions) %>
+  <%= form_select("version", "Version", versions) %>
+  <%= form_select("foundation_version", "Foundation version", foundation_versions) %>
+  <%= form_select("opencfd_version",    "OpenCFD version",    opencfd_versions) %>
   <%= form_commands("e.g. mpiexec interFoam -parallel") %>
   <%= form_llio("commands", "Please transfer the executable file yourself other than the working directory. For example, add 'lilo_transfer $(which interFoam)' in commands area.") %>
   <%= form_email(false) %>

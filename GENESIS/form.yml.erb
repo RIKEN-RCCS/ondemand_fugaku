@@ -1,9 +1,12 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/form.rb'
-
-  versions=["8"]
+  
+  versions = [ ["2.0.3", "ff4qwif"], ["1.6.0", "m7jm7cb"] ]
+  # spack find --paths 
+  execs = ["atdyn", "spdyn"]
 -%>
 ---
+title: GENESIS
 form:
   <%= form_cluster("fugaku") %>
   <%= form_queue("fugaku_small_and_large") %>
@@ -17,11 +20,12 @@ form:
   <%= form_fugaku_large_free_hours() %>
   <%= form_fugaku_large_nodes() %>
   <%= form_fugaku_large_procs() %>
+  <%= form_fugaku_threads() %>
   <%= form_mode() %>
-  <%= form_working_dir() %>
-  <%= form_version(versions) %>
-  <%= form_commands("e.g. mpiexec interFoam -parallel") %>
-  <%= form_llio("commands", "Please transfer the executable file yourself other than the working directory. For example, add 'lilo_transfer $(which interFoam)' in commands area.") %>
+  <%= form_select("version", "Version", versions) %>
+  <%= form_select("executable", "Executable file", execs, execs[1]) %>
+  <%= form_input_file(true) %>
+  <%= form_llio("input_file") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>

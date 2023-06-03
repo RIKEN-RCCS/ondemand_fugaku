@@ -565,7 +565,7 @@ EOF
   return "- fugaku_large_procs"
 end
 
-def form_fugaku_threads()
+def form_fugaku_threads(help = "Number of threads x Total number of processes <= Number of nodes x 48.")
   $attr <<<<"EOF"
   fugaku_threads:
     label: Number of threads (1 - 48)
@@ -576,7 +576,7 @@ def form_fugaku_threads()
     step: 1
     required: true
     help: |
-      Number of threads x Total number of processes <= Number of nodes x 48.
+      #{help}
 EOF
   return "- fugaku_threads"
 end
@@ -786,7 +786,7 @@ def form_opengl_with_nvidia()
     unchecked_value: "false"
     cacheable: true
     help: |
-      This option is experimental and if this app fails to start, please maximize the required memory.
+      This option is experimental. If this app fails to start, please maximize the required memory.
 EOF
   return "- opengl_with_nvidia"
 end
@@ -794,8 +794,10 @@ end
 def form_mode()
   $attr <<<<"EOF"
   mode:
-    label: Mode
+    label: Execution mode
     widget: select
+    help: |
+      Please refer to the manual for details ([English](https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/use_latest/PowerControlFunction/index.html) or [Japanese](https://www.fugaku.r-ccs.riken.jp/doc_root/ja/user_guides/use_latest/PowerControlFunction/index.html)).
     options:
     - Normal
     - Boost
@@ -838,38 +840,64 @@ EOF
   return "- exec_" + version.delete(".-")
 end
 
-def form_input_file(memo = "", required = true)
-  $attr << "  input_file:\n"
-  if memo == ""
-    $attr << "    label: Input file\n"
-  else
-    $attr << "    label: Input file (#{memo})\n"
-  end
+def form_input_file(required = true, memo = "")
+  memo = "(" + memo + ")" if memo != ""
 
   $attr <<<<"EOF"
+  input_file:
+    label: Input file #{memo}
     data-filepicker: true
     data-target-file-type: files  # Valid values are: files, dirs, or both
     # Optionally set a default directory
     data-default-directory: #{ENV['HOME']}
     # Optionally only allow editing through the file picker; defaults to false
     data-file_picker_favorites: #{get_groups_fdirs()}
+    required: #{required.to_s}
 EOF
-  $attr << "    required: true\n" if required
 
   return "- input_file"
 end
 
-def form_working_dir(label = "Working directory", type = "dirs")
+def form_multi_input_files(required = true, prefix = "", label = "")
   $attr <<<<"EOF"
-  working_dir:
-    label: #{label}
+  input_file_#{prefix}:
+    label: Input file #{label}
     data-filepicker: true
-    data-target-file-type: #{type} # Valid values are: files, dirs, or both
+    data-target-file-type: files  # Valid values are: files, dirs, or both
+    # Optionally set a default directory
+    data-default-directory: #{ENV['HOME']}
+    # Optionally only allow editing through the file picker; defaults to false
+    data-file_picker_favorites: #{get_groups_fdirs()}
+    required: #{required.to_s}
+EOF
+
+  return "- input_file_" + prefix
+end
+
+def form_output_file(required = true, memo = "")
+  memo = "(" + memo + ")" if memo != ""
+  
+  $attr <<<<"EOF"
+  output_file:
+    label: Output file #{memo}
+    required: #{required.to_s}
+EOF
+  return "- output_file"
+end
+
+def form_working_dir(required = true, label = "Working directory", type = "dirs", item = "working_dir", help = "")
+  $attr <<<<"EOF"
+  #{item}:
+    label: #{label}
+    data-target-file-type: #{type}
+    data-filepicker: true
     data-default-directory: #{ENV['HOME']}
     data-file_picker_favorites: #{get_groups_fdirs()}
-    readonly: false
+    required: #{required.to_s}
+    help: #{help}
 EOF
-  return "- working_dir"
+  
+  return "- " + item
 end
 
 def form_llio(flag, add_memo = "")
@@ -955,18 +983,31 @@ EOF
   return "- desktop"
 end
 
-
-def form_select(item, memo, options)
+def form_select(item, label, options, value = "", help = "")
   $attr <<<<"EOF"
   #{item}:
     widget: select
-    label: #{memo}
-    value: #{options[0][0]}
+    label: #{label}
     options:
 EOF
-  options.each do |i|
-    $attr << "    - [\"" + i[0] + "\", \"" + i[1] + "\"]\n"
+  if options[0].is_a?(Array)
+    if options[0].length == 2
+      options.each do |i|
+        $attr << "    - [\"" + i[0] + "\", \"" + i[1] + "\"]\n"
+      end
+    elsif options[0].length == 3
+      options.each do |i|
+        $attr << "    - [\"" + i[0] + "\", \"" + i[1] + "\", " + i[2] + "]\n"
+      end
+    end
+  else
+    options.each do |i|
+      $attr << "    - [\"" + i + "\"]\n"
+    end
   end
+  $attr << "    value: " + value + "\n" if value != ""
+  $attr << "    help: |\n"              if help  != ""
+  $attr << "      " + help + "\n"       if help  != ""
 
   return "- #{item}"
 end
@@ -976,3 +1017,4 @@ def form_attr()
   $attr = ""
   return attr
 end
+

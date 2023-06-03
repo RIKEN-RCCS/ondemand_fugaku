@@ -6,26 +6,22 @@
   openmx39 = get_bins("openmx39", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openmx-3.9-j52bvdtvorjy2stvpf7ve2ygxogwjw4n/bin/")
 -%>
 ---
+title: OpenMX
 form:
   <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small_and_large") %>
+  <%= form_queue("fugaku_small") %>
   <%= form_volume() %>
   <%= form_group() %>
   <%= form_fugaku_small_hours() %>
   <%= form_fugaku_small_free_hours() %>
   <%= form_fugaku_small_nodes() %>
   <%= form_fugaku_small_procs() %>
-  <%= form_fugaku_large_hours() %>
-  <%= form_fugaku_large_free_hours() %>
-  <%= form_fugaku_large_nodes() %>
-  <%= form_fugaku_large_procs() %>
   <%= form_fugaku_threads() %>
   <%= form_mode() %>
   <%= form_version(versions) %>
   <%= form_exec(versions[0], openmx39, "openmx") %>
   <%= form_input_file() %>
   <%= form_options("e.g. –nt 2") %>
-  <%= form_llio("input_file") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>

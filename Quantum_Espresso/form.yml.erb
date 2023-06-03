@@ -12,19 +12,16 @@
   qe.push(get_bins("quantum_espresso65", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.5-as6kxmc5wvgscu2xqlsfb6akkbjzf3fz/bin/"))
 -%>
 ---
+title: Quantum Espresso
 form:
   <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small_and_large") %>
+  <%= form_queue("fugaku_small") %>
   <%= form_volume() %>
   <%= form_group() %>
   <%= form_fugaku_small_hours() %>
   <%= form_fugaku_small_free_hours() %>
   <%= form_fugaku_small_nodes() %>
   <%= form_fugaku_small_procs() %>
-  <%= form_fugaku_large_hours() %>
-  <%= form_fugaku_large_free_hours() %>
-  <%= form_fugaku_large_nodes() %>
-  <%= form_fugaku_large_procs() %>
   <%= form_fugaku_threads() %>
   <%= form_mode() %>
   <%= form_version(versions) %>
@@ -33,9 +30,8 @@ form:
   <%= form_exec(versions[2], qe[2], "pw.x") %>
   <%= form_exec(versions[3], qe[3], "pw.x") %>
   <%= form_exec(versions[4], qe[4], "pw.x") %>
-  <%= form_input_file("-in <input>") %>
+  <%= form_input_file(true, "-in [input]") %>
   <%= form_options("e.g. -nk 2") %>
-  <%= form_llio("input_file") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>

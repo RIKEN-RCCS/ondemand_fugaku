@@ -1,0 +1,9 @@
+---
+name: CAE-OpenFOAM
+category: Batch Jobs
+subcategory: Computer Aided Engineering
+role: batch_connect
+description: |
+  [OpenFOAM (Foundation)](https://openfoam.org) and [OpenFOAM (OpenCFD)](https://www.openfoam.com) are computational fluid dynamics software packages.
+tile:
+  sub_caption: |

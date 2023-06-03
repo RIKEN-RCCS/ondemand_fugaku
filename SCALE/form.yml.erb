@@ -1,0 +1,34 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/form.rb'
+  
+  # spack versions scale -s
+  versions = ["5.4.4"]
+-%>
+---
+title: SCALE
+form:
+  <%= form_cluster("fugaku") %>
+  <%= form_queue("fugaku_small_and_large") %>
+  <%= form_volume() %>
+  <%= form_group() %>
+  <%= form_fugaku_small_hours() %>
+  <%= form_fugaku_small_free_hours() %>
+  <%= form_fugaku_small_nodes() %>
+  <%= form_fugaku_small_procs() %>
+  <%= form_fugaku_large_hours() %>
+  <%= form_fugaku_large_free_hours() %>
+  <%= form_fugaku_large_nodes() %>
+  <%= form_fugaku_large_procs() %>
+  <%= form_fugaku_threads() %>
+  <%= form_mode() %>
+  <%= form_version(versions) %>
+  <%= form_working_dir() %>
+  <%= form_multi_input_files(false, "scale_rm_pp",   "for scale-rm_pp (If blank, scale-rm_pp will not run)") %>
+  <%= form_multi_input_files(false, "scale_rm_init", "for scale-rm_init (If blank, scale-rm_init will not run)") %>
+  <%= form_multi_input_files(false, "scale_rm",      "for scale-rm (If blank, scale-rm will not run)") %>
+  <%= form_multi_input_files(false, "sno",           "for sno (If blank, sno will not run)") %>
+  <%= form_multi_input_files(false, "net2g",         "for net2g (If blank, net2g will not run)") %>
+  <%= form_llio("working_dir") %>
+  <%= form_email(false) %>
+attributes:
+<%= form_attr() %>
