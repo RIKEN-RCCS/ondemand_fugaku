@@ -14,5 +14,4 @@ batch_connect:
     <%= submit_llio(fugaku_llio, queue, executable, input_file) %>
     
     cd `dirname <%= input_file %>`
-    FILE=`basename <%= input_file %>`
-    mpiexec <%= executable %> $FILE
+    mpiexec <%= executable %> <%= input_file %>
