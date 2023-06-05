@@ -13,5 +13,4 @@ batch_connect:
     <%= submit_env(fugaku_threads, "quantum-espresso", version) %>
     
     cd `dirname <%= input_file %>`
-    FILE=`basename <%= input_file %>`
-    mpiexec <%= eval("exec_#{version.delete(".")}") %> -in $FILE <%= options %>
+    mpiexec <%= eval("exec_#{version.delete(".")}") %> -in <%= input_file %> <%= options %>

@@ -15,37 +15,37 @@ batch_connect:
     export PLE_MPI_STD_EMPTYFILE=off
     export OMP_WAIT_POLICY=active
     export FLIB_BARRIER=HARD
-    
-    <%= submit_llio_dir(fugaku_llio, queue, working_dir) %>
+
+    <%= submit_llio(queue, fugaku_llio, working_dir) %>
     cd <%= working_dir %>
 
     ## scale-rm_pp
     if [ "<%= input_file_scale_rm_pp %>" != "" ]; then
-      <%= submit_llio_exec_file(fugaku_llio, queue, "scale-rm_pp") %>
+      <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "scale-rm_pp") %>
       mpiexec scale-rm_pp <%= input_file_scale_rm_pp %>
     fi
 
     ## scale-rm_init
     if [ "<%= input_file_scale_rm_init %>" != "" ]; then
-      <%= submit_llio_exec_file(fugaku_llio, queue, "scale-rm_init") %>
+      <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "scale-rm_init") %>
       mpiexec scale-rm_init <%= input_file_scale_rm_init %>
     fi
 
     ## scale-rm
     if [ "<%= input_file_scale_rm %>" != "" ]; then
-      <%= submit_llio_exec_file(fugaku_llio, queue, "scale-rm") %>
+      <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "scale-rm") %>
       mpiexec scale-rm <%= input_file_scale_rm %>
     fi
 
     ## sno
     if [ "<%= input_file_sno %>" != "" ]; then
-      <%= submit_llio_exec_file(fugaku_llio, queue, "sno") %>
+      <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "sno") %>
       mpiexec sno <%= input_file_sno %>
     fi
 
     ## net2g
     if [ "<%= input_file_net2g %>" != "" ]; then
-      <%= submit_llio_exec_file(fugaku_llio, queue, "net2g") %>
+      <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "net2g") %>
       mpiexec net2g <%= input_file_net2g %>
     fi
     

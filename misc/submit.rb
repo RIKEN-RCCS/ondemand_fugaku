@@ -1,12 +1,14 @@
 SINGULARITY_DIR        = "/home/apps/singularity/ondemand/"
-REMOTE_DESKTOP_AARCH64 = SINGULARITY_DIR + "remote_desktop_ubi87_aarch64.sif"
-REMOTE_DESKTOP_X86_64  = SINGULARITY_DIR + "remote_desktop_ubi86_x86_64.sif"
+REMOTE_DESKTOP_AARCH64 = SINGULARITY_DIR + "desktop_ubi87_aarch64.sif"
+REMOTE_DESKTOP_X86_64  = SINGULARITY_DIR + "desktop_ubi86_x86_64.sif"
 JUPYTER_AARCH64        = SINGULARITY_DIR + "jupyter_ubi87_aarch64.sif"
 JUPYTER_X86_64         = SINGULARITY_DIR + "jupyter_ubi86_x86_64.sif"
 RSTUDIO_AARCH64        = SINGULARITY_DIR + "rstudio_ubi87_aarch64.sif"
 RSTUDIO_X86_64         = SINGULARITY_DIR + "rstudio_ubi86_x86_64.sif"
 VSCODE_AARCH64         = SINGULARITY_DIR + "vscode_ubi87_aarch64.sif"
 VSCODE_X86_64          = SINGULARITY_DIR + "vscode_ubi86_x86_64.sif"
+LLIO_LBOUND_NODES      = 7000
+LLIO_LBOUND_PROCS      = 28000
 
 def submit_gpus_per_node(queue, gpus_per_node)
   return "gpus_per_node: #{gpus_per_node}" if queue == "gpu1" or queue == "gpu2"
@@ -226,14 +228,14 @@ def submit_vnc(staged_root)
 EOF
 end
 
-def submit_env(threads, app_name, version, hash = "")
+def submit_env(threads, app_name = "", version = "")
   str =<<"EOF"
 #!/usr/bin/env bash
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
 EOF
 
-  if hash != ""
-    str << "    spack load /#{hash}\n"
+  if version == "" # app_name is hash
+    str << "    spack load /#{app_name}\n"
   else
     str << "    spack load #{app_name}@#{version}\n"
   end
@@ -245,41 +247,22 @@ EOF
   end
 end
 
-def submit_llio_file(flag, queue, file)
-  if flag != "none" and flag != "working_dir"
-    if queue == "large" or queue == "large-free"
-      return "/usr/bin/llio_transfer " + file
-    end
+def submit_llio_exec_file(queue, nodes, procs, exec_file)
+  return if queue != "large" and queue != "large-free"
+  
+  if nodes.to_i >= LLIO_LBOUND_NODES or procs.to_i >= LLIO_LBOUND_PROCS
+    return "/usr/bin/llio_transfer " + "`which " + exec_file + "`"
   end
 end
 
-def submit_llio_exec_file(flag, queue, exec_file)
-  return submit_llio_file(flag, queue, "`which " + exec_file + "`\n")
-end
-
-def submit_llio_dir(flag, queue, dir)
-  if flag == "executable_and_input_dir" or flag == "executable_and_working_dir" or flag == "working_dir"
-    if queue == "large" or queue == "large-free"
-      return "/home/system/tool/dir_transfer " + dir
-    end
-  end
-end
-
-def submit_llio(flag, queue, exec_file, target) # target is a path of input_file or working_dir
-  return if flag == "none"
-
-  if flag == "working_dir"
-    return submit_llio_dir(flag, queue, target)
-  else
-    str = submit_llio_exec_file(flag, queue, exec_file)
-    if flag == "executable_and_input_file"
-      return str << "    " + submit_llio_file(flag, queue, target)
-    elsif flag == "executable_and_input_dir"
-      return str << "    " + submit_llio_dir(flag, queue, File.dirname(target)) # target is a input file.
-    elsif flag == "executable_and_working_dir"
-      return str << "    " + submit_llio_dir(flag, queue, target)
-    elsif flag == "executable"
-      return str
-    end
+def submit_llio(queue, flag, target) # target is an input file or a working directory
+  return if queue != "large" and queue != "large-free"
+  
+  if flag == "input_file"
+    return "/usr/bin/llio_transfer " + target
+  elsif flag == "directrory_where_input_file_exists"
+    return "/home/system/tool/dir_transfer " + File.dirname(target)
+  elsif flag == "working_dir"
+    return "/home/system/tool/dir_transfer " + target
   end
 end

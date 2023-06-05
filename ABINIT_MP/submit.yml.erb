@@ -11,8 +11,8 @@ batch_connect:
   template: "basic"
   script_wrapper: |
     <%= submit_env(fugaku_threads, "abinitmp", version) %>
-    <%= submit_llio(fugaku_llio, queue, eval("exec_#{version.delete("-")}"), input_file) %>
+    <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, eval("exec_#{version.delete("-")}")) %>
+    <%= submit_llio(queue, fugaku_llio, input_file) %>
     
     cd `dirname <%= input_file %>`
-    FILE=`basename <%= input_file %>`
-    mpiexec <%= eval("exec_#{version.delete("-")}") %> < ${FILE}
+    mpiexec <%= eval("exec_#{version.delete("-")}") %> < <%= input_file %>

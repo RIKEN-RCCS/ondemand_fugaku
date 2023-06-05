@@ -26,7 +26,7 @@ form:
   <%= form_select("foundation_version", "Foundation version", foundation_versions) %>
   <%= form_select("opencfd_version",    "OpenCFD version",    opencfd_versions) %>
   <%= form_commands("e.g. mpiexec interFoam -parallel") %>
-  <%= form_llio("commands", "Please transfer the executable file yourself other than the working directory. For example, add 'lilo_transfer $(which interFoam)' in commands area.") %>
+  <%= form_llio("working_dir", "If you transfer the executable file, for example, please add 'lilo_transfer $(which interFoam)' in commands area.") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>

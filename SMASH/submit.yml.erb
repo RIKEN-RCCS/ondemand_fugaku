@@ -13,5 +13,4 @@ batch_connect:
     <%= submit_env(fugaku_threads, "smash", version) %>
     
     cd `dirname <%= input_file %>`
-    FILE=`basename <%= input_file %>`
-    mpiexec smash $FILE
+    mpiexec smash <%= input_file %>

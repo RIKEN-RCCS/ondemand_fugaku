@@ -17,7 +17,7 @@ batch_connect:
     else
       spack load openfoam@<%= opencfd_version %>
     fi
-    <%= submit_llio(fugaku_llio, queue, "", working_dir) %>
+    <%= submit_llio(queue, fugaku_llio, working_dir) %>
     
     cd <%= working_dir %>
     <% commands.split("\r\n").each do |c| %>

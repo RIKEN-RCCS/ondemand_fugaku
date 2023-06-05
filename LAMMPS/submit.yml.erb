@@ -13,5 +13,4 @@ batch_connect:
     <%= submit_env(fugaku_threads, "lammps", version) %>
     
     cd `dirname <%= input_file %>`
-    FILE=`basename <%= input_file %>`
-    mpiexec lmp -in $FILE <%= options %>
+    mpiexec lmp -in <%= input_file %> <%= options %>

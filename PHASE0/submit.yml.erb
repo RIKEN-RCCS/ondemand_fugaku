@@ -11,11 +11,11 @@ batch_connect:
   template: "basic"
   script_wrapper: |
     <% if version == "3D" %>
-    <%= submit_env(fugaku_threads, "phase0", version, threed_version) %>
+    <%= submit_env(fugaku_threads, threed_version) %>
     cd <%= working_dir %>
     mpiexec <%= threed_exec %> <%= options %>
     <% else %>
-    <%= submit_env(fugaku_threads, "phase0", version, twod_version) %>
+    <%= submit_env(fugaku_threads, twod_version) %>
     cd <%= working_dir %>
     mpiexec <%= twod_exec %> <%= options %>
     <% end %>

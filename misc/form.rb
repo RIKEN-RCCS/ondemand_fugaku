@@ -900,27 +900,24 @@ EOF
   return "- " + item
 end
 
-def form_llio(flag, add_memo = "")
+def form_llio(flag, memo = "")
+  memo = "Executable files are transferred there automatically." if memo == ""
+  
   $attr <<<<"EOF"
   fugaku_llio:
     label: "Targets with LLIO"
     widget: select
     value: "none"
-    help: "To reduce IO load, the targets are transferred to the cache area. Enable this setting when using more than 7,000 nodes or 28,000 processes. #{add_memo} [More info.](https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/use_latest/LayeredStorageAndLLIO/index.html)"
+    help: "Enable this setting when using more than 7,000 nodes or 28,000 processes. To reduce IO load, the targets are transferred to the cache area. #{memo} [More info.](https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/use_latest/LayeredStorageAndLLIO/index.html)"
     options:
       - ["(None)", "none"]
 EOF
   if flag == "input_file"
     $attr <<<<"EOF"
-      - ["Executable file and input file", "executable_and_input_file"]
-      - ["Executable file and directory where input file exists", "executable_and_input_dir"]
+      - ["Input file", "input_file"]
+      - ["Directory where input file exists", "directrory_where_input_file_exists"]
 EOF
   elsif flag == "working_dir"
-    $attr <<<<"EOF"
-      - ["Executable file", "executable"]
-      - ["Executable file and working directory", "executable_and_working_dir"]
-EOF
-  elsif flag == "commands"
     $attr <<<<"EOF"
       - ["Working directory", "working_dir"]
 EOF
