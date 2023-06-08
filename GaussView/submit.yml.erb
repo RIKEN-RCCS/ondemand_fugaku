@@ -1,0 +1,14 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/submit.rb'
+-%>
+---
+script:
+  job_name: ood_gaussview
+  queue_name: <%= queue %>
+  <%= submit_email(email) %>
+  <%= submit_gpus_per_node(queue, gpus_per_node) %>
+  <%= submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+  gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
+  mem2_memory, reserved_hours, reserved_cores, reserved_memory) %>
+batch_connect:
+<%= submit_vnc(staged_root) %>
