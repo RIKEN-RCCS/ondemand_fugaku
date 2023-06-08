@@ -1,0 +1,50 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/submit.rb'
+-%>
+---
+script:
+  job_name: ood_ntchem
+  queue_name: <%= queue %>
+  <%= submit_email(email, false) %>
+  <% additional_options = (working_dir_type == "working_dir_sharedtmp")? "--llio sharedtmp-size=80Gi" : "" %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, group, volume, mode, additional_options) %>
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    <%= submit_env(fugaku_threads, "ntchem", version) %>
+    export OMP_STACKSIZE=128M
+    
+    function calc() {
+      LOG_DIR="$1"
+      mkdir -p "${LOG_DIR}"
+      if [ "<%= calculation %>" = "HF/DFT" ]; then
+        <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "basinp_mpiomp.exe") %>
+        <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "mdint1_mpiomp.exe") %>
+        <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "scf_mpiomp.exe") %>
+        for i in basinp mdint1 scf; do
+          mpiexec -std-proc "${LOG_DIR}/${i}/%%/1000r/${i}" ${i}_mpiomp.exe
+        done
+      fi
+    }
+    
+    if [ "<%= working_dir_type %>" = "working_dir_jobid" ]; then        # $HOME/$PJM_JOBID
+      WORKING_DIR=${HOME}/${PJM_JOBID}
+     elif [ "<%= working_dir_type %>" = "working_dir_sharedtmp" ]; then # $PJM_SHAREDTMP
+      WORKING_DIR=${PJM_SHAREDTMP}
+     elif [ "<%= working_dir_type %>" = "working_dir_specified" ]; then # Specify a directory
+      WORKING_DIR="<%= working_dir_specified %>"
+      [ "${WORKING_DIR}" = "" ] && WORKING_DIR=${HOME}/${PJM_JOBID}
+    fi
+    
+    mkdir -p "${WORKING_DIR}"
+    cd "${WORKING_DIR}"
+    cp "<%= input_file %>" ./INPUT
+    
+    if [ "<%= working_dir_type %>" = "working_dir_sharedtmp" ]; then
+      OUTPUT_DIR="<%= working_dir_output %>"
+      [ "${OUTPUT_DIR}" = "" ] && OUTPUT_DIR=${HOME}/${PJM_JOBID}
+      calc "${OUTPUT_DIR}"
+      cp "${WORKING_DIR}"/*.MO "${OUTPUT_DIR}"
+    else
+      calc "${WORKING_DIR}"
+    fi
