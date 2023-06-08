@@ -1,0 +1,16 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/submit.rb'
+-%>
+---
+script:
+  job_name: ood_akaikkr
+  queue_name: <%= queue %>
+  <%= submit_email(email, false) %>
+  <%= submit_native_fugaku_small(queue, fugaku_small_hours, fugaku_small_free_hours, 1, 1, group, volume, mode) %>
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    <%= submit_env(fugaku_threads, "akaikkr", version) %>
+    
+    cd "$(dirname "<%= input_file %>")"
+    specx < "<%= input_file %>" > "<%= output_file %>"
