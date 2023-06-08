@@ -1,0 +1,9 @@
+---
+name: Co-ALAMODE
+category: Batch Jobs
+subcategory: Condensed Matter Physics
+role: batch_connect
+description: |
+  [ALAMODE](https://alamode.readthedocs.io/en/latest/index.html) is a software to analyze lattice anharmonicity and lattice thermal conductivity of solids. 
+tile:
+  sub_caption: |
