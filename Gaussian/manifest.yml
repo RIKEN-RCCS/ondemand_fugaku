@@ -1,0 +1,10 @@
+---
+name: Q-Gaussian
+category: Batch Jobs
+subcategory: Quantum Chemistry
+role: batch_connect
+icon: fa://atom
+description: |
+  [Gaussian](https://gaussian.com) is a general purpose computational chemistry software package.
+tile:
+  sub_caption: |
