@@ -12,5 +12,5 @@ batch_connect:
   script_wrapper: |
     <%= submit_env(fugaku_threads, "gromacs", version) %>
     
-    cd <%= working_dir %>
+    cd "<%= working_dir %>"
     mpiexec gmx_mpi <%= options %>

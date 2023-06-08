@@ -12,6 +12,6 @@ batch_connect:
   script_wrapper: |
     <%= submit_env(fugaku_threads, "fugaku-frontistr", version) %>
     
-    cd <%= working_dir %>
+    cd "<%= working_dir %>"
     <%= pre_execute %>
     mpiexec <%= exec_master %>

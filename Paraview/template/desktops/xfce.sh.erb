@@ -10,9 +10,9 @@ if [ "$ARCH" = "aarch64" ]; then
 #  spack load paraview@5.10.1%fj@4.8.1/oh5qwq
 #  which paraview
 #  mpiexec paraview <%= context.input_file %> &
-  paraview <%= context.input_file %> &
+  paraview "<%= context.input_file %>" &
 else
-  eval ${_OPENGL_WITH_NVIDIA_OPTION} /opt/ParaView/bin/paraview <%= context.input_file %> &
+  eval ${_OPENGL_WITH_NVIDIA_OPTION} /opt/ParaView/bin/paraview "<%= context.input_file %>" &
 fi
 xfce4-session
 fg

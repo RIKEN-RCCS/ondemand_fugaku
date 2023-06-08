@@ -12,5 +12,5 @@ batch_connect:
   script_wrapper: |
     <%= submit_env(fugaku_threads, "lammps", version) %>
     
-    cd `dirname <%= input_file %>`
-    mpiexec lmp -in <%= input_file %> <%= options %>
+    cd "$(dirname "<%= input_file %>")"
+    mpiexec lmp -in "<%= input_file %>" <%= options %>

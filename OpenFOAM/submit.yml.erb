@@ -11,6 +11,7 @@ batch_connect:
   template: "basic"
   script_wrapper: |
     #!/usr/bin/env bash
+    set -e
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
     if [ "<%= version %>" = "fundation" ]; then
       spack load openfoam-org@<%= foundation_version %>
@@ -19,7 +20,7 @@ batch_connect:
     fi
     <%= submit_llio(queue, fugaku_llio, working_dir) %>
     
-    cd <%= working_dir %>
+    cd "<%= working_dir %>"
     <% commands.split("\r\n").each do |c| %>
     <%= c.strip -%>
     <% end %>

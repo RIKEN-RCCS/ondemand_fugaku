@@ -14,5 +14,5 @@ batch_connect:
     <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "salmon") %>
     <%= submit_llio(queue, fugaku_llio, input_file) %>
     
-    cd `dirname <%= input_file %>`
-    mpiexec -stdin <%= input_file %> salmon
+    cd "$(dirname "<%= input_file %>")"
+    mpiexec -stdin "<%= input_file %>" salmon

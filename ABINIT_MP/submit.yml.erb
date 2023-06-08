@@ -14,5 +14,5 @@ batch_connect:
     <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, eval("exec_#{version.delete("-")}")) %>
     <%= submit_llio(queue, fugaku_llio, input_file) %>
     
-    cd `dirname <%= input_file %>`
-    mpiexec <%= eval("exec_#{version.delete("-")}") %> < <%= input_file %>
+    cd "$(dirname "<%= input_file %>")"
+    mpiexec <%= eval("exec_#{version.delete("-")}") %> < "<%= input_file %>"

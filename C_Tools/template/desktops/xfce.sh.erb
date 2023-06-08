@@ -4,10 +4,6 @@
 
 <%= output_xfce() %>
 
-if [ "<%= context.input_file %>" = "" ]; then
-  /usr/local/C-TOOLS062/c-tools &
-else
-  /usr/local/C-TOOLS062/c-tools <%= context.input_file %> &
-fi
+/usr/local/C-TOOLS062/c-tools "<%= context.input_file %>" &
 xfce4-session
 fg

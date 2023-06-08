@@ -4,6 +4,6 @@
 
 <%= output_xfce(context.opengl_with_nvidia, context.gpus_per_node, context.queue) %>
 
-eval ${_OPENGL_WITH_NVIDIA_OPTION} /opt/ovito/bin/ovito <%= context.input_file %> &
+eval ${_OPENGL_WITH_NVIDIA_OPTION} /opt/ovito/bin/ovito "<%= context.input_file %>" &
 xfce4-session
 fg

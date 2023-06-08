@@ -12,5 +12,5 @@ batch_connect:
   script_wrapper: |
     <%= submit_env(fugaku_threads, "smash", version) %>
     
-    cd `dirname <%= input_file %>`
-    mpiexec smash <%= input_file %>
+    cd "$(dirname "<%= input_file %>")"
+    mpiexec smash "<%= input_file %>"

@@ -231,6 +231,7 @@ end
 def submit_env(threads, app_name = "", version = "")
   str =<<"EOF"
 #!/usr/bin/env bash
+    set -e
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
 EOF
 

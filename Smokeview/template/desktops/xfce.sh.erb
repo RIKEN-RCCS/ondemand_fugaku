@@ -4,10 +4,6 @@
 
 <%= output_xfce() %>
 
-if [ "<%= context.input_file %>" = "" ]; then
-  /opt/smokeview/smokeview
-else
-  /opt/smokeview/smokeview <%= context.input_file %> &
-fi
+/opt/smokeview/smokeview "<%= context.input_file %>" &
 xfce4-session
 fg
