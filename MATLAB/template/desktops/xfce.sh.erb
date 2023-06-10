@@ -1,0 +1,22 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/desktop.rb'
+-%>
+
+<%= output_xfce(context.opengl_with_nvidia, context.gpus_per_node, context.queue) %>
+
+if [ "${_OPENGL_WITH_NVIDIA_OPTION}" != "" ]; then
+  if [ "<%= context.working_dir %>" != "" ]; then
+    TMPDIR=/tmp /vol0004/apps/MATLAB/R2020a/bin/matlab -desktop -nosoftwareopengl -sd "<%= context.working_dir %>" &
+  else
+    TMPDIR=/tmp /vol0004/apps/MATLAB/R2020a/bin/matlab -desktop -nosoftwareopengl &
+  fi
+else
+  if [ "<%= context.working_dir %>" != "" ]; then
+    TMPDIR=/tmp /vol0004/apps/MATLAB/R2020a/bin/matlab -desktop -sd "<%= context.working_dir %>" &
+  else
+    TMPDIR=/tmp /vol0004/apps/MATLAB/R2020a/bin/matlab -desktop &
+  fi
+fi
+
+xfce4-session
+fg
