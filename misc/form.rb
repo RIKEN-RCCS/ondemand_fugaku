@@ -3,7 +3,7 @@ require 'fileutils'
 $attr           = ""
 BASE_DIR        = ENV['HOME'] + "/ondemand/cache/"
 GROUPS_CACHE    = BASE_DIR + "groups.cache"
-EXCLUDED_GROUPS = ["f-op", "fugaku", "oss-adm"]
+EXCLUDED_GROUPS = ["f-op", "fugaku", "oss-adm", "isv001", "isv002", "isv003"]
 LIFE_TIME       = 3600
 
 FUGAKU_SMALL =<<"EOF"
