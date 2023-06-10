@@ -1,0 +1,10 @@
+---
+name: 3Vampir
+category: Interactive Apps
+subcategory: Profiler
+role: batch_connect
+icon: fa://binoculars
+description: |
+  [Vampir](https://vampir.eu) is a framework for performance analysis.
+tile:
+  sub_caption: |
