@@ -3,7 +3,7 @@
 -%>
 ---
 script:
-  job_name: ood_nvidia_profiler
+  job_name: ood_<%= app_name %>
   queue_name: <%= queue %>
   <%= submit_gpus_per_node(queue, gpus_per_node) %>
   <%= submit_email(email) %>

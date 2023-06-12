@@ -12,7 +12,7 @@ end
 counts = times.sort.group_by { |t| [t.year, t.month] }.transform_values(&:count)
 
 # Generate all year and month combinations
-years = times.map(&:year).uniq.sort
+years = times.map(&:year).sort.uniq
 months = (1..12).to_a
 all_combinations = years.product(months)
 

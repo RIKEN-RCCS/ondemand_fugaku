@@ -13,7 +13,7 @@ batch_connect:
     #!/usr/bin/env bash
     set -e
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
-    if [ "<%= version %>" = "fundation" ]; then
+    if [ "<%= version %>" = "foundation" ]; then
       spack load openfoam-org@<%= foundation_version %>
     else
       spack load openfoam@<%= opencfd_version %>
