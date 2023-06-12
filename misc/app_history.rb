@@ -1,7 +1,13 @@
+#!/usr/bin/ruby
 # coding: utf-8
 require "fileutils"
 require "zlib"
 require "csv"
+
+###
+Fugaku  = false
+PrePost = true
+###
 
 APPNAME     = 0
 CATEGORY    = 1
@@ -9,20 +15,16 @@ SUBCATEGORY = 2
 log_files = "/var/log/ondemand-nginx/*/error.log*"
 csv_file  = "./applications.csv"
 
-###  
-Fugaku = true
-PrePost = true
-###
-
 def fugaku_grep(prepost, line)
   return if Fugaku != true
   if line.include?("pjsub") && line.include?("execve")
     year_month = line.split("\[")[1].split[0].split("-")[0..1]
-    return if line.split(",").size <= 2
+    return if line.split(",").size <= 3
     appname    = line.split(",")[2][3..-3]
     appname    = line.split(",")[6][3..-3] if appname.include?("@") # specified mail address
     appname    = line.split(",")[7][3..-3] if appname.include?("-N")
-    return if(appname == "--bulk" || appname == "ood_openfoam" || appname == "ood_openfoam_fundation") # Old log file
+    return if(appname == "--bulk" || appname == "ood_openfoam" ||
+              appname == "ood_openfoam_fundation" || appname.include?("\"ood_desktop")) # Old log file
     prepost.push([year_month, appname])
   end
 end
@@ -31,6 +33,7 @@ def prepost_grep(prepost, line)
   return if PrePost != true
   if line.include?("sbatch") && line.include?("execve")
     year_month = line.split("\[")[1].split[0].split("-")[0..1]
+    return if line.split(",").size <= 5
     appname    = line.split(",")[5][3..-3]
     appname    = line.split(",")[9][3..-3] if appname.include?("@") # specified mail address
     prepost.push([year_month, appname])
@@ -45,6 +48,7 @@ def output_statistics(kind, items, prepost)
   end
 end
 
+exit if Fugaku == false && PrePost == false
 prepost = Array.new
 Dir.glob(log_files) do |file|
   if FileTest.file?(file)
