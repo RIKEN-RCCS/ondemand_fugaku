@@ -10,7 +10,7 @@ Gaussian,                ood_gaussian,            Batch Jobs,       Quantum Chem
 GaussView,               ood_gaussview,           Interactive Apps, Viewer
 GENESIS,                 ood_genesis,             Batch Jobs,       Molecular Dynamics
 GROMACS,                 ood_gromacs,             Batch Jobs,       Molecular Dynamics
-H_Phi,                   ood_h_phi,               Batch Jobs,       Condensed Matter Physics
+HPhi,                    ood_hphi,                Batch Jobs,       Condensed Matter Physics
 job_submitter,           ood_job_submitter,       Batch Jobs,       Utility
 Jupyter,                 ood_jupyter,             Interactive Apps, Development
 LAMMPS,                  ood_lammps,              Batch Jobs,       Molecular Dynamics
