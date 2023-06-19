@@ -1,0 +1,9 @@
+---
+name: CAE-FrontFlow
+category: Batch Jobs
+subcategory: Computer Aided Engineering
+role: batch_connect
+description: |
+  [FrontFlow](http://www.ciss.iis.u-tokyo.ac.jp/project/rss/software/07_info.html) is a general-purpose fluid analysis code.
+tile:
+  sub_caption: |

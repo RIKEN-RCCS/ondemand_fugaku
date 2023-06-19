@@ -1,0 +1,25 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/submit.rb'
+-%>
+---
+script:
+  job_name: ood_frontflow_<%= app %>
+  queue_name: <%= queue %>
+  <%= submit_email(email, false) %>
+  <%= submit_native_fugaku_small(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, group, volume, mode) %>
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    <% if app == "blue" %>
+    <%= submit_env(fugaku_threads, "ffb", b_version) %>
+    <% else %>
+    <%= submit_env(fugaku_threads, "ffx", x_version) %>
+    <% end %>
+    export FORT90L="-Wl,-T"
+    
+    cd "<%= working_dir %>"
+    if [ "<%= app %>" = "blue" ]; then
+      mpiexec les3x.mpi
+    else
+      mpiexec lbm3d.mpi
+    fi
