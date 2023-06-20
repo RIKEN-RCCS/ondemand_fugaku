@@ -1,0 +1,34 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/form.rb'
+  
+  # spack versions mvmc -s
+  versions = ["1.2.0"]
+
+  exec_file = [["vmc.out", "vmc.out", "data-hide-output-file: true"], ["UHF", "UHF", "data-hide-se-mode: true, data-hide-fugaku-small-nodes: true, data-hide-fugaku-small-procs: true, data-hide-fugaku-large-nodes: true, data-hide-fugaku-large-procs: true"]]
+-%>
+---
+title: mVMC
+form:
+  <%= form_cluster("fugaku") %>
+  <%= form_queue("fugaku_small_and_large") %>
+  <%= form_volume() %>
+  <%= form_group() %>
+  <%= form_fugaku_small_hours() %>
+  <%= form_fugaku_small_free_hours() %>
+  <%= form_fugaku_small_nodes() %>
+  <%= form_fugaku_small_procs() %>
+  <%= form_fugaku_large_hours() %>
+  <%= form_fugaku_large_free_hours() %>
+  <%= form_fugaku_large_nodes() %>
+  <%= form_fugaku_large_procs() %>
+  <%= form_fugaku_threads() %>
+  <%= form_mode() %>
+  <%= form_version(versions) %>
+  <%= form_select("exec_file", "Executable file", exec_file) %>
+  <%= form_select("se_mode", "Mode", [["--standard", "-s"], ["--expert", "-e"]]) %>
+  <%= form_input_file() %>
+  <%= form_output_file(false, memo = "Default is output.${PJM_JOBID}") %>
+  <%= form_llio("input_file") %>
+  <%= form_email(false) %>
+attributes:
+<%= form_attr() %>

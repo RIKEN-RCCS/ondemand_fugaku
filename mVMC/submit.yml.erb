@@ -1,0 +1,28 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/submit.rb'
+-%>
+---
+script:
+  job_name: ood_mvmc
+  queue_name: <%= queue %>
+  <%= submit_email(email, false) %>
+  <% if exec_file == "vmc.out" then %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, group, volume, mode) %>
+  <% else %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, 1, 1, fugaku_large_hours, fugaku_large_free_hours, 1, 1, group, volume, mode) %>
+  <% end %>
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    <%= submit_env(fugaku_threads, "mvmc", version) %>
+    <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, exec_file) %>
+    <%= submit_llio(queue, fugaku_llio, input_file) %>
+        
+    cd "$(dirname "<%= input_file %>")"
+    if [ "<%= exec_file %>" = "vmc.out" ]; then
+      mpiexec vmc.out <%= se_mode %> "<%= input_file %>"
+    else
+      OUTPUT_FILE="<%= output_file %>"
+      [ "<%= output_file %>" = "" ] && OUTPUT_FILE=output.${PJM_JOBID}
+      UHF "<%= input_file %>" &> "${OUTPUT_FILE}"
+    fi
