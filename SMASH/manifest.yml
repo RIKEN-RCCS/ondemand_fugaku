@@ -1,5 +1,5 @@
 ---
-name: Q-SMASH
+name: QC-SMASH
 category: Batch Jobs
 subcategory: Quantum Chemistry
 role: batch_connect

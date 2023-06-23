@@ -1,5 +1,5 @@
 ---
-name: Q-ABINIT-MP
+name: QC-ABINIT-MP
 category: Batch Jobs
 subcategory: Quantum Chemistry
 role: batch_connect

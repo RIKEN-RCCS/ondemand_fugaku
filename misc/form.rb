@@ -889,6 +889,7 @@ def form_working_dir(required = true, label = "Working directory", type = "dirs"
   $attr <<<<"EOF"
   #{item}:
     label: #{label}
+    value: #{ENV['HOME']}
     data-target-file-type: #{type}
     data-filepicker: true
     data-default-directory: #{ENV['HOME']}
