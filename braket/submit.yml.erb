@@ -1,0 +1,17 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/submit.rb'
+-%>
+---
+script:
+  job_name: ood_braket
+  queue_name: <%= queue %>
+  <%= submit_email(email, false) %>
+  <%= submit_native_fugaku_small(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, group, volume, mode) %>
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    <%= submit_env(fugaku_threads, "braket", version) %>
+
+    mkdir -p "<%= working_dir %>"
+    cd "<%= working_dir %>"
+    mpiexec bra --mode simple --file "<%= input_file %>"

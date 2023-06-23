@@ -1,0 +1,9 @@
+---
+name: QS-braket
+category: Batch Jobs
+subcategory: Quantum Simulation
+role: batch_connect
+description: |
+  The [braket](https://github.com/naoki-yoshioka/braket) is a tool for simulations of quantum gates.
+tile:
+  sub_caption: |
