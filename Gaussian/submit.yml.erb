@@ -17,5 +17,5 @@ batch_connect:
     export OMP_NUM_THREADS=<%= fugaku_threads %>
     
     . $g16root/g16/bsd/g16.profile
-    cd "$(dirname "<%= input_file %>")"
+    <%= submit_working_dir(working_dir) %>
     g16 < "<%= input_file %>" >& "<%= output_file %>"

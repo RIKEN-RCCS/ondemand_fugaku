@@ -11,6 +11,5 @@ batch_connect:
   template: "basic"
   script_wrapper: |
     <%= submit_env(fugaku_threads, "akaikkr", version) %>
-    
-    cd "$(dirname "<%= input_file %>")"
+    <%= submit_working_dir(working_dir) %>
     specx < "<%= input_file %>" > "<%= output_file %>"

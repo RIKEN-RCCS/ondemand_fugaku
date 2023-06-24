@@ -26,6 +26,7 @@ form:
   <%= form_version(versions) %>
   <%= form_select("exec_file", "Executable file", exec_file) %>
   <%= form_select("se_mode", "Mode", [["--standard", "-s"], ["--expert", "-e"]]) %>
+  <%= form_working_dir(false) %>
   <%= form_input_file() %>
   <%= form_output_file(false, memo = "Default is output.${PJM_JOBID}") %>
   <%= form_llio("input_file") %>

@@ -10,6 +10,15 @@ VSCODE_X86_64          = SINGULARITY_DIR + "vscode_ubi86_x86_64.sif"
 LLIO_LBOUND_NODES      = 7000
 LLIO_LBOUND_PROCS      = 28000
 
+def submit_working_dir(working_dir)
+  <<"EOF"
+WORKING_DIR=#{working_dir}
+    [ "${WORKING_DIR}" = "" ] && WORKING_DIR=${HOME}
+    mkdir -p "${WORKING_DIR}"
+    cd "${WORKING_DIR}"
+EOF
+end
+
 def submit_gpus_per_node(queue, gpus_per_node)
   return "gpus_per_node: #{gpus_per_node}" if queue == "gpu1" or queue == "gpu2"
 end
