@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ "$HOSTNAME" = "fn06sv04" ]; then
-    pjrls $@
+    pjrls "$@"
 else
-    ssh login.fugaku.r-ccs.riken.jp pjrls $@
+    ssh login.fugaku.r-ccs.riken.jp pjrls "$@"
 fi
