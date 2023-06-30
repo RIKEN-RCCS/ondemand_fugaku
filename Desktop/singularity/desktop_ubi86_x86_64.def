@@ -107,6 +107,11 @@ From: redhat/ubi8:8.6-990
   cd ../
   rm -rf v2.5.0.tar.gz pymol-open-source-2.5.0
   #
+  # ImageJ
+  wget https://wsr.imagej.net/distros/linux/ij153-linux64-java8.zip
+  unzip ij153-linux64-java8.zip
+  rm -f ij153-linux64-java8.zip
+  #
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo
