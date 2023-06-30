@@ -226,6 +226,7 @@ def submit_vnc(staged_root)
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/qt-4.8.6/lib"
     export PATH="$PATH:/usr/local/pymol-2.5.0/bin"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/pymol-2.5.0/lib64"
+    export PATH="$PATH:/opt/ImageJ"
     %s
     CTRSCRIPT
 
