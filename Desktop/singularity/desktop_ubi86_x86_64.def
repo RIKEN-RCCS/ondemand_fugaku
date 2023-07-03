@@ -100,6 +100,7 @@ From: redhat/ubi8:8.6-990
   #
   # PyMOL
   dnf --releasever=8.6 -y install glew-devel python36-devel netcdf-devel glm-devel libxml2-devel python3-tkinter
+  pip3 install pmw
   wget https://github.com/schrodinger/pymol-open-source/archive/refs/tags/v2.5.0.tar.gz
   tar xfz v2.5.0.tar.gz
   cd pymol-open-source-2.5.0
