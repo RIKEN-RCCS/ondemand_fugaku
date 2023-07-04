@@ -15,7 +15,4 @@ mkdir -p $SINGULARITYENV_JUPYTER_DATA_DIR
 
 <%= setting_singularity("jupyter") %>
 
-if [ ! -e ${PYTHONUSERBASE}/bin/jupyter-lab ]; then
-    time singularity run ${NV_OPTION} ${IMAGE} pip3.9 install -U jupyterlab --user --use-feature=2020-resolver
-fi
-singularity run ${NV_OPTION} ${IMAGE} ${PYTHONUSERBASE}/bin/jupyter-lab --config="${CONFIG_FILE}"
+singularity run ${NV_OPTION} ${IMAGE} jupyter-lab --config="${CONFIG_FILE}"
