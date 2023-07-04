@@ -15,8 +15,7 @@ From: redhat/ubi8:8.6-943
   pip3.9 install packaging
   curl -fsSL https://rpm.nodesource.com/setup_18.x | bash -
   dnf --releasever=8.7 -y install nodejs
-  # pip3.9 install jupyterlab
-  # pip3.9 uninstall -y jupyterlab
+  pip3.9 install jupyterlab pandas matplotlib scikit-learn seaborn tqdm
   #
   # For Fujitsu TCS
   cat <<EOF > /etc/yum.repos.d/Fugaku.repo
