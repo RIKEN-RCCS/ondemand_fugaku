@@ -1,0 +1,16 @@
+<%-
+  info = dashboard_info("/system/ood/motd/info.txt")
+-%>
+<h4 class="fugaku_info">Information</h4>
+<p>
+  <table class="fugaku_motd">
+    <%- info.each do |i| -%>
+    <tr>
+      <%- c = i.split(":") -%>
+      <td class="no_wrap"><%= c[0] %></td>
+      <td class="no_wrap"><%= c[1] %></td>
+      <td><%= c[2] %></td>
+    </tr>
+    <%- end -%>
+  </table>
+</p>

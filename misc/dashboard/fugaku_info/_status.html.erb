@@ -1,0 +1,16 @@
+<%-
+  require 'time'
+  
+  # Get the current time as epoch milliseconds.
+  now = (Time.now.to_f * 1000).to_i
+
+  # Get time 60 minutes ago as epoch milliseconds
+  one_hour_ago = now - (60 * 60 * 1000)
+
+  dashboard_url  = "https://status.fugaku.r-ccs.riken.jp/d-solo/cf06d886-e672-41d8-a587-85ccb32fce7e/5a6f6KGM5b6F44Gh44K444On44OW5pWw?orgId=1"
+-%>
+
+<h4 class="fugaku_info">Pending jobs</h4>
+<p>
+  <iframe style="margin-top: 10px;" src="<%= dashboard_url %>&from=<%= one_hour_ago %>&to=<%= now %>&theme=light&panelId=2" width="650px" height="200px" frameborder="0"></iframe>
+</p>

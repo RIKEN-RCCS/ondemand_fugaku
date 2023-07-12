@@ -1,0 +1,108 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+-%>
+
+<p>
+<table class="design01">
+  <tr>
+    <th rowspan="2">Group</th>
+    <th rowspan="2">Volume</th>
+    <th colspan="4">Disk (GiB)</th>
+    <th colspan="4">Disk (inode)</th>
+    <th colspan="4">Resource (NH)</th>
+  </tr>
+  <tr>
+    <th>Limit</th><th>Usage</th><th>Avail.</th><th>Rate</th>
+    <th>Limit</th><th>Usage</th><th>Avail.</th><th>Rate</th>
+    <th>Limit</th><th>Usage</th><th>Avail.</th><th>Rate</th>
+  </tr>
+  <%- `groups`.split.each do |group_name|                 -%>
+  <%-   disk_info     = dashboard_disk(group_name)        -%>
+  <%-   inode_info    = dashboard_inode(group_name)       -%>
+  <%-   resource_info = dashboard_resource(group_name)    -%>
+  <%-   if disk_info.empty? and resource_info == nil then -%>
+  <%-     next                                            -%>
+  <%-   elsif disk_info.empty? then                       -%>
+  <%-     num_volumes = 1                                 -%>
+  <%-   else                                              -%>
+  <%-     num_volumes = disk_info.size                    -%>
+  <%-   end                                               -%>
+  <%-                                                     -%>
+  <%-   num_volumes.times do |i|                          -%>
+  <tr>
+  <%-     if i == 0 then -%>
+    <td rowspan="<%= num_volumes %>"><%= group_name %></td>
+  <%-     end -%>
+  <%-     unless disk_info.empty? then -%>
+    <td><%= disk_info[i].volume %></td>
+    <td align="right"><%= disk_info[i].limit %></td>
+    <td align="right"><%= disk_info[i].usage %></td>
+    <td align="right"><%= disk_info[i].avail %></td>
+    <td>
+      <div class="graph">
+        <strong class="bar_<%= dashboard_color(disk_info[i].rate) %>" style="width: <%= disk_info[i].rate %>%;"><%= disk_info[i].rate %>%</strong>
+      </div>
+    </td>
+  <%-     else -%>
+    <td> - </td><td> - </td><td> - </td><td> - </td><td> - </td>
+  <%-     end -%>
+    
+  <%-     unless inode_info.empty? then -%>
+    <td align="right"><%= inode_info[i].limit %></td>
+    <td align="right"><%= inode_info[i].usage %></td>
+    <td align="right"><%= inode_info[i].avail %></td>
+    <td>
+      <div class="graph">
+        <strong class="bar_<%= dashboard_color(inode_info[i].rate) %>" style="width: <%= inode_info[i].rate %>%;"><%= inode_info[i].rate %>%</strong>
+      </div>
+    </td>
+  <%-     else -%>
+    <td> - </td><td> - </td><td> - </td><td> - </td>
+  <%-     end -%>
+
+  <%-     if i == 0 then -%>
+  <%-       unless resource_info == nil then -%>
+    <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.limit %></td>
+    <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.usage %></td>
+    <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.avail %></td>
+    <td rowspan="<%= num_volumes %>">
+      <div class="graph">
+        <strong class="bar_<%= dashboard_color(resource_info.rate) %>" style="width: <%= resource_info.rate %>%;"><%= resource_info.rate %>%</strong>
+      </div>
+    </td>
+  <%-       else -%>
+    <td rowspan="<%= num_volumes %>"> - </td>
+    <td rowspan="<%= num_volumes %>"> - </td>
+    <td rowspan="<%= num_volumes %>"> - </td>
+    <td rowspan="<%= num_volumes %>"> - </td>
+  <%-       end -%>
+  <%-     end -%>
+  </tr>
+  <%-   end -%>
+  <%- end -%>
+
+  <%- home_disk_info  = dashboard_home_disk() -%>
+  <%- home_inode_info = dashboard_home_inode() -%>
+  <tr>
+    <td>/home</td>
+    <td><%= home_disk_info.volume %></td>
+    <td align="right"><%= home_disk_info.limit %></td>
+    <td align="right"><%= home_disk_info.usage %></td>
+    <td align="right"><%= home_disk_info.avail %></td>
+    <td>
+      <div class="graph">
+        <strong class="bar_<%= dashboard_color(home_disk_info.rate) %>" style="width: <%= home_disk_info.rate %>%;"><%= home_disk_info.rate %>%</strong>
+      </div>
+    </td>
+    <td align="right"><%= home_inode_info.limit %></td>
+    <td align="right"><%= home_inode_info.usage %></td>
+    <td align="right"><%= home_inode_info.avail %></td>
+    <td>
+      <div class="graph">
+        <strong class="bar_<%= dashboard_color(home_inode_info.rate) %>" style="width: <%= home_inode_info.rate %>%;"><%= home_inode_info.rate %>%</strong>
+      </div>
+    </td>
+    <td> - </td><td> - </td><td> - </td><td> - </td>
+  </tr>
+</table>
+</p>
