@@ -1,15 +1,13 @@
 <%-
-  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/form.rb'
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
   
   # spack versions quantum-espresso -s
-  versions = ["7.1", "6.8", "6.7", "6.6", "6.5"]
+  versions = ["7.1", "6.8", "6.7"]
   # spack find --paths quantum-espresso@7.1
   qe = []
-  qe.push(get_bins("quantum_espresso71", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-7.1-ajuzfbp5wu63dftcmo62ju2nljcc4hyo/bin/"))
-  qe.push(get_bins("quantum_espresso68", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.8-ta62xwj6autfedayz3r3br7k5xscvxzx/bin/"))
-  qe.push(get_bins("quantum_espresso67", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.7-nei6krt2zokcj4d67apadkuh4zqlqlbb/bin/"))
-  qe.push(get_bins("quantum_espresso66", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.6-d2bgjxrq6wj4so7wehupzvqkg5u7nk7y/bin/"))
-  qe.push(get_bins("quantum_espresso65", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/quantum-espresso-6.5-as6kxmc5wvgscu2xqlsfb6akkbjzf3fz/bin/"))
+  qe.push(form_load_cache("quantum_espresso71"))
+  qe.push(form_load_cache("quantum_espresso68"))
+  qe.push(form_load_cache("quantum_espresso67"))
 -%>
 ---
 title: Quantum Espresso
@@ -28,8 +26,6 @@ form:
   <%= form_exec(versions[0], qe[0], "pw.x") %>
   <%= form_exec(versions[1], qe[1], "pw.x") %>
   <%= form_exec(versions[2], qe[2], "pw.x") %>
-  <%= form_exec(versions[3], qe[3], "pw.x") %>
-  <%= form_exec(versions[4], qe[4], "pw.x") %>
   <%= form_working_dir(false) %>
   <%= form_input_file(true, "-in [input]") %>
   <%= form_options("e.g. -nk 2") %>

@@ -1,9 +1,9 @@
 <%-
-  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/form.rb'
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
   # spack versions fugaku-frontistr -s  
   versions=["master"]
   # spack find --paths fugaku-frontistr@master
-  ff_master = get_bins("fugaku-frontistr_master", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/fugaku-frontistr-master-jnhpudkojwedf7jtwssi6kykadxj46ol/bin/")
+  ff_master = form_load_cache("fugaku-frontistr_master")
 -%>
 ---
 title: FrontISTR

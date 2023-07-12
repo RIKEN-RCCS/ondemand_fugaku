@@ -1,10 +1,26 @@
+# coding: utf-8
 require 'fileutils'
 
-$attr           = ""
-BASE_DIR        = ENV['HOME'] + "/ondemand/cache/"
-GROUPS_CACHE    = BASE_DIR + "groups.cache"
-EXCLUDED_GROUPS = ["f-op", "fugaku", "oss-adm", "isv001", "isv002", "isv003"]
-LIFE_TIME       = 3600
+SINGULARITY_DIR        = "/home/apps/singularity/ondemand/"
+REMOTE_DESKTOP_AARCH64 = SINGULARITY_DIR + "desktop_ubi87_aarch64.sif"
+REMOTE_DESKTOP_X86_64  = SINGULARITY_DIR + "desktop_ubi86_x86_64.sif"
+JUPYTER_AARCH64        = SINGULARITY_DIR + "jupyter_ubi87_aarch64.sif"
+JUPYTER_X86_64         = SINGULARITY_DIR + "jupyter_ubi86_x86_64.sif"
+RSTUDIO_AARCH64        = SINGULARITY_DIR + "rstudio_ubi87_aarch64.sif"
+RSTUDIO_X86_64         = SINGULARITY_DIR + "rstudio_ubi86_x86_64.sif"
+VSCODE_AARCH64         = SINGULARITY_DIR + "vscode_ubi87_aarch64.sif"
+VSCODE_X86_64          = SINGULARITY_DIR + "vscode_ubi86_x86_64.sif"
+LLIO_LBOUND_NODES      = 7000
+LLIO_LBOUND_PROCS      = 28000
+EXCLUDED_GROUPS        = ["f-op", "fugaku", "oss-adm", "isv001", "isv002", "isv003"]
+SYS_OOD_DIR            = "/system/ood/"
+ACC_DIR                = SYS_OOD_DIR + "accounting/"
+ACC_GROUP_DIR          = ACC_DIR + "group/"
+ACC_HOME_DIR           = ACC_DIR + "home/"
+APP_CACHE_DIR          = SYS_OOD_DIR + "app/"
+Resource_info          = Struct.new(:limit, :usage, :avail, :rate)
+Disk_info              = Struct.new(:volume, :limit, :usage, :avail, :rate)
+$attr                  = ""
 
 FUGAKU_SMALL =<<"EOF"
       - [ "fugaku-small", "small",
@@ -236,76 +252,28 @@ PREPOST_RESERVED =<<"EOF"
           data-hide-mode: true ]
 EOF
 
-def load_cache(file)
-  f = File.open(file, 'r')
-  info = Marshal.load(f.read())
-  f.close()
-
-  return info
-end
-
-def store_bins_cache(file, dir_paths)
-  bins = []
-  dir_paths.split(":").each do |d|
-    d = d + '/' unless d[-1] == '/'
-    Dir.foreach(d) do |x|
-      bins.push(x) if File.file?(d + x)
+def get_group_dirs()
+  info = []
+  `groups`.split.each do |g|
+    file = ACC_GROUP_DIR + g + ".disk"
+    if File.exist?(file) then
+      dirs = File.readlines(file).grep(/\/vol/)
+      unless dirs.empty?
+        dirs.each do |d|
+          info.push(d.chomp)
+	end
+        info.push("/2ndfs/" + g)
+      end
     end
   end
-  
-  # Create cache
-  FileUtils.mkdir_p(File.dirname(file))
-  f = File.open(file, 'w')
-  f.write(Marshal.dump(bins.sort()))
-  f.close()
-end
 
-def store_groups_cache()
-  output = `sh /var/www/ood/apps/sys/ondemand_fugaku/misc/data_share_dir.sh`.split
-  info = Array.new()
-  output.each_slice(2) do |m, n|
-    volume = "/vol000" + m.split("/")[1].split("0")[1]
-    info.push([m.split("/").last, m, n, volume])  # [ group_name, data_dir, share_dir, volume ]
-  end
-
-  FileUtils.mkdir_p(File.dirname(GROUPS_CACHE))
-  f = File.open(GROUPS_CACHE, 'w')
-  f.write(Marshal.dump(info))
-  f.close()
-end
-
-def get_groups_cache()
-  unless File.exist?(GROUPS_CACHE) and (Time.now - File.mtime(GROUPS_CACHE)) < LIFE_TIME
-    store_groups_cache()
-  end
-
-  return load_cache(GROUPS_CACHE)
-end
-
-def get_bins(fname, dir_paths)
-  file = BASE_DIR + fname + ".cache"
-  unless File.exist?(file) and (Time.now - File.mtime(file)) < LIFE_TIME
-    store_bins_cache(file, dir_paths)
-  end
-
-  return load_cache(file)
-end
-
-def get_groups_dirs()
-  groups = []
-  get_groups_cache().each do |n|
-    groups.push(n[1], n[2], "/2ndfs/" + n[0])
-  end
-
-  return groups
+  return info.sort
 end
 
 def get_groups_fdirs()
   dirs = "{\"title\": \"Home\", \"href\": \"" + ENV['HOME'] + "\"},"
-  get_groups_cache().each do |n|
-    dirs += "{\"title\": \"data ("  + n[0] + ")\", \"href\": \"" + n[1] + "\"},"
-    dirs += "{\"title\": \"share (" + n[0] + ")\", \"href\": \"" + n[2] + "\"},"
-    dirs += "{\"title\": \"2ndfs (" + n[0] + ")\", \"href\": \"/2ndfs/" + n[0] + "\"},"
+  get_group_dirs.each do |d|
+    dirs += "{\"title\": \"" +  d + "\", \"href\": \"" + d + "\"},"
   end
 
   return "'[" + dirs.chop + "]'"
@@ -323,38 +291,17 @@ end
 
 # Since the code becomes complicated when checking whether the free queue is available for each group,
 # the free queue will be displayed in the user's selection item if one group can use the free queue.
-def store_free_queue_cache(file)
-  groups = []
-  get_groups_cache().each do |n|
-    flag = true
-    EXCLUDED_GROUPS.each do |d|
-      flag = false if n[0] == d
-    end
-    groups.push(n[0]) if flag
-  end
-
-  flag = false
-  groups.each do |g|
-    output = `sh /var/www/ood/apps/sys/ondemand_fugaku/misc/free_queue.sh #{g}`.split
-    if output[0] != "0"
-      flag = true
-      break
-    end
-  end
-
-  FileUtils.mkdir_p(File.dirname(file))
-  f = File.open(file, 'w')
-  f.write(Marshal.dump(flag))
-  f.close()
-end
-
 def check_free_queue()
-  file = BASE_DIR + "free_queue.cache"
-  unless File.exist?(file) and (Time.now - File.mtime(file)) < LIFE_TIME
-    store_free_queue_cache(file)
+  `groups`.split.each do |g|
+    file = ACC_GROUP_DIR + g + ".free_queue"
+    if File.exist?(file) then
+      File.open(file, 'r') do |l|
+        return true if l.gets.chomp == "ON"
+      end
+    end
   end
-  
-  return load_cache(file)
+
+  return false
 end
 
 def form_queue(name = "")
@@ -409,7 +356,7 @@ EOF
     $attr << PREPOST_MEM2
     $attr << PREPOST_RESERVED
   end
-  
+
   return "- queue"
 end
 
@@ -429,21 +376,9 @@ def form_group()
     widget: select
     options:
 EOF
-  added_groups = []
-  get_groups_cache().each do |n|
-    flag = true
-    EXCLUDED_GROUPS.each do |d|
-      flag = false if n[0] == d
-    end
-    if flag
-      $attr << "      - [\"" + n[0] + "\" , \"" + n[0] + "\"]\n"
-      added_groups.push(n[0])
-    end
-  end
-
-  extra_groups = `groups`.split - added_groups - EXCLUDED_GROUPS
-  extra_groups.each do |g|
-    $attr << "      - [\"" + g + "\" , \"" + g + "\"]\n"
+  groups = `groups`.split - EXCLUDED_GROUPS
+  groups.each do |n|
+    $attr << "      - [\"" + n + "\" , \"" + n + "\"]\n"
   end
   
   return "- group"
@@ -821,7 +756,7 @@ EOF
     end
     $attr << "]\n"
   end
-  
+
   return "- version"
 end
 
@@ -1016,3 +951,461 @@ def form_attr()
   return attr
 end
 
+def form_load_cache(file)
+  f = File.open(APP_CACHE_DIR + file, 'r')
+  cache = Marshal.load(f.read())
+  f.close()
+
+  return cache
+end
+
+def dashboard_info(file)
+  info = []
+  File.open(file, "r") do |f|
+    f.each_line do |l|
+      info.push(l)
+    end
+  end
+
+  return info
+end
+
+def num_with_commas(number)
+  return number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
+end
+
+def dashboard_resource(group_name)
+  file = ACC_GROUP_DIR + group_name + ".resource"
+  return nil unless File.exist?(file)
+  
+  File.open(file, "r") do |f|
+    # Resources in Fugaku are divided into early and late periods.
+    # The order is reversed to give priority to the later period.
+    f.readlines.reverse_each do |l|
+      i = l.split(",")
+      if i[0] == "SUBTHEMEPERIOD" and i[1] == group_name and i[3].to_i != 0 and i[5] != "---" then
+        limit = i[3].to_i/3600
+        usage = i[7].to_i/3600
+        avail = i[6].to_i/3600
+        rate  = ((usage * 100) / limit).round
+        return Resource_info.new(num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), rate)
+      end
+    end
+  end
+
+  return nil
+end
+
+def _disk_info(file, group_name)
+  return [] unless File.exist?(file)
+  
+  info = []
+  File.open(file, "r") do |f|
+    f.each_line do |l|
+      i = l.split(",")
+      if i[0] == "GROUP" and i[1] == group_name and i[2] != "vol0001" then
+        volume = "/" + i[2]
+        limit  = i[3].to_i
+        usage  = i[4].to_i
+        avail  = i[5].to_i
+        rate   = ((usage * 100) / limit).round
+        info.push(Disk_info.new(volume, num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), rate))
+      end
+    end
+  end
+
+  return info
+end
+
+def dashboard_disk(group_name)
+  file = ACC_GROUP_DIR + group_name + ".disk"
+  return _disk_info(file, group_name)
+end
+
+def dashboard_inode(group_name)
+  file = ACC_GROUP_DIR + group_name + ".inode"
+  return _disk_info(file, group_name)
+end
+
+def _home_info(file)
+  File.open(file, "r") do |f|
+    f.each_line do |l|
+      i = l.split(",")
+      volume = "/" + i[2]
+      limit  = i[3].to_i
+      usage  = i[4].to_i
+      avail  = i[5].to_i
+      rate   = ((usage * 100) / limit).round
+      return Disk_info.new(volume, num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), rate)
+    end
+  end
+
+  return nil
+end
+
+def dashboard_home_disk()
+  file = ACC_HOME_DIR + ENV['USER'] + ".disk"
+  return _home_info(file)
+end
+
+def dashboard_home_inode()
+  file = ACC_HOME_DIR + ENV['USER'] + ".inode"
+  return _home_info(file)
+end
+
+def dashboard_color(num)
+  if 0 <= num and num <= 25 then
+    return "green"
+  elsif 25 < num and num <= 75 then
+    return "blue"
+  else
+    return "red"
+  end
+end
+
+def dashboard_date()
+  file = ACC_DIR + "date.txt"
+  File.open(file, 'r') do |f|
+    first_line = f.gets
+    return first_line
+  end
+end
+
+def output_xfce(opengl_with_nvidia = "false", gpus_per_node = "0", queue = "unknown")
+  <<"EOF"
+# Remove any preconfigured monitors
+if [[ -f "${HOME}/.config/monitors.xml" ]]; then
+  mv "${HOME}/.config/monitors.xml" "${HOME}/.config/monitors.xml.bak"
+fi
+
+# Copy over default panel if doesn't exist, otherwise it will prompt the user
+PANEL_CONFIG="${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+if [[ ! -e "${PANEL_CONFIG}" ]]; then
+  mkdir -p "$(dirname "${PANEL_CONFIG}")"
+  cp "/etc/xdg/xfce4/panel/default.xml" "${PANEL_CONFIG}"
+fi
+
+# Disable startup services
+xfconf-query -c xfce4-session -p /startup/ssh-agent/enabled -n -t bool -s false
+xfconf-query -c xfce4-session -p /startup/gpg-agent/enabled -n -t bool -s false
+
+# Disable useless services on autostart
+AUTOSTART="${HOME}/.config/autostart"
+rm -fr "${AUTOSTART}"    # clean up previous autostarts
+mkdir -p "${AUTOSTART}"
+for service in "pulseaudio" "rhsm-icon" "spice-vdagent" "tracker-extract" "tracker-miner-apps" "tracker-miner-user-guides" "xfce4-power-manager" "xfce-polki\
+t"; do
+  echo -e "[Desktop Entry]\nHidden=true" > "${AUTOSTART}/${service}.desktop"
+done
+
+# Run Xfce4 Terminal as login shell (sets proper TERM)
+TERM_CONFIG="${HOME}/.config/xfce4/terminal/terminalrc"
+if [[ ! -e "${TERM_CONFIG}" ]]; then
+  mkdir -p "$(dirname "${TERM_CONFIG}")"
+  sed 's/^ \{4\}//' > "${TERM_CONFIG}" << EOL
+    [Configuration]
+    CommandLoginShell=TRUE
+EOL
+else
+  sed -i \
+    '/^CommandLoginShell=/{h;s/=.*/=TRUE/};${x;/^$/{s//CommandLoginShell=TRUE/;H};x}' \
+    "${TERM_CONFIG}"
+fi
+
+# Set custom Directories
+USER_DIRS_CONFIG="${HOME}/.config/user-dirs.dirs"
+if [[ ! -e "${USER_DIRS_CONFIG}" ]]; then
+    xdg-user-dirs-update --set DESKTOP ${HOME}
+    xdg-user-dirs-update --set DOCUMENTS ${HOME}
+    xdg-user-dirs-update --set DOWNLOAD ${HOME}
+    xdg-user-dirs-update --set MUSIC ${HOME}
+    xdg-user-dirs-update --set PICTURES ${HOME}
+    xdg-user-dirs-update --set PUBLICSHARE ${HOME}
+    xdg-user-dirs-update --set TEMPLATES ${HOME}
+    xdg-user-dirs-update --set VIDEOS ${HOME}
+fi
+
+# launch dbus first through eval becuase it can conflict with a conda environment
+# see https://github.com/OSC/ondemand/issues/700
+eval $(dbus-launch --sh-syntax)
+
+# For some reason the lang module information disappears, so reload it.
+module remove lang
+module load lang
+
+_OPENGL_WITH_NVIDIA_OPTION=""
+if [ "#{opengl_with_nvidia}" = "true" ] && [ "#{gpus_per_node}" != "0" ]; then
+  if [ "#{queue}" = "gpu1" ] || [ "#{queue}" = "gpu2" ]; then
+    _OPENGL_WITH_NVIDIA_OPTION="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia"
+  fi
+fi
+EOF
+end
+
+def submit_working_dir(working_dir)
+  <<"EOF"
+WORKING_DIR=#{working_dir}
+    [ "${WORKING_DIR}" = "" ] && WORKING_DIR=${HOME}
+    mkdir -p "${WORKING_DIR}"
+    cd "${WORKING_DIR}"
+EOF
+end
+
+def submit_gpus_per_node(queue, gpus_per_node)
+  return "gpus_per_node: #{gpus_per_node}" if queue == "gpu1" or queue == "gpu2"
+end
+
+def submit_email(email = "", only_start = true)
+  if email != ""
+    str = "email: #{email}\n  email_on_started: true\n"
+    if only_start
+      return str
+    else
+      return str << "  email_on_terminated: true\n"
+    end
+  end
+end
+
+def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
+                         fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
+                         fugaku_large_procs, group, volume, mode, additional_options = "")
+  str = "native:\n"
+  if queue == "small" then
+    str << "    - \"-L elapse=#{fugaku_small_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}"
+  elsif queue == "small-free" then
+    str << "    - \"-L elapse=#{fugaku_small_free_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}"
+  elsif queue == "large" then
+    str << "    - \"-L elapse=#{fugaku_large_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}"
+  elsif queue == "large-free" then
+    str << "    - \"-L elapse=#{fugaku_large_free_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}"
+  end
+  str << " --no-check-directory -g #{group}"
+
+  # volume == "" is set when a group with no data/share directory defined (e.g. rist-a) is set.
+  if volume == "/vol0004" or volume == ""
+    str << " -x PJM_LLIO_GFSCACHE=/vol0004"
+  else
+    str << " -x PJM_LLIO_GFSCACHE=/vol0004:#{volume}"
+  end
+  
+  if mode == "Boost"
+    str << " -L freq=2200"
+  elsif mode == "Eco"
+    str << " -L eco_state=2"
+  elsif mode == "Boost + Eco"
+    str << " -L freq=2200,eco_state=2"
+  end
+
+  str << " " + additional_options if additional_options != ""
+  
+  return str + "\""
+end
+
+def submit_native_fugaku_small(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
+                               group, volume, mode)
+  submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
+                      "-1", "-1", "-1", "-1", group, volume, mode)
+end
+
+def submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+                          gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
+                          mem2_memory, reserved_hours, reserved_cores, reserved_memory)
+  str = "native:\n"
+  if queue == "gpu1"
+    str<<<<"EOF"
+    - "-t"
+    - "#{prepost1_hours}:00:00"
+    - "-n"
+    - "#{gpu1_cores}"
+    - "--mem"
+    - "#{gpu1_memory}G"
+EOF
+  elsif queue == "gpu2"
+    str<<<<"EOF"
+    - "-t"
+    - "#{prepost2_hours}:00:00"
+    - "-n"
+    - "#{gpu2_cores}"
+    - "--mem"
+    - "#{gpu2_memory}G"
+EOF
+  elsif queue == "mem1"
+    str<<<<"EOF"
+    - "-t"
+    - "#{prepost1_hours}:00:00"
+    - "-n"
+    - "#{mem1_cores}"
+    - "--mem"
+    - "#{mem1_memory}G"
+EOF
+  elsif queue == "mem2"
+    str<<<<"EOF"
+    - "-t"
+    - "#{prepost2_hours}:00:00"
+    - "-n"
+    - "#{mem2_cores}"
+    - "--mem"
+    - "#{mem2_memory}G"
+EOF
+  elsif queue == "ondemand-reserved"
+    str<<<<"EOF"
+    - "-t"
+    - "#{reserved_hours}:00:00"
+    - "-n"
+    - "#{reserved_cores}"
+    - "--mem"
+    - "#{reserved_memory}G"
+EOF
+  end
+
+  return str
+end
+
+def submit_native_prepost_gpu(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+                              gpu2_cores, gpu2_memory)
+  return submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+                               gpu2_cores, gpu2_memory, -1, -1, -1, -1, -1, -1, -1)
+end
+
+def submit_native(cluster, queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
+                  fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
+                  fugaku_large_procs, group, volume, mode, prepost1_hours, gpu1_cores, gpu1_memory,
+                  prepost2_hours, gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
+                  mem2_memory, reserved_hours, reserved_cores, reserved_memory)
+  if cluster == "fugaku"
+    return submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
+                                fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours,
+                                fugaku_large_nodes, fugaku_large_procs, group, volume, mode)
+  elsif cluster == "prepost"
+    return submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
+                                 gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
+                                 mem2_memory, reserved_hours, reserved_cores, reserved_memory)
+  end
+end
+
+def setting_singularity(name)
+  <<"EOF"
+    export SINGULARITYENV_XDG_DATA_HOME=${HOME}/ondemand/#{name}/`arch`
+    export SINGULARITYENV_TMPDIR=${SINGULARITYENV_XDG_DATA_HOME}/tmp
+    export SINGULARITYENV_XDG_RUNTIME_DIR=${SINGULARITYENV_TMPDIR}
+    export SINGULARITY_BINDPATH=/data,/work,/sys,/var/opt,/usr/share/Modules,/etc/profile.d/zFJSVlangload.sh,/2ndfs
+    mkdir -p $SINGULARITYENV_TMPDIR
+    NV_OPTION=""
+    CUDA_PATH=/usr/local/cuda
+    if [ -e $CUDA_PATH ]; then
+        NV_OPTION="--nv"
+        CUDA_REAL_PATH=`readlink -f /usr/local/cuda`
+        export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$CUDA_REAL_PATH:$CUDA_PATH
+        export SINGULARITYENV_PATH=$PATH:$CUDA_PATH/bin
+        export SINGULARITYENV_LD_LIBRARY_PATH=$CUDA_PATH/lib64:$LD_LIBRARY_PATH
+    fi
+
+    for i in `ls -l /opt | grep ^d | awk '{print $9}'`; do
+        export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/opt/$i
+    done
+    for i in `ls -1 / | grep ^vol`; do
+      export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/$i
+    done
+    for i in /lib64/liblustreapi.so /run/psv; do
+      [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
+    done
+
+    if [ #{name} = "remote_desktop" ]; then
+      if [ `arch` = aarch64 ]; then
+        IMAGE=#{REMOTE_DESKTOP_AARCH64}
+      else
+        IMAGE=#{REMOTE_DESKTOP_X86_64}
+      fi
+    elif [ #{name} = "jupyter" ]; then
+      if [ `arch` = aarch64 ]; then
+        IMAGE=#{JUPYTER_AARCH64}
+      else
+        IMAGE=#{JUPYTER_X86_64}
+      fi
+    elif [ #{name} = "rstudio" ]; then
+      if [ `arch` = aarch64 ]; then
+        IMAGE=#{RSTUDIO_AARCH64}
+      else
+        IMAGE=#{RSTUDIO_X86_64}
+      fi
+    elif [ #{name} = "vscode" ]; then
+      if [ `arch` = aarch64 ]; then
+        IMAGE=#{VSCODE_AARCH64}
+      else
+        IMAGE=#{VSCODE_X86_64}
+      fi
+    fi
+EOF
+end
+
+def submit_vnc(staged_root)
+  str =<<"EOF"
+  template: "vnc"
+  websockify_cmd: '/usr/bin/websockify'
+  script_wrapper: |
+    cat << "CTRSCRIPT" > #{staged_root}/container.sh
+    #!/usr/bin/env bash
+    export PATH="$PATH:/opt/TurboVNC/bin"
+    export PATH="$PATH:/opt/ParaView/bin"
+    export PATH="$PATH:/opt/visit/bin"
+    export PATH="$PATH:/vol0004/apps/avs_xp851/bin/linux_64_el8"
+    export XP_LICENSE_SERVER=fn01sv02
+    export PATH="$PATH:/opt/xcrysden/bin"
+    export PATH="$PATH:/usr/local/vesta"
+    export PATH="$PATH:/opt/smokeview"
+    export PATH="$PATH:/opt/ovito/bin"
+    export PATH="$PATH:/usr/local/C-TOOLS062"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/qt-4.8.6/lib"
+    export PATH="$PATH:/usr/local/pymol-2.5.0/bin"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/pymol-2.5.0/lib64"
+    export PATH="$PATH:/opt/ImageJ"
+    %s
+    CTRSCRIPT
+
+    cd ${HOME}
+    #{setting_singularity("remote_desktop")}
+
+    chmod +x #{staged_root}/container.sh
+    singularity run ${NV_OPTION} ${IMAGE} #{staged_root}/container.sh
+EOF
+end
+
+def submit_env(threads, app_name = "", version = "")
+  str =<<"EOF"
+#!/usr/bin/env bash
+    set -e
+    . /vol0004/apps/oss/spack/share/spack/setup-env.sh
+EOF
+
+  if version == "" # app_name is hash
+    str << "    spack load /#{app_name}\n"
+  else
+    str << "    spack load #{app_name}@#{version}\n"
+  end
+  
+  if threads != 0
+    return str << "    export OMP_NUM_THREADS=#{threads}"
+  else
+    return str
+  end
+end
+
+def submit_llio_exec_file(queue, nodes, procs, exec_file)
+  return if queue != "large" and queue != "large-free"
+  
+  if nodes.to_i >= LLIO_LBOUND_NODES or procs.to_i >= LLIO_LBOUND_PROCS
+    return "/usr/bin/llio_transfer " + "`which " + exec_file + "`"
+  end
+end
+
+def submit_llio(queue, flag, target) # target is an input file or a working directory
+  return if queue != "large" and queue != "large-free"
+  
+  if flag == "input_file"
+    return "/usr/bin/llio_transfer " + target
+  elsif flag == "directrory_where_input_file_exists"
+    return "/home/system/tool/dir_transfer " + File.dirname(target)
+  elsif flag == "working_dir"
+    return "/home/system/tool/dir_transfer " + target
+  end
+end

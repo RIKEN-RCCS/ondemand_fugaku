@@ -1,9 +1,9 @@
 <%-
-  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/form.rb'
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
   # spack versions openmx -s
   versions = ["3.9"]
   # spack find --paths openmx@3.9
-  openmx39 = get_bins("openmx39", "/vol0004/apps/oss/spack-v0.19/opt/spack/linux-rhel8-a64fx/fj-4.8.1/openmx-3.9-j52bvdtvorjy2stvpf7ve2ygxogwjw4n/bin/")
+  openmx39 = form_load_cache("openmx39")
 -%>
 ---
 title: OpenMX

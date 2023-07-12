@@ -1,12 +1,12 @@
 <%-
-  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/form.rb'
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
   
   # spack versions abinitmp -s
   versions = ["2-4", "1-22"]
   # spack find --paths abinitmp@2-4
   ab = []
-  ab.push(get_bins("ab2-4",  "/vol0004/apps/opt/SPACK-Feb2023-ABINIT-MP-VER2-REV4/bin"))
-  ab.push(get_bins("ab1-22", "/vol0004/apps/opt/SPACK-Feb2023-ABINIT-MP-VER1-REV22/bin"))
+  ab.push(form_load_cache("ab2-4"))
+  ab.push(form_load_cache("ab1-22"))
 -%>
 ---
 title: ABINIT-MP
