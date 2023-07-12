@@ -76,7 +76,8 @@ h4.fugaku_info {
 }
 .design01 th {
     padding: 4px;
-    background: #5507FF;
+    background: #2A2A2A;
+    /*background: #5507FF;*/
     border: solid 1px #AAAAAA;
     color: #ffffff;
 }
@@ -98,7 +99,8 @@ h4.fugaku_info {
 }
 .link th {
     padding: 5px 10px;
-    background-color: #5507FF;
+    background: #2A2A2A;
+    /*background-color: #5507FF;*/
     border: 1px solid #AAAAAA;
     text-align: center;
 }
