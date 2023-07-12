@@ -39,43 +39,17 @@
         
         <h2><a id="batch" name="batch">Batch Jobs</a></h2>
         <p>
-          <table>
-            <tr>
-              <td>
-                <img alt="web form" src="./img/batch.png" width="300" />
-              </td>
-              <td valign="top">
-                <p>
-                  Click the icon to display a web form for entering computational resources.
-                  Input items differ for each application.
-                  Only the important ones will be explained as following.
-                  <ul>
-                    <li>Elapsed Time : Maximum time used by the application</li>
-                    <li>Mode : Execution mode for Fugaku. Please refer to <a href="https://www.fugaku.r-ccs.riken.jp/en/operation/20220701_01">HERE</a> for detail</li>
-                    <li>Version : Version number of the application</li>
-                  </ul>
-                </p>
-                <p>
-                   Clicking Launch bottom will submit the job to Fugaku.
-                </p>
-              </td>
-            </tr>
-          </table>
+          Click the icon to display a web form for entering computational resources.
+          Input items differ for each application.
+          Clicking Launch bottom will submit the job to Fugaku.
         </p>
         
         <h2><a id="interactive" name="interactive">Interactive Apps</a></h2>
         <p>
-          Click the icon to display a web form for entering computational resources.
-          Input items differ for each application.
-          When fugaku or prepost is selected in Queue field, the input fields thereafter will change.
-          Clicking Launch bottom will submit the job to the system selected in Queue field.
+          The web form is the same as Batch Jobs, but after clicking Launch the link to the application will be displayed when the job is launched on the compute node. By clicking on the link, you can use the corresponding application from your web browser.
         </p>
         <p>
-          When a job is launched on a compute node, a link to the application is displayed.
-          By clicking on the link, you can use the corresponding application from your web browser.
-        </p>
-        <p>
-          <img alt="launch" src="./img/launch.png" width="400" />
+          <img style="border:solid 1px #000000" alt="launch" src="./img/launch.png" width="400" />
         </p>
         
         <h2><a id="passenger" name="passenger">Passenger Apps</a></h2>
@@ -84,23 +58,26 @@
           You can view job information, and delete your jobs.
         </p>
         <p>
-          <img alt="active jobs" src="./img/activejobs.png" width="600" />
+          <img style="border:solid 1px #000000" alt="active jobs" src="./img/activejobs.png" width="600" />
         </p>
 
         <h3>Home Directory</h3>
         <p>
           You can upload, download, delete, and edit files. The file size upload limit is 10GB.
         </p>
-
+        <p>
+          <img style="border:solid 1px #000000" alt="home directory" src="./img/homedirectory.png" width="600" />
+        </p>
         <p>
           File operations for cloud storage using <a href="https://rclone.org">rclone</a> are also possible.
           You can set up rclone by starting Remote Desktop in Interactive Apps and running rclone or rclone-browser from the terminal.
           When you launch Home Directory afterwards, you can access the configured cloud storage.
           Please note that Fugaku Help Desk does not support rclone settings.
         </p>
+        
+        <h3>GakuNin RDM</h3>
         <p>
-          File operations for <a href="https://rdm.nii.ac.jp">GakuNin RDM</a> are also possible.
-          When you launch GakuNin RDM in Passenger Apps, input following information.
+          You can perform file operations on <a href="https://rdm.nii.ac.jp">GakuNin RDM</a>, a research data management platform provided by the National Institute of Informatics.
         </p>
         <ul>
           <li>MOUNT_POINT : mount point on Fugaku (e.g. /home/rccs-aot/a00000/abc)</li>
@@ -117,10 +94,6 @@
           Please note that Fugaku Help Desk does not support this application. Please visit to <a href="https://github.com/RCOSDP/CS-ood-rdmfs/">https://github.com/RCOSDP/CS-ood-rdmfs/</a>.
         </p>
         
-        <p>
-          <img alt="home directory" src="./img/homedirectory.png" width="600" />
-        </p>
-
         <!--
         <h3>Job Submitter</h3>
         <p>
@@ -137,7 +110,7 @@
           You can perform operations using a command line interface on your web browser.
         </p>
         <p>
-          <img alt="shell access" src="./img/shellaccess.png" width="600" />
+          <img style="border:solid 1px #000000" alt="shell access" src="./img/shellaccess.png" width="600" />
         </p>
 
         <h2><a id="note" name="note">Note</a></h2>
