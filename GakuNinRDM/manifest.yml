@@ -1,0 +1,8 @@
+name: Gakunin RDM
+description: Mounting Gakunin RDM
+icon: fa://folder-o
+#category: Files
+#subcategory: Utilities
+category: Passenger Apps
+tile:
+  sub_caption: |
