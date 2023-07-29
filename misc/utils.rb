@@ -793,6 +793,23 @@ EOF
   return "- input_file"
 end
 
+def form_free_input_file(required = true, label = "Input file", item = "input_file", help = "")
+  $attr <<<<"EOF"
+  #{item}:
+    label: #{label}
+    data-filepicker: true
+    data-target-file-type: files  # Valid values are: files, dirs, or both
+    # Optionally set a default directory
+    data-default-directory: #{ENV['HOME']}
+    # Optionally only allow editing through the file picker; defaults to false
+    data-file_picker_favorites: #{get_groups_fdirs()}
+    required: #{required.to_s}
+    help: #{help}
+EOF
+
+  return "- #{item}"
+end
+
 def form_multi_input_files(required = true, prefix = "", label = "")
   $attr <<<<"EOF"
   input_file_#{prefix}:

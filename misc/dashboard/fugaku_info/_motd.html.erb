@@ -6,18 +6,17 @@
   # Get the current time as epoch milliseconds.
   now = (Time.now.to_f * 1000).to_i
 
-  # Get time 5 minutes ago as epoch milliseconds
-  #five_min_ago = now - (5 * 60 * 1000)
-  one_week_ago = now - (7 * 24 * 60 * 60 * 1000)
+  # Get time one month ago as epoch milliseconds
+  one_month_ago = now - (30 * 24 * 60 * 60 * 1000)
 
-  dashboard_url  = "https://status.fugaku.r-ccs.riken.jp/d-solo/cf06d886-e672-41d8-a587-85ccb32fce7e/5a6f6KGM5b6F44Gh44K444On44OW5pWw?orgId=1"
+  dashboard_url = "https://status.fugaku.r-ccs.riken.jp/d-solo/cf06d886-e672-41d8-a587-85ccb32fce7e/5a6f6KGM5b6F44Gh44K444On44OW5pWw?orgId=1"
 -%>
 
-  <table border="0" style="margin-bottom: 20px;">
+  <table border="0" width="100%" style="margin-bottom:20px;">
     <tr>
-      <td valign="top">
+      <td width="100%" valign="top">
 	<h4 class="fugaku_info">Information</h4>
-	<table class="fugaku_motd" style="margin-right: 20px; margin-top: 12px;">
+	<table class="fugaku_motd" style="margin-right: 25px; margin-top: 12px; margin-bottom: 12px;">
 	  <%- info.each do |i| -%>
 	  <tr>
 	    <%- c = i.split(":") -%>
@@ -28,10 +27,17 @@
 	  <%- end -%>
 	</table>
       </td>
-      <td valign="top">
+      <td valign="top" rowspan="2">
+	<h4 class="fugaku_info">Fugaku Schedule</h4>
+	<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FTokyo&hl=en&showCalendars=0&showTabs=0&showPrint=0&showNav=1&showTitle=0&src=NWU5YTU2MjY3ZTMxNjBmZGY0YzJiODhlNjk1MjRmMjU5MWZhMTAyMTA1M2NiNjhkOTRiM2FiMDIzZWI0ZmUyN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%233F51B5" style="margin-top:10px; border-width:0" width="420" height="420" frameborder="0" scrolling="no"></iframe>
+      </td>
+    </tr>
+    <tr>
+      <td valign="bottom">
 	<h4 class="fugaku_info">Pending jobs</h4>
-	<iframe style="margin-top: 8px;" src="<%= dashboard_url %>&from=<%= one_week_ago %>&to=<%= now %>&theme=light&panelId=2" width="400px" height="170px" frameborder="0"></iframe>
+	<div style="margin-right:25px;">
+	  <iframe class="fugaku_frame" src="<%= dashboard_url %>&from=<%= one_month_ago %>&to=<%= now %>&theme=light&panelId=2" frameborder="0" width="100%" height="225px"></iframe>
+	</div>
       </td>
     </tr>
   </table>
-
