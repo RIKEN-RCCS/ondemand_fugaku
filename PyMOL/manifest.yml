@@ -1,5 +1,5 @@
 ---
-name: View-PyMOL
+name: PyMOL
 category: Interactive Apps
 subcategory: Viewer
 role: batch_connect
