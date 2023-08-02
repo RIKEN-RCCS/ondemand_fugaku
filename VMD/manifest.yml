@@ -1,0 +1,9 @@
+---
+name: VMD
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
+description: |
+  [VMD](https://www.ks.uiuc.edu/Research/vmd/) is a molecular visualization program.
+tile:
+  sub_caption: |
