@@ -712,6 +712,20 @@ EOF
   return "- gpus_per_node"
 end
 
+def form_check(item, label, help, required = true)
+  $attr <<<<"EOF"
+  #{item}:
+    label: #{label}
+    widget: check_box
+    checked_value: "true"
+    unchecked_value: "false"
+    cacheable: true
+    required: #{required.to_s}
+    help: #{help}
+EOF
+  return "- #{item}"
+end
+
 def form_opengl_with_nvidia()
   $attr <<<<"EOF"
   opengl_with_nvidia:

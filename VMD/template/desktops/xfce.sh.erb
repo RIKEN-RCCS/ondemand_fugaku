@@ -3,7 +3,15 @@
 -%>
 
 <%= output_xfce(context.opengl_with_nvidia, context.gpus_per_node, context.queue) %>
+FTYPE=""
+if [ "<%= context.ftype %>" = "psf" ]; then
+  FTYPE="-psf"
+elif [ "<%= context.ftype %>" = "pdb" ]; then
+  FTYPE="-pdb"
+elif [ "<%= context.ftype %>" = "dcd" ]; then
+  FTYPE="-dcd"
+fi
 
-xfce4-terminal -e 'bash -c "eval ${_OPENGL_WITH_NVIDIA_OPTION} /vol0004/apps/oss/vmd/bin/vmd <%= context.input_file %>; exec bash"' -T "VMD Terminal" --disable-server &
+xfce4-terminal -e 'bash -c "eval ${_OPENGL_WITH_NVIDIA_OPTION} /vol0004/apps/oss/vmd/bin/vmd ${FTYPE} <%= context.input_file %>; exec bash"' -T "VMD Terminal" --disable-server &
 
 xfce4-session

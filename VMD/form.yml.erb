@@ -4,6 +4,7 @@
 ---
 title: VMD
 form:
+  <%= form_check("license", "Do you accept the VMD license?", "If you want to use VMD, you need to agree to [the VMD License](https://www.ks.uiuc.edu/Research/vmd/current/LICENSE.html).") %>
   <%= form_cluster("prepost") %>
   <%= form_queue("prepost") %>
   <%= form_prepost1_hours() %>
@@ -21,6 +22,7 @@ form:
   <%= form_reserved_memory() %>
   <%= form_gpus_per_node() %>
   <%= form_opengl_with_nvidia() %>
+  <%= form_select("ftype", "File type", ["(auto)", "psf", "pdb", "dcd"], "(auto)", "If nothing is output, select [File] -> [New Molecule] in the VMD window and load the file manually.") %>
   <%= form_input_file(false) %>
   <%= form_email() %>
   <%= form_desktop() %>
