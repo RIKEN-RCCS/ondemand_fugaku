@@ -12,6 +12,10 @@ elif [ "<%= context.ftype %>" = "dcd" ]; then
   FTYPE="-dcd"
 fi
 
-xfce4-terminal -e 'bash -c "eval ${_OPENGL_WITH_NVIDIA_OPTION} /vol0004/apps/oss/vmd/bin/vmd ${FTYPE} <%= context.input_file %>; exec bash"' -T "VMD Terminal" --disable-server &
+if [ "${_OPENGL_WITH_NVIDIA_OPTION}" = "" ]; then
+  xfce4-terminal -e 'bash -c "/vol0004/apps/oss/vmd/bin/vmd ${FTYPE} <%= context.input_file %>; exec bash"' -T "VMD Terminal" --disable-server &
+else
+  xfce4-terminal -e 'bash -c "__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia /vol0004/apps/oss/vmd/bin/vmd ${FTYPE} <%= context.input_file %>; exec bash"' -T "VMD Terminal" --disable-server &
+fi
 
 xfce4-session
