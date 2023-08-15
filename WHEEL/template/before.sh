@@ -41,8 +41,8 @@ mkdir ${config_dir} 2>/dev/null
 cd ${config_dir}
 
 #download server.json and jobScheduler.json from github
-wget -nc https://raw.githubusercontent.com/RIKEN-RCCS/OPEN-WHEEL/master/server/app/config/server.json
-wget -nc https://raw.githubusercontent.com/RIKEN-RCCS/OPEN-WHEEL/master/server/app/config/jobScheduler.json
+wget -nc https://raw.githubusercontent.com/RIKEN-RCCS/OPEN-WHEEL/master/server/app/db/server.json
+wget -nc https://raw.githubusercontent.com/RIKEN-RCCS/OPEN-WHEEL/master/server/app/db/jobScheduler.json
 
 #rewrite port
 sed -i -e "/port/c \"port\": ${port}," server.json
