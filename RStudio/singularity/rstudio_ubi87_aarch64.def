@@ -46,7 +46,7 @@ baseurl=http://10.4.38.1/pxinst/repos/FUGAKU/BaseOS
 enabled=1
 gpgcheck=0
 EOF
-  dnf --releasever=8.7 -y install xpmem libevent tcl less hwloc openssh-clients gcc-c++ elfutils-libelf-devel FJSVpxtof FJSVpxple FJSVpxpsm FJSVpxkrm FJSVxoslibmpg
+  dnf --releasever=8.7 -y install xpmem libevent tcl less hwloc openssh-clients gcc-c++ elfutils-libelf-devel FJSVpxtof FJSVpxple FJSVpxpsm FJSVpxkrm FJSVxoslibmpg papi-devel
   dnf --releasever=8.7 -y install python39-devel
   update-alternatives --set python /usr/bin/python3
   #

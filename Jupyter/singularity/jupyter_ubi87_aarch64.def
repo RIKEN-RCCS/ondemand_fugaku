@@ -15,7 +15,7 @@ From: redhat/ubi8:8.6-943
   pip3.9 install packaging
   curl -fsSL https://rpm.nodesource.com/setup_18.x | bash -
   dnf --releasever=8.7 -y install nodejs
-  pip3.9 install jupyterlab pandas matplotlib scikit-learn seaborn tqdm
+  pip3.9 install jupyterlab pandas matplotlib scikit-learn seaborn tqdm pymatgen
   #
   # For Fujitsu TCS
   cat <<EOF > /etc/yum.repos.d/Fugaku.repo
@@ -31,7 +31,7 @@ baseurl=http://10.4.38.1/pxinst/repos/FUGAKU/BaseOS
 enabled=1
 gpgcheck=0
 EOF
-  dnf --releasever=8.7 -y install xpmem libevent tcl less hwloc openssh-clients gcc-c++ elfutils-libelf-devel FJSVpxtof FJSVpxple FJSVpxpsm FJSVpxkrm FJSVxoslibmpg
+  dnf --releasever=8.7 -y install xpmem libevent tcl less hwloc openssh-clients gcc-c++ elfutils-libelf-devel FJSVpxtof FJSVpxple FJSVpxpsm FJSVpxkrm FJSVxoslibmpg papi-devel
   update-alternatives --set python /usr/bin/python3
   #
   dnf clean all
