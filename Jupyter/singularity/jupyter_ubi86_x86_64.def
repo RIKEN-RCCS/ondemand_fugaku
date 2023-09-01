@@ -15,7 +15,7 @@ From: redhat/ubi8:8.6-990
   pip3.9 install packaging
   curl -fsSL https://rpm.nodesource.com/setup_18.x | bash -
   dnf --releasever=8.6 -y install nodejs
-  pip3.9 install jupyterlab pandas matplotlib scikit-learn seaborn tqdm pymatgen
+  pip3.9 install jupyterlab pandas matplotlib scikit-learn seaborn tqdm pymatgen boto3 kaleido botocore mpcontribs-client
   #
   dnf clean all
   rm -f /etc/pki/entitlement/*
