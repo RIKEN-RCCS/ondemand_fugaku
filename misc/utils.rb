@@ -1340,6 +1340,7 @@ def setting_singularity(name)
     for i in /lib64/liblustreapi.so /run/psv; do
       [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
     done
+    [ -e /usr/bin/xospastop ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/usr/bin/xospastop
 
     if [ #{name} = "remote_desktop" ]; then
       if [ `arch` = aarch64 ]; then
