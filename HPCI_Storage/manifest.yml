@@ -1,0 +1,8 @@
+name: HPCI Shared Storage
+description: Mounting HPCI Shared Storage
+icon: fa://database
+#category: Files
+#subcategory: Utilities
+category: Passenger Apps
+tile:
+  sub_caption: |
