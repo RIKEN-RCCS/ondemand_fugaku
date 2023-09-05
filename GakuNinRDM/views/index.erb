@@ -9,22 +9,32 @@
   <% @data.each do |k, v| %>
   <tr>
     <form action="" method="post">
-    <td style="border: solid 2px #333333;">
+      <td style="border: solid 2px #333333;">
         <input type="submit" name="act" value="<%= v['available_action'] %>">
         <input type="<%= v['available_action'] == 'mount' ? 'submit' : 'hidden' %>" name="<%= v['available_action'] == 'mount' ? 'act' : 'dummy' %>" value="delete">
-    </td>
-    <td style="border: solid 2px #333333;"><input type="text" name="mount_path"  id="mount_path"  value="<%= k %>"required></td>
-    <td style="border: solid 2px #333333;"><input type="text" name="rdm_node_id" id="rdm_node_id" value="<%= v['rdm_node_id'] %>"required></td>
-    <td style="border: solid 2px #333333;"><input type="text" name="rdm_token"   id="rdm_token"   value="<%= v['rdm_token'] %>"required></td>
+      </td>
+      <% if v['available_action'] == 'mount' then %>
+      <td style="border: solid 2px #333333;"><input type="text" name="mount_path"  id="mount_path"  value="<%= k %>"required></td>
+      <td style="border: solid 2px #333333;"><input type="text" name="rdm_node_id" id="rdm_node_id" value="<%= v['rdm_node_id'] %>"required></td>
+      <td style="border: solid 2px #333333;"><input type="text" name="rdm_token"   id="rdm_token"   value="<%= v['rdm_token'] %>"required></td>
+      <% else %>
+      <td style="border: solid 2px #333333;"><input type="hidden" name="mount_path"  id="mount_path"  value="<%= k %>"required>
+        <a href="https://ondemand-test.fugaku.r-ccs.riken.jp/pun/sys/dashboard/files/fs/<%= k %>" target="_blank">
+          <%= k %>
+	</a>
+      </td>
+      <td style="border: solid 2px #333333;"><input type="hidden" name="rdm_node_id" id="rdm_node_id" value="<%= v['rdm_node_id'] %>"required><%= v['rdm_node_id'] %></td>
+      <td style="border: solid 2px #333333;"><input type="hidden" name="rdm_token"   id="rdm_token"   value="<%= v['rdm_token'] %>"required>*****</td>
+      <% end %>
     </form>
   </tr>
   <% end %>
   <tr>
     <form action="" method="post">
-    <td style="border: solid 2px #333333;"><input type="submit" name="act"         value="mount"></td>
-    <td style="border: solid 2px #333333;"><input type="text"   name="mount_path"  id="mount_path"  required></td>
-    <td style="border: solid 2px #333333;"><input type="text"   name="rdm_node_id" id="rdm_node_id" required></td>
-    <td style="border: solid 2px #333333;"><input type="text"   name="rdm_token"   id="rdm_token"   required></td>
+      <td style="border: solid 2px #333333;"><input type="submit" name="act"         value="mount">            </td>
+      <td style="border: solid 2px #333333;"><input type="text"   name="mount_path"  id="mount_path"  required></td>
+      <td style="border: solid 2px #333333;"><input type="text"   name="rdm_node_id" id="rdm_node_id" required></td>
+      <td style="border: solid 2px #333333;"><input type="text"   name="rdm_token"   id="rdm_token"   required></td>
     </form>
   </tr>
 
