@@ -20,10 +20,6 @@ helpers do
   def title
     "HPCI Shared Storage"
   end
-
-  def files_url
-    "https://ondemand-test.fugaku.r-ccs.riken.jp/pun/sys/dashboard/files/fs"
-  end
 end
 
 # Define a route at the root '/' of the app.

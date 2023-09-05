@@ -30,8 +30,9 @@ class Command
     end
 
     data.each do |k, v|
-      if Dir.exist?(k) then
-        system("fusermount3 -u #{k}") unless system("ls #{k}") # Check if it is mounted correctly
+      # Check if it is mounted correctly
+      unless system("ls #{k}") then
+        system("fusermount3 -u #{k}")
       end
       real_path = `readlink -f #{k}`.strip
       data[k]['available_action'] = system("mount | grep #{real_path}")? 'unmount' : 'mount'

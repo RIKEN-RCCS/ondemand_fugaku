@@ -37,6 +37,7 @@ class Command
         data[params['hpci_id']] = d
         open(SAVE_FILE, 'w') {|f| YAML.dump(data, f) }
       elsif params['act'] == 'unmount' then
+        system("echo #{params['pass']} | myproxy-logon -s #{HPCI_URL} -l #{params['hpci_id']} -t #{params['time']} -S")
         system("umount.hpci")
       elsif params['act'] == 'delete' then
         data.delete(params['hpci_id'])

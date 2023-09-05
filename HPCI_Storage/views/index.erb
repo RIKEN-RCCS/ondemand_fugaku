@@ -27,7 +27,7 @@
       <% if v['act'] == 'mount' then %>
       <%= d %>
       <% else %>
-      <a href="<%= files_url %><%= d %>" target="_blank"><%= d %></a>
+      <a href="./dashboard/files/fs/<%= d %>" target="_blank"><%= d %></a>
       <% end %>
       <% if index < v['mount_path'].length - 1 then %>
       <br>
