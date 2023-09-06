@@ -11,7 +11,8 @@ From: redhat/ubi8:8.6-990
   dnf --releasever=8.6 -y install libatomic # for pre-post environment
   dnf --releasever=8.6 -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs
   dnf --releasever=8.6 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  dnf --releasever=8.6 -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs libevent
+  subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms
+  dnf --releasever=8.6 -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs libevent xterm
   dnf --releasever=8.6 -y install gnuplot ImageMagick ncview glfw glfw-devel
   dnf --releasever=8.6 -y install vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts
   dnf -y --releasever=8.7 install rclone rclone-browser

@@ -17,7 +17,7 @@ From: redhat/ubi8:8.6-943
   dnf --releasever=8.7 -y --skip-broken groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
   pip2 install ts
   dnf --releasever=8.7 -y install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python3-websockify-0.10.0-1.el8.noarch.rpm
-  dnf --releasever=8.7 -y install libX11-devel libXi-devel libXt-devel pam-devel java-1.8.0-openjdk-devel
+  dnf --releasever=8.7 -y install libX11-devel libXi-devel libXt-devel pam-devel java-1.8.0-openjdk-devel xterm
   wget https://turbovnc.org/pmwiki/uploads/Downloads/TurboVNC.repo
   mv TurboVNC.repo /etc/yum.repos.d
   dnf --releasever=8.7 -y install turbovnc-3.0.3-20230227
