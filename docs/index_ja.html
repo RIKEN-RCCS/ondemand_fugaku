@@ -70,20 +70,36 @@
           <a href="https://rclone.org">rclone</a>を用いたクラウドストレージに対するファイル操作も可能です。Interactive AppsのRemote Desktopを起動し、ターミナルからrcloneもしくはrclone-browserを実行すると、rcloneの設定を行うことができます。その後にHome Directoryを起動すると、設定されたクラウドストレージにアクセスできます。なお、富岳ヘルプデスクではrcloneの設定のサポートは行っておりませんのでご了承ください。
         </p>
 
+        <h3>HPCI共用ストレージ</h3>
+        <p>
+          <a href="https://www.hpci-office.jp">HPCI (High Performance Computing Infrastructure)</a>が提供するHPCI共用ストレージに対するファイル操作を行えます。本アプリを利用するためには、<a href="https://portal.hpci.nii.ac.jp/auth-portal/Proxycert/proxycert">HPCI証明書発行システム</a>から代理証明書を事前に発行しておく必要があります。
+        </p>
+        <ul>
+          <li>HPCI ID：HPCIのID（例：hpci00xxxx）</li>
+          <li>Elapsed Time：利用時間（最大168時間）</li>
+          <li>Passphrase：代理証明書を発行したときに入力したパスフレーズ</li>
+        </ul>
+        <p>
+          <img style="border:solid 1px #000000" alt="HPCI Shared Storage" src="./img/hpci.png" width="600" />
+        </p>
+        <p>
+          「mount」をクリックすると、HPCI共用ストレージが富岳にマウントされます。富岳上のパスは「Mount Path」に表示されます。
+        </p>
+        
         <h3>GakuNin RDM</h3>
         <p>
           国立情報学研究所が提供する研究データ管理基盤である<a href="https://rdm.nii.ac.jp">GakuNin RDM</a>に対するファイル操作を行えます。
         </p>
         <ul>
-          <li>MOUNT_POINT：富岳側のマウントポイント（例：/home/rccs-aot/a00000/abc）</li>
-          <li>RDM_NODE_ID：GakuNin RDMのプロジェクトのURL（https://rdm.nii.ac.jp/xxx/）のxxxの箇所</li>
-          <li>ROM_TOKEN：GakuNin RDMのパーソナルアクセストークン</li> 
+          <li>Mount Path：富岳側のマウントパス（例：/home/rccs-aot/a00000/abc）</li>
+          <li>RDM Node ID：GakuNin RDMのプロジェクトのURL（https://rdm.nii.ac.jp/xxx/）のxxxの箇所</li>
+          <li>ROM Token：GakuNin RDMのパーソナルアクセストークン</li> 
         </ul>
         <p>
           <img style="border:solid 1px #000000" alt="GakuNin RDM" src="./img/grdm.png" width="600" />
         </p>
         <p>
-          「mount」をクリックすると、指定したGakuNin RDMのプロジェクトが富岳にマウントされます。アンマウントしたい場合は、「unmount」をクリックしてください。
+          「mount」をクリックすると、指定したGakuNin RDMのプロジェクトが富岳にマウントされます。
         </p>
         
         <!--
