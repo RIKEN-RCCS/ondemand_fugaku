@@ -1,0 +1,53 @@
+diff --git a/misc/utils.rb b/misc/utils.rb
+index cfc8a6b..23c2ecd 100644
+--- a/misc/utils.rb
++++ b/misc/utils.rb
+@@ -47,6 +47,31 @@ FUGAKU_SMALL =<<"EOF"
+           data-hide-mem2-memory: true,
+           data-hide-reserved-memory: true ]
+ EOF
++FUGAKU_PT =<<"EOF"
++      - [ "fugaku-small (pt-Aug)", "pt-Aug",
++          data-set-cluster: fugaku,
++          data-hide-fugaku-small-free-hours: true,
++          data-hide-fugaku-large-hours: true,
++          data-hide-fugaku-large-free-hours: true,
++          data-hide-fugaku-large-nodes: true,
++          data-hide-fugaku-large-procs: true,
++          data-hide-fugaku-llio: true,
++          data-hide-prepost1-hours: true,
++          data-hide-prepost2-hours: true,
++          data-hide-reserved-hours: true,
++          data-hide-gpus-per-node: true,
++          data-hide-opengl-with-nvidia: true,
++          data-hide-gpu1-cores: true,
++          data-hide-gpu2-cores: true,
++          data-hide-mem1-cores: true,
++          data-hide-mem2-cores: true,
++          data-hide-reserved-cores: true,
++          data-hide-gpu1-memory: true,
++          data-hide-gpu2-memory: true,
++          data-hide-mem1-memory: true,
++          data-hide-mem2-memory: true,
++          data-hide-reserved-memory: true ]
++EOF
+ FUGAKU_SMALL_FREE =<<"EOF"
+       - [ "fugaku-small-free", "small-free",
+           data-set-cluster: fugaku,
+@@ -317,6 +342,7 @@ EOF
+   if name == "fugaku_small_and_prepost"
+     $attr << FUGAKU_SMALL
+     $attr << FUGAKU_SMALL_FREE if free_queue_available
++    $attr << FUGAKU_PT
+     $attr << PREPOST_GPU1
+     $attr << PREPOST_GPU2
+     $attr << PREPOST_MEM1
+@@ -1201,7 +1227,7 @@ def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fug
+                          fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
+                          fugaku_large_procs, group, volume, mode, additional_options = "")
+   str = "native:\n"
+-  if queue == "small" then
++  if queue == "small" or queue == "pt-Aug" then
+     str << "    - \"-L elapse=#{fugaku_small_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}"
+   elsif queue == "small-free" then
+     str << "    - \"-L elapse=#{fugaku_small_free_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}"
