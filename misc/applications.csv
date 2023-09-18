@@ -2,15 +2,19 @@ ABINIT_MP,               ood_abinitmp,            Batch Jobs,       Quantum Chem
 AkaiKKR,                 ood_akaikkr,             Batch Jobs,       Condensed Matter Physics
 ALAMODE,                 ood_alamode,             Batch Jobs,       Condensed Matter Physics
 AVS/Express,             ood_avs_express,         Interactive Apps, Viewer
+braket,                  ood_braket,              Batch Jobs,       Quantum Simulation
 C-Tools,                 ood_ctools,              Interactive Apps, Viewer
 Desktop,                 ood_desktop,             Interactive Apps, Development
 FDS,                     ood_fds,                 Batch Jobs,       Computer Aided Engineering
+FrontFlow_blue,          ood_frontflow_blue,      Batch Jobs,       Computer Aided Engineering
+FrontFlow_x,             ood_frontflow_x,         Batch Jobs,       Computer Aided Engineering
 FrontISTR,               ood_frontistr,           Batch Jobs,       Computer Aided Engineering
 Gaussian,                ood_gaussian,            Batch Jobs,       Quantum Chemistry
 GaussView,               ood_gaussview,           Interactive Apps, Viewer
 GENESIS,                 ood_genesis,             Batch Jobs,       Molecular Dynamics
 GROMACS,                 ood_gromacs,             Batch Jobs,       Molecular Dynamics
 HPhi,                    ood_hphi,                Batch Jobs,       Condensed Matter Physics
+ImageJ,                  ood_imagej,              Interactive Apps, Viewer
 job_submitter,           ood_job_submitter,       Batch Jobs,       Utility
 Jupyter,                 ood_jupyter,             Interactive Apps, Development
 LAMMPS,                  ood_lammps,              Batch Jobs,       Molecular Dynamics
@@ -38,6 +42,7 @@ Smokeview,               ood_smokeview,           Interactive Apps, Viewer
 Vampir,                  ood_vampir,              Interactive Apps, Profiler
 VESTA,                   ood_vesta,               Interactive Apps, Viewer
 VisIt,                   ood_visit,               Interactive Apps, Viewer
+VMD,                     ood_vmd,                 Interactive Apps, Viewer
 VSCode,                  ood_vscode,              Interactive Apps, Development
 WHEEL,                   ood_wheel,               Interactive Apps, Workflow
 XCrySDen,                ood_xcrysden,            Interactive Apps, Viewer
