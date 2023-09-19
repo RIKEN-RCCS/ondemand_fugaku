@@ -15,6 +15,7 @@ class Command
     end
     
     FileUtils.touch(SAVE_FILE)
+    FileUtils.chmod(0600, SAVE_FILE)
     data = open(SAVE_FILE, 'r') { |f| YAML.load(f) }
     data = Hash.new if data == false
     
@@ -33,7 +34,6 @@ class Command
         d['mount_path'] = mount_path
         d['hpci_id']    = params['hpci_id']
         d['time']       = params['time']
-        d['pass']       = params['pass']
         data[params['hpci_id']] = d
         open(SAVE_FILE, 'w') {|f| YAML.dump(data, f) }
       elsif params['act'] == 'unmount' then

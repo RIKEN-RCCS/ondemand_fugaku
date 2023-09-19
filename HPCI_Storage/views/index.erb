@@ -21,7 +21,7 @@
       </td>
       <td><input type="text"     name="hpci_id" id="hpci_id" value="<%= v['hpci_id'] %>" required></td>
       <td><input type="number"   name="time"    id="time"    value="<%= v['time'] %>" min="1" max="168" required></td>
-      <td><input type="password" name="pass"    id="pass"    value="<%= v['pass'] %>"></td>
+      <td><input type="password" name="pass"    id="pass"></td>
       <td>
       <% v['mount_path'].each_with_index{|d, index| %>
       <% if v['act'] == 'mount' then %>

@@ -6,6 +6,7 @@ RDM_API_URL = "https://api.rdm.nii.ac.jp/v2/"
 class Command
   def exec(params)
     FileUtils.touch(SAVE_FILE)
+    FileUtils.chmod(0600, SAVE_FILE)
     data = open(SAVE_FILE, 'r') { |f| YAML.load(f) }
     data = Hash.new if data == false
 
