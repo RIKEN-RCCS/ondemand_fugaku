@@ -2,13 +2,13 @@
 require 'fileutils'
 
 SINGULARITY_DIR        = "/home/apps/singularity/ondemand/"
-REMOTE_DESKTOP_AARCH64 = SINGULARITY_DIR + "desktop_ubi87_aarch64.sif"
+REMOTE_DESKTOP_AARCH64 = SINGULARITY_DIR + "desktop_ubi88_aarch64.sif"
 REMOTE_DESKTOP_X86_64  = SINGULARITY_DIR + "desktop_ubi86_x86_64.sif"
-JUPYTER_AARCH64        = SINGULARITY_DIR + "jupyter_ubi87_aarch64.sif"
+JUPYTER_AARCH64        = SINGULARITY_DIR + "jupyter_ubi88_aarch64.sif"
 JUPYTER_X86_64         = SINGULARITY_DIR + "jupyter_ubi86_x86_64.sif"
-RSTUDIO_AARCH64        = SINGULARITY_DIR + "rstudio_ubi87_aarch64.sif"
+RSTUDIO_AARCH64        = SINGULARITY_DIR + "rstudio_ubi88_aarch64.sif"
 RSTUDIO_X86_64         = SINGULARITY_DIR + "rstudio_ubi86_x86_64.sif"
-VSCODE_AARCH64         = SINGULARITY_DIR + "vscode_ubi87_aarch64.sif"
+VSCODE_AARCH64         = SINGULARITY_DIR + "vscode_ubi88_aarch64.sif"
 VSCODE_X86_64          = SINGULARITY_DIR + "vscode_ubi86_x86_64.sif"
 LLIO_LBOUND_NODES      = 7000
 LLIO_LBOUND_PROCS      = 28000

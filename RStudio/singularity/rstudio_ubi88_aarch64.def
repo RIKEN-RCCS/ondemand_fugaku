@@ -7,12 +7,12 @@ From: redhat/ubi8:8.6-943
   
 %post
   rm -f /etc/yum.repos.d/ubi.repo
-  dnf --releasever=8.7 -y upgrade
-  dnf --releasever=8.7 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
+  dnf --releasever=8.8 -y upgrade
+  dnf --releasever=8.8 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
   dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  dnf --releasever=8.7 -y install Lmod glibc-langpack-en R ant tar git bzip2 libxml2-devel pandoc sudo mlocate soci-sqlite3-devel
-  dnf -y --releasever=8.7 module enable nodejs:18
-  dnf -y --releasever=8.7 module install nodejs:18/common
+  dnf --releasever=8.8 -y install Lmod glibc-langpack-en R ant tar git bzip2 libxml2-devel pandoc sudo mlocate soci-sqlite3-devel
+  dnf -y --releasever=8.8 module enable nodejs:18
+  dnf -y --releasever=8.8 module install nodejs:18/common
   wget https://github.com/rstudio/rstudio/archive/refs/tags/v2023.03.0+386.tar.gz
   tar xfz v2023.03.0+386.tar.gz
   cd rstudio-2023.03.0-386/dependencies/common/
@@ -46,8 +46,8 @@ baseurl=http://10.4.38.1/pxinst/repos/FUGAKU/BaseOS
 enabled=1
 gpgcheck=0
 EOF
-  dnf --releasever=8.7 -y install xpmem libevent tcl less hwloc openssh-clients gcc-c++ elfutils-libelf-devel FJSVpxtof FJSVpxple FJSVpxpsm FJSVpxkrm FJSVxoslibmpg papi-devel
-  dnf --releasever=8.7 -y install python39-devel
+  dnf --releasever=8.8 -y install xpmem libevent tcl less hwloc openssh-clients gcc-c++ elfutils-libelf-devel FJSVpxtof FJSVpxple FJSVpxpsm FJSVpxkrm FJSVxoslibmpg papi-devel
+  dnf --releasever=8.8 -y install python39-devel
   update-alternatives --set python /usr/bin/python3
   #
   dnf clean all
