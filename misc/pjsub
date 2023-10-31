@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [ "$HOSTNAME" = "fn06sv04" ]; then
-    cd $HOME; /usr/local/bin/pjsub "$@"
-else
-    ssh login.fugaku.r-ccs.riken.jp pjsub "$@"
-fi

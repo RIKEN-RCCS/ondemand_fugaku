@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [ "$HOSTNAME" = "fn06sv04" ]; then
-    /usr/local/bin/pjstat "$@"
-else
-    ssh login.fugaku.r-ccs.riken.jp pjstat "$@"
-fi

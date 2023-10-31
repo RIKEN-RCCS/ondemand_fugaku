@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [ "$HOSTNAME" = "fn06sv04" ]; then
-    pjhold "$@"
-else
-    ssh login.fugaku.r-ccs.riken.jp pjhold "$@"
-fi
