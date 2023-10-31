@@ -7,14 +7,9 @@ From: redhat/ubi8:8.6-990
 
 %post
   rm -f /etc/yum.repos.d/ubi.repo
-  dnf --releasever=8.6 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh ksh tcsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
-  dnf --releasever=8.6 -y install libatomic # for pre-post environment
-  dnf --releasever=8.6 -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs
   dnf --releasever=8.6 -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms
-  dnf --releasever=8.6 -y install xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs libevent xterm
-  dnf --releasever=8.6 -y install gnuplot ImageMagick ncview glfw glfw-devel
-  dnf --releasever=8.6 -y install vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts
+  dnf --releasever=8.6 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh ksh tcsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname libatomic mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs xorg-x11-apps evince eog glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs libevent xterm gnuplot ImageMagick ncview glfw glfw-devel dbus-x11 python3-numpy vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts
   dnf -y --releasever=8.7 install rclone rclone-browser
   dnf --releasever=8.6 --skip-broken -y groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
   #
@@ -29,13 +24,17 @@ From: redhat/ubi8:8.6-990
   cd /opt
   #
   # Paraview
+  dnf -y install python39 python39-devel
   wget -O ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.10&type=binary&os=Linux&downloadFile=ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz"
   tar xfz ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
   ln -s ParaView-5.10.1-MPI-Linux-Python3.9-x86_64 ParaView
-  wget https://github.com/visit-dav/visit/releases/download/v3.3.2/visit3_3_2.linux-x86_64-rhel7-wmesa.tar.gz
-  tar xfz visit3_3_2.linux-x86_64-rhel7-wmesa.tar.gz
-  ln -s visit3_3_2.linux-x86_64 visit
-  rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz visit3_3_2.linux-x86_64-rhel7-wmesa.tar.gz
+  rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
+  #
+  # VisIt
+  wget https://github.com/visit-dav/visit/releases/download/v3.3.3/visit3_3_3.linux-x86_64-rhel7.tar.gz
+  tar xfz visit3_3_3.linux-x86_64-rhel7.tar.gz
+  ln -s visit3_3_3.linux-x86_64 visit
+  rm visit3_3_3.linux-x86_64-rhel7.tar.gz
   #
   # XCrySDen
   dnf -y install libXmu-devel tcl-devel tk-devel libGL-devel mesa-libGLU-devel fftw-devel
@@ -115,6 +114,15 @@ From: redhat/ubi8:8.6-990
   unzip ij153-linux64-java8.zip
   rm -f ij153-linux64-java8.zip
   #
+  # VirtaulGL
+  dnf config-manager --add-repo http://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo
+  dnf -y install nvidia-driver-libs
+  wget https://sourceforge.net/projects/virtualgl/files/3.1/VirtualGL-3.1.x86_64.rpm/download
+  mv download VirtualGL-3.1.x86_64.rpm
+  rpm -ivh VirtualGL-3.1.x86_64.rpm
+  rm -f VirtualGL-3.1.x86_64.rpm
+  #
+  # Clean up
   dnf clean all
   rm -f /etc/pki/entitlement/*
   rm -f /etc/yum.repos.d/redhat.repo

@@ -8,12 +8,8 @@ From: redhat/ubi8:8.6-943
 %post
   rm -f /etc/yum.repos.d/ubi.repo
   dnf --releasever=8.8 -y upgrade
-  dnf --releasever=8.8 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh ksh tcsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname
   dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  dnf --releasever=8.8 -y install xorg-x11-apps evince glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs
-  dnf --releasever=8.8 -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs
-  dnf --releasever=8.8 -y install gnuplot ImageMagick ncview freeglut freeglut-devel
-  dnf --releasever=8.8 -y install vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts
+  dnf --releasever=8.8 -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh ksh tcsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname xorg-x11-apps evince glx-utils systemd-libs sssd python2-pip Lmod glibc-langpack-en xdg-user-dirs mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs gnuplot ImageMagick ncview freeglut freeglut-devel vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts dbus-x11 python3-numpy
   dnf --releasever=8.8 -y --skip-broken groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
   pip2 install ts
   dnf --releasever=8.8 -y install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python3-websockify-0.10.0-1.el8.noarch.rpm
