@@ -1,0 +1,24 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+-%>
+---
+script:
+  job_name: ood_vscode_supercon2023
+  <%- if queue == "serial" then -%>
+  queue_name: excl_ra022303_2308-1
+  <%- else -%>
+  queue_name: small
+  <%- end -%>
+  <%= submit_email(email) %>
+  native:
+  <%-
+  hours  = elapsed_time.to_i / 60
+  minite = elapsed_time.to_i % 60
+  -%>
+  <%- if queue == "serial" then -%>
+    - "-L elapse=<%= hours %>:<%= minite %>:00,node=1,jobenv=singularity --mpi proc=<%= serial_procs %> -L freq=2200 --rsc-list retention_state=0 -x PJM_LLIO_GFSCACHE=/vol0004:/vol0003"
+  <%- else -%>
+    - "-L elapse=<%= hours %>:<%= minite %>:00,node=<%= parallel_nodes %>,jobenv=singularity --mpi proc=<%= parallel_procs %> -L freq=2200 --rsc-list retention_state=0 -x PJM_LLIO_GFSCACHE=/vol0004:/vol0003"
+  <%- end -%>
+batch_connect:
+  template: "basic"

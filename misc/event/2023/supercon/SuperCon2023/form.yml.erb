@@ -1,0 +1,93 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+-%>
+---
+title: SuperCon 2023
+form:
+  - cluster
+  - queue
+  - volume
+  - elapsed_time
+  - serial_nodes
+  - parallel_nodes
+  - serial_procs
+  - parallel_procs
+  - nthreads
+  - working_dir
+  - commands
+  - email
+attributes:
+  cluster:
+    widget: hidden_field
+  queue:
+    label: キューの種類
+    widget: select
+    options:
+     - [ "ノード内並列ジョブ", "serial",   data-set-cluster: fugaku, data-hide-parallel-nodes: true, data-hide-parallel-procs: true ]
+     - [ "ノード間並列ジョブ", "parallel", data-set-cluster: fugaku, data-hide-serial-nodes: true,   data-hide-serial-procs: true   ]
+  volume:
+    widget: hidden_field
+    cacheable: false
+  elapsed_time:
+    label: 予約する時間 (5 - 480分)
+    widget: number_field
+    value: 5
+    min: 5
+    max: 480
+    step: 5
+    required: true
+  serial_nodes:
+    label: ノード数 (1に固定)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 1
+    step: 1
+    required: true
+  parallel_nodes:
+    label: ノード数 (1 - 4)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 4
+    step: 1
+    required: true
+  serial_procs:
+    label: プロセス数 (1 - 48)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 48
+    step: 1
+    required: true
+  parallel_procs:
+    label: プロセス数 (1 - 192)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 192
+    step: 1
+    required: true
+  nthreads:
+    label: スレッド数 (1 - 48)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 48
+    step: 1
+    required: true
+    help: スレッド数 x プロセス数 <= 48 x ノード数にしてください
+  working_dir:
+    label: 作業ディレクトリ
+    value: <%= ENV['HOME'] + "/." %>
+    data-target-file-type: dirs
+    data-filepicker: true
+    data-default-directory: <%= ENV['HOME'] %>
+    data-file_picker_favorites: <%= get_groups_fdirs() %>
+    required: true
+  commands:
+    label: コマンド
+    widget: text_area
+  email:
+    widget: email_field
+    label: Email (ジョブの開始時と終了時に、下記に入力されたアドレスにメールが届きます)

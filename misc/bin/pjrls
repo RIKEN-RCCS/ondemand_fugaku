@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+ssh login.fugaku.r-ccs.riken.jp pjrls "$@"
+

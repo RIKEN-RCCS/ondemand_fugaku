@@ -1,0 +1,11 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+-%>
+---
+script:
+  job_name: ood_desktop_meeting
+  queue_name: excl_isv005_2310-1
+  native:
+    - "-L elapse=<%= elapsed_time %>:00:00,node=<%= meeting_nodes %>,jobenv=singularity --mpi proc=<%= meeting_procs %> --no-check-directory -g isv005"
+batch_connect:
+<%= submit_vnc(staged_root) %>

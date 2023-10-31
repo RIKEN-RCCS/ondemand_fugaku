@@ -1,0 +1,27 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+-%>
+#!/usr/bin/env bash
+
+<%= setting_singularity("vscode") %>
+
+CODE_SERVER_DATAROOT="$HOME/ondemand/vscode/${ARCH}"
+mkdir -p "$CODE_SERVER_DATAROOT/extensions"
+
+# Expose the password to the server.
+export PASSWORD="$password"
+
+# Print compute node.
+echo "$(date): Running on compute node ${compute_node}:$port"
+
+export SINGULARITYENV_OMP_NUM_THREADS=<%= context.nthreads %>
+WORKING_DIR="<%= context.working_dir %>"
+mkdir -p $WORKING_DIR
+singularity run ${NV_OPTION} ${IMAGE} code-server \
+    --auth="password" \
+    --bind-addr="0.0.0.0:${port}" \
+    --disable-telemetry \
+    --extensions-dir="$CODE_SERVER_DATAROOT/extensions" \
+    --user-data-dir="$CODE_SERVER_DATAROOT" \
+    --log debug --disable-update-check --ignore-last-opened \
+    "$WORKING_DIR"

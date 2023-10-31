@@ -1,0 +1,9 @@
+---
+name: U-Job Submitter
+category: Batch Jobs
+subcategory: Utility
+role: batch_connect
+description: バッチジョブのためのWebフォーム
+icon: fa://space-awesome
+tile:
+  sub_caption: |

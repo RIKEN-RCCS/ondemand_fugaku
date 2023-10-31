@@ -1,0 +1,36 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+-%>
+---
+script:
+  job_name: ood_job_submitter_supercon2023
+  <%- if queue == "serial" then -%>
+  queue_name: excl_ra022303_2308-1
+  <%- else -%>
+  queue_name: small
+  <%- end -%>
+  <%= submit_email(email, false) %>
+  native:
+  <%-
+  hours  = elapsed_time.to_i / 60
+  minite = elapsed_time.to_i % 60
+  -%>
+  <%- if queue == "serial" then -%>
+    - "-L elapse=<%= hours %>:<%= minite %>:00,node=1 --mpi proc=<%= serial_procs %>"
+  <%- else -%>
+    - "-L elapse=<%= hours %>:<%= minite %>:00,node=<%= parallel_nodes %> --mpi proc=<%= parallel_procs %>"
+  <%- end -%>
+    - "-L freq=2200"
+    - "--rsc-list retention_state=0"
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    #!/usr/bin/env bash
+    set -e
+    
+    export OMP_NUM_THREADS=<%= nthreads %>
+    cd "<%= working_dir %>"
+    <% commands.split("\r\n").each do |c| %>
+    <%= c.strip -%>
+    <% end %>
+    

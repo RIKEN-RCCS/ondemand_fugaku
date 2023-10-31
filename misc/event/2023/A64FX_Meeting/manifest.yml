@@ -1,0 +1,11 @@
+---
+name: 1Desktop
+icon: fa://desktop
+category: Interactive Apps
+subcategory: Development
+role: batch_connect
+description: |
+  This app will launch an [Xfce](https://xfce.org/) desktop.
+tile:
+  sub_caption: |
+new_window: true

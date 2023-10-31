@@ -1,0 +1,37 @@
+---
+title: Desktop (for Meeting)
+form:
+- cluster
+- volume
+- elapsed_time
+- meeting_nodes
+- meeting_procs
+- desktop
+attributes:
+  cluster: fugaku
+  volume:
+    widget: hidden_field
+    cacheable: false
+  elapsed_time:
+    label: Elapsed Time (1 - 3 hours)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 3
+    step: 1
+  meeting_nodes:
+    label: Number of nodes (1 - 4)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 4
+    step: 1
+  meeting_procs:
+    label: Number of procs (1 - 192)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 192
+    step: 1
+  desktop: xfce
+
