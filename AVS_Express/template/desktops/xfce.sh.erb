@@ -2,8 +2,8 @@
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
 -%>
 
-<%= output_xfce() %>
+<%= output_xfce(context.gpus_per_node) %>
 
-/vol0004/apps/avs_xp851/bin/linux_64_el8/express.static -mavs &
-xfce4-session
+${_VIRTUALGL} /vol0004/apps/avs_xp851/bin/linux_64_el8/express.static -mavs &
+${_VIRTUALGL} xfce4-session
 fg

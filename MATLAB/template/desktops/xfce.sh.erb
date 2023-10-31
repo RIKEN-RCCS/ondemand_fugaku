@@ -2,9 +2,9 @@
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
 -%>
 
-<%= output_xfce(context.opengl_with_nvidia, context.gpus_per_node, context.queue) %>
+<%= output_xfce(context.gpus_per_node) %>
 
-if [ "${_OPENGL_WITH_NVIDIA_OPTION}" != "" ]; then
+if [ "${_VIRTUALGL}" != "" ]; then
   if [ "<%= context.working_dir %>" != "" ]; then
     TMPDIR=/tmp /vol0004/apps/MATLAB/R2020a/bin/matlab -desktop -nosoftwareopengl -sd "<%= context.working_dir %>" &
   else
@@ -18,5 +18,5 @@ else
   fi
 fi
 
-xfce4-session
+${_VIRTUALGL} xfce4-session
 fg

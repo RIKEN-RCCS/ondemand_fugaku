@@ -35,7 +35,6 @@ FUGAKU_SMALL =<<"EOF"
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
-          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -60,7 +59,6 @@ FUGAKU_SMALL_FREE =<<"EOF"
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
-          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -84,7 +82,6 @@ FUGAKU_LARGE =<<"EOF"
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
-          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -108,7 +105,6 @@ FUGAKU_LARGE_FREE =<<"EOF"
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
-          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -186,7 +182,6 @@ PREPOST_MEM1 =<<"EOF"
           data-hide-prepost2-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
-          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem2-cores: true,
@@ -213,7 +208,6 @@ PREPOST_MEM2 =<<"EOF"
           data-hide-prepost1-hours: true,
           data-hide-reserved-hours: true,
           data-hide-gpus-per-node: true,
-          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -240,7 +234,6 @@ PREPOST_RESERVED =<<"EOF"
           data-hide-prepost1-hours: true,
           data-hide-prepost2-hours: true,
           data-hide-gpus-per-node: true,
-          data-hide-opengl-with-nvidia: true,
           data-hide-gpu1-cores: true,
           data-hide-gpu2-cores: true,
           data-hide-mem1-cores: true,
@@ -698,18 +691,33 @@ EOF
   return "- reserved_memory"
 end
 
-def form_gpus_per_node(min = 0, max = 2)
-  $attr <<<<"EOF"
+def form_gpus_per_node(enable_vgl = false, is_desktop = false, min = 0, max = 2)
+    $attr <<<<"EOF"
   gpus_per_node:
     label: Number of GPUs (#{min} - #{max})
-    widget: number_field
     value: #{min}
-    min: #{min}
-    max: #{max}
-    step: 1
     required: true
+    widget: select
+    options:
 EOF
-  return "- gpus_per_node"
+    $attr << "      - [ \"0\", \"0\" ]\n" if min <= 0 and max >= 0
+    if is_desktop then
+      $attr << "      - [ \"1 using VirtualGL\", \"1_VGL\" ]\n" if min <= 1 and max >= 1
+      $attr << "      - [ \"1\",                 \"1\"     ]\n" if min <= 1 and max >= 1
+      $attr << "      - [ \"2 using VirtualGL\", \"2_VGL\" ]\n" if min <= 2 and max >= 2
+      $attr << "      - [ \"2\",                 \"2\"     ]\n" if min <= 2 and max >= 2
+      $attr << "    help: Option \"using VirtualGL\" means that X rendering is accelerated using GPU.\n"
+    else
+      if enable_vgl then
+        $attr << "      - [ \"1\", \"1_VGL\" ]\n" if min <= 1 and max >= 1
+        $attr << "      - [ \"2\", \"2_VGL\" ]\n" if min <= 2 and max >= 2
+        $attr << "    help: When GPU >= 1, X rendering is accelerated using GPU.\n"
+      else
+        $attr << "      - [ \"1\", \"1\" ]\n" if min <= 1 and max >= 1
+        $attr << "      - [ \"2\", \"2\" ]\n" if min <= 2 and max >= 2
+      end
+    end
+    return "- gpus_per_node"
 end
 
 def form_check(item, label, help, required = true)
@@ -724,20 +732,6 @@ def form_check(item, label, help, required = true)
     help: #{help}
 EOF
   return "- #{item}"
-end
-
-def form_opengl_with_nvidia()
-  $attr <<<<"EOF"
-  opengl_with_nvidia:
-    label: "OpenGL with NVIDIA"
-    widget: check_box
-    checked_value: "true"
-    unchecked_value: "false"
-    cacheable: true
-    help: |
-      This option is experimental. If this app fails to start, please maximize the required memory.
-EOF
-  return "- opengl_with_nvidia"
 end
 
 def form_mode()
@@ -1102,7 +1096,7 @@ def dashboard_date()
   end
 end
 
-def output_xfce(opengl_with_nvidia = "false", gpus_per_node = "0", queue = "unknown")
+def output_xfce(gpus_per_node = "0")
   <<"EOF"
 # Remove any preconfigured monitors
 if [[ -f "${HOME}/.config/monitors.xml" ]]; then
@@ -1164,12 +1158,8 @@ eval $(dbus-launch --sh-syntax)
 module remove lang
 module load lang
 
-_OPENGL_WITH_NVIDIA_OPTION=""
-if [ "#{opengl_with_nvidia}" = "true" ] && [ "#{gpus_per_node}" != "0" ]; then
-  if [ "#{queue}" = "gpu1" ] || [ "#{queue}" = "gpu2" ]; then
-    _OPENGL_WITH_NVIDIA_OPTION="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia"
-  fi
-fi
+_VIRTUALGL=""
+[ `arch` = "x86_64" ] && [ "#{gpus_per_node}" = "1_VGL" -o "#{gpus_per_node}" = "2_VGL" ] && _VIRTUALGL="vglrun -d egl"
 EOF
 end
 
@@ -1183,7 +1173,15 @@ EOF
 end
 
 def submit_gpus_per_node(queue, gpus_per_node)
-  return "gpus_per_node: #{gpus_per_node}" if queue == "gpu1" or queue == "gpu2"
+  return if queue != "gpu1" and queue != "gpu2"
+
+  if gpus_per_node == "0" then
+    return "gpus_per_node: 0"
+  elsif gpus_per_node == "1" or gpus_per_node == "1_VGL" then
+    return "gpus_per_node: 1"
+  elsif gpus_per_node == "2" or gpus_per_node == "2_VGL" then
+    return "gpus_per_node: 2"
+  end
 end
 
 def submit_email(email = "", only_start = true)

@@ -2,6 +2,6 @@
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
 -%>
 
-<%= output_xfce() %>
+<%= output_xfce(context.gpus_per_node) %>
 
-xfce4-session
+${_VIRTUALGL} xfce4-session

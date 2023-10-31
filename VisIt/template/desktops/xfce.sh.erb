@@ -2,8 +2,12 @@
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
 -%>
 
-<%= output_xfce() %>
+<%= output_xfce(context.gpus_per_node) %>
 
-/opt/visit/bin/visit -o "<%= context.input_file %>" &
-xfce4-session
+if [ "<%= context.input_file %>" = "" ]; then
+  ${_VIRTUALGL} /opt/visit/bin/visit &
+else
+  ${_VIRTUALGL} /opt/visit/bin/visit -o "<%= context.input_file %>" &
+fi
+${_VIRTUALGL} xfce4-session
 fg
