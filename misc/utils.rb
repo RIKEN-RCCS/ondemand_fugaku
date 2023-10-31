@@ -1200,34 +1200,35 @@ def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fug
                          fugaku_large_procs, group, volume, mode, additional_options = "")
   str = "native:\n"
   if queue == "small" then
-    str << "    - \"-L elapse=#{fugaku_small_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}"
+    str << "    - -L elapse=#{fugaku_small_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}\n"
   elsif queue == "small-free" then
-    str << "    - \"-L elapse=#{fugaku_small_free_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}"
+    str << "    - -L elapse=#{fugaku_small_free_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}\n"
   elsif queue == "large" then
-    str << "    - \"-L elapse=#{fugaku_large_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}"
+    str << "    - -L elapse=#{fugaku_large_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}\n"
   elsif queue == "large-free" then
-    str << "    - \"-L elapse=#{fugaku_large_free_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}"
+    str << "    - -L elapse=#{fugaku_large_free_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}\n"
   end
-  str << " --no-check-directory -g #{group}"
+  str << "    - --no-check-directory\n"
+  str << "    - -g #{group}\n"
 
   # volume == "" is set when a group with no data/share directory defined (e.g. rist-a) is set.
   if volume == "/vol0004" or volume == ""
-    str << " -x PJM_LLIO_GFSCACHE=/vol0004"
+    str << "    - -x PJM_LLIO_GFSCACHE=/vol0004\n"
   else
-    str << " -x PJM_LLIO_GFSCACHE=/vol0004:#{volume}"
-  end
-  
-  if mode == "Boost"
-    str << " -L freq=2200"
-  elsif mode == "Eco"
-    str << " -L eco_state=2"
-  elsif mode == "Boost + Eco"
-    str << " -L freq=2200,eco_state=2"
+    str << "    - -x PJM_LLIO_GFSCACHE=/vol0004:#{volume}\n"
   end
 
-  str << " " + additional_options if additional_options != ""
-  
-  return str + "\""
+  if mode == "Boost"
+    str << "    - -L freq=2200\n"
+  elsif mode == "Eco"
+    str << "    -  -L eco_state=2\n"
+  elsif mode == "Boost + Eco"
+    str << "    -  -L freq=2200,eco_state=2\n"
+  end
+
+  str << "    - " + additional_options + "\n" if additional_options != ""
+
+  return str
 end
 
 def submit_native_fugaku_small(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
