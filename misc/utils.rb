@@ -1,5 +1,6 @@
 # coding: utf-8
 require 'fileutils'
+require 'date'
 
 SINGULARITY_DIR        = "/home/apps/singularity/ondemand/"
 REMOTE_DESKTOP_AARCH64 = SINGULARITY_DIR + "desktop_ubi88_aarch64.sif"
@@ -1002,13 +1003,15 @@ end
 def dashboard_resource(group_name)
   file = ACC_GROUP_DIR + group_name + ".resource"
   return nil unless File.exist?(file)
+
+  period = Date.today.month.between?(4, 9)? "1" : "2"
   
   File.open(file, "r") do |f|
     # Resources in Fugaku are divided into early and late periods.
     # The order is reversed to give priority to the later period.
     f.readlines.reverse_each do |l|
       i = l.split(",")
-      if i[0] == "SUBTHEMEPERIOD" and i[1] == group_name and i[3].to_i != 0 and i[5] != "---" then
+      if ((i[0] == "SUBTHEMEPERIOD" and i[2] == period) or i[0] == "SUBTHEME") and i[1] == group_name and i[3].to_i != 0 then
         limit = i[3].to_i/3600
         usage = i[7].to_i/3600
         avail = i[6].to_i/3600
