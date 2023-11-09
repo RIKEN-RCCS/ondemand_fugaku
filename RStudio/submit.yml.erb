@@ -8,7 +8,7 @@ script:
   <%= submit_gpus_per_node(queue, gpus_per_node) %>
   <%= submit_email(email) %>
   <%= submit_native(cluster, queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
-  fugaku_small_procs, -1, -1, -1, -1, group, volume, mode, prepost1_hours,
+  fugaku_small_procs, -1, -1, -1, -1, group, mode, prepost1_hours,
   gpu1_cores, gpu1_memory, prepost2_hours, gpu2_cores, gpu2_memory, mem1_cores,
   mem1_memory, mem2_cores, mem2_memory, reserved_hours, reserved_cores, reserved_memory) %>
 batch_connect:

@@ -10,7 +10,6 @@ title: GENESIS
 form:
   <%= form_cluster("fugaku") %>
   <%= form_queue("fugaku_small_and_large") %>
-  <%= form_volume() %>
   <%= form_group() %>
   <%= form_fugaku_small_hours() %>
   <%= form_fugaku_small_free_hours() %>
@@ -24,7 +23,6 @@ form:
   <%= form_mode() %>
   <%= form_select("version", "Version", versions) %>
   <%= form_select("executable", "Executable file", execs, execs[1]) %>
-  <%= form_working_dir(false) %>
   <%= form_input_file(true) %>
   <%= form_llio("input_file") %>
   <%= form_email(false) %>

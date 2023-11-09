@@ -7,7 +7,7 @@ script:
   queue_name: <%= queue %>
   <%= submit_email(email, false) %>
   <% additional_options = (working_dir_type == "working_dir_sharedtmp")? "--llio sharedtmp-size=80Gi" : "" %>
-  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, group, volume, mode, additional_options) %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, group, mode, additional_options) %>
 batch_connect:
   template: "basic"
   script_wrapper: |
