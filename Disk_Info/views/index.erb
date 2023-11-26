@@ -1,0 +1,69 @@
+<style type="text/css">
+table tr:nth-child(even) td {
+  background: #FFEEFF;
+  border: solid 2px #888888;
+  vertical-align: middle;
+  font-size: 16px;
+}
+table tr:nth-child(odd) td {
+  border: solid 2px #888888;
+  vertical-align: middle;
+  font-size: 16px;
+}
+th {
+  background-color: purple;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  vertical-align: middle;
+  font-size: 16px;
+}
+td {
+  text-align: right;
+}
+</style>
+<h1><%= title %></h1>
+<% @disk_info.each_with_index do |d, i| %>
+  <h2><%= @groups[i] %></h2>
+  <table class="table table-bordered" style="border: solid 2px #888888;">
+    <tr>
+      <th style="vertical-align: middle;" rowspan="2">User</th>
+      <th style="vertical-align: middle;" rowspan="2">Volume</th>
+      <th colspan="2">Disk (GiB)</th>
+      <th colspan="2">Disk (inode)</th>
+    </tr>
+    <tr>
+      <th>Usage</th>
+      <th>Rate</th>
+      <th>Usage</th>
+      <th>Rate</th>
+    </tr>
+    <% d.each do |c| %>
+    <tr>
+      <% user        = c[2] %>
+      <% volume      = c[1] %>
+      <% disk_usage  = c[4] %>
+      <% inode_usage = c[3] %>
+      <% if user == ENV['USER'] %>
+      <td style="color: red; font-weight: bold"><%= user %></td>
+      <% else %>
+      <td><%= user %></td>
+      <% end %>
+      <td>/<%= volume %></td>
+      <td><%= num_with_commas(KtoG(disk_usage)) %></td>
+      <td>
+        <div class="graph">
+          <strong class="bar_<%= color(rate(disk_usage, @disk_size_sum[i])) %>" style="width: <%= rate(disk_usage, @disk_size_sum[i]) %>%;"><%= rate(disk_usage, @disk_size_sum[i]) %>%</strong>
+        </div>
+      </td>
+      <td><%= num_with_commas(inode_usage) %></td>
+      <td>
+        <div class="graph">
+          <strong class="bar_<%= color(rate(inode_usage, @disk_inode_sum[i])) %>" style="width: <%= rate(inode_usage, @disk_inode_sum[i]) %>%;"><%= rate(inode_usage, @disk_inode_sum[i]) %>%</strong>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
+<br>

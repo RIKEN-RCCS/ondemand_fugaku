@@ -1,0 +1,8 @@
+name: Disk Info
+description: Disk usage of users by group.
+icon: fa://inbox
+#category: Files
+#subcategory: Utilities
+category: Passenger Apps
+tile:
+  sub_caption: |
