@@ -49,10 +49,15 @@ get '/' do
   @disk_info      = []
   @disk_size_sum  = []
   @disk_inode_sum = []
+  @date           = []
   
   @groups.each{ |g|
     # In order to increase the accuracy of file size addition, the -s option is used to output KiB instead of GiB
-    c = CSV.new(`accountd -c -s -m -g #{g} | grep -v root | tail -n +3`, headers: true)
+    lines = `accountd -c -s -m -g #{g} | grep -v root`
+    c = CSV.new(lines.split("\n")[1])
+    @date.push(c.readlines[0][1].strip)
+    
+    c = CSV.new(lines.split("\n")[2..-1].join("\n"), headers: true)
     size_sum  = 0
     inode_sum = 0
     c.each{|n|
@@ -64,7 +69,7 @@ get '/' do
     @disk_size_sum.push(size_sum)
     @disk_inode_sum.push(inode_sum)
   }
-
+  
   # Render the view
   erb :index
 end

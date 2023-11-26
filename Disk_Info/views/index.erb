@@ -24,7 +24,7 @@ td {
 </style>
 <h1><%= title %></h1>
 <% @disk_info.each_with_index do |d, i| %>
-  <h2><%= @groups[i] %></h2>
+  <h2><%= @groups[i] %> <font size="3">(<%= @date[i] %>)</font></h2>
   <table class="table table-bordered" style="border: solid 2px #888888;">
     <tr>
       <th style="vertical-align: middle;" rowspan="2">User</th>
