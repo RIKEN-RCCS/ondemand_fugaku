@@ -1036,6 +1036,26 @@ def _disk_info(file, group_name)
   return info
 end
 
+def get_disk_limit(kind, group_name, volume)
+  return -1 if volume == "vol0001"
+
+  if kind == "capacity"
+    file = ACC_GROUP_DIR + group_name + ".disk"
+  else
+    file = ACC_GROUP_DIR + group_name + ".inode"
+  end
+  return -1 unless File.exist?(file)
+
+  File.open(file, "r") do |f|
+    f.each_line do |l|
+      i = l.split(",")
+      return i[3] if i[0] == "GROUP" and i[1] == group_name and i[2] == volume
+    end
+  end
+
+  return -1
+end
+
 def dashboard_disk(group_name)
   file = ACC_GROUP_DIR + group_name + ".disk"
   return _disk_info(file, group_name)

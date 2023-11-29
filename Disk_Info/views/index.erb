@@ -23,45 +23,64 @@ td {
 }
 </style>
 <h1><%= title %></h1>
-<% @disk_info.each_with_index do |d, i| %>
-  <h2><%= @groups[i] %> <font size="3">(<%= @date[i] %>)</font></h2>
+<p>
+<font size="5">Disk usage for each user by group.</font>
+</p>
+<% @groups.each_with_index do |g, i| %>
+  <h2><%= g %> <font size="3">(Updated at <%= @disk_info[i][0] %> (JST) )</font></h2>
   <table class="table table-bordered" style="border: solid 2px #888888;">
     <tr>
       <th style="vertical-align: middle;" rowspan="2">User</th>
       <th style="vertical-align: middle;" rowspan="2">Volume</th>
-      <th colspan="2">Disk (GiB)</th>
-      <th colspan="2">Disk (inode)</th>
+      <th colspan="3">Capacity</th>
+      <th colspan="3">Inode</th>
     </tr>
     <tr>
-      <th>Usage</th>
+      <th>Usage (GiB)</th>
+      <th>Limit (GiB)</th>
       <th>Rate</th>
       <th>Usage</th>
+      <th>Limit</th>
       <th>Rate</th>
     </tr>
-    <% d.each do |c| %>
+    <% @disk_info[i][1..-1].each do |d| %>
     <tr>
-      <% user        = c[2] %>
-      <% volume      = c[1] %>
-      <% disk_usage  = c[4] %>
-      <% inode_usage = c[3] %>
+      <% user           = d[0] %>
+      <% volume         = d[1] %>
+      <% capacity       = d[2] %>
+      <% inode          = d[3] %>
+      <% capacity_limit = d[4] %>
+      <% inode_limit    = d[5] %>
       <% if user == ENV['USER'] %>
       <td style="color: red; font-weight: bold"><%= user %></td>
       <% else %>
       <td><%= user %></td>
       <% end %>
       <td>/<%= volume %></td>
-      <td><%= num_with_commas(KtoG(disk_usage)) %></td>
+      <td><%= num_with_commas(capacity) %></td>
+      <% if capacity_limit != -1 %>
+      <td><%= num_with_commas(capacity_limit) %></td>
       <td>
         <div class="graph">
-          <strong class="bar_<%= color(rate(disk_usage, @disk_size_sum[i])) %>" style="width: <%= rate(disk_usage, @disk_size_sum[i]) %>%;"><%= rate(disk_usage, @disk_size_sum[i]) %>%</strong>
+          <strong class="bar_<%= color(rate(capacity, capacity_limit)) %>" style="width: <%= rate(capacity, capacity_limit) %>%;"><%= rate(capacity, capacity_limit) %>%</strong>
         </div>
       </td>
-      <td><%= num_with_commas(inode_usage) %></td>
+      <% else %>
+      <td> - </td>
+      <td> - </td>
+      <% end %>
+      <td><%= num_with_commas(inode) %></td>
+      <% if inode_limit != -1 %>
+      <td><%= num_with_commas(inode_limit) %></td>
       <td>
         <div class="graph">
-          <strong class="bar_<%= color(rate(inode_usage, @disk_inode_sum[i])) %>" style="width: <%= rate(inode_usage, @disk_inode_sum[i]) %>%;"><%= rate(inode_usage, @disk_inode_sum[i]) %>%</strong>
+          <strong class="bar_<%= color(rate(inode, inode_limit)) %>" style="width: <%= rate(inode, inode_limit) %>%;"><%= rate(inode, inode_limit) %>%</strong>
         </div>
       </td>
+      <% else %>
+      <td> - </td>
+      <td> - </td>
+      <% end %>
     </tr>
     <% end %>
   </table>

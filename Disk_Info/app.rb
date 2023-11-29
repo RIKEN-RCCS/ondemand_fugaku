@@ -1,4 +1,4 @@
-require "csv"
+require "/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb"
 
 set :erb, :escape_html => true
 
@@ -12,13 +12,9 @@ helpers do
   end
 
   def title
-    "Disk usage for each user by group"
+    "Disk info"
   end
 
-  def KtoG(number)
-    return number.to_i / 1024/ 1024
-  end
-  
   def num_with_commas(number)
     return number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
   end
@@ -44,32 +40,25 @@ end
 
 # Define a route at the root '/' of the app.
 get '/' do
+  @disk_info = []
   @groups = `groups`.split.reject { |e| e.start_with?("isv") } - ["fugaku"]
-  
-  @disk_info      = []
-  @disk_size_sum  = []
-  @disk_inode_sum = []
-  @date           = []
-  
-  @groups.each{ |g|
-    # In order to increase the accuracy of file size addition, the -s option is used to output KiB instead of GiB
-    lines = `accountd -c -s -m -g #{g} | grep -v root`
-    c = CSV.new(lines.split("\n")[1])
-    @date.push(c.readlines[0][1].strip)
-    
-    c = CSV.new(lines.split("\n")[2..-1].join("\n"), headers: true)
-    size_sum  = 0
-    inode_sum = 0
-    c.each{|n|
-      size_sum  += n[4].to_i
-      inode_sum += n[3].to_i
-    }
-    c.rewind()
-    @disk_info.push(c)
-    @disk_size_sum.push(size_sum)
-    @disk_inode_sum.push(inode_sum)
-  }
-  
+
+  @groups.each do |g|
+    lines = `accountd -m -g #{g} | grep -v root`.split("\n")
+    tmp = [lines.first.split[2] + " " + lines.first.split[3]] # date
+    lines[3..-1].each do |l|
+      s        = l.split
+      user     = s[1]
+      volume   = s[0]
+      capacity = s[3].gsub(",", "")
+      inode    = s[2].gsub(",", "")
+      capacity_limit = get_disk_limit("capacity", g, volume)
+      inode_limit    = get_disk_limit("inode",    g, volume)
+      tmp.push([user, volume, capacity, inode, capacity_limit, inode_limit])
+    end
+    @disk_info.push(tmp)
+  end
+
   # Render the view
   erb :index
 end
