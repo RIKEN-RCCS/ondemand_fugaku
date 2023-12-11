@@ -13,7 +13,7 @@ VSCODE_AARCH64         = SINGULARITY_DIR + "vscode_ubi88_aarch64.sif"
 VSCODE_X86_64          = SINGULARITY_DIR + "vscode_ubi86_x86_64.sif"
 LLIO_LBOUND_NODES      = 7000
 LLIO_LBOUND_PROCS      = 28000
-EXCLUDED_GROUPS        = ["f-op", "fugaku", "oss-adm", "isv001", "isv002", "isv003"]
+EXCLUDED_GROUPS        = ["f-op", "fugaku", "oss-adm"] # "Group names starting with "isv" are deleted in the code.
 SYS_OOD_DIR            = "/system/ood/"
 ACC_DIR                = SYS_OOD_DIR + "accounting/"
 ACC_GROUP_DIR          = ACC_DIR + "group/"
@@ -362,6 +362,7 @@ def form_group()
     options:
 EOF
   groups = `groups`.split - EXCLUDED_GROUPS
+  groups.delete_if { |i| i.start_with?("isv") }
   groups.each do |n|
     $attr << "      - [\"" + n + "\" , \"" + n + "\"]\n"
   end
