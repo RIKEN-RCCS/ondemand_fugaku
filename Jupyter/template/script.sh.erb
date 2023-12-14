@@ -15,4 +15,8 @@ mkdir -p $SINGULARITYENV_JUPYTER_DATA_DIR
 
 <%= setting_singularity("jupyter") %>
 
+# module load lang
+export SINGULARITYENV_PFJSVXTCLANGA=$PFJSVXTCLANGA
+export SINGULARITYENV_PATH=$PATH
+export SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 singularity run ${NV_OPTION} ${IMAGE} jupyter-lab --config="${CONFIG_FILE}"
