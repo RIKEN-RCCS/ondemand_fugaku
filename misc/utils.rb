@@ -243,7 +243,8 @@ PREPOST_RESERVED =<<"EOF"
           data-hide-gpu2-memory: true,
           data-hide-mem1-memory: true,
           data-hide-mem2-memory: true,
-          data-hide-mode: true ]
+          data-hide-mode: true,
+          data-hide-nodelist: true ]
 EOF
 
 def get_group_dirs()
@@ -711,6 +712,29 @@ EOF
       end
     end
     return "- gpus_per_node"
+end
+
+def form_nodelist()
+  $attr <<<<"EOF"
+  nodelist:
+    label: Specified node
+    widget: select
+    help: This option is useful if you want to fix the MAC address.
+    options:
+      - [ "(Not specified)", "not_specified" ]
+      - [ "pps01", "pps01", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
+      - [ "pps02", "pps02", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
+      - [ "pps03", "pps03", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
+      - [ "pps04", "pps04", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
+      - [ "pps05", "pps05", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
+      - [ "pps06", "pps06", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
+      - [ "pps07", "pps07", data-option-for-queue-gpu1: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
+      - [ "pps08", "pps08", data-option-for-queue-gpu1: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
+      - [ "ppm01", "ppm01", data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem2: false ]
+      - [ "ppm02", "ppm02", data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false ]
+      - [ "ppm03", "ppm03", data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false ]
+EOF
+  return "- nodelist"
 end
 
 def form_check(item, label, help, required = true)
@@ -1248,7 +1272,7 @@ end
 
 def submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
                           gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
-                          mem2_memory, reserved_hours, reserved_cores, reserved_memory)
+                          mem2_memory, reserved_hours, reserved_cores, reserved_memory, nodelist="not_specified")
   str = "native:\n"
   if queue == "gpu1"
     str<<<<"EOF"
@@ -1297,6 +1321,12 @@ EOF
 EOF
   end
 
+  if queue == "gpu1" or queue == "gpu2" or queue == "mem1" or queue == "mem2" then
+    if nodelist != "not_specified" then
+      str << "    - \"--nodelist=#{nodelist}\n\""
+    end
+  end
+  
   return str
 end
 
