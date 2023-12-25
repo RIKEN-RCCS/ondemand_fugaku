@@ -1,0 +1,22 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+-%>
+
+<%= output_xfce(context.gpus_per_node) %>
+
+if [ "${_VIRTUALGL}" != "" ]; then
+  if [ "<%= context.working_dir %>" != "" ]; then
+    TMPDIR=/tmp /vol0004/apps/MATLAB/<%= context.version %>/bin/matlab -desktop -nosoftwareopengl -sd "<%= context.working_dir %>" &
+  else
+    TMPDIR=/tmp /vol0004/apps/MATLAB/<%= context.version %>/bin/matlab -desktop -nosoftwareopengl &
+  fi
+else
+  if [ "<%= context.working_dir %>" != "" ]; then
+    TMPDIR=/tmp /vol0004/apps/MATLAB/<%= context.version %>/bin/matlab -desktop -sd "<%= context.working_dir %>" &
+  else
+    TMPDIR=/tmp /vol0004/apps/MATLAB/<%= context.version %>/bin/matlab -desktop &
+  fi
+fi
+
+${_VIRTUALGL} xfce4-session
+fg

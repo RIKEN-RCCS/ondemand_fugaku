@@ -1,0 +1,30 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+  versions = ["R2023a", "R2022b", "R2020a"]
+-%>
+---
+title: MATLAB (BYOL)
+form:
+  <%= form_cluster("prepost") %>
+  <%= form_queue("prepost") %>
+  <%= form_nodelist() %>
+  <%= form_prepost1_hours() %>
+  <%= form_prepost2_hours() %>
+  <%= form_reserved_hours() %>
+  <%= form_gpu1_cores() %>
+  <%= form_gpu2_cores() %>
+  <%= form_mem1_cores() %>
+  <%= form_mem2_cores() %>
+  <%= form_reserved_cores() %>
+  <%= form_gpu1_memory() %>
+  <%= form_gpu2_memory() %>
+  <%= form_mem1_memory() %>
+  <%= form_mem2_memory() %>
+  <%= form_reserved_memory() %>
+  <%= form_gpus_per_node(true) %>
+  <%= form_select("version", "Version", versions) %>
+  <%= form_working_dir(false) %>
+  <%= form_email() %>
+  <%= form_desktop() %>
+attributes:
+<%= form_attr() %>
