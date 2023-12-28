@@ -1,0 +1,8 @@
+name: Resource Info
+description: Resource usage of users by group.
+icon: fa://dollar
+#category: Files
+#subcategory: Utilities
+category: Passenger Apps
+tile:
+  sub_caption: |

@@ -1,6 +1,7 @@
 # coding: utf-8
 require 'fileutils'
 require 'date'
+require 'csv'
 
 SINGULARITY_DIR        = "/home/apps/singularity/ondemand/"
 REMOTE_DESKTOP_AARCH64 = SINGULARITY_DIR + "desktop_ubi88_aarch64.sif"
@@ -250,7 +251,7 @@ EOF
 def get_group_dirs()
   info = []
   `groups`.split.each do |g|
-    file = ACC_GROUP_DIR + g + ".disk"
+    file = ACC_GROUP_DIR + g + "/disk.csv"
     if File.exist?(file) then
       dirs = File.readlines(file).grep(/\/vol/)
       unless dirs.empty?
@@ -288,7 +289,7 @@ end
 # the free queue will be displayed in the user's selection item if one group can use the free queue.
 def check_free_queue()
   `groups`.split.each do |g|
-    file = ACC_GROUP_DIR + g + ".free_queue"
+    file = ACC_GROUP_DIR + g + "/free_queue.dat"
     if File.exist?(file) then
       File.open(file, 'r') do |l|
         return true if l.gets.chomp == "ON"
@@ -1017,7 +1018,7 @@ def num_with_commas(number)
 end
 
 def dashboard_resource(group_name)
-  file = ACC_GROUP_DIR + group_name + ".resource"
+  file = ACC_GROUP_DIR + group_name + "/resource.csv"
   return nil unless File.exist?(file)
 
   period = Date.today.month.between?(4, 9)? "1" : "2"
@@ -1038,6 +1039,10 @@ def dashboard_resource(group_name)
   end
 
   return nil
+end
+
+def get_resource_limit(group_name)
+  return dashboard_resource(group_name)[0].gsub(",", "")
 end
 
 def _disk_info(file, group_name)
@@ -1065,9 +1070,9 @@ def get_disk_limit(kind, group_name, volume)
   return -1 if volume == "vol0001"
 
   if kind == "capacity"
-    file = ACC_GROUP_DIR + group_name + ".disk"
+    file = ACC_GROUP_DIR + group_name + "/disk.csv"
   else
-    file = ACC_GROUP_DIR + group_name + ".inode"
+    file = ACC_GROUP_DIR + group_name + "/inode.csv"
   end
   return -1 unless File.exist?(file)
 
@@ -1082,12 +1087,12 @@ def get_disk_limit(kind, group_name, volume)
 end
 
 def dashboard_disk(group_name)
-  file = ACC_GROUP_DIR + group_name + ".disk"
+  file = ACC_GROUP_DIR + group_name + "/disk.csv"
   return _disk_info(file, group_name)
 end
 
 def dashboard_inode(group_name)
-  file = ACC_GROUP_DIR + group_name + ".inode"
+  file = ACC_GROUP_DIR + group_name + "/inode.csv"
   return _disk_info(file, group_name)
 end
 

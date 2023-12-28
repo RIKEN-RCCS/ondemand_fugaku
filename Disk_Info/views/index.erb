@@ -32,15 +32,15 @@ td {
     <tr>
       <th style="vertical-align: middle;" rowspan="2">User</th>
       <th style="vertical-align: middle;" rowspan="2">Volume</th>
-      <th colspan="3">Capacity</th>
+      <th colspan="3">Capacity (GiB)</th>
       <th colspan="3">Inode</th>
     </tr>
     <tr>
-      <th>Usage (GiB)</th>
-      <th>Limit (GiB)</th>
-      <th>Rate</th>
-      <th>Usage</th>
       <th>Limit</th>
+      <th>Usage</th>
+      <th>Rate</th>
+      <th>Limit</th>
+      <th>Usage</th>
       <th>Rate</th>
     </tr>
     <% @disk_info[i][1..-1].each do |d| %>
@@ -57,9 +57,9 @@ td {
       <td><%= user %></td>
       <% end %>
       <td>/<%= volume %></td>
-      <td><%= num_with_commas(capacity) %></td>
       <% if capacity_limit != -1 %>
       <td><%= num_with_commas(capacity_limit) %></td>
+      <td><%= num_with_commas(capacity) %></td>
       <td>
         <div class="graph">
           <strong class="bar_<%= color(rate(capacity, capacity_limit)) %>" style="width: <%= rate(capacity, capacity_limit) %>%;"><%= rate(capacity, capacity_limit) %>%</strong>
@@ -68,16 +68,19 @@ td {
       <% else %>
       <td> - </td>
       <td> - </td>
+      <td> - </td>
       <% end %>
-      <td><%= num_with_commas(inode) %></td>
+      
       <% if inode_limit != -1 %>
       <td><%= num_with_commas(inode_limit) %></td>
+      <td><%= num_with_commas(inode) %></td>
       <td>
         <div class="graph">
           <strong class="bar_<%= color(rate(inode, inode_limit)) %>" style="width: <%= rate(inode, inode_limit) %>%;"><%= rate(inode, inode_limit) %>%</strong>
         </div>
       </td>
       <% else %>
+      <td> - </td>
       <td> - </td>
       <td> - </td>
       <% end %>
