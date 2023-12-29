@@ -6,13 +6,13 @@ script:
   job_name: ood_modylas
   queue_name: <%= queue %>
   <%= submit_email(email, false) %>
-  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, group, mode) %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, fugaku_group, fugaku_mode) %>
 batch_connect:
   template: "basic"
   script_wrapper: |
     <%= submit_env(fugaku_threads, "modylas-new", version) %>
-    <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, eval("exec_110b")) %>
-    <%= submit_llio(queue, fugaku_llio, working_dir) %>
+    <%= submit_fugaku_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, eval("exec_110b")) %>
+    <%= submit_fugaku_llio(queue, fugaku_llio, working_dir) %>
         
     cd "<%= working_dir %>"
     mpiexec <%= exec_110b %> <%= session_name %>

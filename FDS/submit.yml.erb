@@ -6,12 +6,12 @@ script:
   job_name: ood_fds
   queue_name: <%= queue %>
   <%= submit_email(email, false) %>
-  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, group, mode) %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, fugaku_group, fugaku_mode) %>
 batch_connect:
   template: "basic"
   script_wrapper: |
     <%= submit_env(fugaku_threads, "fds", version) %>
-    <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "fds_mpi_fugaku") %>
-    <%= submit_llio(queue, fugaku_llio, input_file) %>
+    <%= submit_fugaku_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "fds_mpi_fugaku") %>
+    <%= submit_fugaku_llio(queue, fugaku_llio, input_file) %>
     <%= submit_working_dir(working_dir) %>
     mpiexec fds_mpi_fugaku "<%= input_file %>"

@@ -7,7 +7,7 @@ script:
   queue_name: <%= queue %>
   <%= submit_email(email, false) %>
   <% additional_options = (working_dir_type == "working_dir_sharedtmp")? "--llio sharedtmp-size=80Gi" : "" %>
-  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, group, mode, additional_options) %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, fugaku_group, fugaku_mode, additional_options) %>
 batch_connect:
   template: "basic"
   script_wrapper: |
@@ -18,9 +18,9 @@ batch_connect:
       LOG_DIR="$1"
       mkdir -p "${LOG_DIR}"
       if [ "<%= calculation %>" = "HF/DFT" ]; then
-        <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "basinp_mpiomp.exe") %>
-        <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "mdint1_mpiomp.exe") %>
-        <%= submit_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "scf_mpiomp.exe") %>
+        <%= submit_fugaku_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "basinp_mpiomp.exe") %>
+        <%= submit_fugaku_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "mdint1_mpiomp.exe") %>
+        <%= submit_fugaku_llio_exec_file(queue, fugaku_large_nodes, fugaku_large_procs, "scf_mpiomp.exe") %>
         for i in basinp mdint1 scf; do
           mpiexec -std-proc "${LOG_DIR}/${i}/%%/1000r/${i}" ${i}_mpiomp.exe
         done

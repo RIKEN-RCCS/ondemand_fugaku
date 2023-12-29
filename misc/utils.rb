@@ -22,237 +22,15 @@ ACC_HOME_DIR           = ACC_DIR + "home/"
 APP_CACHE_DIR          = SYS_OOD_DIR + "app/"
 Resource_info          = Struct.new(:limit, :usage, :avail, :rate)
 Disk_info              = Struct.new(:volume, :limit, :usage, :avail, :rate)
+NOT_DEFINED            = -1
+NOT_USED               = -1
 $attr                  = ""
-
-FUGAKU_SMALL =<<"EOF"
-      - [ "fugaku-small", "small",
-          data-set-cluster: fugaku,
-          data-hide-fugaku-small-free-hours: true,
-          data-hide-fugaku-large-hours: true,
-          data-hide-fugaku-large-free-hours: true,
-          data-hide-fugaku-large-nodes: true,
-          data-hide-fugaku-large-procs: true,
-          data-hide-fugaku-llio: true,
-          data-hide-prepost1-hours: true,
-          data-hide-prepost2-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpus-per-node: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-reserved-memory: true ]
-EOF
-FUGAKU_SMALL_FREE =<<"EOF"
-      - [ "fugaku-small-free", "small-free",
-          data-set-cluster: fugaku,
-          data-hide-fugaku-small-hours: true,
-          data-hide-fugaku-large-hours: true,
-          data-hide-fugaku-large-free-hours: true,
-          data-hide-fugaku-large-nodes: true,
-          data-hide-fugaku-large-procs: true,
-          data-hide-fugaku-llio: true,
-          data-hide-prepost1-hours: true,
-          data-hide-prepost2-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpus-per-node: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-reserved-memory: true ]
-EOF
-FUGAKU_LARGE =<<"EOF"
-      - [ "fugaku-large", "large",
-          data-set-cluster: fugaku,
-          data-hide-fugaku-small-hours: true,
-          data-hide-fugaku-small-free-hours: true,
-          data-hide-fugaku-small-nodes: true,
-          data-hide-fugaku-small-procs: true,
-          data-hide-fugaku-large-free-hours: true,
-          data-hide-prepost1-hours: true,
-          data-hide-prepost2-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpus-per-node: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-reserved-memory: true ]
-EOF
-FUGAKU_LARGE_FREE =<<"EOF"
-      - [ "fugaku-large-free", "large-free",
-          data-set-cluster: fugaku,
-          data-hide-fugaku-small-hours: true,
-          data-hide-fugaku-small-free-hours: true,
-          data-hide-fugaku-small-nodes: true,
-          data-hide-fugaku-small-procs: true,
-          data-hide-fugaku-large-hours: true,
-          data-hide-prepost1-hours: true,
-          data-hide-prepost2-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpus-per-node: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-reserved-memory: true ]
-EOF
-PREPOST_GPU1 =<<"EOF"
-      - [ "prepost-gpu1", "gpu1", 
-          data-set-cluster: prepost,
-          data-hide-group: true,
-          data-hide-fugaku-small-hours: true,
-          data-hide-fugaku-small-free-hours: true,
-          data-hide-fugaku-small-nodes: true,
-          data-hide-fugaku-small-procs: true,
-          data-hide-fugaku-large-hours: true,
-          data-hide-fugaku-large-free-hours: true,
-          data-hide-fugaku-large-nodes: true,
-          data-hide-fugaku-large-procs: true,
-          data-hide-fugaku-llio: true,
-          data-hide-prepost2-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-reserved-memory: true,
-          data-hide-mode: true ]
-EOF
-PREPOST_GPU2 =<<"EOF"
-      - [ "prepost-gpu2", "gpu2", 
-          data-set-cluster: prepost,
-          data-hide-group: true,
-          data-hide-fugaku-small-hours: true,
-          data-hide-fugaku-small-free-hours: true,
-          data-hide-fugaku-small-nodes: true,
-          data-hide-fugaku-small-procs: true,
-          data-hide-fugaku-large-hours: true,
-          data-hide-fugaku-large-free-hours: true,
-          data-hide-fugaku-large-nodes: true,
-          data-hide-fugaku-large-procs: true,
-          data-hide-fugaku-llio: true,
-          data-hide-prepost1-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpu1-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-reserved-memory: true,
-          data-hide-mode: true ]
-EOF
-PREPOST_MEM1 =<<"EOF"
-      - [ "prepost-mem1", "mem1",
-          data-set-cluster: prepost,
-          data-hide-group: true,
-          data-hide-fugaku-small-hours: true,
-          data-hide-fugaku-small-free-hours: true,
-          data-hide-fugaku-small-nodes: true,
-          data-hide-fugaku-small-procs: true,
-          data-hide-fugaku-large-hours: true,
-          data-hide-fugaku-large-free-hours: true,
-          data-hide-fugaku-large-nodes: true,
-          data-hide-fugaku-large-procs: true,
-          data-hide-fugaku-llio: true,
-          data-hide-prepost2-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpus-per-node: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-reserved-memory: true,
-          data-hide-mode: true ]
-EOF
-PREPOST_MEM2 =<<"EOF"
-      - [ "prepost-mem2", "mem2",
-          data-set-cluster: prepost,
-          data-hide-group: true,
-          data-hide-fugaku-small-hours: true,
-          data-hide-fugaku-small-free-hours: true,
-          data-hide-fugaku-small-nodes: true,
-          data-hide-fugaku-small-procs: true,
-          data-hide-fugaku-large-hours: true,
-          data-hide-fugaku-large-free-hours: true,
-          data-hide-fugaku-large-nodes: true,
-          data-hide-fugaku-large-procs: true,
-          data-hide-fugaku-llio: true,
-          data-hide-prepost1-hours: true,
-          data-hide-reserved-hours: true,
-          data-hide-gpus-per-node: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-reserved-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-reserved-memory: true,
-          data-hide-mode: true ]
-EOF
-PREPOST_RESERVED =<<"EOF"
-      - [ "prepost-ondemand-reserved", "ondemand-reserved", 
-          data-set-cluster: prepost,
-          data-hide-group: true,
-          data-hide-fugaku-small-hours: true,
-          data-hide-fugaku-small-free-hours: true,
-          data-hide-fugaku-small-nodes: true,
-          data-hide-fugaku-small-procs: true,
-          data-hide-fugaku-large-hours: true,
-          data-hide-fugaku-large-free-hours: true,
-          data-hide-fugaku-large-nodes: true,
-          data-hide-fugaku-large-procs: true,
-          data-hide-fugaku-llio: true,
-          data-hide-prepost1-hours: true,
-          data-hide-prepost2-hours: true,
-          data-hide-gpus-per-node: true,
-          data-hide-gpu1-cores: true,
-          data-hide-gpu2-cores: true,
-          data-hide-mem1-cores: true,
-          data-hide-mem2-cores: true,
-          data-hide-gpu1-memory: true,
-          data-hide-gpu2-memory: true,
-          data-hide-mem1-memory: true,
-          data-hide-mem2-memory: true,
-          data-hide-mode: true,
-          data-hide-nodelist: true ]
-EOF
 
 def get_group_dirs()
   info = []
   `groups`.split.each do |g|
     file = ACC_GROUP_DIR + g + "/disk.csv"
-    if File.exist?(file) then
+    if File.exist?(file)
       dirs = File.readlines(file).grep(/\/vol/)
       unless dirs.empty?
         dirs.each do |d|
@@ -290,7 +68,7 @@ end
 def check_free_queue()
   `groups`.split.each do |g|
     file = ACC_GROUP_DIR + g + "/free_queue.dat"
-    if File.exist?(file) then
+    if File.exist?(file)
       File.open(file, 'r') do |l|
         return true if l.gets.chomp == "ON"
       end
@@ -300,65 +78,102 @@ def check_free_queue()
   return false
 end
 
-def form_queue(name = "")
+def output_queue(option, value, cluster, elmts)
+  tmp = "      - [ \"" + option + "\", \"" + value + "\", data-set-cluster: " + cluster + ",\n"
+  
+  elmts.each_with_index do |e, i|
+    if i != elmts.length - 1
+      tmp << "          data-hide-" + e + ": true,\n"
+    else
+      tmp << "          data-hide-" + e + ": true ]\n"
+    end
+  end
+  
+  return tmp
+end
+
+def form_queue(name, tmp_fugaku_queue = [])
+  hide_elmts  = ["fugaku-group", "fugaku-small-hours", "fugaku-small-free-hours", "fugaku-small-nodes", "fugaku-small-procs"]
+  hide_elmts += ["fugaku-large-hours", "fugaku-large-free-hours", "fugaku-large-nodes", "fugaku-large-procs", "fugaku-llio"]
+  hide_elmts += ["prepost1-hours", "prepost2-hours", "reserved-hours", "gpus-per-node"]
+  hide_elmts += ["gpu1-cores", "gpu2-cores", "mem1-cores", "mem2-cores", "reserved-cores"]
+  hide_elmts += ["gpu1-memory", "gpu2-memory", "mem1-memory", "mem2-memory", "reserved-memory", "fugaku-mode"]
+
+  tmp_fugaku_queue.each do |i|
+    hide_elmts += ["#{i}-hours", "#{i}-nodes", "#{i}-procs"]
+  end
+  
+  show_elmts_small      = ["fugaku-small-hours",      "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode"]
+  show_elmts_small_free = ["fugaku-small-free-hours", "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode"]
+  show_elmts_large      = ["fugaku-large-hours",      "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-llio"]
+  show_elmts_large_free = ["fugaku-large-hours-free", "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-llio"]
+  show_elmts_gpu1       = ["prepost1-hours", "gpu1-cores", "gpu1-memory", "gpus-per-node"]
+  show_elmts_gpu2       = ["prepost2-hours", "gpu2-cores", "gpu2-memory", "gpus-per-node"]
+  show_elmts_mem1       = ["prepost1-hours", "mem1-cores", "mem1-memory"]
+  show_elmts_mem2       = ["prepost2-hours", "mem2-cores", "mem2-memory"]
+  show_elmts_reserverd  = ["reserved-hours", "reserved-cores", "reserved-memory"]
+  
   $attr <<<<"EOF"
   queue:
     label: Queue
     widget: select
     options:
 EOF
-  
+
   free_queue_available = check_free_queue()
-  
   if name == "fugaku_small_and_prepost"
-    $attr << FUGAKU_SMALL
-    $attr << FUGAKU_SMALL_FREE if free_queue_available
-    $attr << PREPOST_GPU1
-    $attr << PREPOST_GPU2
-    $attr << PREPOST_MEM1
-    $attr << PREPOST_MEM2
-    $attr << PREPOST_RESERVED
+    $attr << output_queue("fugaku-small",       "small",      "fugaku",  hide_elmts - show_elmts_small)
+    $attr << output_queue("fugaku-small-free",  "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if free_queue_available
+    $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
+    $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
+    $attr << output_queue("prepost-mem1",       "mem1",       "prepost", hide_elmts - show_elmts_mem1)
+    $attr << output_queue("prepost-mem2",       "mem2",       "prepost", hide_elmts - show_elmts_mem2)
+    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
   elsif name == "fugaku_small"
-    $attr << FUGAKU_SMALL
-    $attr << FUGAKU_SMALL_FREE if free_queue_available
+    $attr << output_queue("fugaku-small",       "small",      "fugaku",  hide_elmts - show_elmts_small)
+    $attr << output_queue("fugaku-small-free",  "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if free_queue_available
   elsif name == "fugaku_small_and_large"
-    $attr << FUGAKU_SMALL
-    $attr << FUGAKU_SMALL_FREE if free_queue_available
-    $attr << FUGAKU_LARGE
-    $attr << FUGAKU_LARGE_FREE if free_queue_available
+    $attr << output_queue("fugaku-small",       "small",      "fugaku",  hide_elmts - show_elmts_small)
+    $attr << output_queue("fugaku-small-free",  "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if free_queue_available
+    $attr << output_queue("fugaku-large",       "large",      "fugaku",  hide_elmts - show_elmts_large)
+    $attr << output_queue("fugaku-large-large", "large",      "fugaku",  hide_elmts - show_elmts_large_free) if free_queue_available
   elsif name == "prepost"
-    $attr << PREPOST_GPU1
-    $attr << PREPOST_GPU2
-    $attr << PREPOST_MEM1
-    $attr << PREPOST_MEM2
-    $attr << PREPOST_RESERVED
+    $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
+    $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
+    $attr << output_queue("prepost-mem1",       "mem1",       "prepost", hide_elmts - show_elmts_mem1)
+    $attr << output_queue("prepost-mem2",       "mem2",       "prepost", hide_elmts - show_elmts_mem2)
+    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
   elsif name == "gpu"
-    $attr << PREPOST_GPU1
-    $attr << PREPOST_GPU2
+    $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
+    $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
   elsif name == "workflow"
-    $attr << PREPOST_RESERVED
-    $attr << PREPOST_GPU1
-    $attr << PREPOST_GPU2
-    $attr << PREPOST_MEM1
-    $attr << PREPOST_MEM2
+    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
+    $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
+    $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
+    $attr << output_queue("prepost-mem1",       "mem1",       "prepost", hide_elmts - show_elmts_mem1)
+    $attr << output_queue("prepost-mem2",       "mem2",       "prepost", hide_elmts - show_elmts_mem2)
   else name == "all"
-    $attr << FUGAKU_SMALL
-    $attr << FUGAKU_SMALL_FREE if free_queue_available
-    $attr << FUGAKU_LARGE
-    $attr << FUGAKU_LARGE_FREE if free_queue_available
-    $attr << PREPOST_GPU1
-    $attr << PREPOST_GPU2
-    $attr << PREPOST_MEM1
-    $attr << PREPOST_MEM2
-    $attr << PREPOST_RESERVED
+    $attr << output_queue("fugaku-small",       "small",      "fugaku",  hide_elmts - show_elmts_small)
+    $attr << output_queue("fugaku-small-free",  "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if free_queue_available
+    $attr << output_queue("fugaku-large",       "large",      "fugaku",  hide_elmts - show_elmts_large)
+    $attr << output_queue("fugaku-large-large", "large",      "fugaku",  hide_elmts - show_elmts_large_free) if free_queue_available
+    $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
+    $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
+    $attr << output_queue("prepost-mem1",       "mem1",       "prepost", hide_elmts - show_elmts_mem1)
+    $attr << output_queue("prepost-mem2",       "mem2",       "prepost", hide_elmts - show_elmts_mem2)
+    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts -show_elmts_reserverd)
+  end
+
+  tmp_fugaku_queue.each do |i|
+    $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{i}-hours", "#{i}-nodes", "#{i}-procs"])
   end
 
   return "- queue"
 end
 
-def form_group()
+def form_fugaku_group()
   $attr <<<<"EOF"
-  group:
+  fugaku_group:
     label: Group
     widget: select
     options:
@@ -369,123 +184,90 @@ EOF
     $attr << "      - [\"" + n + "\" , \"" + n + "\"]\n"
   end
   
-  return "- group"
+  return "- fugaku_group"
 end
 
-def form_fugaku_small_hours()
+def form_hours(name, min = NOT_DEFINED, max = NOT_DEFINED)
+  if name == "fugaku_small"
+    min = 1  if min == NOT_DEFINED
+    max = 72 if max == NOT_DEFINED
+  elsif name == "fugaku_small_free"
+    min = 1  if min == NOT_DEFINED
+    max = 12 if max == NOT_DEFINED
+  elsif name == "fugaku_large"
+    min = 1  if min == NOT_DEFINED
+    max = 24 if max == NOT_DEFINED
+  elsif name == "fugaku_large_free"
+    min = 1  if min == NOT_DEFINED
+    max = 12 if max == NOT_DEFINED
+  elsif name == "prepost1"
+    min = 1  if min == NOT_DEFINED
+    max = 3  if max == NOT_DEFINED
+  elsif name == "prepost2"
+    min = 1  if min == NOT_DEFINED
+    max = 24  if max == NOT_DEFINED
+  elsif name == "reserved"
+    min = 1   if min == NOT_DEFINED
+    max = 720 if max == NOT_DEFINED
+  end
+  
   $attr <<<<"EOF"
-  fugaku_small_hours:
-    label: Elapsed time (1 - 72 hours)
+  #{name}_hours:
+    label: Elapsed time (#{min} - #{max} hours)
     widget: number_field
-    value: 1
-    min: 1
-    max: 72
+    value: #{min}
+    min: #{min}
+    max: #{max}
     step: 1
     required: true
 EOF
-  return "- fugaku_small_hours"
+  return "- #{name}_hours"
 end
 
-def form_fugaku_large_hours()
+def form_nodes(name, min = NOT_DEFINED, max = NOT_DEFINED)
+  if name == "fugaku_small"
+    min = 1     if min == NOT_DEFINED
+    max = 384   if max == NOT_DEFINED
+  elsif name == "fugaku_large"
+    min = 385   if min == NOT_DEFINED
+    max = 12288 if max == NOT_DEFINED
+  end
+  
   $attr <<<<"EOF"
-  fugaku_large_hours:
-    label: Elapsed time (1 - 24 hours)
+  #{name}_nodes:
+    label: Number of nodes (#{min} - #{num_with_commas(max)})
     widget: number_field
-    value: 1
-    min: 1
-    max: 24
+    value: #{min}
+    min: #{min}
+    max: #{max}
     step: 1
     required: true
 EOF
-  return "- fugaku_large_hours"
+  return "- #{name}_nodes"
 end
 
-def form_fugaku_small_free_hours()
+def form_procs(name, min = NOT_DEFINED, max = NOT_DEFINED)
+  if name == "fugaku_small"
+    min = 1      if min == NOT_DEFINED
+    max = 18432  if max == NOT_DEFINED
+  elsif name == "fugaku_large"
+    min = 385    if min == NOT_DEFINED
+    max = 589824 if max == NOT_DEFINED
+  end
+  
   $attr <<<<"EOF"
-  fugaku_small_free_hours:
-    label: Elapsed time (1 - 12 hours)
+  #{name}_procs:
+    label: Total number of processes (#{min} - #{num_with_commas(max)})
     widget: number_field
-    value: 1
-    min: 1
-    max: 12
-    step: 1
-    required: true
-EOF
-  return "- fugaku_small_free_hours"
-end
-
-def form_fugaku_large_free_hours()
-  $attr <<<<"EOF"
-  fugaku_large_free_hours:
-    label: Elapsed time (1 - 12 hours)
-    widget: number_field
-    value: 1
-    min: 1
-    max: 12
-    step: 1
-    required: true
-EOF
-  return "- fugaku_large_free_hours"
-end
-
-def form_fugaku_small_nodes()
-  $attr <<<<"EOF"
-  fugaku_small_nodes:
-    label: Number of nodes (1 - 384)
-    widget: number_field
-    value: 1
-    min: 1
-    max: 384
-    step: 1
-    required: true
-EOF
-  return "- fugaku_small_nodes"
-end
-
-def form_fugaku_large_nodes()
-  $attr <<<<"EOF"
-  fugaku_large_nodes:
-    label: Number of nodes (385 - 12,288)
-    widget: number_field
-    value: 385
-    min: 385
-    max: 12288
-    step: 1
-    required: true
-EOF
-  return "- fugaku_large_nodes"
-end
-
-def form_fugaku_small_procs()
-  $attr <<<<"EOF"
-  fugaku_small_procs:
-    label: Total number of processes (1 - 18,432)
-    widget: number_field
-    value: 1
-    min: 1
-    max: 18432
+    value: #{min}
+    min: #{min}
+    max: #{max}
     step: 1
     required: true
     help: |
       Total number of processes <= Number of nodes x 48.
 EOF
-  return "- fugaku_small_procs"
-end
-
-def form_fugaku_large_procs()
-  $attr <<<<"EOF"
-  fugaku_large_procs:
-    label: Total number of processes (385 - 589,824)
-    widget: number_field
-    value: 385
-    min: 385
-    max: 589,824
-    step: 1
-    required: true
-    help: |
-      Total number of processes <= Number of nodes x 48.
-EOF
-  return "- fugaku_large_procs"
+  return "- #{name}_procs"
 end
 
 def form_fugaku_threads(help = "Number of threads x Total number of processes <= Number of nodes x 48.")
@@ -504,52 +286,27 @@ EOF
   return "- fugaku_threads"
 end
 
-def form_prepost1_hours()
-  $attr <<<<"EOF"
-  prepost1_hours:
-    label: Elapsed time (1 - 3 hours)
-    widget: number_field
-    value: 1
-    min: 1
-    max: 3
-    step: 1
-    required: true
-EOF
-  return "- prepost1_hours"
-end
+def form_cores(name, min = NOT_DEFINED, max = NOT_DEFINED)
+  if name == "gpu1"
+    min = 1   if min == NOT_DEFINED
+    max = 72  if max == NOT_DEFINED
+  elsif name == "gpu2"
+    min = 1   if min == NOT_DEFINED
+    max = 36  if max == NOT_DEFINED
+  elsif name == "mem1"
+    min = 1   if min == NOT_DEFINED
+    max = 224 if max == NOT_DEFINED
+  elsif name == "mem2"
+    min = 1   if min == NOT_DEFINED
+    max = 56  if max == NOT_DEFINED
+  elsif name == "reserved"
+    min = 1   if min == NOT_DEFINED
+    max = 8   if max == NOT_DEFINED
+  end
 
-def form_prepost2_hours()
   $attr <<<<"EOF"
-  prepost2_hours:
-    label: Elapsed time (1 - 24 hours)
-    widget: number_field
-    value: 1
-    min: 1
-    max: 24
-    step: 1
-    required: true
-EOF
-  return "- prepost2_hours"
-end
-
-def form_reserved_hours()
-  $attr <<<<"EOF"
-  reserved_hours:
-    label: Elapsed time (1 - 720 hours)
-    widget: number_field
-    value: 1
-    min: 1
-    max: 720
-    step: 1
-    required: true
-EOF
-  return "- reserved_hours"
-end
-
-def form_gpu1_cores(min = 1, max = 72)
-  $attr <<<<"EOF"
-  gpu1_cores:
-    label: Number of CPU cores (#{min} - #{max})
+  #{name}_cores:
+    label: Number of CPU cores (#{min} - #{num_with_commas(max)})
     widget: number_field
     value: #{min}
     min: #{min}
@@ -557,13 +314,30 @@ def form_gpu1_cores(min = 1, max = 72)
     step: 1
     required: true
 EOF
-  return "- gpu1_cores"
+  return "- #{name}_cores"
 end
 
-def form_gpu2_cores(min = 1, max = 36)
+def form_memory(name, min = NOT_DEFINED, max = NOT_DEFINED)
+  if name == "gpu1"
+    min = 5    if min == NOT_DEFINED
+    max = 186  if max == NOT_DEFINED
+  elsif name == "gpu2"
+    min = 5    if min == NOT_DEFINED
+    max = 93   if max == NOT_DEFINED
+  elsif name == "mem1"
+    min = 5    if min == NOT_DEFINED
+    max = 5020 if max == NOT_DEFINED
+  elsif name == "mem2"
+    min = 5    if min == NOT_DEFINED
+    max = 1500 if max == NOT_DEFINED
+  elsif name == "reserved"
+    min = 5    if min == NOT_DEFINED
+    max = 32   if max == NOT_DEFINED
+  end
+
   $attr <<<<"EOF"
-  gpu2_cores:
-    label: Number of CPU cores (#{min} - #{max})
+  #{name}_memory:
+    label: Required memory (#{min} - #{num_with_commas(max)} GB)
     widget: number_field
     value: #{min}
     min: #{min}
@@ -571,119 +345,7 @@ def form_gpu2_cores(min = 1, max = 36)
     step: 1
     required: true
 EOF
-  return "- gpu2_cores"
-end
-
-def form_mem1_cores(min = 1, max = 224)
-  $attr <<<<"EOF"
-  mem1_cores:
-    label: Number of CPU cores (#{min} - #{max})
-    widget: number_field
-    value: #{min}
-    min: #{min}
-    max: #{max}
-    step: 1
-    required: true
-EOF
-  return "- mem1_cores"
-end
-
-def form_mem2_cores(min = 1, max = 56)
-  $attr <<<<"EOF"
-  mem2_cores:
-    label: Number of CPU cores (#{min} - #{max})
-    widget: number_field
-    value: #{min}
-    min: #{min}
-    max: #{max}
-    step: 1
-    required: true
-EOF
-  return "- mem2_cores"
-end
-
-def form_reserved_cores( min = 1, max = 8)
-  $attr <<<<"EOF"
-  reserved_cores:
-    label: Number of CPU cores (#{min} - #{max})
-    widget: number_field
-    value: #{min}
-    min: #{min}
-    max: #{max}
-    step: 1
-    required: true
-EOF
-  return "- reserved_cores"
-end
-
-def form_gpu1_memory(min = 5, max = 186)
-  $attr <<<<"EOF"
-  gpu1_memory:
-    label: Required memory (#{min} - #{max} GB)
-    widget: number_field
-    value: #{min}
-    min: #{min}
-    max: #{max}
-    step: 1
-    required: true
-EOF
-  return "- gpu1_memory"
-end
-
-def form_gpu2_memory(min = 5, max = 93)
-  $attr <<<<"EOF"
-  gpu2_memory:
-    label: Required memory (#{min} - #{max} GB)
-    widget: number_field
-    value: #{min}
-    min: #{min}
-    max: #{max}
-    step: 1
-    required: true
-EOF
-  return "- gpu2_memory"
-end
-
-def form_mem1_memory(min = 5, max = 5020)
-  $attr <<<<"EOF"
-  mem1_memory:
-    label: Required memory (#{min} - #{max} GB)
-    widget: number_field
-    value: #{min}
-    min: #{min}
-    max: #{max}
-    step: 1
-    required: true
-EOF
-  return "- mem1_memory"
-end
-
-def form_mem2_memory(min = 5, max = 1500)
-  $attr <<<<"EOF"
-  mem2_memory:
-    label: Required memory (#{min} - #{max} GB)
-    widget: number_field
-    value: #{min}
-    min: #{min}
-    max: #{max}
-    step: 1
-    required: true
-EOF
-  return "- mem2_memory"
-end
-
-def form_reserved_memory(min = 5, max = 32)
-  $attr <<<<"EOF"
-  reserved_memory:
-    label: Required memory (#{min} - #{max} GB)
-    widget: number_field
-    value: #{min}
-    min: #{min}
-    max: #{max}
-    step: 1
-    required: true
-EOF
-  return "- reserved_memory"
+  return "- #{name}_memory"
 end
 
 def form_gpus_per_node(enable_vgl = false, is_desktop = false, min = 0, max = 2)
@@ -696,14 +358,14 @@ def form_gpus_per_node(enable_vgl = false, is_desktop = false, min = 0, max = 2)
     options:
 EOF
     $attr << "      - [ \"0\", \"0\" ]\n" if min <= 0 and max >= 0
-    if is_desktop then
+    if is_desktop
       $attr << "      - [ \"1 using VirtualGL\", \"1_VGL\" ]\n" if min <= 1 and max >= 1
       $attr << "      - [ \"1\",                 \"1\"     ]\n" if min <= 1 and max >= 1
       $attr << "      - [ \"2 using VirtualGL\", \"2_VGL\" ]\n" if min <= 2 and max >= 2
       $attr << "      - [ \"2\",                 \"2\"     ]\n" if min <= 2 and max >= 2
       $attr << "    help: Option \"using VirtualGL\" means that X rendering is accelerated using GPU.\n"
     else
-      if enable_vgl then
+      if enable_vgl
         $attr << "      - [ \"1\", \"1_VGL\" ]\n" if min <= 1 and max >= 1
         $attr << "      - [ \"2\", \"2_VGL\" ]\n" if min <= 2 and max >= 2
         $attr << "    help: When GPU >= 1, X rendering is accelerated using GPU.\n"
@@ -723,17 +385,19 @@ def form_nodelist()
     help: This option is useful if you want to fix the MAC address.
     options:
       - [ "(Not specified)", "not_specified" ]
-      - [ "pps01", "pps01", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
-      - [ "pps02", "pps02", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
-      - [ "pps03", "pps03", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
-      - [ "pps04", "pps04", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
-      - [ "pps05", "pps05", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
-      - [ "pps06", "pps06", data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
-      - [ "pps07", "pps07", data-option-for-queue-gpu1: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
-      - [ "pps08", "pps08", data-option-for-queue-gpu1: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
-      - [ "ppm01", "ppm01", data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem2: false ]
-      - [ "ppm02", "ppm02", data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false ]
-      - [ "ppm03", "ppm03", data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false ]
+      - [ "pps01",  "pps01",  data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false, data-option-for-queue-ondemand-reserved: false ]
+      - [ "pps02",  "pps02",  data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false, data-option-for-queue-ondemand-reserved: false ]
+      - [ "pps03",  "pps03",  data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false, data-option-for-queue-ondemand-reserved: false ]
+      - [ "pps04",  "pps04",  data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false, data-option-for-queue-ondemand-reserved: false ]
+      - [ "pps05",  "pps05",  data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false, data-option-for-queue-ondemand-reserved: false ]
+      - [ "pps06",  "pps06",  data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false, data-option-for-queue-ondemand-reserved: false ]
+      - [ "pps07",  "pps07",  data-option-for-queue-gpu1: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false, data-option-for-queue-ondemand-reserved: false ]
+      - [ "pps08",  "pps08",  data-option-for-queue-gpu1: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false, data-option-for-queue-ondemand-reserved: false ]
+      - [ "ppm01",  "ppm01",  data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem2: false, data-option-for-queue-ondemand-reserved: false ]
+      - [ "ppm02",  "ppm02",  data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-ondemand-reserved: false ]
+      - [ "ppm03",  "ppm03",  data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-ondemand-reserved: false ]
+      - [ "wheel1", "wheel1", data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
+      - [ "wheel2", "wheel2", data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
 EOF
   return "- nodelist"
 end
@@ -752,9 +416,9 @@ EOF
   return "- #{item}"
 end
 
-def form_mode()
+def form_fugaku_mode()
   $attr <<<<"EOF"
-  mode:
+  fugaku_mode:
     label: Execution mode
     widget: select
     help: |
@@ -765,7 +429,7 @@ def form_mode()
     - Eco
     - Boost + Eco
 EOF
-  return "- mode"
+  return "- fugaku_mode"
 end
 
 def form_version(versions)
@@ -879,7 +543,7 @@ EOF
   return "- " + item
 end
 
-def form_llio(flag, memo = "")
+def form_fugaku_llio(flag, memo = "")
   memo = "Executable files are transferred there automatically." if memo == ""
   
   $attr <<<<"EOF"
@@ -1028,7 +692,7 @@ def dashboard_resource(group_name)
     # The order is reversed to give priority to the later period.
     f.readlines.reverse_each do |l|
       i = l.split(",")
-      if ((i[0] == "SUBTHEMEPERIOD" and i[2] == period) or i[0] == "SUBTHEME") and i[1] == group_name and i[3].to_i != 0 then
+      if ((i[0] == "SUBTHEMEPERIOD" and i[2] == period) or i[0] == "SUBTHEME") and i[1] == group_name and i[3].to_i != 0
         limit = i[3].to_i/3600
         usage = i[7].to_i/3600
         avail = i[6].to_i/3600
@@ -1052,7 +716,7 @@ def _disk_info(file, group_name)
   File.open(file, "r") do |f|
     f.each_line do |l|
       i = l.split(",")
-      if i[0] == "GROUP" and i[1] == group_name and i[2] != "vol0001" then
+      if i[0] == "GROUP" and i[1] == group_name and i[2] != "vol0001"
         volume = "/" + i[2]
         limit  = i[3].to_i
         usage  = i[4].to_i
@@ -1123,9 +787,9 @@ def dashboard_home_inode()
 end
 
 def dashboard_color(num)
-  if 0 <= num and num <= 25 then
+  if 0 <= num and num <= 25
     return "green"
-  elsif 25 < num and num <= 75 then
+  elsif 25 < num and num <= 75
     return "blue"
   else
     return "red"
@@ -1219,11 +883,11 @@ end
 def submit_gpus_per_node(queue, gpus_per_node)
   return if queue != "gpu1" and queue != "gpu2"
 
-  if gpus_per_node == "0" then
+  if gpus_per_node == "0"
     return "gpus_per_node: 0"
-  elsif gpus_per_node == "1" or gpus_per_node == "1_VGL" then
+  elsif gpus_per_node == "1" or gpus_per_node == "1_VGL"
     return "gpus_per_node: 1"
-  elsif gpus_per_node == "2" or gpus_per_node == "2_VGL" then
+  elsif gpus_per_node == "2" or gpus_per_node == "2_VGL"
     return "gpus_per_node: 2"
   end
 end
@@ -1239,28 +903,51 @@ def submit_email(email = "", only_start = true)
   end
 end
 
+def submit_tmp_fugaku_queue_info(keys = [])
+  queue_info = {}
+
+  keys.each do |key|
+    queue_info[key] = {
+      "procs" => send("#{key}_procs"),
+      "nodes" => send("#{key}_nodes"),
+      "hours" => send("#{key}_hours")
+    }
+  end
+
+  return queue_info
+end
+
 def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
                          fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
-                         fugaku_large_procs, group, mode, additional_options = "")
+                         fugaku_large_procs, fugaku_group, fugaku_mode, additional_options = "", tmp_fugaku_queue_info = [])
   str = "native:\n"
-  if queue == "small" then
+  if queue == "small"
     str << "    - -L elapse=#{fugaku_small_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}\n"
-  elsif queue == "small-free" then
+  elsif queue == "small-free"
     str << "    - -L elapse=#{fugaku_small_free_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}\n"
-  elsif queue == "large" then
+  elsif queue == "large"
     str << "    - -L elapse=#{fugaku_large_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}\n"
-  elsif queue == "large-free" then
+  elsif queue == "large-free"
     str << "    - -L elapse=#{fugaku_large_free_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}\n"
+  else # For special queue in tmp_fugaku_queue
+    # q1 = {"procs" => q1_procs, "nodes" => q1_nodes, "hours" => q1_hours }
+    # q2 = {"procs" => q2_procs, "nodes" => q2_nodes, "hours" => q2_hours }
+    # tmp_fugaku_queue_info = {"q1" => q1, "q2" => q2}
+    
+    hours = tmp_fugaku_queue_info[queue]["hours"]
+    nodes = tmp_fugaku_queue_info[queue]["nodes"]
+    procs = tmp_fugaku_queue_info[queue]["procs"]
+    str << "    - -L elapse=#{hours}:00:00,node=#{nodes},jobenv=singularity --mpi proc=#{procs}\n"
   end
   str << "    - --no-check-directory\n"
-  str << "    - -g #{group}\n"
+  str << "    - -g #{fugaku_group}\n"
   str << "    - -x PJM_LLIO_GFSCACHE=/vol0002:/vol0003:/vol0004:/vol0005:/vol0006\n"
 
-  if mode == "Boost"
+  if fugaku_mode == "Boost"
     str << "    - -L freq=2200\n"
-  elsif mode == "Eco"
+  elsif fugaku_mode == "Eco"
     str << "    -  -L eco_state=2\n"
-  elsif mode == "Boost + Eco"
+  elsif fugaku_mode == "Boost + Eco"
     str << "    -  -L freq=2200,eco_state=2\n"
   end
 
@@ -1270,9 +957,9 @@ def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fug
 end
 
 def submit_native_fugaku_small(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
-                               group, mode)
+                               fugaku_group, fugaku_mode)
   submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
-                      "-1", "-1", "-1", "-1", group,  mode)
+                      NOT_USED, NOT_USED, NOT_USED, NOT_USED, fugaku_group, fugaku_mode)
 end
 
 def submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
@@ -1326,8 +1013,8 @@ EOF
 EOF
   end
 
-  if queue == "gpu1" or queue == "gpu2" or queue == "mem1" or queue == "mem2" then
-    if nodelist != "not_specified" then
+  if queue == "gpu1" or queue == "gpu2" or queue == "mem1" or queue == "mem2"
+    if nodelist != "not_specified"
       str << "    - \"--nodelist=#{nodelist}\n\""
     end
   end
@@ -1338,18 +1025,20 @@ end
 def submit_native_prepost_gpu(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
                               gpu2_cores, gpu2_memory)
   return submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
-                               gpu2_cores, gpu2_memory, -1, -1, -1, -1, -1, -1, -1)
+                               gpu2_cores, gpu2_memory, NOT_USED, NOT_USED, NOT_USED, NOT_USED,
+                               NOT_USED, NOT_USED, NOT_USED)
 end
 
 def submit_native(cluster, queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
                   fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
-                  fugaku_large_procs, group, mode, prepost1_hours, gpu1_cores, gpu1_memory,
+                  fugaku_large_procs, fugaku_group, fugaku_mode, prepost1_hours, gpu1_cores, gpu1_memory,
                   prepost2_hours, gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
-                  mem2_memory, reserved_hours, reserved_cores, reserved_memory)
+                  mem2_memory, reserved_hours, reserved_cores, reserved_memory, additional_options = "",
+                  tmp_fugaku_queue_info = [])
   if cluster == "fugaku"
     return submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
                                 fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours,
-                                fugaku_large_nodes, fugaku_large_procs, group, mode)
+                                fugaku_large_nodes, fugaku_large_procs, fugaku_group, fugaku_mode, additional_options, tmp_fugaku_queue_info)
   elsif cluster == "prepost"
     return submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
                                  gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
@@ -1465,7 +1154,7 @@ EOF
   end
 end
 
-def submit_llio_exec_file(queue, nodes, procs, exec_file)
+def submit_fugaku_llio_exec_file(queue, nodes, procs, exec_file)
   return if queue != "large" and queue != "large-free"
   
   if nodes.to_i >= LLIO_LBOUND_NODES or procs.to_i >= LLIO_LBOUND_PROCS
@@ -1473,7 +1162,7 @@ def submit_llio_exec_file(queue, nodes, procs, exec_file)
   end
 end
 
-def submit_llio(queue, flag, target) # target is an input file or a working directory
+def submit_fugaku_llio(queue, flag, target) # target is an input file or a working directory
   return if queue != "large" and queue != "large-free"
   
   if flag == "input_file"

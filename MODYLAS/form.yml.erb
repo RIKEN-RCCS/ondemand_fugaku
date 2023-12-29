@@ -10,22 +10,22 @@ title: MODYLAS
 form:
   <%= form_cluster("fugaku") %>
   <%= form_queue("fugaku_small_and_large") %>
-  <%= form_group() %>
-  <%= form_fugaku_small_hours() %>
-  <%= form_fugaku_small_free_hours() %>
-  <%= form_fugaku_small_nodes() %>
-  <%= form_fugaku_small_procs() %>
-  <%= form_fugaku_large_hours() %>
-  <%= form_fugaku_large_free_hours() %>
-  <%= form_fugaku_large_nodes() %>
-  <%= form_fugaku_large_procs() %>
+  <%= form_fugaku_group() %>
+  <%= form_hours("fugaku_small") %>
+  <%= form_hours("fugaku_small_free") %>
+  <%= form_nodes("fugaku_small") %>
+  <%= form_procs("fugaku_small") %>
+  <%= form_hours("fugaku_large") %>
+  <%= form_hours("fugaku_large_free") %>
+  <%= form_nodes("fugaku_large") %>
+  <%= form_procs("fugaku_large") %>
   <%= form_fugaku_threads() %>
-  <%= form_mode() %>
+  <%= form_fugaku_mode() %>
   <%= form_working_dir() %>
   <%= form_version(versions) %>
   <%= form_exec(versions[0], modylas110b, "modylas") %>
   <%= form_session_name() %>
-  <%= form_llio("working_dir") %>
+  <%= form_fugaku_llio("working_dir") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>

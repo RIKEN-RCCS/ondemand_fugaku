@@ -10,22 +10,22 @@ title: OpenFOAM
 form:
   <%= form_cluster("fugaku") %>
   <%= form_queue("fugaku_small_and_large") %>
-  <%= form_group() %>
-  <%= form_fugaku_small_hours() %>
-  <%= form_fugaku_small_free_hours() %>
-  <%= form_fugaku_small_nodes() %>
-  <%= form_fugaku_small_procs() %>
-  <%= form_fugaku_large_hours() %>
-  <%= form_fugaku_large_free_hours() %>
-  <%= form_fugaku_large_nodes() %>
-  <%= form_fugaku_large_procs() %>
-  <%= form_mode() %>
+  <%= form_fugaku_group() %>
+  <%= form_hours("fugaku_small") %>
+  <%= form_hours("fugaku_small_free") %>
+  <%= form_nodes("fugaku_small") %>
+  <%= form_procs("fugaku_small") %>
+  <%= form_hours("fugaku_large") %>
+  <%= form_hours("fugaku_large_free") %>
+  <%= form_nodes("fugaku_large") %>
+  <%= form_procs("fugaku_large") %>
+  <%= form_fugaku_mode() %>
   <%= form_working_dir() %>
   <%= form_select("version", "Version", versions) %>
   <%= form_select("foundation_version", "Foundation version", foundation_versions) %>
   <%= form_select("opencfd_version",    "OpenCFD version",    opencfd_versions) %>
   <%= form_commands("e.g. mpiexec interFoam -parallel") %>
-  <%= form_llio("working_dir", "If you transfer the executable file, for example, please add 'lilo_transfer $(which interFoam)' in commands area.") %>
+  <%= form_fugaku_llio("working_dir", "If you transfer the executable file, for example, please add 'lilo_transfer $(which interFoam)' in commands area.") %>
   <%= form_email(false) %>
 attributes:
 <%= form_attr() %>
