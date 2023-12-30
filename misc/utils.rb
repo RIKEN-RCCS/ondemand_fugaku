@@ -100,7 +100,8 @@ def form_queue(name, tmp_fugaku_queue = [])
   hide_elmts += ["gpu1-memory", "gpu2-memory", "mem1-memory", "mem2-memory", "reserved-memory", "fugaku-mode"]
 
   tmp_fugaku_queue.each do |i|
-    hide_elmts += ["#{i}-hours", "#{i}-nodes", "#{i}-procs"]
+    ii = i.gsub("_", "-")
+    hide_elmts += ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"]
   end
   
   show_elmts_small      = ["fugaku-small-hours",      "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode"]
@@ -165,7 +166,8 @@ EOF
   end
 
   tmp_fugaku_queue.each do |i|
-    $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{i}-hours", "#{i}-nodes", "#{i}-procs"])
+    ii = i.gsub("_", "-")
+    $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
   end
 
   return "- queue"
@@ -209,6 +211,8 @@ def form_hours(name, min = NOT_DEFINED, max = NOT_DEFINED)
   elsif name == "reserved"
     min = 1   if min == NOT_DEFINED
     max = 720 if max == NOT_DEFINED
+  else
+    name = name.gsub("-", "_")
   end
   
   $attr <<<<"EOF"
@@ -231,6 +235,8 @@ def form_nodes(name, min = NOT_DEFINED, max = NOT_DEFINED)
   elsif name == "fugaku_large"
     min = 385   if min == NOT_DEFINED
     max = 12288 if max == NOT_DEFINED
+  else
+    name = name.gsub("-", "_")
   end
   
   $attr <<<<"EOF"
@@ -253,6 +259,8 @@ def form_procs(name, min = NOT_DEFINED, max = NOT_DEFINED)
   elsif name == "fugaku_large"
     min = 385    if min == NOT_DEFINED
     max = 589824 if max == NOT_DEFINED
+  else
+    name = name.gsub("-", "_")
   end
   
   $attr <<<<"EOF"
@@ -907,6 +915,7 @@ def submit_tmp_fugaku_queue_info(keys = [])
   queue_info = {}
 
   keys.each do |key|
+    key = key.gsub("-", "_")
     queue_info[key] = {
       "procs" => send("#{key}_procs"),
       "nodes" => send("#{key}_nodes"),
@@ -933,7 +942,8 @@ def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fug
     # q1 = {"procs" => q1_procs, "nodes" => q1_nodes, "hours" => q1_hours }
     # q2 = {"procs" => q2_procs, "nodes" => q2_nodes, "hours" => q2_hours }
     # tmp_fugaku_queue_info = {"q1" => q1, "q2" => q2}
-    
+
+    queue = queue.gsub("-", "_")
     hours = tmp_fugaku_queue_info[queue]["hours"]
     nodes = tmp_fugaku_queue_info[queue]["nodes"]
     procs = tmp_fugaku_queue_info[queue]["procs"]
