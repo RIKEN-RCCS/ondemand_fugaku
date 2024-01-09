@@ -25,18 +25,30 @@
         </ul>
         <h2><a id="overview" name="overview">はじめに</a></h2>
         <p>
-          <a href="https://openondemand.org">Open OnDemand</a>は、Webブラウザから並列計算機システムを利用するためのWebポータルです。富岳のOpen OnDemandで提供しているアプリケーションは下記の3つにグループ分けしています。
+          <a href="https://openondemand.org">Open OnDemand</a>は、Webブラウザから並列計算機システムを利用するためのWebポータルです。富岳のOpen OnDemandで提供しているアプリケーションは下記のグループ分けしています。
           <ul>
             <li>Batch Jobs：富岳の計算ノードに投入する実アプリケーション</li>
             <li>Interactive Apps：富岳やプリポスト環境で動作する対話的アプリケーション</li>
             <li>Passenger Apps：Open OnDemandがインストールされたサーバで動作するユーティリティ</li>
           </ul>
-          下図はOpen OnDemandのダッシュボードです。最上部のナビゲーションバーから，Batch Jobsなどを起動させることができます。
         </p>
         <p>
           <img style="border:solid 1px #000000" alt="dashboard" src="./img/dashboard.png" width="600" />
         </p>
-
+        <p>
+          上図はOpen OnDemandのダッシュボードです。最上部のナビゲーションバーから，各アプリを起動させることができます。
+          図中の数字の項目の意味は下記の通りです。
+          <ol>
+            <li>外部リンク</li>
+            <li>最新の富岳のインフォメーション</li>
+            <li>富岳とプリポスト環境のキューの待ち状況</li>
+            <li>富岳の運用スケジュール</li>
+            <li>ディスクとリソースの使用率</li>
+            <li>最近利用したアプリケーション（最大4つ）</li>
+            <li>Passenger Apps</li>
+          </ol>
+        </p>
+        
         <h2><a id="batch" name="batch">Batch Jobs</a></h2>
         <p>
           アイコンをクリックすると、計算リソースなどを入力するためのWebフォームが表示されます。入力項目はアプリケーション毎に異なります。入力後に「Launch」をクリックすると、富岳にジョブが投入されます。
@@ -59,6 +71,14 @@
           <img style="border:solid 1px #000000" alt="active jobs" src="./img/activejobs.png" width="600" />
         </p>
 
+        <h3>Disk Info</h3>
+        <p>
+          グループ内の各ユーザのディスク利用量を表示します。
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="disk info" src="./img/diskinfo.png" width="600" />
+        </p>
+        
         <h3>Home Directory</h3>
         <p>
           ファイルのアップロード・ダウンロード・削除・編集を行えます。アップロード・ダウンロード可能な最大サイズは10GBです。
@@ -70,12 +90,20 @@
           <a href="https://rclone.org">rclone</a>を用いたクラウドストレージに対するファイル操作も可能です。Interactive AppsのRemote Desktopを起動し、ターミナルからrcloneもしくはrclone-browserを実行すると、rcloneの設定を行うことができます。その後にHome Directoryを起動すると、設定されたクラウドストレージにアクセスできます。なお、富岳ヘルプデスクではrcloneの設定のサポートは行っておりませんのでご了承ください。
         </p>
 
-        <h3>Disk Info</h3>
+        <h3>GakuNin RDM</h3>
         <p>
-          グループ内の各ユーザのディスク利用量を表示します。
+          国立情報学研究所が提供する研究データ管理基盤である<a href="https://rdm.nii.ac.jp">GakuNin RDM</a>に対するファイル操作を行えます。
+        </p>
+        <ul>
+          <li>Mount Path：富岳側のマウントパス（例：/home/rccs-aot/a00000/abc）</li>
+          <li>RDM Node ID：GakuNin RDMのプロジェクトのURL（https://rdm.nii.ac.jp/xxx/）のxxxの箇所</li>
+          <li>ROM Token：GakuNin RDMのパーソナルアクセストークン</li>
+        </ul>
+        <p>
+          <img style="border:solid 1px #000000" alt="GakuNin RDM" src="./img/grdm.png" width="600" />
         </p>
         <p>
-          <img style="border:solid 1px #000000" alt="disk info" src="./img/diskinfo.png" width="600" />
+          「mount」をクリックすると、指定したGakuNin RDMのプロジェクトが富岳にマウントされます。
         </p>
         
         <h3>HPCI共用ストレージ</h3>
@@ -93,21 +121,13 @@
         <p>
           「mount」をクリックすると、HPCI共用ストレージが富岳にマウントされます。富岳上のパスは「Mount Path」に表示されます。
         </p>
-        
-        <h3>GakuNin RDM</h3>
+
+        <h3>Disk Info</h3>
         <p>
-          国立情報学研究所が提供する研究データ管理基盤である<a href="https://rdm.nii.ac.jp">GakuNin RDM</a>に対するファイル操作を行えます。
-        </p>
-        <ul>
-          <li>Mount Path：富岳側のマウントパス（例：/home/rccs-aot/a00000/abc）</li>
-          <li>RDM Node ID：GakuNin RDMのプロジェクトのURL（https://rdm.nii.ac.jp/xxx/）のxxxの箇所</li>
-          <li>ROM Token：GakuNin RDMのパーソナルアクセストークン</li> 
-        </ul>
-        <p>
-          <img style="border:solid 1px #000000" alt="GakuNin RDM" src="./img/grdm.png" width="600" />
+          グループ内の各ユーザのリソース利用量を表示します。
         </p>
         <p>
-          「mount」をクリックすると、指定したGakuNin RDMのプロジェクトが富岳にマウントされます。
+          <img style="border:solid 1px #000000" alt="resource info" src="./img/resourceinfo.png" width="600" />
         </p>
         
         <!--

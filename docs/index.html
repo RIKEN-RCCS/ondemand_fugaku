@@ -26,17 +26,30 @@
         <h2><a id="overview" name="overview">Overview</a></h2>
         <p>
           <a href="https://openondemand.org">Open OnDemand</a> is a web portal for using parallel computer systems via a web browser.
-          The applications provided by Fugaku Open OnDemand are divided into the following three groups.
+          The applications provided by Fugaku Open OnDemand are divided into the following groups.
           <ul>
             <li>Batch Jobs : Real world applications that run on Fugaku</li>
             <li>Interactive Apps : Interactive applications that run on Fugaku and pre-post environment</li>
             <li>Passenger Apps : Utilities that run on the server where Open OnDemand is installed</li>
           </ul>
-          The figure below shows the Open OnDemand dashboard. From the top navigation bar, you can launch Batch Jobs, etc.
         </p>
         <p>
           <img style="border:solid 1px #000000" alt="dashboard" src="./img/dashboard.png" width="600" />
         </p>
+
+        <p>
+          The figure above shows the Open OnDemand dashboard. From the top navigation bar, you can launch the applications.
+          The meanings of the numerical items in the figure are as follows.
+          <ol>
+            <li>External links</li>
+	    <li>The latest information of Fugaku</li>
+	    <li>Fugaku and pre-post environment queue pending status</li>
+	    <li>Fugaku operation schedule</li>
+	    <li>Disk and resource usage</li>
+	    <li>Recently used applications (up to 4)</li>
+	    <li>Passenger Apps</li>
+          </ol>
+	</p>
         
         <h2><a id="batch" name="batch">Batch Jobs</a></h2>
         <p>
@@ -62,6 +75,14 @@
           <img style="border:solid 1px #000000" alt="active jobs" src="./img/activejobs.png" width="600" />
         </p>
 
+        <h3>Disk Info</h3>
+        <p>
+          Displays the amount of disk usage for each user in the group.
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="disk info" src="./img/diskinfo.png" width="600" />
+        </p>
+        
         <h3>Home Directory</h3>
         <p>
           You can upload, download, delete, and edit files. The maximum file size for upload and download is 10GB.
@@ -76,12 +97,20 @@
           Please note that Fugaku Help Desk does not support rclone settings.
         </p>
 
-        <h3>Disk Info</h3>
+        <h3>GakuNin RDM</h3>
         <p>
-          Displays the amount of disk usage for each user in the group. 
+          You can perform file operations on <a href="https://rdm.nii.ac.jp">GakuNin RDM</a>, a research data management platform provided by the National Institute of Informatics.
+        </p>
+        <ul>
+          <li>Mount Path : Mount path on Fugaku (e.g. /home/rccs-aot/a00000/abc)</li>
+          <li>RDM Node ID : A part of URL of your project in GakuNin RDM (xxx in https://rdm.nii.ac.jp/xxx/)</li>
+          <li>ROM Token : Parsonal access token in GakuNin RDM</li>
+        </ul>
+        <p>
+          <img style="border:solid 1px #000000" alt="GakuNin RDM" src="./img/grdm.png" width="600" />
         </p>
         <p>
-          <img style="border:solid 1px #000000" alt="disk info" src="./img/diskinfo.png" width="600" />
+          When clicking mount botton, a project directory in GakuNin RDM is mounted to Fugaku.
         </p>
         
         <h3>HPCI Shared Storage</h3>
@@ -101,21 +130,13 @@
           When clicking mount botton, a project directory in HPCI Shared Storage is mounted to Fugaku.
           The path on Fugaku is displayed in "Mount Path".
         </p>
-        
-        <h3>GakuNin RDM</h3>
+
+        <h3>Resouece Info</h3>
         <p>
-          You can perform file operations on <a href="https://rdm.nii.ac.jp">GakuNin RDM</a>, a research data management platform provided by the National Institute of Informatics.
-        </p>
-        <ul>
-          <li>Mount Path : Mount path on Fugaku (e.g. /home/rccs-aot/a00000/abc)</li>
-          <li>RDM Node ID : A part of URL of your project in GakuNin RDM (xxx in https://rdm.nii.ac.jp/xxx/)</li>
-          <li>ROM Token : Parsonal access token in GakuNin RDM</li> 
-        </ul>
-        <p>
-          <img style="border:solid 1px #000000" alt="GakuNin RDM" src="./img/grdm.png" width="600" />
+          Displays the amount of resource usage for each user in the group.
         </p>
         <p>
-          When clicking mount botton, a project directory in GakuNin RDM is mounted to Fugaku.
+          <img style="border:solid 1px #000000" alt="resource info" src="./img/resourceinfo.png" width="600" />
         </p>
         
         <!--
