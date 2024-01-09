@@ -20,12 +20,9 @@ REMOTE_SSH=""
 [ "$HOSTNAME" != "fn06sv04" ] && REMOTE_SSH="ssh login"
 YEAR=$(date +%Y)
 MONTH=$(date +%m)
-PERIOD=1  # 前期（4月から9月）の場合は1、後期の場合は2
-FIRSTDAY=${YEAR}0401
-if [[ ${MONTH} -ge 10 || ${MONTH} -le 3 ]]; then
-  PERIOD=2
-  FIRSTDAY=${YEAR}1001
-fi
+YEAR=$(( $MONTH >= 1 && $MONTH <= 3 ? `expr ${YEAR} - 1` : ${YEAR} ))  # 年度なので、1月から3月の場合はYEARを1つ少なくする
+FIRSTDAY=$(( $MONTH >= 4 && $MONTH <= 9 ? ${YEAR}0401 : ${YEAR}1001 )) # 前期の開始日は4/1、後期の開始日は10/1
+PERIOD=$((   $MONTH >= 4 && $MONTH <= 9 ? 1 : 2 )) # 前期は1、後期は2
 #=============================================================================
 # ディスク容量が95%以上の場合、スクリプトを停止
 VAR=$(df / | tail -n 1 | awk '{print $5}' | sed -r 's/%//g')

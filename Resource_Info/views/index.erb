@@ -31,11 +31,12 @@ td {
   <table class="table table-bordered" style="border: solid 2px #888888;">
     <tr>
       <th style="vertical-align: middle;" rowspan="2">User</th>
-      <th colspan="3">Resource (NH)</th>
+      <th colspan="4">Resource (NH)</th>
     </tr>
     <tr>
       <th>Limit</th>
       <th>Usage</th>
+      <th>Available</th>
       <th>Rate</th>
     </tr>
     <% @resource_info[i].each do |d| %>
@@ -43,6 +44,7 @@ td {
       <% user  = d[0] %>
       <% limit = d[1] %>
       <% usage = d[2] %>
+      <% avail = d[3] %>
       <% if user == ENV['USER'] %>
       <td style="color: red; font-weight: bold"><%= user %></td>
       <% else %>
@@ -51,12 +53,14 @@ td {
       <% if limit != -1 %>
       <td><%= num_with_commas(limit) %></td>
       <td><%= num_with_commas(usage) %></td>
+      <td><%= num_with_commas(avail) %></td>
       <td>
         <div class="graph">
           <strong class="bar_<%= color(rate(usage, limit)) %>" style="width: <%= rate(usage, limit) %>%;"><%= rate(usage, limit) %>%</strong>
         </div>
       </td>
       <% else %>
+      <td> - </td>
       <td> - </td>
       <td> - </td>
       <td> - </td>

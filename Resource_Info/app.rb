@@ -17,7 +17,7 @@ helpers do
   end
 
   def rate(a, b)
-    if b.to_i == 0 then
+    if b.to_i == 0
       return 0
     else
       return (a.to_f * 100/ b.to_f).truncate(2)
@@ -25,9 +25,9 @@ helpers do
   end
 
   def color(num)
-    if 0 <= num and num <= 25 then
+    if 0 <= num and num <= 25
       return "green"
-    elsif 25 < num and num <= 75 then
+    elsif 25 < num and num <= 75
       return "blue"
     else
       return "red"
@@ -42,50 +42,59 @@ end
 # Define a route at the root '/' of the app.
 get '/' do
   @resource_info = []
-  @groups = `groups`.split.reject { |e| e.start_with?("isv") } - ["fugaku"]
-  year  = Time.now.year.to_s
-  month = Time.now.month
-  current_period = Time.now.month.between?(4, 9)
-  filename = current_period ? year + "-1.csv" : year + "-2.csv"
+  @groups    = `groups`.split.reject { |e| e.start_with?("isv") } - ["fugaku"]
+  month      = Time.now.month
+  year       = (month.between?(1, 3))? Time.now.year - 1 : Time.now.year # 年度なので1月から3月の場合はyear-1する
+  period     = month.between?(4, 9) 
+  filename   = (period)? year.to_s + "-1.csv" : year.to_s + "-2.csv"
 
   unused_groups = []
   @groups.each do |g|
     file = ACC_GROUP_DIR + g + "/" + filename
-    if File.exist?(file) then
+    if File.exist?(file)
       tmp = []
       CSV.foreach(file) do |row|
         user  = row[0]
-        limit = get_resource_limit(g)
+        limit = get_resource_limit(g).to_i
         usage = row[1].to_i / 3600 # NH
         tmp.push([user, limit, usage])
       end
 
       # Add Exclusive use
       file = ACC_GROUP_DIR + g + "/resource.csv"
-      if File.exist?(file) then
+      if File.exist?(file)
         sum = 0
         CSV.foreach(file) do |row|
           next if row[0] != "EXCLUSIVEUSE"
           date = Date.parse(row[3]) # End date of a job
-          sum += row[5].to_i if date.month.between?(4, 9) == current_period
+          sum += row[5].to_i if date.month.between?(4, 9) == period
         end
-        if sum != 0 then
+        if sum != 0
           user  = "(Exclusive Use)"
-          limit = get_resource_limit(g)
+          limit = get_resource_limit(g).to_i
           usage = sum / 3600 # NH
           tmp.push([user, limit, usage])
         end
+      end
+
+      # Add Available
+      sum = 0
+      tmp.each do |d|
+        sum += d[2]
+      end
+
+      tmp.each do |d|
+        d.push(d[1] - sum) # Limit - all usage
       end
       
       @resource_info.push(tmp)
     else
       unused_groups.push(g)
-    end
-  end
+    end # if File.exist?(file)
+  end # end groups.each do |g|
 
-  p @resource_info.push
   @groups -= unused_groups
-
+  
   # Render the view
   erb :index
 end
