@@ -5,8 +5,12 @@ require "zlib"
 require "csv"
 
 ###
-Fugaku = true
-PrePost = false
+Exclusive_appname = ["ood_job_submitter_supercon2023", "ood_openfoam", "ood_vscode_supercon2023", "ood_openfoam_fundation", "ood_desktop_meeting", "--bulk", "--data", "-L", "-L rscgrp=small"]
+###
+#Fugaku = true
+#PrePost = false
+Fugaku = false
+PrePost = true
 ###
 
 APPNAME     = 0
@@ -23,9 +27,7 @@ def fugaku_grep(prepost, line)
     appname = line.split(",")[2][3..-3]
     appname = line.split(",")[6][3..-3] if appname.include?("@") # specified mail address
     appname = line.split(",")[7][3..-3] if appname.include?("-N")
-    return if(appname == "--bulk" || appname == "ood_openfoam" || appname == "ood_vscode_supercon2023" ||
-              appname == "ood_job_submitter_supercon2023" || appname == "ood_openfoam_fundation" ||
-              appname.include?("\"ood_desktop") || appname == "-L rscgrp=small") # Old log file
+    return if(Exclusive_appname.include?(appname) || appname.include?("\"ood_desktop"))
     prepost.push([year_month, appname])
   end
 end
