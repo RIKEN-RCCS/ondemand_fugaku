@@ -13,9 +13,9 @@
       <th colspan="4">Resource (NH)</th>
     </tr>
     <tr>
-      <th>Limit</th><th>Usage</th><th>Avail.</th><th>Rate</th>
-      <th>Limit</th><th>Usage</th><th>Avail.</th><th>Rate</th>
-      <th>Limit</th><th>Usage</th><th>Avail.</th><th>Rate</th>
+      <th>Limit</th><th>Usage</th><th>Avail.</th><th>Ratio</th>
+      <th>Limit</th><th>Usage</th><th>Avail.</th><th>Ratio</th>
+      <th>Limit</th><th>Usage</th><th>Avail.</th><th>Ratio</th>
     </tr>
     <%- groups = `groups`.split - ["f-op"]               -%>
     <%- groups.each do |group_name|                      -%>
@@ -42,7 +42,7 @@
       <td align="right"><%= disk_info[i].avail %></td>
       <td>
         <div class="graph">
-          <strong class="bar_<%= dashboard_color(disk_info[i].rate) %>" style="width: <%= disk_info[i].rate %>%;"><%= disk_info[i].rate %>%</strong>
+          <strong class="bar_<%= dashboard_color(disk_info[i].ratio) %>" style="width: <%= disk_info[i].ratio %>%;"><%= disk_info[i].ratio %>%</strong>
         </div>
       </td>
     <%-     else -%>
@@ -55,7 +55,7 @@
       <td align="right"><%= inode_info[i].avail %></td>
       <td>
         <div class="graph">
-          <strong class="bar_<%= dashboard_color(inode_info[i].rate) %>" style="width: <%= inode_info[i].rate %>%;"><%= inode_info[i].rate %>%</strong>
+          <strong class="bar_<%= dashboard_color(inode_info[i].ratio) %>" style="width: <%= inode_info[i].ratio %>%;"><%= inode_info[i].ratio %>%</strong>
         </div>
       </td>
     <%-     else -%>
@@ -69,7 +69,7 @@
       <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.avail %></td>
       <td rowspan="<%= num_volumes %>">
         <div class="graph">
-          <strong class="bar_<%= dashboard_color(resource_info.rate) %>" style="width: <%= resource_info.rate %>%;"><%= resource_info.rate %>%</strong>
+          <strong class="bar_<%= dashboard_color(resource_info.ratio) %>" style="width: <%= resource_info.ratio %>%;"><%= resource_info.ratio %>%</strong>
         </div>
       </td>
     <%-       else -%>
@@ -93,7 +93,7 @@
       <td align="right"><%= home_disk_info.avail %></td>
       <td>
         <div class="graph">
-          <strong class="bar_<%= dashboard_color(home_disk_info.rate) %>" style="width: <%= home_disk_info.rate %>%;"><%= home_disk_info.rate %>%</strong>
+          <strong class="bar_<%= dashboard_color(home_disk_info.ratio) %>" style="width: <%= home_disk_info.ratio %>%;"><%= home_disk_info.ratio %>%</strong>
         </div>
       </td>
       <td align="right"><%= home_inode_info.limit %></td>
@@ -101,7 +101,7 @@
       <td align="right"><%= home_inode_info.avail %></td>
       <td>
         <div class="graph">
-          <strong class="bar_<%= dashboard_color(home_inode_info.rate) %>" style="width: <%= home_inode_info.rate %>%;"><%= home_inode_info.rate %>%</strong>
+          <strong class="bar_<%= dashboard_color(home_inode_info.ratio) %>" style="width: <%= home_inode_info.ratio %>%;"><%= home_inode_info.ratio %>%</strong>
         </div>
       </td>
       <td> - </td><td> - </td><td> - </td><td> - </td>

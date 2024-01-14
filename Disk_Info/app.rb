@@ -19,7 +19,7 @@ helpers do
     return number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
   end
 
-  def rate(a, b)
+  def ratio(a, b)
     if b.to_i == 0
       return 0
     else

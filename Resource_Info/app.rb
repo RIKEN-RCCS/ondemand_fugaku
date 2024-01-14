@@ -16,7 +16,7 @@ helpers do
     "Resource info"
   end
 
-  def rate(a, b)
+  def ratio(a, b)
     if b.to_i == 0
       return 0
     else

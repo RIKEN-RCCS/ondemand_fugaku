@@ -20,8 +20,8 @@ ACC_DIR                = SYS_OOD_DIR + "accounting/"
 ACC_GROUP_DIR          = ACC_DIR + "group/"
 ACC_HOME_DIR           = ACC_DIR + "home/"
 APP_CACHE_DIR          = SYS_OOD_DIR + "app/"
-Resource_info          = Struct.new(:limit, :usage, :avail, :rate)
-Disk_info              = Struct.new(:volume, :limit, :usage, :avail, :rate)
+Resource_info          = Struct.new(:limit, :usage, :avail, :ratio)
+Disk_info              = Struct.new(:volume, :limit, :usage, :avail, :ratio)
 NOT_DEFINED            = -1
 NOT_USED               = -1
 $attr                  = ""
@@ -704,8 +704,8 @@ def dashboard_resource(group_name)
         limit = i[3].to_i/3600
         usage = i[7].to_i/3600
         avail = i[6].to_i/3600
-        rate  = ((usage * 100) / limit).round
-        return Resource_info.new(num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), rate)
+        ratio = ((usage * 100) / limit).round
+        return Resource_info.new(num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), ratio)
       end
     end
   end
@@ -729,8 +729,8 @@ def _disk_info(file, group_name)
         limit  = i[3].to_i
         usage  = i[4].to_i
         avail  = i[5].to_i
-        rate   = ((usage * 100) / limit).round
-        info.push(Disk_info.new(volume, num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), rate))
+        ratio  = ((usage * 100) / limit).round
+        info.push(Disk_info.new(volume, num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), ratio))
       end
     end
   end
@@ -776,8 +776,8 @@ def _home_info(file)
       limit  = i[3].to_i
       usage  = i[4].to_i
       avail  = i[5].to_i
-      rate   = ((usage * 100) / limit).round
-      return Disk_info.new(volume, num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), rate)
+      ratio  = ((usage * 100) / limit).round
+      return Disk_info.new(volume, num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), ratio)
     end
   end
 
