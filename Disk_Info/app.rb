@@ -43,8 +43,13 @@ get '/' do
   @disk_info = []
   @groups = `groups`.split.reject { |e| e.start_with?("isv") } - ["fugaku", "f-op"]
 
+  unused_groups = []
   @groups.each do |g|
-    lines        = `accountd -m -g #{g} | grep -v root`.split("\n")
+    lines = `accountd -m -g #{g} | grep -v root`.split("\n")
+    if lines.size < 2
+      unused_groups.push(g)
+      next
+    end
     tmp          = [lines.first.split[2] + " " + lines.first.split[3]] # date
     capacity_sum = 0
     inode_sum    = 0
@@ -67,6 +72,8 @@ get '/' do
     end
     @disk_info.push(tmp)
   end
+
+  @groups -= unused_groups
 
   # Render the view
   erb :index
