@@ -1,0 +1,27 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+-%>
+---
+title: Gnuplot
+form:
+  <%= form_cluster("prepost") %>
+  <%= form_queue("prepost") %>
+  <%= form_hours("prepost1") %>
+  <%= form_hours("prepost2") %>
+  <%= form_hours("reserved") %>
+  <%= form_cores("gpu1") %>
+  <%= form_cores("gpu2") %>
+  <%= form_cores("mem1") %>
+  <%= form_cores("mem2") %>
+  <%= form_cores("reserved") %>
+  <%= form_memory("gpu1") %>
+  <%= form_memory("gpu2") %>
+  <%= form_memory("mem1") %>
+  <%= form_memory("mem2") %>
+  <%= form_memory("reserved") %>
+  <%= form_gpus_per_node(true) %>
+  <%= form_input_file(true) %>
+  <%= form_email() %>
+  <%= form_desktop() %>
+attributes:
+<%= form_attr() %>

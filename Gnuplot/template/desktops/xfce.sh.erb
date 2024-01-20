@@ -1,0 +1,9 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+-%>
+
+<%= output_xfce(context.gpus_per_node) %>
+
+${_VIRTUALGL} gnuplot "<%= context.input_file %>" -p &
+${_VIRTUALGL} xfce4-session
+fg
