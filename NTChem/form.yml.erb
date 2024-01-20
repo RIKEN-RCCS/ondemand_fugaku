@@ -24,6 +24,7 @@ form:
   <%= form_procs("fugaku_large") %>
   <%= form_fugaku_threads() %>
   <%= form_fugaku_mode() %>
+  <%= form_fugaku_statistical_info() %>
   <%= form_version(versions) %>
   <%= form_select("calculation", "Calculation", calcs, "", "HF/DFT executes basinp, mdint1, and scf.") %>
   <%= form_select("working_dir_type", "Working directory type", working_dir_types, "", "Copy the input file to the directory where NTChem will run.") %>

@@ -7,9 +7,13 @@ script:
   queue_name: <%= queue %>
   <%= submit_email(email, false) %>
   <% if exec_file == "vmc.out" then %>
-  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, fugaku_group, fugaku_mode) %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
+  fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs,
+  fugaku_group, fugaku_mode, fugaku_statistical_info, input_file) %>
   <% else %>
-  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, 1, 1, fugaku_large_hours, fugaku_large_free_hours, 1, 1, fugaku_group, fugaku_mode) %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, 1, 1,
+  fugaku_large_hours, fugaku_large_free_hours, 1, 1,
+  fugaku_group, fugaku_mode, fugaku_statistical_info, input_file) %>
   <% end %>
 batch_connect:
   template: "basic"

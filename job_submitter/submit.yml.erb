@@ -9,9 +9,9 @@ script:
   <%= submit_email(email, false) %>
   <%= submit_native(cluster, queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
   fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
-  fugaku_large_procs, fugaku_group, fugaku_mode, prepost1_hours, gpu1_cores, gpu1_memory,
-  prepost2_hours, gpu2_cores, gpu2_memory, mem1_cores, mem1_memory,
-  mem2_cores, mem2_memory, reserved_hours, reserved_cores, reserved_memory) %>
+  fugaku_large_procs, fugaku_group, fugaku_mode, fugaku_statistical_info, working_dir,
+  prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours, gpu2_cores, gpu2_memory, mem1_cores,
+  mem1_memory, mem2_cores, mem2_memory, reserved_hours, reserved_cores, reserved_memory) %>
 batch_connect:
   template: "basic"
   script_wrapper: |

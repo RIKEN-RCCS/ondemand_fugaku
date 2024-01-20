@@ -30,6 +30,7 @@ form:
   <%= form_memory("reserved") %>
   <%= form_gpus_per_node(false) %>
   <%= form_fugaku_mode() %>
+  <%= form_fugaku_statistical_info() %>
   <%= form_working_dir() %>
   <%= form_commands("e.g. mpiexec ./a.out") %>
   <%= form_fugaku_llio("working_dir", "If the executable file does not exist in the working directory, manually transfer the executable file as well. For example, add 'lilo_transfer (executable file)' in commands area.") %>

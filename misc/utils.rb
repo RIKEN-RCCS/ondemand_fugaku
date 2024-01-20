@@ -95,6 +95,7 @@ end
 def form_queue(name, tmp_fugaku_queue = [])
   hide_elmts  = ["fugaku-group", "fugaku-small-hours", "fugaku-small-free-hours", "fugaku-small-nodes", "fugaku-small-procs"]
   hide_elmts += ["fugaku-large-hours", "fugaku-large-free-hours", "fugaku-large-nodes", "fugaku-large-procs", "fugaku-llio"]
+  hide_elmts += ["fugaku-statistical-info"]
   hide_elmts += ["prepost1-hours", "prepost2-hours", "reserved-hours", "gpus-per-node"]
   hide_elmts += ["gpu1-cores", "gpu2-cores", "mem1-cores", "mem2-cores", "reserved-cores"]
   hide_elmts += ["gpu1-memory", "gpu2-memory", "mem1-memory", "mem2-memory", "reserved-memory", "fugaku-mode"]
@@ -104,10 +105,10 @@ def form_queue(name, tmp_fugaku_queue = [])
     hide_elmts += ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"]
   end
   
-  show_elmts_small      = ["fugaku-small-hours",      "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode"]
-  show_elmts_small_free = ["fugaku-small-free-hours", "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode"]
-  show_elmts_large      = ["fugaku-large-hours",      "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-llio"]
-  show_elmts_large_free = ["fugaku-large-hours-free", "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-llio"]
+  show_elmts_small      = ["fugaku-small-hours",      "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info"]
+  show_elmts_small_free = ["fugaku-small-free-hours", "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info"]
+  show_elmts_large      = ["fugaku-large-hours",      "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info", "fugaku-llio"]
+  show_elmts_large_free = ["fugaku-large-hours-free", "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info", "fugaku-llio"]
   show_elmts_gpu1       = ["prepost1-hours", "gpu1-cores", "gpu1-memory", "gpus-per-node"]
   show_elmts_gpu2       = ["prepost2-hours", "gpu2-cores", "gpu2-memory", "gpus-per-node"]
   show_elmts_mem1       = ["prepost1-hours", "mem1-cores", "mem1-memory"]
@@ -440,6 +441,19 @@ EOF
   return "- fugaku_mode"
 end
 
+def form_fugaku_statistical_info()
+  $attr <<<<"EOF"
+  fugaku_statistical_info:
+    label: Output statistical information
+    widget: select
+    options:
+    - ["(none)", "none"]
+    - ["-s : Output the statistical information", "-s"]
+    - ["-S : Output the statistical information containing the node information", "-S"]
+EOF
+  return "- fugaku_statistical_info"
+end
+
 def form_version(versions)
   $attr <<<<"EOF"
   version:
@@ -694,13 +708,12 @@ def dashboard_resource(group_name)
   return nil unless File.exist?(file)
 
   period = Date.today.month.between?(4, 9)? "1" : "2"
-  
   File.open(file, "r") do |f|
     # Resources in Fugaku are divided into early and late periods.
     # The order is reversed to give priority to the later period.
     f.readlines.reverse_each do |l|
       i = l.split(",")
-      if ((i[0] == "SUBTHEMEPERIOD" and i[2] == period) or i[0] == "SUBTHEME") and i[1] == group_name and i[3].to_i != 0
+      if ((i[0] == "SUBTHEMEPERIOD" and i[2] == period) or i[0] == "SUBTHEME") and i[3].to_i != 0
         limit = i[3].to_i/3600
         usage = i[7].to_i/3600
         avail = i[6].to_i/3600
@@ -928,7 +941,8 @@ end
 
 def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
                          fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
-                         fugaku_large_procs, fugaku_group, fugaku_mode, additional_options = "", tmp_fugaku_queue_info = [])
+                         fugaku_large_procs, fugaku_group, fugaku_mode, fugaku_statistical_info,
+                         fugaku_statistical_path, additional_options = "", tmp_fugaku_queue_info = [])
   str = "native:\n"
   if queue == "small"
     str << "    - -L elapse=#{fugaku_small_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}\n"
@@ -961,15 +975,21 @@ def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fug
     str << "    -  -L freq=2200,eco_state=2\n"
   end
 
+  if fugaku_statistical_info == "-s" || fugaku_statistical_info == "-S"
+    dir  = File.file?(fugaku_statistical_path) ? File.dirname(fugaku_statistical_path) : fugaku_statistical_path
+    file = dir[-1] == '/' ? dir + "%n.%j.stats" : dir + "/%n.%j.stats"
+    str << "    - #{fugaku_statistical_info} --spath #{file}\n"
+  end
+  
   str << "    - " + additional_options + "\n" if additional_options != ""
 
   return str
 end
 
 def submit_native_fugaku_small(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
-                               fugaku_group, fugaku_mode)
+                               fugaku_group, fugaku_mode, fugaku_statistical_info, fugaku_statistical_path)
   submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
-                      NOT_USED, NOT_USED, NOT_USED, NOT_USED, fugaku_group, fugaku_mode)
+                       NOT_USED, NOT_USED, NOT_USED, NOT_USED, fugaku_group, fugaku_mode, fugaku_statistical_info, fugaku_statistical_path)
 end
 
 def submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
@@ -1039,16 +1059,19 @@ def submit_native_prepost_gpu(queue, prepost1_hours, gpu1_cores, gpu1_memory, pr
                                NOT_USED, NOT_USED, NOT_USED)
 end
 
-def submit_native(cluster, queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
-                  fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
-                  fugaku_large_procs, fugaku_group, fugaku_mode, prepost1_hours, gpu1_cores, gpu1_memory,
+def submit_native(cluster, queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
+                  fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs,
+                  fugaku_group, fugaku_mode, fugaku_statistical_info, fugaku_statistical_path,
+                  prepost1_hours, gpu1_cores, gpu1_memory,
                   prepost2_hours, gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
                   mem2_memory, reserved_hours, reserved_cores, reserved_memory, additional_options = "",
                   tmp_fugaku_queue_info = [])
   if cluster == "fugaku"
     return submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
                                 fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours,
-                                fugaku_large_nodes, fugaku_large_procs, fugaku_group, fugaku_mode, additional_options, tmp_fugaku_queue_info)
+                                fugaku_large_nodes, fugaku_large_procs, fugaku_group, fugaku_mode,
+                                fugaku_statistical_info, fugaku_statistical_path,
+                                additional_options, tmp_fugaku_queue_info)
   elsif cluster == "prepost"
     return submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
                                  gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,

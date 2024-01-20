@@ -57,7 +57,8 @@ get '/' do
         user  = row[0]
         limit = get_resource_limit(g).to_i
         usage = row[1].to_i / 3600 # NH
-        tmp.push([user, limit, usage])
+        avail = dashboard_resource(g).avail
+        tmp.push([user, limit, usage, avail])
       end
 
       # Add Exclusive use
@@ -73,18 +74,9 @@ get '/' do
           user  = "(Exclusive Use)"
           limit = get_resource_limit(g).to_i
           usage = sum / 3600 # NH
-          tmp.push([user, limit, usage])
+          avail = dashboard_resource(g).avail
+          tmp.push([user, limit, usage, avail])
         end
-      end
-
-      # Add Available
-      sum = 0
-      tmp.each do |d|
-        sum += d[2]
-      end
-
-      tmp.each do |d|
-        d.push(d[1] - sum) # Limit - all usage
       end
       
       @resource_info.push(tmp)
