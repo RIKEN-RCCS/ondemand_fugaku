@@ -713,7 +713,7 @@ def dashboard_resource(group_name)
     # The order is reversed to give priority to the later period.
     f.readlines.reverse_each do |l|
       i = l.split(",")
-      if ((i[0] == "SUBTHEMEPERIOD" and i[2] == period) or i[0] == "SUBTHEME") and i[3].to_i != 0
+      if ((i[0] == "SUBTHEMEPERIOD" and i[2] == period) or i[0] == "SUBTHEME") and i[1] == group_name and i[3].to_i != 0
         limit = i[3].to_i/3600
         usage = i[7].to_i/3600
         avail = i[6].to_i/3600
@@ -727,7 +727,8 @@ def dashboard_resource(group_name)
 end
 
 def get_resource_limit(group_name)
-  return dashboard_resource(group_name)[0].gsub(",", "")
+  tmp = dashboard_resource(group_name)
+  return tmp != nil ? tmp[0].gsub(",", "") : nil
 end
 
 def _disk_info(file, group_name)

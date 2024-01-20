@@ -50,6 +50,11 @@ get '/' do
 
   unused_groups = []
   @groups.each do |g|
+    if dashboard_resource(g) == nil
+      unused_groups.push(g)
+      next
+    end
+    
     file = ACC_GROUP_DIR + g + "/" + filename
     if File.exist?(file)
       tmp = []
