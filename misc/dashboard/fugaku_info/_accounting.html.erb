@@ -17,7 +17,8 @@
       <th>Limit</th><th>Usage</th><th>Avail.</th><th>Ratio</th>
       <th>Limit</th><th>Usage</th><th>Avail.</th><th>Ratio</th>
     </tr>
-    <%- groups = `groups`.split - ["f-op"]               -%>
+    <%- groups = `groups`.split - ["fugaku", "f-op"]     -%>
+    <%- groups.delete_if { |i| i.start_with?("isv") }    -%>
     <%- groups.each do |group_name|                      -%>
     <%-   disk_info     = dashboard_disk(group_name)     -%>
     <%-   inode_info    = dashboard_inode(group_name)    -%>
