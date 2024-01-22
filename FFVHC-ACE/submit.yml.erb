@@ -1,0 +1,20 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+-%>
+---
+script:
+  job_name: ood_ffvhc_ace
+  queue_name: <%= queue %>
+  <%= submit_email(email, false) %>
+  <%= submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
+  fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs, fugaku_group, fugaku_mode,
+  fugaku_statistical_info, input_file) %>
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    <%= submit_env(fugaku_threads, "ffvhc-ace", version) %>
+    export PARALLEL=$OMP_NUM_THREADS
+    [ "<%= omp_stacksize %>"    != "(none)" ] && export OMP_STACKSIZE=<%= omp_stacksize %>
+    [ "<%= tofu_eager_limit %>" != "(none)" ] && export OMPI_MCA_btl_tofu_eager_limit=<%= tofu_eager_limit %>
+    cd `dirname "<%= input_file %>"`
+    mpiexec ffv-hc-ace-NS "<%= input_file %>"
