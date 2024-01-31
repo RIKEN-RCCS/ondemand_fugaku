@@ -10,7 +10,7 @@
 .apps-section-header-blue {
     margin-top: 10px;
     padding-left: 20px;
-    font-weight: bold;
+    font-weight: bo<ld;
     background-color: #0000B0;
 }
 h4.fugaku_info {
@@ -92,6 +92,14 @@ h4.fugaku_info {
     border: solid 1px #AAAAAA;
     white-space: nowrap;
     width: 100px;
+}
+@media (max-width: 1459.98px) {
+    .design01 th {
+        padding: 0px;
+    }
+    .design01 td{
+        padding: 0px;
+    }
 }
 .link table {
     width: 100%;
