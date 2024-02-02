@@ -10,20 +10,11 @@
 ---
 title: FrontFlow
 form:
-  <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small") %>
-  <%= form_fugaku_group() %>
-  <%= form_hours("fugaku_small") %>
-  <%= form_hours("fugaku_small_free") %>
-  <%= form_nodes("fugaku_small") %>
-  <%= form_procs("fugaku_small") %>
-  <%= form_fugaku_threads() %>
-  <%= form_fugaku_mode() %>
-  <%= form_fugaku_statistical_info() %>
-  <%= form_select("app",       "Application"             , apps) %>
-  <%= form_select("b_version", "Version (FrontFlow/blue)", b_versions) %>
-  <%= form_select("x_version", "Version (FrontFlowX)",     x_versions) %>
-  <%= form_working_dir() %>
-  <%= form_email(false) %>
+<%= form_queue("fugaku_small") %>
+<%= form_select("app",       "Application"             , apps) %>
+<%= form_select("b_version", "Version (FrontFlow/blue)", b_versions) %>
+<%= form_select("x_version", "Version (FrontFlowX)",     x_versions) %>
+<%= form_working_dir() %>
+<%= form_email(false) %>
 attributes:
 <%= form_attr() %>

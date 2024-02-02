@@ -7,28 +7,15 @@
 ---
 title: SCALE
 form:
-  <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small_and_large") %>
-  <%= form_fugaku_group() %>
-  <%= form_hours("fugaku_small") %>
-  <%= form_hours("fugaku_small_free") %>
-  <%= form_nodes("fugaku_small") %>
-  <%= form_procs("fugaku_small") %>
-  <%= form_hours("fugaku_large") %>
-  <%= form_hours("fugaku_large_free") %>
-  <%= form_nodes("fugaku_large") %>
-  <%= form_procs("fugaku_large") %>
-  <%= form_fugaku_threads() %>
-  <%= form_fugaku_mode() %>
-  <%= form_fugaku_statistical_info() %>
-  <%= form_version(versions) %>
-  <%= form_working_dir() %>
-  <%= form_multi_input_files(false, "scale_rm_pp",   "for scale-rm_pp (If blank, scale-rm_pp will not run)") %>
-  <%= form_multi_input_files(false, "scale_rm_init", "for scale-rm_init (If blank, scale-rm_init will not run)") %>
-  <%= form_multi_input_files(false, "scale_rm",      "for scale-rm (If blank, scale-rm will not run)") %>
-  <%= form_multi_input_files(false, "sno",           "for sno (If blank, sno will not run)") %>
-  <%= form_multi_input_files(false, "net2g",         "for net2g (If blank, net2g will not run)") %>
-  <%= form_fugaku_llio("working_dir") %>
-  <%= form_email(false) %>
+<%= form_queue("fugaku_small_and_large") %>
+<%= form_version(versions) %>
+<%= form_working_dir() %>
+<%= form_multi_input_files(false, "scale_rm_pp",   "for scale-rm_pp (If blank, scale-rm_pp will not run)") %>
+<%= form_multi_input_files(false, "scale_rm_init", "for scale-rm_init (If blank, scale-rm_init will not run)") %>
+<%= form_multi_input_files(false, "scale_rm",      "for scale-rm (If blank, scale-rm will not run)") %>
+<%= form_multi_input_files(false, "sno",           "for sno (If blank, sno will not run)") %>
+<%= form_multi_input_files(false, "net2g",         "for net2g (If blank, net2g will not run)") %>
+<%= form_fugaku_llio("working_dir") %>
+<%= form_email(false) %>
 attributes:
 <%= form_attr() %>

@@ -4,36 +4,11 @@
 ---
 title: Job Submitter
 form:
-  <%= form_cluster() %>
-  <%= form_queue("all") %>
-  <%= form_fugaku_group() %>
-  <%= form_hours("fugaku_small") %>
-  <%= form_hours("fugaku_small_free") %>
-  <%= form_nodes("fugaku_small") %>
-  <%= form_procs("fugaku_small") %>
-  <%= form_hours("fugaku_large") %>
-  <%= form_hours("fugaku_large_free") %>
-  <%= form_nodes("fugaku_large") %>
-  <%= form_procs("fugaku_large") %>
-  <%= form_hours("prepost1") %>
-  <%= form_hours("prepost2") %>
-  <%= form_hours("reserved") %>
-  <%= form_cores("gpu1") %>
-  <%= form_cores("gpu2") %>
-  <%= form_cores("mem1") %>
-  <%= form_cores("mem2") %>
-  <%= form_cores("reserved") %>
-  <%= form_memory("gpu1") %>
-  <%= form_memory("gpu2") %>
-  <%= form_memory("mem1") %>
-  <%= form_memory("mem2") %>
-  <%= form_memory("reserved") %>
-  <%= form_gpus_per_node(false) %>
-  <%= form_fugaku_mode() %>
-  <%= form_fugaku_statistical_info() %>
-  <%= form_working_dir() %>
-  <%= form_commands("e.g. mpiexec ./a.out") %>
-  <%= form_fugaku_llio("working_dir", "If the executable file does not exist in the working directory, manually transfer the executable file as well. For example, add 'lilo_transfer (executable file)' in commands area.") %>
-  <%= form_email(false) %>
+<%= form_queue("all", false) %>
+<%= form_gpus_per_node(false) %>
+<%= form_working_dir() %>
+<%= form_commands("e.g. mpiexec ./a.out") %>
+<%= form_fugaku_llio("working_dir", "If the executable file does not exist in the working directory, manually transfer the executable file as well. For example, add 'lilo_transfer (executable file)' in commands area.") %>
+<%= form_email(false) %>
 attributes:
 <%= form_attr() %>

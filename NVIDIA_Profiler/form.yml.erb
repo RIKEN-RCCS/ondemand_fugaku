@@ -5,17 +5,10 @@
 ---
 title: NVIDIA Profiler
 form:
-  <%= form_cluster("prepost") %>
-  <%= form_queue("gpu") %>
-  <%= form_hours("prepost1") %>
-  <%= form_hours("prepost2") %>
-  <%= form_cores("gpu1") %>
-  <%= form_cores("gpu2") %>
-  <%= form_memory("gpu1", 10) %>
-  <%= form_memory("gpu2", 10) %>
-  <%= form_gpus_per_node(false, false, 1) %>
-  <%= form_select("app_name", "Application", apps) %>
-  <%= form_email() %>
-  <%= form_desktop() %>
+<%= form_queue("gpu") %>
+<%= form_gpus_per_node(false, false, 1) %>
+<%= form_select("app_name", "Application", apps) %>
+<%= form_email() %>
+<%= form_desktop() %>
 attributes:
 <%= form_attr() %>

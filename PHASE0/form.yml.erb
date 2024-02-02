@@ -10,23 +10,14 @@
 ---
 title: PHASE/0
 form:
-  <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small") %>
-  <%= form_fugaku_group() %>
-  <%= form_hours("fugaku_small") %>
-  <%= form_hours("fugaku_small_free") %>
-  <%= form_nodes("fugaku_small") %>
-  <%= form_procs("fugaku_small") %>
-  <%= form_fugaku_threads() %>
-  <%= form_fugaku_mode() %>
-  <%= form_fugaku_statistical_info() %>
-  <%= form_select("version", "Version", versions) %>
-  <%= form_select("threed_version", "3D version", threed_versions) %>
-  <%= form_select("twod_version",   "2D version", twod_versions) %>
-  <%= form_select("threed_exec", "3D Executable file", threed_execs) %>
-  <%= form_select("twod_exec",   "2D Executable file", twod_execs) %>
-  <%= form_working_dir() %>
-  <%= form_options("e.g. ne=8 nk=4") %>
-  <%= form_email(false) %>
+<%= form_queue("fugaku_small") %>
+<%= form_select("version", "Version", versions) %>
+<%= form_select("threed_version", "3D version", threed_versions) %>
+<%= form_select("twod_version",   "2D version", twod_versions) %>
+<%= form_select("threed_exec", "3D Executable file", threed_execs) %>
+<%= form_select("twod_exec",   "2D Executable file", twod_execs) %>
+<%= form_working_dir() %>
+<%= form_options("e.g. ne=8 nk=4") %>
+<%= form_email(false) %>
 attributes:
 <%= form_attr() %>

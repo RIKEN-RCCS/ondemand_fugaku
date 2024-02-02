@@ -8,20 +8,11 @@
 ---
 title: FrontISTR
 form:
-  <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small") %>
-  <%= form_fugaku_group() %>
-  <%= form_hours("fugaku_small") %>
-  <%= form_hours("fugaku_small_free") %>
-  <%= form_nodes("fugaku_small") %>
-  <%= form_procs("fugaku_small") %>
-  <%= form_fugaku_threads() %>
-  <%= form_fugaku_mode() %>
-  <%= form_fugaku_statistical_info() %>
-  <%= form_working_dir() %>
-  <%= form_version(versions) %>
-  <%= form_select("pre_execute", "Execute hecmw_part1 in advance ?", [[ "mpiexec -n 1 hecmw_part1", "mpiexec -n 1 hecmw_part1" ], [ "No", "" ]]) %>
-  <%= form_exec(versions[0], ff_master, "fistr1") %>
-  <%= form_email(false) %>
+<%= form_queue("fugaku_small") %>
+<%= form_working_dir() %>
+<%= form_version(versions) %>
+<%= form_select("pre_execute", "Execute hecmw_part1 in advance ?", [[ "mpiexec -n 1 hecmw_part1", "mpiexec -n 1 hecmw_part1" ], [ "No", "" ]]) %>
+<%= form_exec(versions[0], ff_master, "fistr1") %>
+<%= form_email(false) %>
 attributes:
 <%= form_attr() %>

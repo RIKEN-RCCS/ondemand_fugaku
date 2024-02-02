@@ -6,24 +6,11 @@
 ---
 title: FFVHC-ACE
 form:
-  <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small_and_large") %>
-  <%= form_fugaku_group() %>
-  <%= form_hours("fugaku_small") %>
-  <%= form_hours("fugaku_small_free") %>
-  <%= form_nodes("fugaku_small") %>
-  <%= form_procs("fugaku_small") %>
-  <%= form_hours("fugaku_large") %>
-  <%= form_hours("fugaku_large_free") %>
-  <%= form_nodes("fugaku_large") %>
-  <%= form_procs("fugaku_large") %>
-  <%= form_fugaku_threads() %>
-  <%= form_fugaku_mode() %>
-  <%= form_fugaku_statistical_info() %>
-  <%= form_version(versions) %>
-  <%= form_input_file() %>
-  <%= form_select("omp_stacksize", "export OMP_STACKSIZE", ["(none)", "1g"]) %>
-  <%= form_select("tofu_eager_limit", "export OMPI_MCA_btl_tofu_eager_limit", ["(none)", "128000"]) %>
-  <%= form_email(false) %>
+<%= form_queue("fugaku_small_and_large") %>
+<%= form_version(versions) %>
+<%= form_input_file() %>
+<%= form_select("omp_stacksize", "export OMP_STACKSIZE", ["(none)", "1g"]) %>
+<%= form_select("tofu_eager_limit", "export OMPI_MCA_btl_tofu_eager_limit", ["(none)", "128000"]) %>
+<%= form_email(false) %>
 attributes:
 <%= form_attr() %>

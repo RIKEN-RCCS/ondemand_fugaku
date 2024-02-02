@@ -4,22 +4,8 @@
 ---
 title: WHEEL
 form:
-  <%= form_cluster("prepost") %>
-  <%= form_queue("workflow") %>
-  <%= form_hours("reserved") %>
-  <%= form_hours("prepost1") %>
-  <%= form_hours("prepost2") %>
-  <%= form_cores("reserved", 2, 8) %>
-  <%= form_cores("gpu1", 2, 8) %>
-  <%= form_cores("gpu2", 2, 8) %>
-  <%= form_cores("mem1", 2, 8) %>
-  <%= form_cores("mem2", 2, 8) %>
-  <%= form_memory("reserved", 8, 32) %>
-  <%= form_memory("gpu1", 8, 32) %>
-  <%= form_memory("gpu2", 8, 32) %>
-  <%= form_memory("mem1", 8, 32) %>
-  <%= form_memory("mem2", 8, 32) %>
-  <%= form_email(false) %>
+<%= form_queue("workflow") %>
+<%= form_email(false) %>
   - key_mode
 attributes:
 <%= form_attr() %>

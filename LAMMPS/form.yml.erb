@@ -6,20 +6,11 @@
 ---
 title: LAMMPS
 form:
-  <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small") %>
-  <%= form_fugaku_group() %>
-  <%= form_hours("fugaku_small") %>
-  <%= form_hours("fugaku_small_free") %>
-  <%= form_nodes("fugaku_small") %>
-  <%= form_procs("fugaku_small") %>
-  <%= form_fugaku_threads() %>
-  <%= form_fugaku_mode() %>
-  <%= form_fugaku_statistical_info() %>
-  <%= form_version(versions) %>
-  <%= form_working_dir(false) %>
-  <%= form_input_file(true, "mpiexec lmp -in [input]") %>
-  <%= form_options("e.g. -pk omp 2") %>
-  <%= form_email(false) %>
+<%= form_queue("fugaku_small") %>
+<%= form_version(versions) %>
+<%= form_working_dir(false) %>
+<%= form_input_file(true, "mpiexec lmp -in [input]") %>
+<%= form_options("e.g. -pk omp 2") %>
+<%= form_email(false) %>
 attributes:
 <%= form_attr() %>

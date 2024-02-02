@@ -53,16 +53,6 @@ def get_groups_fdirs()
   return "'[" + dirs.chop + "]'"
 end
 
-def form_cluster(name = "")
-  $attr <<<<"EOF"
-  cluster:
-    widget: hidden_field
-EOF
-  $attr << "    value: #{name}\n" if name != ""
-
-  return "- cluster"
-end
-
 # Since the code becomes complicated when checking whether the free queue is available for each group,
 # the free queue will be displayed in the user's selection item if one group can use the free queue.
 def check_free_queue()
@@ -92,89 +82,7 @@ def output_queue(option, value, cluster, elmts)
   return tmp
 end
 
-def form_queue(name, tmp_fugaku_queue = [])
-  hide_elmts  = ["fugaku-group", "fugaku-small-hours", "fugaku-small-free-hours", "fugaku-small-nodes", "fugaku-small-procs"]
-  hide_elmts += ["fugaku-large-hours", "fugaku-large-free-hours", "fugaku-large-nodes", "fugaku-large-procs", "fugaku-llio"]
-  hide_elmts += ["fugaku-statistical-info"]
-  hide_elmts += ["prepost1-hours", "prepost2-hours", "reserved-hours", "gpus-per-node"]
-  hide_elmts += ["gpu1-cores", "gpu2-cores", "mem1-cores", "mem2-cores", "reserved-cores"]
-  hide_elmts += ["gpu1-memory", "gpu2-memory", "mem1-memory", "mem2-memory", "reserved-memory", "fugaku-mode"]
-
-  tmp_fugaku_queue.each do |i|
-    ii = i.gsub("_", "-")
-    hide_elmts += ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"]
-  end
-  
-  show_elmts_small      = ["fugaku-small-hours",      "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info"]
-  show_elmts_small_free = ["fugaku-small-free-hours", "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info"]
-  show_elmts_large      = ["fugaku-large-hours",      "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info", "fugaku-llio"]
-  show_elmts_large_free = ["fugaku-large-hours-free", "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info", "fugaku-llio"]
-  show_elmts_gpu1       = ["prepost1-hours", "gpu1-cores", "gpu1-memory", "gpus-per-node"]
-  show_elmts_gpu2       = ["prepost2-hours", "gpu2-cores", "gpu2-memory", "gpus-per-node"]
-  show_elmts_mem1       = ["prepost1-hours", "mem1-cores", "mem1-memory"]
-  show_elmts_mem2       = ["prepost2-hours", "mem2-cores", "mem2-memory"]
-  show_elmts_reserverd  = ["reserved-hours", "reserved-cores", "reserved-memory"]
-  
-  $attr <<<<"EOF"
-  queue:
-    label: Queue
-    widget: select
-    options:
-EOF
-
-  free_queue_available = check_free_queue()
-  if name == "fugaku_small_and_prepost"
-    $attr << output_queue("fugaku-small",       "small",      "fugaku",  hide_elmts - show_elmts_small)
-    $attr << output_queue("fugaku-small-free",  "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if free_queue_available
-    $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
-    $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
-    $attr << output_queue("prepost-mem1",       "mem1",       "prepost", hide_elmts - show_elmts_mem1)
-    $attr << output_queue("prepost-mem2",       "mem2",       "prepost", hide_elmts - show_elmts_mem2)
-    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
-  elsif name == "fugaku_small"
-    $attr << output_queue("fugaku-small",       "small",      "fugaku",  hide_elmts - show_elmts_small)
-    $attr << output_queue("fugaku-small-free",  "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if free_queue_available
-  elsif name == "fugaku_small_and_large"
-    $attr << output_queue("fugaku-small",       "small",      "fugaku",  hide_elmts - show_elmts_small)
-    $attr << output_queue("fugaku-small-free",  "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if free_queue_available
-    $attr << output_queue("fugaku-large",       "large",      "fugaku",  hide_elmts - show_elmts_large)
-    $attr << output_queue("fugaku-large-large", "large",      "fugaku",  hide_elmts - show_elmts_large_free) if free_queue_available
-  elsif name == "prepost"
-    $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
-    $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
-    $attr << output_queue("prepost-mem1",       "mem1",       "prepost", hide_elmts - show_elmts_mem1)
-    $attr << output_queue("prepost-mem2",       "mem2",       "prepost", hide_elmts - show_elmts_mem2)
-    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
-  elsif name == "gpu"
-    $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
-    $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
-  elsif name == "workflow"
-    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
-    $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
-    $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
-    $attr << output_queue("prepost-mem1",       "mem1",       "prepost", hide_elmts - show_elmts_mem1)
-    $attr << output_queue("prepost-mem2",       "mem2",       "prepost", hide_elmts - show_elmts_mem2)
-  else name == "all"
-    $attr << output_queue("fugaku-small",       "small",      "fugaku",  hide_elmts - show_elmts_small)
-    $attr << output_queue("fugaku-small-free",  "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if free_queue_available
-    $attr << output_queue("fugaku-large",       "large",      "fugaku",  hide_elmts - show_elmts_large)
-    $attr << output_queue("fugaku-large-large", "large",      "fugaku",  hide_elmts - show_elmts_large_free) if free_queue_available
-    $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
-    $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
-    $attr << output_queue("prepost-mem1",       "mem1",       "prepost", hide_elmts - show_elmts_mem1)
-    $attr << output_queue("prepost-mem2",       "mem2",       "prepost", hide_elmts - show_elmts_mem2)
-    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts -show_elmts_reserverd)
-  end
-
-  tmp_fugaku_queue.each do |i|
-    ii = i.gsub("_", "-")
-    $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
-  end
-
-  return "- queue"
-end
-
-def form_fugaku_group()
+def _form_fugaku_group()
   $attr <<<<"EOF"
   fugaku_group:
     label: Group
@@ -186,11 +94,11 @@ EOF
   groups.each do |n|
     $attr << "      - [\"" + n + "\" , \"" + n + "\"]\n"
   end
-  
-  return "- fugaku_group"
+
+  return "  - fugaku_group\n"
 end
 
-def form_hours(name, min = NOT_DEFINED, max = NOT_DEFINED)
+def _form_hours(name, min = NOT_DEFINED, max = NOT_DEFINED)
   if name == "fugaku_small"
     min = 1  if min == NOT_DEFINED
     max = 72 if max == NOT_DEFINED
@@ -215,7 +123,7 @@ def form_hours(name, min = NOT_DEFINED, max = NOT_DEFINED)
   else
     name = name.gsub("-", "_")
   end
-  
+
   $attr <<<<"EOF"
   #{name}_hours:
     label: Elapsed time (#{min} - #{max} hours)
@@ -226,10 +134,10 @@ def form_hours(name, min = NOT_DEFINED, max = NOT_DEFINED)
     step: 1
     required: true
 EOF
-  return "- #{name}_hours"
+  return "  - #{name}_hours\n"
 end
 
-def form_nodes(name, min = NOT_DEFINED, max = NOT_DEFINED)
+def _form_nodes(name, min = NOT_DEFINED, max = NOT_DEFINED)
   if name == "fugaku_small"
     min = 1     if min == NOT_DEFINED
     max = 384   if max == NOT_DEFINED
@@ -239,7 +147,7 @@ def form_nodes(name, min = NOT_DEFINED, max = NOT_DEFINED)
   else
     name = name.gsub("-", "_")
   end
-  
+
   $attr <<<<"EOF"
   #{name}_nodes:
     label: Number of nodes (#{min} - #{num_with_commas(max)})
@@ -250,10 +158,10 @@ def form_nodes(name, min = NOT_DEFINED, max = NOT_DEFINED)
     step: 1
     required: true
 EOF
-  return "- #{name}_nodes"
+  return "  - #{name}_nodes\n"
 end
 
-def form_procs(name, min = NOT_DEFINED, max = NOT_DEFINED)
+def _form_procs(name, min = NOT_DEFINED, max = NOT_DEFINED)
   if name == "fugaku_small"
     min = 1      if min == NOT_DEFINED
     max = 18432  if max == NOT_DEFINED
@@ -263,7 +171,7 @@ def form_procs(name, min = NOT_DEFINED, max = NOT_DEFINED)
   else
     name = name.gsub("-", "_")
   end
-  
+
   $attr <<<<"EOF"
   #{name}_procs:
     label: Total number of processes (#{min} - #{num_with_commas(max)})
@@ -276,26 +184,10 @@ def form_procs(name, min = NOT_DEFINED, max = NOT_DEFINED)
     help: |
       Total number of processes <= Number of nodes x 48.
 EOF
-  return "- #{name}_procs"
+  return "  - #{name}_procs\n"
 end
 
-def form_fugaku_threads(help = "Number of threads x Total number of processes <= Number of nodes x 48.")
-  $attr <<<<"EOF"
-  fugaku_threads:
-    label: Number of threads (1 - 48)
-    widget: number_field
-    value: 1
-    min: 1
-    max: 48
-    step: 1
-    required: true
-    help: |
-      #{help}
-EOF
-  return "- fugaku_threads"
-end
-
-def form_cores(name, min = NOT_DEFINED, max = NOT_DEFINED)
+def _form_cores(name, min = NOT_DEFINED, max = NOT_DEFINED)
   if name == "gpu1"
     min = 1   if min == NOT_DEFINED
     max = 72  if max == NOT_DEFINED
@@ -323,10 +215,10 @@ def form_cores(name, min = NOT_DEFINED, max = NOT_DEFINED)
     step: 1
     required: true
 EOF
-  return "- #{name}_cores"
+  return "  - #{name}_cores\n"
 end
 
-def form_memory(name, min = NOT_DEFINED, max = NOT_DEFINED)
+def _form_memory(name, min = NOT_DEFINED, max = NOT_DEFINED)
   if name == "gpu1"
     min = 5    if min == NOT_DEFINED
     max = 186  if max == NOT_DEFINED
@@ -354,7 +246,282 @@ def form_memory(name, min = NOT_DEFINED, max = NOT_DEFINED)
     step: 1
     required: true
 EOF
-  return "- #{name}_memory"
+  return "  - #{name}_memory\n"
+end
+
+def _form_fugaku_mode()
+  $attr <<<<"EOF"
+  fugaku_mode:
+    label: Execution mode
+    widget: select
+    help: |
+      Please refer to the manual for details ([English](https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/use_latest/PowerControlFunction/index.html) or [Japanese](https://www.fugaku.r-ccs.riken.jp/doc_root/ja/user_guides/use_latest/PowerControlFunction/index.html)).
+    options:
+    - Normal
+    - Boost
+    - Eco
+    - Boost + Eco
+EOF
+  return "  - fugaku_mode\n"
+end
+
+def _form_fugaku_threads(help = "Number of threads x Total number of processes <= Number of nodes x 48.")
+  $attr <<<<"EOF"
+  fugaku_threads:
+    label: Number of threads (1 - 48)
+    widget: number_field
+    value: 1
+    min: 1
+    max: 48
+    step: 1
+    required: true
+    help: |
+      #{help}
+EOF
+  return "  - fugaku_threads\n"
+end
+
+def _form_fugaku_statistical_info()
+  $attr <<<<"EOF"
+  fugaku_statistical_info:
+    label: Output statistical information
+    widget: select
+    options:
+    - ["(none)", "none"]
+    - ["-s : Output the statistical information", "-s"]
+    - ["-S : Output the statistical information containing the node information", "-S"]
+EOF
+  return "  - fugaku_statistical_info\n"
+end
+
+def form_queue(name, enable_fugaku_threads = true, tmp_fugaku_queue = [])
+  hide_elmts  = ["fugaku-group", "fugaku-small-hours", "fugaku-small-free-hours", "fugaku-small-nodes", "fugaku-small-procs"]
+  hide_elmts += ["fugaku-large-hours", "fugaku-large-free-hours", "fugaku-large-nodes", "fugaku-large-procs", "fugaku-llio"]
+  hide_elmts += ["fugaku-statistical-info"]
+  hide_elmts += ["prepost1-hours", "prepost2-hours", "reserved-hours", "gpus-per-node"]
+  hide_elmts += ["gpu1-cores", "gpu2-cores", "mem1-cores", "mem2-cores", "reserved-cores"]
+  hide_elmts += ["gpu1-memory", "gpu2-memory", "mem1-memory", "mem2-memory", "reserved-memory", "fugaku-mode"]
+
+  tmp_fugaku_queue.each do |i|
+    ii = i.gsub("_", "-")
+    hide_elmts += ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"]
+  end
+  
+  show_elmts_small      = ["fugaku-small-hours",      "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info"]
+  show_elmts_small_free = ["fugaku-small-free-hours", "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info"]
+  show_elmts_large      = ["fugaku-large-hours",      "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info", "fugaku-llio"]
+  show_elmts_large_free = ["fugaku-large-hours-free", "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info", "fugaku-llio"]
+  show_elmts_gpu1       = ["prepost1-hours", "gpu1-cores", "gpu1-memory", "gpus-per-node"]
+  show_elmts_gpu2       = ["prepost2-hours", "gpu2-cores", "gpu2-memory", "gpus-per-node"]
+  show_elmts_mem1       = ["prepost1-hours", "mem1-cores", "mem1-memory"]
+  show_elmts_mem2       = ["prepost2-hours", "mem2-cores", "mem2-memory"]
+  show_elmts_reserverd  = ["reserved-hours", "reserved-cores", "reserved-memory"]
+
+  ret =  "  - cluster\n"
+  ret << "  - queue\n"
+
+  $attr <<<<"EOF"
+  cluster:
+    widget: hidden_field
+  queue:
+    label: Queue
+    widget: select
+    options:
+EOF
+
+  enable_free_queue = check_free_queue()
+  if name == "fugaku_small_and_prepost"
+    $attr << output_queue("fugaku-small",      "small",      "fugaku",  hide_elmts - show_elmts_small)
+    $attr << output_queue("fugaku-small-free", "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if enable_free_queue
+    $attr << output_queue("prepost-gpu1",      "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
+    $attr << output_queue("prepost-gpu2",      "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
+    $attr << output_queue("prepost-mem1",      "mem1",       "prepost", hide_elmts - show_elmts_mem1)
+    $attr << output_queue("prepost-mem2",      "mem2",       "prepost", hide_elmts - show_elmts_mem2)
+    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
+    
+    ret << _form_fugaku_group()
+    ret << _form_hours("fugaku_small")
+    ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_nodes("fugaku_small")
+    ret << _form_procs("fugaku_small")
+    ret << _form_hours("prepost1")
+    ret << _form_hours("prepost2")
+    ret << _form_hours("reserved")
+    ret << _form_cores("gpu1")
+    ret << _form_cores("gpu2")
+    ret << _form_cores("mem1")
+    ret << _form_cores("mem2")
+    ret << _form_cores("reserved")
+    ret << _form_memory("gpu1")
+    ret << _form_memory("gpu2")
+    ret << _form_memory("mem1")
+    ret << _form_memory("mem2")
+    ret << _form_memory("reserved")
+    ret << _form_fugaku_threads() if enable_fugaku_threads
+    ret << _form_fugaku_mode()
+    ret << _form_fugaku_statistical_info()
+  elsif name == "fugaku_small"
+    $attr << output_queue("fugaku-small",      "small",      "fugaku", hide_elmts - show_elmts_small)
+    $attr << output_queue("fugaku-small-free", "small-free", "fugaku", hide_elmts - show_elmts_small_free) if enable_free_queue
+
+    ret << _form_fugaku_group()
+    ret << _form_hours("fugaku_small")
+    ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_nodes("fugaku_small")
+    ret << _form_procs("fugaku_small")
+    ret << _form_fugaku_threads() if enable_fugaku_threads
+    ret << _form_fugaku_mode()
+    ret << _form_fugaku_statistical_info()
+  elsif name == "fugaku_single"
+    $attr << output_queue("fugaku-small",      "small",      "fugaku", hide_elmts - show_elmts_small)
+    $attr << output_queue("fugaku-small-free", "small-free", "fugaku", hide_elmts - show_elmts_small_free) if enable_free_queue
+
+    ret << _form_fugaku_group()
+    ret << _form_hours("fugaku_small")
+    ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_fugaku_threads("") if enable_fugaku_threads
+    ret << _form_fugaku_mode()
+    ret << _form_fugaku_statistical_info()
+  elsif name == "fugaku_single_and_prepost"
+    $attr << output_queue("fugaku-small",      "small",      "fugaku", hide_elmts - show_elmts_small)
+    $attr << output_queue("fugaku-small-free", "small-free", "fugaku", hide_elmts - show_elmts_small_free) if enable_free_queue
+    $attr << output_queue("prepost-gpu1", "gpu1", "prepost", hide_elmts - show_elmts_gpu1)
+    $attr << output_queue("prepost-gpu2", "gpu2", "prepost", hide_elmts - show_elmts_gpu2)
+    $attr << output_queue("prepost-mem1", "mem1", "prepost", hide_elmts - show_elmts_mem1)
+    $attr << output_queue("prepost-mem2", "mem2", "prepost", hide_elmts - show_elmts_mem2)
+    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
+
+    ret << _form_fugaku_group()
+    ret << _form_hours("fugaku_small")
+    ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_hours("prepost1")
+    ret << _form_hours("prepost2")
+    ret << _form_hours("reserved")
+    ret << _form_cores("gpu1")
+    ret << _form_cores("gpu2")
+    ret << _form_cores("mem1")
+    ret << _form_cores("mem2")
+    ret << _form_cores("reserved")
+    ret << _form_memory("gpu1")
+    ret << _form_memory("gpu2")
+    ret << _form_memory("mem1")
+    ret << _form_memory("mem2")
+    ret << _form_memory("reserved")
+    ret << _form_fugaku_threads("") if enable_fugaku_threads
+    ret << _form_fugaku_mode()
+    ret << _form_fugaku_statistical_info()
+  elsif name == "fugaku_small_and_large"
+    $attr << output_queue("fugaku-small",       "small",      "fugaku", hide_elmts - show_elmts_small)
+    $attr << output_queue("fugaku-small-free",  "small-free", "fugaku", hide_elmts - show_elmts_small_free) if enable_free_queue
+    $attr << output_queue("fugaku-large",       "large",      "fugaku", hide_elmts - show_elmts_large)
+    $attr << output_queue("fugaku-large-large", "large",      "fugaku", hide_elmts - show_elmts_large_free) if enable_free_queue
+
+    ret << _form_fugaku_group()
+    ret << _form_hours("fugaku_small")
+    ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_nodes("fugaku_small")
+    ret << _form_procs("fugaku_small")
+    ret << _form_hours("fugaku_large")
+    ret << _form_hours("fugaku_large_free") if enable_free_queue
+    ret << _form_nodes("fugaku_large")
+    ret << _form_procs("fugaku_large")
+    ret << _form_fugaku_threads() if enable_fugaku_threads
+    ret << _form_fugaku_mode()
+    ret << _form_fugaku_statistical_info()
+  elsif name == "prepost"
+    $attr << output_queue("prepost-gpu1", "gpu1", "prepost", hide_elmts - show_elmts_gpu1)
+    $attr << output_queue("prepost-gpu2", "gpu2", "prepost", hide_elmts - show_elmts_gpu2)
+    $attr << output_queue("prepost-mem1", "mem1", "prepost", hide_elmts - show_elmts_mem1)
+    $attr << output_queue("prepost-mem2", "mem2", "prepost", hide_elmts - show_elmts_mem2)
+    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
+
+    ret << _form_hours("prepost1")
+    ret << _form_hours("prepost2")
+    ret << _form_hours("reserved")
+    ret << _form_cores("gpu1")
+    ret << _form_cores("gpu2")
+    ret << _form_cores("mem1")
+    ret << _form_cores("mem2")
+    ret << _form_cores("reserved")
+    ret << _form_memory("gpu1")
+    ret << _form_memory("gpu2")
+    ret << _form_memory("mem1")
+    ret << _form_memory("mem2")
+    ret << _form_memory("reserved")
+  elsif name == "gpu"
+    $attr << output_queue("prepost-gpu1", "gpu1", "prepost", hide_elmts - show_elmts_gpu1)
+    $attr << output_queue("prepost-gpu2", "gpu2", "prepost", hide_elmts - show_elmts_gpu2)
+    
+    ret << _form_hours("prepost1")
+    ret << _form_hours("prepost2")
+    ret << _form_cores("gpu1")
+    ret << _form_cores("gpu2")
+    ret << _form_memory("gpu1", 10)
+    ret << _form_memory("gpu2", 10)
+  elsif name == "workflow"
+    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
+    $attr << output_queue("prepost-gpu1", "gpu1", "prepost", hide_elmts - show_elmts_gpu1)
+    $attr << output_queue("prepost-gpu2", "gpu2", "prepost", hide_elmts - show_elmts_gpu2)
+    $attr << output_queue("prepost-mem1", "mem1", "prepost", hide_elmts - show_elmts_mem1)
+    $attr << output_queue("prepost-mem2", "mem2", "prepost", hide_elmts - show_elmts_mem2)
+
+    ret << _form_hours("prepost1")
+    ret << _form_hours("prepost2")
+    ret << _form_hours("reserved")
+    ret << _form_cores("gpu1", 2, 8)
+    ret << _form_cores("gpu2", 2, 8)
+    ret << _form_cores("mem1", 2, 8)
+    ret << _form_cores("mem2", 2, 8)
+    ret << _form_cores("reserved", 2, 8)
+    ret << _form_memory("gpu1", 8, 32)
+    ret << _form_memory("gpu2", 8, 32)
+    ret << _form_memory("mem1", 8, 32)
+    ret << _form_memory("mem2", 8, 32)
+    ret << _form_memory("reserved", 8, 32)
+  else name == "all"
+    $attr << output_queue("fugaku-small",       "small",      "fugaku",  hide_elmts - show_elmts_small)
+    $attr << output_queue("fugaku-small-free",  "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if enable_free_queue
+    $attr << output_queue("fugaku-large",       "large",      "fugaku",  hide_elmts - show_elmts_large)
+    $attr << output_queue("fugaku-large-large", "large",      "fugaku",  hide_elmts - show_elmts_large_free) if enable_free_queue
+    $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
+    $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
+    $attr << output_queue("prepost-mem1",       "mem1",       "prepost", hide_elmts - show_elmts_mem1)
+    $attr << output_queue("prepost-mem2",       "mem2",       "prepost", hide_elmts - show_elmts_mem2)
+    $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts -show_elmts_reserverd)
+
+    ret << _form_fugaku_group()
+    ret << _form_hours("fugaku_small")
+    ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_nodes("fugaku_small")
+    ret << _form_procs("fugaku_small")
+    ret << _form_hours("fugaku_large")
+    ret << _form_hours("fugaku_large_free") if enable_free_queue
+    ret << _form_nodes("fugaku_large")
+    ret << _form_procs("fugaku_large")
+    ret << _form_hours("prepost1")
+    ret << _form_hours("prepost2")
+    ret << _form_hours("reserved")
+    ret << _form_cores("gpu1")
+    ret << _form_cores("gpu2")
+    ret << _form_cores("mem1")
+    ret << _form_cores("mem2")
+    ret << _form_cores("reserved")
+    ret << _form_memory("gpu1")
+    ret << _form_memory("gpu2")
+    ret << _form_memory("mem1")
+    ret << _form_memory("mem2")
+    ret << _form_memory("reserved")
+    ret << _form_fugaku_threads() if enable_fugaku_threads
+    ret << _form_fugaku_mode()
+    ret << _form_fugaku_statistical_info()
+  end
+  
+  tmp_fugaku_queue.each do |i|
+    ii = i.gsub("_", "-")
+    $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
+  end
+
+  return ret
 end
 
 def form_gpus_per_node(enable_vgl = false, is_desktop = false, min = 0, max = 2)
@@ -383,7 +550,7 @@ EOF
         $attr << "      - [ \"2\", \"2\" ]\n" if min <= 2 and max >= 2
       end
     end
-    return "- gpus_per_node"
+    return "  - gpus_per_node"
 end
 
 def form_nodelist()
@@ -408,7 +575,7 @@ def form_nodelist()
       - [ "wheel1", "wheel1", data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
       - [ "wheel2", "wheel2", data-option-for-queue-gpu1: false, data-option-for-queue-gpu2: false, data-option-for-queue-mem1: false, data-option-for-queue-mem2: false ]
 EOF
-  return "- nodelist"
+  return "  - nodelist"
 end
 
 def form_check(item, label, help, required = true)
@@ -422,36 +589,7 @@ def form_check(item, label, help, required = true)
     required: #{required.to_s}
     help: #{help}
 EOF
-  return "- #{item}"
-end
-
-def form_fugaku_mode()
-  $attr <<<<"EOF"
-  fugaku_mode:
-    label: Execution mode
-    widget: select
-    help: |
-      Please refer to the manual for details ([English](https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/use_latest/PowerControlFunction/index.html) or [Japanese](https://www.fugaku.r-ccs.riken.jp/doc_root/ja/user_guides/use_latest/PowerControlFunction/index.html)).
-    options:
-    - Normal
-    - Boost
-    - Eco
-    - Boost + Eco
-EOF
-  return "- fugaku_mode"
-end
-
-def form_fugaku_statistical_info()
-  $attr <<<<"EOF"
-  fugaku_statistical_info:
-    label: Output statistical information
-    widget: select
-    options:
-    - ["(none)", "none"]
-    - ["-s : Output the statistical information", "-s"]
-    - ["-S : Output the statistical information containing the node information", "-S"]
-EOF
-  return "- fugaku_statistical_info"
+  return "  - #{item}"
 end
 
 def form_version(versions)
@@ -469,7 +607,7 @@ EOF
     $attr << "]\n"
   end
 
-  return "- version"
+  return "  - version"
 end
 
 def form_exec(version, exec_files, value)
@@ -484,7 +622,7 @@ EOF
     $attr << "      - " + e + "\n"
   end
 
-  return "- exec_" + version.delete(".-")
+  return "  - exec_" + version.delete(".-")
 end
 
 def form_input_file(required = true, memo = "")
@@ -502,7 +640,7 @@ def form_input_file(required = true, memo = "")
     required: #{required.to_s}
 EOF
 
-  return "- input_file"
+  return "  - input_file"
 end
 
 def form_free_input_file(required = true, label = "Input file", item = "input_file", help = "")
@@ -519,7 +657,7 @@ def form_free_input_file(required = true, label = "Input file", item = "input_fi
     help: #{help}
 EOF
 
-  return "- #{item}"
+  return "  - #{item}"
 end
 
 def form_multi_input_files(required = true, prefix = "", label = "")
@@ -535,7 +673,7 @@ def form_multi_input_files(required = true, prefix = "", label = "")
     required: #{required.to_s}
 EOF
 
-  return "- input_file_" + prefix
+  return "  - input_file_" + prefix
 end
 
 def form_output_file(required = true, memo = "")
@@ -546,7 +684,7 @@ def form_output_file(required = true, memo = "")
     label: Output file #{memo}
     required: #{required.to_s}
 EOF
-  return "- output_file"
+  return "  - output_file"
 end
 
 def form_working_dir(required = true, label = "Working directory", type = "dirs", item = "working_dir", help = "")
@@ -562,7 +700,7 @@ def form_working_dir(required = true, label = "Working directory", type = "dirs"
     help: #{help}
 EOF
   
-  return "- " + item
+  return "  - " + item
 end
 
 def form_fugaku_llio(flag, memo = "")
@@ -587,7 +725,7 @@ EOF
       - ["Working directory", "working_dir"]
 EOF
   end
-  return "- fugaku_llio"
+  return "  - fugaku_llio"
 end
 
 def form_options(memo = "")
@@ -596,7 +734,7 @@ def form_options(memo = "")
     label: Options (#{memo})
     widget: text_field
 EOF
-  return "- options"
+  return "  - options"
 end
 
 def form_commands(memo = "")
@@ -611,7 +749,7 @@ EOF
     $attr << "    label: Commands (#{memo})\n"
   end
 
-  return "- commands"
+  return "  - commands"
 end
 
 def form_session_name()
@@ -620,7 +758,7 @@ def form_session_name()
     label: Session name
     required: true
 EOF
-  return "- session_name"
+  return "  - session_name"
 end
 
 def form_email(only_start = true)
@@ -635,14 +773,14 @@ EOF
     $attr << "    label: Email (You will receive an email when it starts and ends)\n"
   end
 
-  return "- email"
+  return "  - email"
 end
 
 def form_desktop()
   $attr <<<<"EOF"
   desktop: xfce
 EOF
-  return "- desktop"
+  return "  - desktop"
 end
 
 def form_select(item, label, options, value = "", help = "")
@@ -671,7 +809,7 @@ EOF
   $attr << "    help: |\n"              if help  != ""
   $attr << "      " + help + "\n"       if help  != ""
 
-  return "- #{item}"
+  return "  - #{item}"
 end
 
 def form_attr()

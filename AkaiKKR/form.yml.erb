@@ -7,18 +7,11 @@
 ---
 title: AkaiKKR
 form:
-  <%= form_cluster("fugaku") %>
-  <%= form_queue("fugaku_small") %>
-  <%= form_fugaku_group() %>
-  <%= form_hours("fugaku_small") %>
-  <%= form_hours("fugaku_small_free") %>
-  <%= form_fugaku_threads("") %>
-  <%= form_fugaku_mode() %>
-  <%= form_fugaku_statistical_info() %>
-  <%= form_version(versions) %>
-  <%= form_working_dir(false) %>
-  <%= form_input_file(true, "specx < [input] > [output]") %>
-  <%= form_output_file(true, "specx < [input] > [output]") %>
-  <%= form_email(false) %>
+<%= form_queue("fugaku_single") %>
+<%= form_version(versions) %>
+<%= form_working_dir(false) %>
+<%= form_input_file(true, "specx < [input] > [output]") %>
+<%= form_output_file(true, "specx < [input] > [output]") %>
+<%= form_email(false) %>
 attributes:
 <%= form_attr() %>
