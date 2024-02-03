@@ -1,13 +1,15 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+  hours  = submit_hours(queue, NOT_USED, NOT_USED, NOT_USED, NOT_USED, NOT_USED, prepost1_hours, prepost2_hours, NOT_USED)
+  cores  = submit_cores(queue, gpu1_cores, gpu2_cores, NOT_USED, NOT_USED, NOT_USED)
+  memory = submit_memory(queue, gpu1_memory, gpu2_memory, NOT_USED, NOT_USED, NOT_USED)
 -%>
 ---
 script:
-  job_name: ood_<%= app_name %>
-  queue_name: <%= queue %>
-  <%= submit_gpus_per_node(queue, gpus_per_node) %>
-  <%= submit_email(email) %>
-  <%= submit_native_prepost_gpu(queue, prepost1_hours, gpu1_cores,
-  gpu1_memory, prepost2_hours, gpu2_cores, gpu2_memory) %>
+<%= submit_job_name("ood_#{app_name}") %>
+<%= submit_queue_name(queue) %>
+<%= submit_gpus_per_node(queue, gpus_per_node) %>
+<%= submit_email(email) %>
+<%= submit_native(queue, hours, NOT_USED, NOT_USED, cores, memory, NOT_USED, NOT_USED, NOT_USED, NOT_USED, NOT_USED, NOT_USED, NOT_USED) %>
 batch_connect:
 <%= submit_vnc(staged_root) %>

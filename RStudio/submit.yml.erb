@@ -1,16 +1,20 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+
+  added_fugaku_queues = submit_added_fugaku_queues()
+  hours  = submit_hours(queue, fugaku_small_hours, fugaku_small_free_hours, NOT_USED, NOT_USED, fugaku_cd_portal_hours, prepost1_hours, prepost2_hours, reserved_hours)
+  nodes  = submit_nodes(queue, fugaku_small_nodes, NOT_USED, fugaku_cd_portal_nodes)
+  procs  = submit_procs(queue, fugaku_small_procs, NOT_USED, fugaku_cd_portal_procs)
+  cores  = submit_cores(queue, gpu1_cores, gpu2_cores, mem1_cores, mem2_cores, reserved_cores)
+  memory = submit_memory(queue, gpu1_memory, gpu2_memory, mem1_memory, mem2_memory, reserved_memory)
 -%>
 ---
 script:
-  job_name: ood_rstudio
-  queue_name: <%= queue %>
-  <%= submit_gpus_per_node(queue, gpus_per_node) %>
-  <%= submit_email(email) %>
-  <%= submit_native(cluster, queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
-  fugaku_small_procs, NOT_USED, NOT_USED, NOT_USED, NOT_USED, fugaku_group, fugaku_mode, NOT_USED, NOT_USED,
-  prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours, gpu2_cores, gpu2_memory, mem1_cores,
-  mem1_memory, mem2_cores, mem2_memory, reserved_hours, reserved_cores, reserved_memory) %>
+<%= submit_job_name("ood_rstudio") %>
+<%= submit_queue_name(queue) %>
+<%= submit_gpus_per_node(queue, gpus_per_node) %>
+<%= submit_email(email) %>
+<%= submit_native(queue, hours, nodes, procs, cores, memory, fugaku_group, fugaku_mode, fugaku_statistical_info, working_dir, NOT_USED, added_fugaku_queues, NOT_USED) %>
 batch_connect:
   template: "basic"
   conn_params:

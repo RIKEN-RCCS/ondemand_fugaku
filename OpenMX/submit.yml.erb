@@ -1,13 +1,17 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+
+  added_fugaku_queues = submit_added_fugaku_queues()
+  hours = submit_hours(queue, fugaku_small_hours, fugaku_small_free_hours, NOT_USED, NOT_USED, fugaku_cd_portal_hours, NOT_USED, NOT_USED, NOT_USED)
+  nodes = submit_nodes(queue, fugaku_small_nodes, NOT_USED, fugaku_cd_portal_nodes)
+  procs = submit_procs(queue, fugaku_small_procs, NOT_USED, fugaku_cd_portal_procs)
 -%>
 ---
 script:
-  job_name: ood_openmx
-  queue_name: <%= queue %>
-  <%= submit_email(email, false) %>
-  <%= submit_native_fugaku_small(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
-  fugaku_group, fugaku_mode, fugaku_statistical_info, input_file) %>
+<%= submit_job_name("ood_openmx") %>
+<%= submit_queue_name(queue) %>
+<%= submit_email(email, false) %>
+<%= submit_native(queue, hours, nodes, procs, NOT_USED, NOT_USED, fugaku_group, fugaku_mode, fugaku_statistical_info, input_file, NOT_USED, added_fugaku_queues, NOT_USED) %>
 batch_connect:
   template: "basic"
   script_wrapper: |

@@ -307,7 +307,7 @@ def check_cd_portal()
   return `groups`.split.include?("ra022310")
 end
 
-def form_queue(name, enable_fugaku_threads = true, tmp_fugaku_queue = [])
+def form_queue(name, enable_fugaku_threads = true, added_fugaku_queues = [])
   hide_elmts  = ["fugaku-small-hours",     "fugaku-small-nodes",     "fugaku-small-procs"]
   hide_elmts += ["fugaku-large-hours",     "fugaku-large-nodes",     "fugaku-large-procs"]
   hide_elmts += ["fugaku-cd-portal-hours", "fugaku-cd-portal-nodes", "fugaku-cd-portal-procs"]
@@ -317,7 +317,7 @@ def form_queue(name, enable_fugaku_threads = true, tmp_fugaku_queue = [])
   hide_elmts += ["gpu1-cores", "gpu2-cores", "mem1-cores", "mem2-cores", "reserved-cores"]
   hide_elmts += ["gpu1-memory", "gpu2-memory", "mem1-memory", "mem2-memory", "reserved-memory"]
 
-  tmp_fugaku_queue.each do |i|
+  added_fugaku_queues.each do |i|
     ii = i.gsub("_", "-")
     hide_elmts += ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"]
   end
@@ -359,12 +359,12 @@ EOF
     
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
-    ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_hours("fugaku_small_free")
     ret << _form_nodes("fugaku_small")
     ret << _form_procs("fugaku_small")
-    ret << _form_hours("fugaku_cd_portal")  if enable_cd_portal
-    ret << _form_nodes("fugaku_cd_portal")  if enable_cd_portal
-    ret << _form_procs("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_hours("fugaku_cd_portal")
+    ret << _form_nodes("fugaku_cd_portal")
+    ret << _form_procs("fugaku_cd_portal")
     ret << _form_hours("prepost1")
     ret << _form_hours("prepost2")
     ret << _form_hours("reserved")
@@ -388,12 +388,12 @@ EOF
     
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
-    ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_hours("fugaku_small_free")
     ret << _form_nodes("fugaku_small")
     ret << _form_procs("fugaku_small")
-    ret << _form_hours("fugaku_cd_portal")  if enable_cd_portal
-    ret << _form_nodes("fugaku_cd_portal")  if enable_cd_portal
-    ret << _form_procs("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_hours("fugaku_cd_portal")
+    ret << _form_nodes("fugaku_cd_portal")
+    ret << _form_procs("fugaku_cd_portal")
     ret << _form_fugaku_threads() if enable_fugaku_threads
     ret << _form_fugaku_mode()
     ret << _form_fugaku_statistical_info()
@@ -404,7 +404,7 @@ EOF
 
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
-    ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_hours("fugaku_small_free")
     ret << _form_fugaku_threads("") if enable_fugaku_threads
     ret << _form_fugaku_mode()
     ret << _form_fugaku_statistical_info()
@@ -420,10 +420,10 @@ EOF
 
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
-    ret << _form_hours("fugaku_small_free") if enable_free_queue
-    ret << _form_hours("fugaku_cd_portal")  if enable_cd_portal
-    ret << _form_nodes("fugaku_cd_portal")  if enable_cd_portal
-    ret << _form_procs("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_hours("fugaku_small_free")
+    ret << _form_hours("fugaku_cd_portal")
+    ret << _form_nodes("fugaku_cd_portal")
+    ret << _form_procs("fugaku_cd_portal")
     ret << _form_hours("prepost1")
     ret << _form_hours("prepost2")
     ret << _form_hours("reserved")
@@ -449,16 +449,16 @@ EOF
 
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
-    ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_hours("fugaku_small_free")
     ret << _form_nodes("fugaku_small")
     ret << _form_procs("fugaku_small")
     ret << _form_hours("fugaku_large")
-    ret << _form_hours("fugaku_large_free") if enable_free_queue
+    ret << _form_hours("fugaku_large_free")
     ret << _form_nodes("fugaku_large")
     ret << _form_procs("fugaku_large")
-    ret << _form_hours("fugaku_cd_portal")  if enable_cd_portal
-    ret << _form_nodes("fugaku_cd_portal")  if enable_cd_portal
-    ret << _form_procs("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_hours("fugaku_cd_portal")
+    ret << _form_nodes("fugaku_cd_portal")
+    ret << _form_procs("fugaku_cd_portal")
     ret << _form_fugaku_threads() if enable_fugaku_threads
     ret << _form_fugaku_mode()
     ret << _form_fugaku_statistical_info()
@@ -526,16 +526,16 @@ EOF
 
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
-    ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_hours("fugaku_small_free")
     ret << _form_nodes("fugaku_small")
     ret << _form_procs("fugaku_small")
     ret << _form_hours("fugaku_large")
-    ret << _form_hours("fugaku_large_free") if enable_free_queue
+    ret << _form_hours("fugaku_large_free")
     ret << _form_nodes("fugaku_large")
     ret << _form_procs("fugaku_large")
-    ret << _form_hours("fugaku_cd_portal")  if enable_cd_portal
-    ret << _form_nodes("fugaku_cd_portal")  if enable_cd_portal
-    ret << _form_procs("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_hours("fugaku_cd_portal")
+    ret << _form_nodes("fugaku_cd_portal")
+    ret << _form_procs("fugaku_cd_portal")
     ret << _form_hours("prepost1")
     ret << _form_hours("prepost2")
     ret << _form_hours("reserved")
@@ -554,7 +554,7 @@ EOF
     ret << _form_fugaku_statistical_info()
   end
   
-  tmp_fugaku_queue.each do |i|
+  added_fugaku_queues.each do |i|
     ii = i.gsub("_", "-")
     $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
   end
@@ -1078,21 +1078,29 @@ WORKING_DIR=#{working_dir}
 EOF
 end
 
+def submit_job_name(name)
+  return "  job_name: #{name}"
+end
+
+def submit_queue_name(name)
+  return "  queue_name: #{name}"
+end
+
 def submit_gpus_per_node(queue, gpus_per_node)
   return if queue != "gpu1" and queue != "gpu2"
 
   if gpus_per_node == "0"
-    return "gpus_per_node: 0"
+    return "  gpus_per_node: 0"
   elsif gpus_per_node == "1" or gpus_per_node == "1_VGL"
-    return "gpus_per_node: 1"
+    return "  gpus_per_node: 1"
   elsif gpus_per_node == "2" or gpus_per_node == "2_VGL"
-    return "gpus_per_node: 2"
+    return "  gpus_per_node: 2"
   end
 end
 
 def submit_email(email = "", only_start = true)
   if email != ""
-    str = "email: #{email}\n  email_on_started: true\n"
+    str = "  email: #{email}\n  email_on_started: true\n"
     if only_start
       return str
     else
@@ -1101,159 +1109,154 @@ def submit_email(email = "", only_start = true)
   end
 end
 
-def submit_tmp_fugaku_queue_info(keys = [])
-  queue_info = {}
-
-  keys.each do |key|
-    key = key.gsub("-", "_")
-    queue_info[key] = {
-      "procs" => send("#{key}_procs"),
-      "nodes" => send("#{key}_nodes"),
-      "hours" => send("#{key}_hours")
+def submit_added_fugaku_queues(keys = [])
+  return NOT_USED if keys == []
+  
+  queues = {}
+  keys.each do |k|
+    k = keys.gsub("-", "_")
+    queue[k] = {
+      "procs" => send("#{k}_procs"),
+      "nodes" => send("#{k}_nodes"),
+      "hours" => send("#{k}_hours")
     }
   end
 
-  return queue_info
+  return queues
 end
 
-def submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
-                         fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes,
-                         fugaku_large_procs, fugaku_group, fugaku_mode, fugaku_statistical_info,
-                         fugaku_statistical_path, additional_options = "", tmp_fugaku_queue_info = [])
-  str = "native:\n"
-  if queue == "small"
-    str << "    - -L elapse=#{fugaku_small_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}\n"
-  elsif queue == "small-free"
-    str << "    - -L elapse=#{fugaku_small_free_hours}:00:00,node=#{fugaku_small_nodes},jobenv=singularity --mpi proc=#{fugaku_small_procs}\n"
-  elsif queue == "large"
-    str << "    - -L elapse=#{fugaku_large_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}\n"
-  elsif queue == "large-free"
-    str << "    - -L elapse=#{fugaku_large_free_hours}:00:00,node=#{fugaku_large_nodes},jobenv=singularity --mpi proc=#{fugaku_large_procs}\n"
-  else # For special queue in tmp_fugaku_queue
-    # q1 = {"procs" => q1_procs, "nodes" => q1_nodes, "hours" => q1_hours }
-    # q2 = {"procs" => q2_procs, "nodes" => q2_nodes, "hours" => q2_hours }
-    # tmp_fugaku_queue_info = {"q1" => q1, "q2" => q2}
+def submit_hours(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_large_hours, fugaku_large_free_hours,
+                 fugaku_cd_portal_hours, prepost1_hours, prepost2_hours, reserved_hours)
 
-    queue = queue.gsub("-", "_")
-    hours = tmp_fugaku_queue_info[queue]["hours"]
-    nodes = tmp_fugaku_queue_info[queue]["nodes"]
-    procs = tmp_fugaku_queue_info[queue]["procs"]
-    str << "    - -L elapse=#{hours}:00:00,node=#{nodes},jobenv=singularity --mpi proc=#{procs}\n"
+  return fugaku_small_hours      if queue == "small"
+  return fugaku_small_free_hours if queue == "small-free"
+  return fugaku_large_hours      if queue == "large"
+  return fugaku_large_free_hours if queue == "large-free"
+  return cd_portal_hours         if queue == "cd-portal"
+  return prepost1_hours          if queue == "gpu1" or queue == "mem1"
+  return prepost2_hours          if queue == "gpu2" or queue == "mem2"
+  return reserved_hours          if queue == "ondemand-reserved"
+
+  return -1 # for debug
+end
+
+def submit_nodes(queue, fugaku_small_nodes, fugaku_large_nodes, fugaku_cd_portal_nodes)
+
+  return fugaku_small_nodes     if queue == "small" or queue == "small-free"
+  return fugaku_large_nodes     if queue == "large" or queue == "large-free"
+  return fugaku_cd_portal_nodes if queue == "cd-portal"
+
+  return -1 # for debug
+end
+
+def submit_procs(queue, fugaku_small_procs, fugaku_large_procs, fugaku_cd_portal_procs)
+
+  return fugaku_small_procs     if queue == "small" or queue == "small-free"
+  return fugaku_large_procs     if queue == "large" or queue == "large-free"
+  return fugaku_cd_portal_procs if queue == "cd-portal"
+
+  return -1 # for debug
+end
+
+def submit_cores(queue, gpu1_cores, gpu2_cores, mem1_cores, mem2_cores, reserved_cores)
+
+  return gpu1_cores     if queue == "gpu1"
+  return gpu2_cores     if queue == "gpu2"
+  return mem1_cores     if queue == "mem1"
+  return mem2_cores     if queue == "mem2"
+  return reserved_cores if queue == "ondemand-reserved"
+
+  return -1 # for debug
+end
+
+def submit_memory(queue, gpu1_memory, gpu2_memory, mem1_memory, mem2_memory, reserved_memory)
+
+  return gpu1_memory     if queue == "gpu1"
+  return gpu2_memory     if queue == "gpu2"
+  return mem1_memory     if queue == "mem1"
+  return mem2_memory     if queue == "mem2"
+  return reserved_memory if queue == "ondemand-reserved"
+
+  return -1 # for debug
+end
+
+def _submit_native_fugaku(queue, hours, nodes, procs, fugaku_group, fugaku_mode, fugaku_statistical_info,
+                          fugaku_statistical_path, added_fugaku_queues, added_options)
+  ret = "  native:\n"
+  if queue == "small" or queue == "small-free" or queue == "large" or queue == "large-free" or queue == "cd-portal"
+    ret << "    - -L elapse=#{hours}:00:00,node=#{nodes},jobenv=singularity --mpi proc=#{procs}\n"
+  else # For added_fugaku_queues
+    # q1 = {"procs" => q1_procs, "nodes" => q1_nodes, "hours" => q1_hours}
+    # q2 = {"procs" => q2_procs, "nodes" => q2_nodes, "hours" => q2_hours}
+    # added_fugaku_queues = {"q1" => q1, "q2" => q2}
+
+    _queue = queue.gsub("-", "_")
+    _hours = added_fugaku_queues[_queue]["hours"]
+    _nodes = added_fugaku_queues[_queue]["nodes"]
+    _procs = added_fugaku_queues[_queue]["procs"]
+    ret << "    - -L elapse=#{_hours}:00:00,node=#{_nodes},jobenv=singularity --mpi proc=#{_procs}\n"
   end
-  str << "    - --no-check-directory\n"
-  str << "    - -g #{fugaku_group}\n"
-  str << "    - -x PJM_LLIO_GFSCACHE=/vol0002:/vol0003:/vol0004:/vol0005:/vol0006\n"
+  
+  ret << "    - --no-check-directory\n"
+  ret << "    - -g #{fugaku_group}\n"
+  ret << "    - -x PJM_LLIO_GFSCACHE=/vol0002:/vol0003:/vol0004:/vol0005:/vol0006\n"
 
   if fugaku_mode == "Boost"
-    str << "    - -L freq=2200\n"
+    ret << "    - -L freq=2200\n"
   elsif fugaku_mode == "Eco"
-    str << "    -  -L eco_state=2\n"
+    ret << "    -  -L eco_state=2\n"
   elsif fugaku_mode == "Boost + Eco"
-    str << "    -  -L freq=2200,eco_state=2\n"
+    ret << "    -  -L freq=2200,eco_state=2\n"
   end
 
   if fugaku_statistical_info == "-s" || fugaku_statistical_info == "-S"
+    fugaku_statistical_path = ENV['HOME'] if fugaku_statistical_path == ""
     dir  = File.file?(fugaku_statistical_path) ? File.dirname(fugaku_statistical_path) : fugaku_statistical_path
     file = dir[-1] == '/' ? dir + "%n.%j.stats" : dir + "/%n.%j.stats"
-    str << "    - #{fugaku_statistical_info} --spath #{file}\n"
+    ret << "    - #{fugaku_statistical_info} --spath #{file}\n"
   end
   
-  str << "    - " + additional_options + "\n" if additional_options != ""
+  ret << "    - " + added_options + "\n" if added_options != NOT_USED
 
-  return str
+  return ret
 end
 
-def submit_native_fugaku_small(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
-                               fugaku_group, fugaku_mode, fugaku_statistical_info, fugaku_statistical_path)
-  submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
-                       NOT_USED, NOT_USED, NOT_USED, NOT_USED, fugaku_group, fugaku_mode, fugaku_statistical_info, fugaku_statistical_path)
+def _submit_native_prepost(queue, hours, cores, memory, nodelist)
+  ret =<<"EOF"
+  native:
+    - "-t"
+    - "#{hours}:00:00"
+    - "-n"
+    - "#{cores}"
+    - "--mem"
+    - "#{memory}G"
+EOF
+
+  ret << "    - \"--nodelist=#{nodelist}\n\"" if nodelist != NOT_USED
+
+  puts ret
+  return ret
 end
 
-def submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
-                          gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
-                          mem2_memory, reserved_hours, reserved_cores, reserved_memory, nodelist="not_specified")
-  str = "native:\n"
-  if queue == "gpu1"
-    str<<<<"EOF"
-    - "-t"
-    - "#{prepost1_hours}:00:00"
-    - "-n"
-    - "#{gpu1_cores}"
-    - "--mem"
-    - "#{gpu1_memory}G"
-EOF
-  elsif queue == "gpu2"
-    str<<<<"EOF"
-    - "-t"
-    - "#{prepost2_hours}:00:00"
-    - "-n"
-    - "#{gpu2_cores}"
-    - "--mem"
-    - "#{gpu2_memory}G"
-EOF
-  elsif queue == "mem1"
-    str<<<<"EOF"
-    - "-t"
-    - "#{prepost1_hours}:00:00"
-    - "-n"
-    - "#{mem1_cores}"
-    - "--mem"
-    - "#{mem1_memory}G"
-EOF
-  elsif queue == "mem2"
-    str<<<<"EOF"
-    - "-t"
-    - "#{prepost2_hours}:00:00"
-    - "-n"
-    - "#{mem2_cores}"
-    - "--mem"
-    - "#{mem2_memory}G"
-EOF
-  elsif queue == "ondemand-reserved"
-    str<<<<"EOF"
-    - "-t"
-    - "#{reserved_hours}:00:00"
-    - "-n"
-    - "#{reserved_cores}"
-    - "--mem"
-    - "#{reserved_memory}G"
-EOF
+def submit_native(queue, hours, nodes, procs, cores, memory, fugaku_group, fugaku_mode,
+                  fugaku_statistical_info, fugaku_statistical_path, nodelist, added_fugaku_queues, added_options)
+  if queue == "small" or queue == "small-free" or queue == "large" or queue == "large-free" or queue == "cd-portal" or added_fugaku_queues != NOT_USED
+    return _submit_native_fugaku(queue, hours, nodes, procs, fugaku_group, fugaku_mode, fugaku_statistical_info,
+                                fugaku_statistical_path, added_fugaku_queues, added_options)
+  else
+    return _submit_native_prepost(queue, hours, cores, memory, nodelist)
   end
+end
 
-  if queue == "gpu1" or queue == "gpu2" or queue == "mem1" or queue == "mem2"
-    if nodelist != "not_specified"
-      str << "    - \"--nodelist=#{nodelist}\n\""
-    end
-  end
+def submit_memory(queue, gpu1_memory, gpu2_memory, mem1_memory, mem2_memory, reserved_memory)
   
-  return str
-end
+  return gpu1_memory     if queue == "gpu1"
+  return gpu2_memory     if queue == "gpu2"
+  return mem1_memory     if queue == "mem1"
+  return mem2_memory     if queue == "mem2"
+  return reserved_memory if queue == "ondemand-reserved"
 
-def submit_native_prepost_gpu(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
-                              gpu2_cores, gpu2_memory)
-  return submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
-                               gpu2_cores, gpu2_memory, NOT_USED, NOT_USED, NOT_USED, NOT_USED,
-                               NOT_USED, NOT_USED, NOT_USED)
-end
-
-def submit_native(cluster, queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes, fugaku_small_procs,
-                  fugaku_large_hours, fugaku_large_free_hours, fugaku_large_nodes, fugaku_large_procs,
-                  fugaku_group, fugaku_mode, fugaku_statistical_info, fugaku_statistical_path,
-                  prepost1_hours, gpu1_cores, gpu1_memory,
-                  prepost2_hours, gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
-                  mem2_memory, reserved_hours, reserved_cores, reserved_memory, additional_options = "",
-                  tmp_fugaku_queue_info = [])
-  if cluster == "fugaku"
-    return submit_native_fugaku(queue, fugaku_small_hours, fugaku_small_free_hours, fugaku_small_nodes,
-                                fugaku_small_procs, fugaku_large_hours, fugaku_large_free_hours,
-                                fugaku_large_nodes, fugaku_large_procs, fugaku_group, fugaku_mode,
-                                fugaku_statistical_info, fugaku_statistical_path,
-                                additional_options, tmp_fugaku_queue_info)
-  elsif cluster == "prepost"
-    return submit_native_prepost(queue, prepost1_hours, gpu1_cores, gpu1_memory, prepost2_hours,
-                                 gpu2_cores, gpu2_memory, mem1_cores, mem1_memory, mem2_cores,
-                                 mem2_memory, reserved_hours, reserved_cores, reserved_memory)
-  end
+  return -1 # for debug
 end
 
 def setting_singularity(name)
