@@ -120,6 +120,9 @@ def _form_hours(name, min = NOT_DEFINED, max = NOT_DEFINED)
   elsif name == "reserved"
     min = 1   if min == NOT_DEFINED
     max = 720 if max == NOT_DEFINED
+  elsif name == "fugaku_cd_portal"
+    min = 1   if min == NOT_DEFINED
+    max = 720 if max == NOT_DEFINED
   else
     name = name.gsub("-", "_")
   end
@@ -144,6 +147,9 @@ def _form_nodes(name, min = NOT_DEFINED, max = NOT_DEFINED)
   elsif name == "fugaku_large"
     min = 385   if min == NOT_DEFINED
     max = 12288 if max == NOT_DEFINED
+  elsif name == "fugaku_cd_portal"
+    min = 1     if min == NOT_DEFINED
+    max = 48    if max == NOT_DEFINED
   else
     name = name.gsub("-", "_")
   end
@@ -163,11 +169,14 @@ end
 
 def _form_procs(name, min = NOT_DEFINED, max = NOT_DEFINED)
   if name == "fugaku_small"
-    min = 1      if min == NOT_DEFINED
-    max = 18432  if max == NOT_DEFINED
+    min = 1          if min == NOT_DEFINED
+    max = 384 * 48   if max == NOT_DEFINED
   elsif name == "fugaku_large"
-    min = 385    if min == NOT_DEFINED
-    max = 589824 if max == NOT_DEFINED
+    min = 385        if min == NOT_DEFINED
+    max = 12288 * 48 if max == NOT_DEFINED
+  elsif name == "fugaku_cd_portal"
+    min = 1          if min == NOT_DEFINED
+    max = 48 * 48    if max == NOT_DEFINED
   else
     name = name.gsub("-", "_")
   end
@@ -294,23 +303,30 @@ EOF
   return "  - fugaku_statistical_info\n"
 end
 
+def check_cd_portal()
+  return `groups`.split.include?("ra022310")
+end
+
 def form_queue(name, enable_fugaku_threads = true, tmp_fugaku_queue = [])
-  hide_elmts  = ["fugaku-group", "fugaku-small-hours", "fugaku-small-free-hours", "fugaku-small-nodes", "fugaku-small-procs"]
-  hide_elmts += ["fugaku-large-hours", "fugaku-large-free-hours", "fugaku-large-nodes", "fugaku-large-procs", "fugaku-llio"]
-  hide_elmts += ["fugaku-statistical-info"]
+  hide_elmts  = ["fugaku-small-hours",     "fugaku-small-nodes",     "fugaku-small-procs"]
+  hide_elmts += ["fugaku-large-hours",     "fugaku-large-nodes",     "fugaku-large-procs"]
+  hide_elmts += ["fugaku-cd-portal-hours", "fugaku-cd-portal-nodes", "fugaku-cd-portal-procs"]
+  hide_elmts += ["fugaku-small-free-hours", "fugaku-large-free-hours"]
+  hide_elmts += ["fugaku-group", "fugaku-statistical-info", "fugaku-llio", "fugaku-mode"]
   hide_elmts += ["prepost1-hours", "prepost2-hours", "reserved-hours", "gpus-per-node"]
   hide_elmts += ["gpu1-cores", "gpu2-cores", "mem1-cores", "mem2-cores", "reserved-cores"]
-  hide_elmts += ["gpu1-memory", "gpu2-memory", "mem1-memory", "mem2-memory", "reserved-memory", "fugaku-mode"]
+  hide_elmts += ["gpu1-memory", "gpu2-memory", "mem1-memory", "mem2-memory", "reserved-memory"]
 
   tmp_fugaku_queue.each do |i|
     ii = i.gsub("_", "-")
     hide_elmts += ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"]
   end
   
-  show_elmts_small      = ["fugaku-small-hours",      "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info"]
-  show_elmts_small_free = ["fugaku-small-free-hours", "fugaku-small-nodes", "fugaku-small-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info"]
-  show_elmts_large      = ["fugaku-large-hours",      "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info", "fugaku-llio"]
-  show_elmts_large_free = ["fugaku-large-hours-free", "fugaku-large-nodes", "fugaku-large-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info", "fugaku-llio"]
+  show_elmts_small      = ["fugaku-small-hours",      "fugaku-small-nodes",     "fugaku-small-procs",     "fugaku-group", "fugaku-mode", "fugaku-statistical-info"]
+  show_elmts_small_free = ["fugaku-small-free-hours", "fugaku-small-nodes",     "fugaku-small-procs",     "fugaku-group", "fugaku-mode", "fugaku-statistical-info"]
+  show_elmts_large      = ["fugaku-large-hours",      "fugaku-large-nodes",     "fugaku-large-procs",     "fugaku-group", "fugaku-mode", "fugaku-statistical-info", "fugaku-llio"]
+  show_elmts_large_free = ["fugaku-large-hours-free", "fugaku-large-nodes",     "fugaku-large-procs",     "fugaku-group", "fugaku-mode", "fugaku-statistical-info", "fugaku-llio"]
+  show_elmts_cd_portal  = ["fugaku-cd-portal-hours",  "fugaku-cd-portal-nodes", "fugaku-cd-portal-procs", "fugaku-group", "fugaku-mode", "fugaku-statistical-info"]
   show_elmts_gpu1       = ["prepost1-hours", "gpu1-cores", "gpu1-memory", "gpus-per-node"]
   show_elmts_gpu2       = ["prepost2-hours", "gpu2-cores", "gpu2-memory", "gpus-per-node"]
   show_elmts_mem1       = ["prepost1-hours", "mem1-cores", "mem1-memory"]
@@ -330,9 +346,11 @@ def form_queue(name, enable_fugaku_threads = true, tmp_fugaku_queue = [])
 EOF
 
   enable_free_queue = check_free_queue()
+  enable_cd_portal  = check_cd_portal()
   if name == "fugaku_small_and_prepost"
     $attr << output_queue("fugaku-small",      "small",      "fugaku",  hide_elmts - show_elmts_small)
     $attr << output_queue("fugaku-small-free", "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if enable_free_queue
+    $attr << output_queue("fugaku-cd-portal",  "cd-portal",  "fugaku",  hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
     $attr << output_queue("prepost-gpu1",      "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
     $attr << output_queue("prepost-gpu2",      "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
     $attr << output_queue("prepost-mem1",      "mem1",       "prepost", hide_elmts - show_elmts_mem1)
@@ -344,6 +362,9 @@ EOF
     ret << _form_hours("fugaku_small_free") if enable_free_queue
     ret << _form_nodes("fugaku_small")
     ret << _form_procs("fugaku_small")
+    ret << _form_hours("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_nodes("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_procs("fugaku_cd_portal")  if enable_cd_portal
     ret << _form_hours("prepost1")
     ret << _form_hours("prepost2")
     ret << _form_hours("reserved")
@@ -363,18 +384,23 @@ EOF
   elsif name == "fugaku_small"
     $attr << output_queue("fugaku-small",      "small",      "fugaku", hide_elmts - show_elmts_small)
     $attr << output_queue("fugaku-small-free", "small-free", "fugaku", hide_elmts - show_elmts_small_free) if enable_free_queue
-
+    $attr << output_queue("fugaku-cd-portal",  "cd-portal",  "fugaku", hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
+    
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
     ret << _form_hours("fugaku_small_free") if enable_free_queue
     ret << _form_nodes("fugaku_small")
     ret << _form_procs("fugaku_small")
+    ret << _form_hours("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_nodes("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_procs("fugaku_cd_portal")  if enable_cd_portal
     ret << _form_fugaku_threads() if enable_fugaku_threads
     ret << _form_fugaku_mode()
     ret << _form_fugaku_statistical_info()
   elsif name == "fugaku_single"
     $attr << output_queue("fugaku-small",      "small",      "fugaku", hide_elmts - show_elmts_small)
     $attr << output_queue("fugaku-small-free", "small-free", "fugaku", hide_elmts - show_elmts_small_free) if enable_free_queue
+    $attr << output_queue("fugaku-cd-portal",  "cd-portal",  "fugaku", hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
 
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
@@ -383,8 +409,9 @@ EOF
     ret << _form_fugaku_mode()
     ret << _form_fugaku_statistical_info()
   elsif name == "fugaku_single_and_prepost"
-    $attr << output_queue("fugaku-small",      "small",      "fugaku", hide_elmts - show_elmts_small)
-    $attr << output_queue("fugaku-small-free", "small-free", "fugaku", hide_elmts - show_elmts_small_free) if enable_free_queue
+    $attr << output_queue("fugaku-small",      "small",      "fugaku",  hide_elmts - show_elmts_small)
+    $attr << output_queue("fugaku-small-free", "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if enable_free_queue
+    $attr << output_queue("fugaku-cd-portal",  "cd-portal",  "fugaku",  hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
     $attr << output_queue("prepost-gpu1", "gpu1", "prepost", hide_elmts - show_elmts_gpu1)
     $attr << output_queue("prepost-gpu2", "gpu2", "prepost", hide_elmts - show_elmts_gpu2)
     $attr << output_queue("prepost-mem1", "mem1", "prepost", hide_elmts - show_elmts_mem1)
@@ -394,6 +421,9 @@ EOF
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
     ret << _form_hours("fugaku_small_free") if enable_free_queue
+    ret << _form_hours("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_nodes("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_procs("fugaku_cd_portal")  if enable_cd_portal
     ret << _form_hours("prepost1")
     ret << _form_hours("prepost2")
     ret << _form_hours("reserved")
@@ -415,6 +445,7 @@ EOF
     $attr << output_queue("fugaku-small-free",  "small-free", "fugaku", hide_elmts - show_elmts_small_free) if enable_free_queue
     $attr << output_queue("fugaku-large",       "large",      "fugaku", hide_elmts - show_elmts_large)
     $attr << output_queue("fugaku-large-large", "large",      "fugaku", hide_elmts - show_elmts_large_free) if enable_free_queue
+    $attr << output_queue("fugaku-cd-portal",   "cd-portal",  "fugaku", hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
 
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
@@ -425,6 +456,9 @@ EOF
     ret << _form_hours("fugaku_large_free") if enable_free_queue
     ret << _form_nodes("fugaku_large")
     ret << _form_procs("fugaku_large")
+    ret << _form_hours("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_nodes("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_procs("fugaku_cd_portal")  if enable_cd_portal
     ret << _form_fugaku_threads() if enable_fugaku_threads
     ret << _form_fugaku_mode()
     ret << _form_fugaku_statistical_info()
@@ -483,6 +517,7 @@ EOF
     $attr << output_queue("fugaku-small-free",  "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if enable_free_queue
     $attr << output_queue("fugaku-large",       "large",      "fugaku",  hide_elmts - show_elmts_large)
     $attr << output_queue("fugaku-large-large", "large",      "fugaku",  hide_elmts - show_elmts_large_free) if enable_free_queue
+    $attr << output_queue("fugaku-cd-portal",   "cd-portal",  "fugaku",  hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
     $attr << output_queue("prepost-gpu1",       "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
     $attr << output_queue("prepost-gpu2",       "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
     $attr << output_queue("prepost-mem1",       "mem1",       "prepost", hide_elmts - show_elmts_mem1)
@@ -498,6 +533,9 @@ EOF
     ret << _form_hours("fugaku_large_free") if enable_free_queue
     ret << _form_nodes("fugaku_large")
     ret << _form_procs("fugaku_large")
+    ret << _form_hours("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_nodes("fugaku_cd_portal")  if enable_cd_portal
+    ret << _form_procs("fugaku_cd_portal")  if enable_cd_portal
     ret << _form_hours("prepost1")
     ret << _form_hours("prepost2")
     ret << _form_hours("reserved")
