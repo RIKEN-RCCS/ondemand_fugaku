@@ -4,35 +4,15 @@
 ---
 title: Desktop
 form:
-  <%= form_cluster() %>
-  <%= form_queue("fugaku_small_and_prepost", ["aa", "bb"]) %>
-  <%= form_fugaku_group() %>
-  <%= form_hours("fugaku_small") %>
-  <%= form_hours("fugaku_small_free") %>
-  <%= form_hours("aa", 1, 10) %>
-  <%= form_hours("bb", 2, 3) %>
-  <%= form_nodes("fugaku_small") %>
-  <%= form_nodes("aa", 1, 3) %>
-  <%= form_nodes("bb", 12, 13) %>
-  <%= form_procs("fugaku_small") %>
-  <%= form_procs("aa", 1, 48) %>
-  <%= form_procs("bb", 2, 4) %>
-  <%= form_hours("prepost1") %>
-  <%= form_hours("prepost2") %>
-  <%= form_hours("reserved") %>
-  <%= form_cores("gpu1") %>
-  <%= form_cores("gpu2") %>
-  <%= form_cores("mem1") %>
-  <%= form_cores("mem2") %>
-  <%= form_cores("reserved") %>
-  <%= form_memory("gpu1", 10) %>
-  <%= form_memory("gpu2", 10) %>
-  <%= form_memory("mem1", 10) %>
-  <%= form_memory("mem2", 10) %>
-  <%= form_memory("reserved", 10) %>
-  <%= form_gpus_per_node(true, true) %>
-  <%= form_fugaku_mode() %>
-  <%= form_email() %>
-  <%= form_desktop() %>
+<%= form_queue("fugaku_small_and_prepost", false, ["aa", "bb"]) %>
+<%= _form_hours("aa", 1, 1) %>
+<%= _form_nodes("aa", 1, 2) %>
+<%= _form_procs("aa", 1, 3) %>
+<%= _form_hours("bb", 1, 4) %>
+<%= _form_nodes("bb", 1, 5) %>
+<%= _form_procs("bb", 1, 6) %>
+<%= form_gpus_per_node(true, true) %>
+<%= form_email() %>
+<%= form_desktop() %>
 attributes:
 <%= form_attr() %>

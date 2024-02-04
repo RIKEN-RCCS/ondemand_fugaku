@@ -2,6 +2,7 @@
 require 'fileutils'
 require 'date'
 require 'csv'
+require 'time'
 
 FUGAKU_PT_AUG_START    = '2023-08-01 15:00'
 FUGAKU_PT_AUG_END      = '2023-08-31 15:00'
@@ -395,6 +396,10 @@ EOF
     $attr << output_queue("fugaku-cd-portal",  "cd-portal",  "fugaku",  hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
     $attr << output_queue("fugaku-pt-Aug",     "pt-Aug",     "fugaku",  hide_elmts - show_elmts_pt_aug)     if enable_pt_aug
     $attr << output_queue("fugaku-pt-Feb",     "pt-Feb",     "fugaku",  hide_elmts - show_elmts_pt_feb)     if enable_pt_feb
+    added_fugaku_queues.each do |i|
+      ii = i.gsub("_", "-")
+      $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
+    end
     $attr << output_queue("prepost-gpu1",      "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
     $attr << output_queue("prepost-gpu2",      "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
     $attr << output_queue("prepost-mem1",      "mem1",       "prepost", hide_elmts - show_elmts_mem1)
@@ -436,6 +441,10 @@ EOF
     $attr << output_queue("fugaku-cd-portal",  "cd-portal",  "fugaku", hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
     $attr << output_queue("fugaku-pt-Aug",     "pt-Aug",     "fugaku", hide_elmts - show_elmts_pt_aug)     if enable_pt_aug
     $attr << output_queue("fugaku-pt-Feb",     "pt-Feb",     "fugaku", hide_elmts - show_elmts_pt_feb)     if enable_pt_feb
+    added_fugaku_queues.each do |i|
+      ii = i.gsub("_", "-")
+      $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
+    end
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
     ret << _form_hours("fugaku_small_free")
@@ -459,6 +468,10 @@ EOF
     $attr << output_queue("fugaku-cd-portal",  "cd-portal",  "fugaku", hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
     $attr << output_queue("fugaku-pt-Aug",     "pt-Aug",     "fugaku", hide_elmts - show_elmts_pt_aug)     if enable_pt_aug
     $attr << output_queue("fugaku-pt-Feb",     "pt-Feb",     "fugaku", hide_elmts - show_elmts_pt_feb)     if enable_pt_feb
+    added_fugaku_queues.each do |i|
+      ii = i.gsub("_", "-")
+      $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
+    end
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
     ret << _form_hours("fugaku_small_free")
@@ -473,6 +486,10 @@ EOF
     $attr << output_queue("fugaku-cd-portal",  "cd-portal",  "fugaku",  hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
     $attr << output_queue("fugaku-pt-Aug",     "pt-Aug",     "fugaku",  hide_elmts - show_elmts_pt_aug)     if enable_pt_aug
     $attr << output_queue("fugaku-pt-Feb",     "pt-Feb",     "fugaku",  hide_elmts - show_elmts_pt_feb)     if enable_pt_feb
+    added_fugaku_queues.each do |i|
+      ii = i.gsub("_", "-")
+      $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
+    end
     $attr << output_queue("prepost-gpu1",      "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
     $attr << output_queue("prepost-gpu2",      "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
     $attr << output_queue("prepost-mem1",      "mem1",       "prepost", hide_elmts - show_elmts_mem1)
@@ -508,6 +525,10 @@ EOF
     $attr << output_queue("fugaku-cd-portal",  "cd-portal",  "fugaku", hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
     $attr << output_queue("fugaku-pt-Aug",     "pt-Aug",     "fugaku", hide_elmts - show_elmts_pt_aug)     if enable_pt_aug
     $attr << output_queue("fugaku-pt-Feb",     "pt-Feb",     "fugaku", hide_elmts - show_elmts_pt_feb)     if enable_pt_feb
+    added_fugaku_queues.each do |i|
+      ii = i.gsub("_", "-")
+      $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
+    end
     ret << _form_fugaku_group()
     ret << _form_hours("fugaku_small")
     ret << _form_hours("fugaku_small_free")
@@ -584,6 +605,10 @@ EOF
     $attr << output_queue("fugaku-cd-portal",  "cd-portal",  "fugaku",  hide_elmts - show_elmts_cd_portal)  if enable_cd_portal
     $attr << output_queue("fugaku-pt-Aug",     "pt-Aug",     "fugaku",  hide_elmts - show_elmts_pt_aug)     if enable_pt_aug
     $attr << output_queue("fugaku-pt-Feb",     "pt-Feb",     "fugaku",  hide_elmts - show_elmts_pt_feb)     if enable_pt_feb
+    added_fugaku_queues.each do |i|
+      ii = i.gsub("_", "-")
+      $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
+    end
     $attr << output_queue("prepost-gpu1",      "gpu1",       "prepost", hide_elmts - show_elmts_gpu1)
     $attr << output_queue("prepost-gpu2",      "gpu2",       "prepost", hide_elmts - show_elmts_gpu2)
     $attr << output_queue("prepost-mem1",      "mem1",       "prepost", hide_elmts - show_elmts_mem1)
@@ -625,11 +650,6 @@ EOF
     ret << _form_fugaku_statistical_info()
   end
   
-  added_fugaku_queues.each do |i|
-    ii = i.gsub("_", "-")
-    $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
-  end
-
   return ret
 end
 
@@ -1182,11 +1202,11 @@ end
 
 def submit_added_fugaku_queues(keys = [])
   return NOT_USED if keys == []
-  
+
   queues = {}
   keys.each do |k|
-    k = keys.gsub("-", "_")
-    queue[k] = {
+    k = k.gsub("-", "_")
+    queues[k] = {
       "procs" => send("#{k}_procs"),
       "nodes" => send("#{k}_nodes"),
       "hours" => send("#{k}_hours")
@@ -1311,7 +1331,6 @@ EOF
 
   ret << "    - \"--nodelist=#{nodelist}\n\"" if nodelist != NOT_USED
 
-  puts ret
   return ret
 end
 
