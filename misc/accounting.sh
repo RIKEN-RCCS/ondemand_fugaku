@@ -10,9 +10,11 @@ HOME_DIR=${ACCOUNTING_DIR}/home
 GROUP_TMP=${GROUP_DIR}/group.tmp
 DISK_TMP=${HOME_DIR}/disk.tmp
 INODE_TMP=${HOME_DIR}/inode.tmp
+FUGAKU_PT_TMP=${GROUP_DIR}/fugaku_pt.tmp
 FREE_QUEUE_TMP=${ACCOUNTING_DIR}/free_queue.tmp
 #=============================================================================
 ACCOUNTJ="/usr/local/bin/accountj"
+ACCOUNTJ_PT="/usr/local/bin/accountj_pt"
 ACCOUNTD="/usr/local/bin/accountd"
 PJSTATA="/usr/local/bin/pjstata"
 CHKLOWPRIORITY="/usr/local/bin/chklowpriority"
@@ -225,10 +227,23 @@ mkdir -p ${GROUP_DIR} ${HOME_DIR}
     rm ${FREE_QUEUE_TMP}
 } &
 
-wait
+#==============================================================================
+# 富岳ポイント
+#==============================================================================
+{
+    su - ktool -c "${REMOTE_SSH} ${ACCOUNTJ_PT} -a -c" | tr -d '"' | tail -n +6 > ${FUGAKU_PT_TMP}
+
+    while IFS=, read -r _ _ group _ value _ _;  do
+        echo ${value} > ${GROUP_DIR}/${group}/fugaku_pt.dat
+    done < ${FUGAKU_PT_TMP}
+	
+    rm ${FUGAKU_PT_TMP}
+} &
+
 #==============================================================================
 # 終了処理
 #==============================================================================
+wait
 date "+%Y/%m/%d %H:%M:%S (JST)" > ${DATE_TXT}
 echo ${SECONDS} > ${ELAPSED_TIME}
 rm ${LOCKFILE}
