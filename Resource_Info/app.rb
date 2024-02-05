@@ -16,24 +16,6 @@ helpers do
     "Resource info"
   end
 
-  def ratio(a, b)
-    if b.to_i == 0
-      return 0
-    else
-      return (a.to_f * 100/ b.to_f).truncate(2)
-    end
-  end
-
-  def color(num)
-    if 0 <= num and num <= 25
-      return "green"
-    elsif 25 < num and num <= 75
-      return "blue"
-    else
-      return "red"
-    end
-  end
-
   def get_update_time()
     return File.read(ACC_DIR + "date.txt")
   end
@@ -54,23 +36,28 @@ get '/' do
       unused_groups.push(g)
       next
     end
+
+    period_file   = ACC_GROUP_DIR + g + "/" + filename
+    resource_file = ACC_GROUP_DIR + g + "/resource.csv"
+    if File.exist?(period_file) and File.exist?(resource_file)
+      defined_limit = {}
+      CSV.foreach(resource_file, headers: true) do |row|
+        defined_limit[row[1]] = row[2] if row[0].start_with?("USER")
+      end
     
-    file = ACC_GROUP_DIR + g + "/" + filename
-    if File.exist?(file)
       tmp = []
-      CSV.foreach(file) do |row|
+      CSV.foreach(period_file) do |row|
         user  = row[0]
-        limit = get_resource_limit(g).to_i
+        limit = (defined_limit[user] == "unlimited")? get_resource_limit(g).to_i : defined_limit[user].to_i / 3600
         usage = row[1].to_i / 3600 # NH
-        avail = dashboard_resource(g).avail
+        avail = (defined_limit[user] == "unlimited")? dashboard_resource(g).avail : limit - usage
         tmp.push([user, limit, usage, avail])
       end
 
       # Add Exclusive use
-      file = ACC_GROUP_DIR + g + "/resource.csv"
-      if File.exist?(file)
+      if File.exist?(resource_file)
         sum = 0
-        CSV.foreach(file) do |row|
+        CSV.foreach(resource_file, headers: true) do |row|
           next if row[0] != "EXCLUSIVEUSE"
           date = Date.parse(row[3]) # End date of a job
           sum += row[5].to_i if date.month.between?(4, 9) == period
@@ -87,7 +74,7 @@ get '/' do
       @resource_info.push(tmp)
     else
       unused_groups.push(g)
-    end # if File.exist?(file)
+    end # if File.exist?(period_file)
   end # end groups.each do |g|
 
   @groups -= unused_groups

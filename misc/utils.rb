@@ -1093,6 +1093,19 @@ def dashboard_date()
   end
 end
 
+def ratio(a, b, limit = NOT_USED)
+  if b.to_i == 0
+    return 0
+  else
+    if limit != NOT_USED
+      v = (a.to_f * 100/ b.to_f)
+      return (v < limit)? v.truncate(2) : limit
+    else
+      return (a.to_f * 100/ b.to_f).truncate(2)
+    end
+  end
+end
+
 def output_xfce(gpus_per_node = "0")
   <<"EOF"
 # Remove any preconfigured monitors

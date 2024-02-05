@@ -67,7 +67,7 @@ td {
       <td><%= num_with_commas(capacity_avail) %></td>
       <td>
         <div class="graph">
-          <strong class="bar_<%= color(ratio(capacity, capacity_limit)) %>" style="width: <%= ratio(capacity, capacity_limit) %>%;"><%= ratio(capacity, capacity_limit) %>%</strong>
+          <strong class="bar_<%= dashboard_color(ratio(capacity, capacity_limit)) %>" style="width: <%= ratio(capacity, capacity_limit, 100) %>%;"><%= ratio(capacity, capacity_limit) %>%</strong>
         </div>
       </td>
       <% else %>
@@ -82,7 +82,7 @@ td {
       <td><%= num_with_commas(inode_avail) %></td>
       <td>
         <div class="graph">
-          <strong class="bar_<%= color(ratio(inode, inode_limit)) %>" style="width: <%= ratio(inode, inode_limit) %>%;"><%= ratio(inode, inode_limit) %>%</strong>
+          <strong class="bar_<%= dashboard_color(ratio(inode, inode_limit)) %>" style="width: <%= ratio(inode, inode_limit, 100) %>%;"><%= ratio(inode, inode_limit) %>%</strong>
         </div>
       </td>
       <% else %>

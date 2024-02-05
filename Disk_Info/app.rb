@@ -14,28 +14,6 @@ helpers do
   def title
     "Disk info"
   end
-
-  def num_with_commas(number)
-    return number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
-  end
-
-  def ratio(a, b)
-    if b.to_i == 0
-      return 0
-    else
-      return (a.to_f * 100/ b.to_f).truncate(2)
-    end
-  end
-
-  def color(num)
-    if 0 <= num and num <= 25
-      return "green"
-    elsif 25 < num and num <= 75
-      return "blue"
-    else
-      return "red"
-    end
-  end
 end
 
 # Define a route at the root '/' of the app.

@@ -56,7 +56,7 @@ td {
       <td><%= num_with_commas(avail) %></td>
       <td>
         <div class="graph">
-          <strong class="bar_<%= color(ratio(usage, limit)) %>" style="width: <%= ratio(usage, limit) %>%;"><%= ratio(usage, limit) %>%</strong>
+          <strong class="bar_<%= dashboard_color(ratio(usage, limit)) %>" style="width: <%= ratio(usage, limit, 100) %>%;"><%= ratio(usage, limit) %>%</strong>
         </div>
       </td>
       <% else %>
