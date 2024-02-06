@@ -321,13 +321,14 @@ def check_cd_portal()
   return `groups`.split.include?("ra022310")
 end
 
+def dashboard_get_fugaku_point(group)
+  file = ACC_GROUP_DIR + group + "/fugaku_pt.dat"
+  return File.exist?(file)? num_with_commas(File.read(file).chomp) : "0"
+end
+
 def check_pt()
   `groups`.split.each do |g|
-    file = ACC_GROUP_DIR + g + "/fugaku_pt.dat"
-    if File.exist?(file)
-      num = File.read(file).chomp.to_i
-      return true if num > 0
-    end
+    return true if dashboard_get_fugaku_point(g) != "0"
   end
 
   return false

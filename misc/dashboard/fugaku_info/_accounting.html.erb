@@ -11,6 +11,7 @@
       <th colspan="4">Capacity (GiB)</th>
       <th colspan="4">Inode</th>
       <th colspan="4">Resource (NH)</th>
+      <th rowspan="2">Fugaku Points</th>
     </tr>
     <tr>
       <th>Limit</th><th>Usage</th><th>Avail.</th><th>Ratio</th>
@@ -73,7 +74,9 @@
           <strong class="bar_<%= dashboard_color(resource_info.ratio) %>" style="width: <%= resource_info.ratio %>%;"><%= resource_info.ratio %>%</strong>
         </div>
       </td>
+      <td align="right" rowspan="<%= num_volumes %>"><%= dashboard_get_fugaku_point(group_name) %></td>
     <%-       else -%>
+      <td rowspan="<%= num_volumes %>"> - </td>
       <td rowspan="<%= num_volumes %>"> - </td>
       <td rowspan="<%= num_volumes %>"> - </td>
       <td rowspan="<%= num_volumes %>"> - </td>
@@ -105,7 +108,7 @@
           <strong class="bar_<%= dashboard_color(home_inode_info.ratio) %>" style="width: <%= home_inode_info.ratio %>%;"><%= home_inode_info.ratio %>%</strong>
         </div>
       </td>
-      <td> - </td><td> - </td><td> - </td><td> - </td>
+      <td> - </td><td> - </td><td> - </td><td> - </td><td> - </td>
     </tr>
   </table>
 </p>
