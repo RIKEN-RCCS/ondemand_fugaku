@@ -326,24 +326,39 @@ def dashboard_get_fugaku_point(group)
   return File.exist?(file)? num_with_commas(File.read(file).chomp) : "0"
 end
 
-def check_pt()
+def check_fugaku_pt_period(month)
+  if month == "Aug"
+    return Time.now.between?(Time.parse(FUGAKU_PT_AUG_START), Time.parse(FUGAKU_PT_AUG_END))
+  elsif month == "Feb"
+    return Time.now.between?(Time.parse(FUGAKU_PT_FEB_START), Time.parse(FUGAKU_PT_FEB_END))
+  else
+    return false
+  end
+end
+
+def get_fugaku_pt_resource(month, group, w_commas = true)
+  file = ACC_GROUP_DIR + group + "/resource.csv"
+  if File.exist?(file)
+    CSV.foreach(file) do |row|
+      if    row[0] == "RESOURCE_GROUP" and row[1] == "pt-Aug" and month == "Aug"
+        return (w_commas)? num_with_commas(row[2]) : row[2].to_i
+      elsif row[0] == "RESOURCE_GROUP" and row[1] == "pt-Feb" and month == "Feb"
+        return (w_commas)? num_with_commas(row[2]) : row[2].to_i
+      end
+    end
+  end
+  
+  return -1 # for debug
+end
+
+def check_fugaku_pt(month)
+  return false unless check_fugaku_pt_period(month)
+    
   `groups`.split.each do |g|
-    return true if dashboard_get_fugaku_point(g) != "0"
+    return true if get_fugaku_pt_resource(month, g, false) > 0
   end
 
   return false
-end
-
-def check_within_period(start_time, end_time)
-  return Time.now.between?(Time.parse(start_time), Time.parse(end_time))
-end
-
-def check_pt_aug()
-  return check_within_period(FUGAKU_PT_AUG_START, FUGAKU_PT_AUG_END) && check_pt()
-end
-
-def check_pt_feb()
-  return check_within_period(FUGAKU_PT_FEB_START, FUGAKU_PT_FEB_END) && check_pt()
 end
 
 def form_queue(name, enable_fugaku_threads = true, added_fugaku_queues = [])
@@ -389,8 +404,8 @@ EOF
 
   enable_free_queue = check_free_queue()
   enable_cd_portal  = check_cd_portal()
-  enable_pt_aug     = check_pt_aug()
-  enable_pt_feb     = check_pt_feb()
+  enable_pt_aug     = check_fugaku_pt("Aug")
+  enable_pt_feb     = check_fugaku_pt("Feb")
   if name == "fugaku_small_and_prepost"
     $attr << output_queue("fugaku-small",      "small",      "fugaku",  hide_elmts - show_elmts_small)
     $attr << output_queue("fugaku-small-free", "small-free", "fugaku",  hide_elmts - show_elmts_small_free) if enable_free_queue

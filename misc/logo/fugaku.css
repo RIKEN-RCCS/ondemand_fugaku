@@ -86,6 +86,7 @@ h4.fugaku_info {
     background: #2A2A2A;
     border: solid 1px #AAAAAA;
     color: #ffffff;
+    white-space: nowrap;
 }
 .design01 td {
     padding: 0px 4px;
@@ -96,6 +97,7 @@ h4.fugaku_info {
 @media (max-width: 1459.98px) {
     .design01 th {
         padding: 0px;
+	white-space: nowrap;
     }
     .design01 td{
         padding: 0px;
