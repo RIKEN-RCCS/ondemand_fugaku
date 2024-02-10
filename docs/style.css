@@ -119,3 +119,22 @@ blockquote{
     padding:5px;
     margin:10px;
 }
+
+.design01 {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.design01 th {
+    padding: 3px 10px;
+    background: #214555;
+    color: #ffffff;
+    border: solid 1px black;
+}
+
+.design01 td {
+    padding: 3px 10px;
+    border: solid 1px black;
+}
