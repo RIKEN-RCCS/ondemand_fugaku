@@ -13,7 +13,6 @@ INODE_TMP=${HOME_DIR}/inode.tmp
 FREE_QUEUE_TMP=${ACCOUNTING_DIR}/free_queue.tmp
 #=============================================================================
 ACCOUNTJ="/usr/local/bin/accountj"
-ACCOUNTJ_PT="/usr/local/bin/accountj_pt"
 ACCOUNTD="/usr/local/bin/accountd"
 PJSTATA="/usr/local/bin/pjstata"
 CHKLOWPRIORITY="/usr/local/bin/chklowpriority"

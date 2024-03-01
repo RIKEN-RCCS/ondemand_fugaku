@@ -341,9 +341,9 @@ def get_fugaku_pt_resource(month, group, w_commas = true)
   if File.exist?(file)
     CSV.foreach(file) do |row|
       if    row[0] == "RESOURCE_GROUP" and row[1] == "pt-Aug" and month == "Aug"
-        return (w_commas)? num_with_commas(row[2]) : row[2].to_i
+        return (w_commas)? num_with_commas(row[2].to_i/3600) : row[2].to_i/3600
       elsif row[0] == "RESOURCE_GROUP" and row[1] == "pt-Feb" and month == "Feb"
-        return (w_commas)? num_with_commas(row[2]) : row[2].to_i
+        return (w_commas)? num_with_commas(row[2].to_i/3600) : row[2].to_i/3600
       end
     end
   end
