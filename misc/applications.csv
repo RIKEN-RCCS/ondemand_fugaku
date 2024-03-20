@@ -13,7 +13,7 @@ Gaussian,                ood_gaussian,            Batch Jobs,       Quantum Chem
 GaussView,               ood_gaussview,           Interactive Apps, Viewer
 GENESIS,                 ood_genesis,             Batch Jobs,       Molecular Dynamics
 GROMACS,                 ood_gromacs,             Batch Jobs,       Molecular Dynamics
-HPhi,                    ood_hphi,                Batch Jobs,       Condensed Matter Physics
+HPhi,                    ood_h_phi,               Batch Jobs,       Condensed Matter Physics
 ImageJ,                  ood_imagej,              Interactive Apps, Viewer
 job_submitter,           ood_job_submitter,       Batch Jobs,       Utility
 Jupyter,                 ood_jupyter,             Interactive Apps, Development
@@ -46,3 +46,6 @@ VMD,                     ood_vmd,                 Interactive Apps, Viewer
 VSCode,                  ood_vscode,              Interactive Apps, Development
 WHEEL,                   ood_wheel,               Interactive Apps, Workflow
 XCrySDen,                ood_xcrysden,            Interactive Apps, Viewer
+Gnuplot,                 ood_gnuplot,             Interactive Apps, Viewer
+KIERTTA,                 ood_kiertaa,             Batch Jobs,       Computer Aided Engineering
+FFVHC-ACE,               ood_ffvhc_ace,           Batch Jobs,       Computer Aided Engineering

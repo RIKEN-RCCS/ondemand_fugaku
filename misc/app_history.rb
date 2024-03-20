@@ -5,12 +5,12 @@ require "zlib"
 require "csv"
 
 ###
-Exclusive_appname = ["ood_job_submitter_supercon2023", "ood_openfoam", "ood_vscode_supercon2023", "ood_openfoam_fundation", "ood_desktop_meeting", "--bulk", "--data", "-L", "-L rscgrp=small"]
+Exclusive_appname = ["ood_job_submitter_supercon2023", "ood_openfoam", "ood_vscode_supercon2023", "ood_openfoam_fundation", "ood_desktop_meeting", "--bulk", "--data", "-L", "-L rscgrp=small", "gpu1", "BatchMode=yes"]
 ###
-#Fugaku = true
-#PrePost = false
-Fugaku = false
-PrePost = true
+Fugaku = true
+PrePost = false
+#Fugaku = false
+#PrePost = true
 ###
 
 APPNAME     = 0
@@ -28,6 +28,7 @@ def fugaku_grep(prepost, line)
     appname = line.split(",")[6][3..-3] if appname.include?("@") # specified mail address
     appname = line.split(",")[7][3..-3] if appname.include?("-N")
     return if(Exclusive_appname.include?(appname) || appname.include?("\"ood_desktop"))
+    appname = "ood_h_phi" if appname == "ood_hphi"
     prepost.push([year_month, appname])
   end
 end
@@ -39,6 +40,7 @@ def prepost_grep(prepost, line)
     return if line.split(",").size <= 5
     appname    = line.split(",")[5][3..-3]
     appname    = line.split(",")[9][3..-3] if appname.include?("@") # specified mail address
+    return if(Exclusive_appname.include?(appname))
     prepost.push([year_month, appname])
   end
 end
@@ -85,7 +87,13 @@ end
 
 counts = prepost.group_by{ |i| i }.transform_values(&:count)
 counts.each do |value, count|
-  puts "#{value[0][0]}-#{value[0][1]}\t#{items[value[1]][0]}\t#{count}"
+  begin
+    puts "#{value[0][0]}-#{value[0][1]}\t#{items[value[1]][0]}\t#{count}"
+  rescue => e
+    puts value[1]
+    puts e
+    exit(1)
+  end
 end
 
 puts "--"
