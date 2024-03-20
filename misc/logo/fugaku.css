@@ -10,7 +10,7 @@
 .apps-section-header-blue {
     margin-top: 10px;
     padding-left: 20px;
-    font-weight: bo<ld;
+    font-weight: bold;
     background-color: #0000B0;
 }
 h4.fugaku_info {
@@ -28,7 +28,6 @@ h4.fugaku_info {
 .fugaku_motd table {
     word-break: break-word;
     word-wrap: break-word;
-    font-size: 1.2rem;
     margin-bottom: 25px;
 }
 
@@ -95,6 +94,12 @@ h4.fugaku_info {
     width: 100px;
 }
 @media (max-width: 1459.98px) {
+    .fugaku_motd td{
+	font-size: 1.0rem;
+    }
+    .design01{
+	font-size: 0.9rem;
+    }
     .design01 th {
         padding: 0px;
 	white-space: nowrap;
