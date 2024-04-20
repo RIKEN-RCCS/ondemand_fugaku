@@ -87,7 +87,7 @@ def output_queue(option, value, cluster, elmts)
   return tmp
 end
 
-def _form_fugaku_group()
+def form_fugaku_group()
   $attr <<<<"EOF"
   fugaku_group:
     label: Group
@@ -421,7 +421,7 @@ EOF
     $attr << output_queue("prepost-mem1",      "mem1",       "prepost", hide_elmts - show_elmts_mem1)
     $attr << output_queue("prepost-mem2",      "mem2",       "prepost", hide_elmts - show_elmts_mem2)
     $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
-    ret << _form_fugaku_group()
+    ret << form_fugaku_group()
     ret << _form_hours("fugaku_small")
     ret << _form_hours("fugaku_small_free")
     ret << _form_nodes("fugaku_small")
@@ -461,7 +461,7 @@ EOF
       ii = i.gsub("_", "-")
       $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
     end
-    ret << _form_fugaku_group()
+    ret << form_fugaku_group()
     ret << _form_hours("fugaku_small")
     ret << _form_hours("fugaku_small_free")
     ret << _form_nodes("fugaku_small")
@@ -488,7 +488,7 @@ EOF
       ii = i.gsub("_", "-")
       $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
     end
-    ret << _form_fugaku_group()
+    ret << form_fugaku_group()
     ret << _form_hours("fugaku_small")
     ret << _form_hours("fugaku_small_free")
     ret << _form_hours("fugaku_pt_aug")
@@ -511,7 +511,7 @@ EOF
     $attr << output_queue("prepost-mem1",      "mem1",       "prepost", hide_elmts - show_elmts_mem1)
     $attr << output_queue("prepost-mem2",      "mem2",       "prepost", hide_elmts - show_elmts_mem2)
     $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts - show_elmts_reserverd)
-    ret << _form_fugaku_group()
+    ret << form_fugaku_group()
     ret << _form_hours("fugaku_small")
     ret << _form_hours("fugaku_small_free")
     ret << _form_hours("fugaku_cd_portal")
@@ -545,7 +545,7 @@ EOF
       ii = i.gsub("_", "-")
       $attr << output_queue(i, i, "fugaku", hide_elmts - ["#{ii}-hours", "#{ii}-nodes", "#{ii}-procs"])
     end
-    ret << _form_fugaku_group()
+    ret << form_fugaku_group()
     ret << _form_hours("fugaku_small")
     ret << _form_hours("fugaku_small_free")
     ret << _form_nodes("fugaku_small")
@@ -630,7 +630,7 @@ EOF
     $attr << output_queue("prepost-mem1",      "mem1",       "prepost", hide_elmts - show_elmts_mem1)
     $attr << output_queue("prepost-mem2",      "mem2",       "prepost", hide_elmts - show_elmts_mem2)
     $attr << output_queue("prepost-ondemand-reserved", "ondemand-reserved", "prepost", hide_elmts -show_elmts_reserverd)
-    ret << _form_fugaku_group()
+    ret << form_fugaku_group()
     ret << _form_hours("fugaku_small")
     ret << _form_hours("fugaku_small_free")
     ret << _form_nodes("fugaku_small")
@@ -723,7 +723,7 @@ EOF
   return "  - nodelist"
 end
 
-def form_check(item, label, help, required = true)
+def form_check(item, label, help, required = true, hide_list = [])
   $attr <<<<"EOF"
   #{item}:
     label: #{label}
@@ -734,6 +734,14 @@ def form_check(item, label, help, required = true)
     required: #{required.to_s}
     help: #{help}
 EOF
+  return "  - #{item}" if hide_list.empty?
+
+  $attr << "    html_options:\n"
+  $attr << "      data:\n"
+  hide_list.each do |h|
+    $attr << "       hide-" + h + "-when-unchecked: true\n"
+  end
+  
   return "  - #{item}"
 end
 
@@ -775,47 +783,26 @@ def form_input_file(required = true, memo = "")
 
   $attr <<<<"EOF"
   input_file:
+    widget: path_selector
     label: Input file #{memo}
-    data-filepicker: true
-    data-target-file-type: files  # Valid values are: files, dirs, or both
-    # Optionally set a default directory
-    data-default-directory: #{ENV['HOME']}
-    # Optionally only allow editing through the file picker; defaults to false
-    data-file_picker_favorites: #{get_groups_fdirs()}
+    directory: #{ENV['HOME']}
     required: #{required.to_s}
+    show_hidden: false
+    show_files: true
 EOF
 
   return "  - input_file"
 end
 
-def form_free_input_file(required = true, label = "Input file", item = "input_file", help = "")
-  $attr <<<<"EOF"
-  #{item}:
-    label: #{label}
-    data-filepicker: true
-    data-target-file-type: files  # Valid values are: files, dirs, or both
-    # Optionally set a default directory
-    data-default-directory: #{ENV['HOME']}
-    # Optionally only allow editing through the file picker; defaults to false
-    data-file_picker_favorites: #{get_groups_fdirs()}
-    required: #{required.to_s}
-    help: #{help}
-EOF
-
-  return "  - #{item}"
-end
-
 def form_multi_input_files(required = true, prefix = "", label = "")
   $attr <<<<"EOF"
   input_file_#{prefix}:
+    widget: path_selector
     label: Input file #{label}
-    data-filepicker: true
-    data-target-file-type: files  # Valid values are: files, dirs, or both
-    # Optionally set a default directory
-    data-default-directory: #{ENV['HOME']}
-    # Optionally only allow editing through the file picker; defaults to false
-    data-file_picker_favorites: #{get_groups_fdirs()}
+    directory: #{ENV['HOME']}
     required: #{required.to_s}
+    show_hidden: false
+    show_files: true
 EOF
 
   return "  - input_file_" + prefix
@@ -833,18 +820,20 @@ EOF
 end
 
 def form_working_dir(required = true, label = "Working directory", type = "dirs", item = "working_dir", help = "")
+  show_files_flag = (type == "both")
+                      
   $attr <<<<"EOF"
   #{item}:
+    widget: path_selector
     label: #{label}
+    directory: #{ENV['HOME']}
     value: #{ENV['HOME']}
-    data-target-file-type: #{type}
-    data-filepicker: true
-    data-default-directory: #{ENV['HOME']}
-    data-file_picker_favorites: #{get_groups_fdirs()}
     required: #{required.to_s}
     help: #{help}
+    show_hidden: false
+    show_files: #{show_files_flag}
 EOF
-  
+
   return "  - " + item
 end
 
@@ -880,6 +869,20 @@ def form_options(memo = "")
     widget: text_field
 EOF
   return "  - options"
+end
+
+def form_number(item, label, min = "", max = "", step = "", value = "", help = "")
+  $attr <<<<"EOF"
+  #{item}:
+    label: "#{label}"
+    widget: 'number_field'
+    value: #{value}
+    min: #{min}
+    max: #{max}
+    step: #{step}
+    help: "#{help}"
+EOF
+  return "  - #{item}"
 end
 
 def form_commands(memo = "")
@@ -931,8 +934,8 @@ end
 def form_select(item, label, options, value = "", help = "")
   $attr <<<<"EOF"
   #{item}:
-    widget: select
     label: #{label}
+    widget: select
     options:
 EOF
   if options[0].is_a?(Array)
