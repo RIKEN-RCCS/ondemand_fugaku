@@ -4,32 +4,25 @@ require 'date'
 require 'csv'
 require 'time'
 
-FUGAKU_PT_AUG_START    = '2023-08-01 15:00'
-FUGAKU_PT_AUG_END      = '2023-08-31 15:00'
-FUGAKU_PT_FEB_START    = '2024-02-05 15:00'
-FUGAKU_PT_FEB_END      = '2024-03-11 15:00'
-SINGULARITY_DIR        = "/home/apps/singularity/ondemand/"
-REMOTE_DESKTOP_AARCH64 = SINGULARITY_DIR + "desktop_ubi88_aarch64.sif"
-REMOTE_DESKTOP_X86_64  = SINGULARITY_DIR + "desktop_ubi86_x86_64.sif"
-JUPYTER_AARCH64        = SINGULARITY_DIR + "jupyter_ubi88_aarch64.sif"
-JUPYTER_X86_64         = SINGULARITY_DIR + "jupyter_ubi86_x86_64.sif"
-RSTUDIO_AARCH64        = SINGULARITY_DIR + "rstudio_ubi88_aarch64.sif"
-RSTUDIO_X86_64         = SINGULARITY_DIR + "rstudio_ubi86_x86_64.sif"
-VSCODE_AARCH64         = SINGULARITY_DIR + "vscode_ubi88_aarch64.sif"
-VSCODE_X86_64          = SINGULARITY_DIR + "vscode_ubi86_x86_64.sif"
-LLIO_LBOUND_NODES      = 7000
-LLIO_LBOUND_PROCS      = 28000
-EXCLUDED_GROUPS        = ["f-op", "fugaku", "oss-adm"] # "Group names starting with "isv" are deleted in the code.
-SYS_OOD_DIR            = "/system/ood/"
-ACC_DIR                = SYS_OOD_DIR + "accounting/"
-ACC_GROUP_DIR          = ACC_DIR + "group/"
-ACC_HOME_DIR           = ACC_DIR + "home/"
-APP_CACHE_DIR          = SYS_OOD_DIR + "app/"
-Resource_info          = Struct.new(:limit, :usage, :avail, :ratio)
-Disk_info              = Struct.new(:volume, :limit, :usage, :avail, :ratio)
-NOT_DEFINED            = -1
-NOT_USED               = -1
-$attr                  = ""
+FUGAKU_PT_AUG_START = '2023-08-01 15:00'
+FUGAKU_PT_AUG_END   = '2023-08-31 15:00'
+FUGAKU_PT_FEB_START = '2024-02-05 15:00'
+FUGAKU_PT_FEB_END   = '2024-03-11 15:00'
+IMAGE_AARCH64       = "/home/apps/singularity/ondemand/ubi89_aarch64.sif"
+IMAGE_X86_64        = "/home/apps/singularity/ondemand/ubi88_x86_64.sif"
+LLIO_LBOUND_NODES   = 7000
+LLIO_LBOUND_PROCS   = 28000
+EXCLUDED_GROUPS     = ["f-op", "fugaku", "oss-adm"] # "Group names starting with "isv" are deleted in the code.
+SYS_OOD_DIR         = "/system/ood/"
+ACC_DIR             = SYS_OOD_DIR + "accounting/"
+ACC_GROUP_DIR       = ACC_DIR + "group/"
+ACC_HOME_DIR        = ACC_DIR + "home/"
+APP_CACHE_DIR       = SYS_OOD_DIR + "app/"
+Resource_info       = Struct.new(:limit, :usage, :avail, :ratio)
+Disk_info           = Struct.new(:volume, :limit, :usage, :avail, :ratio)
+NOT_DEFINED         = -1
+NOT_USED            = -1
+$attr               = ""
 
 def get_group_dirs()
   info = []
@@ -1415,30 +1408,10 @@ def setting_singularity(name)
     done
     [ -e /usr/bin/xospastop ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/usr/bin/xospastop
 
-    if [ #{name} = "remote_desktop" ]; then
-      if [ `arch` = aarch64 ]; then
-        IMAGE=#{REMOTE_DESKTOP_AARCH64}
-      else
-        IMAGE=#{REMOTE_DESKTOP_X86_64}
-      fi
-    elif [ #{name} = "jupyter" ]; then
-      if [ `arch` = aarch64 ]; then
-        IMAGE=#{JUPYTER_AARCH64}
-      else
-        IMAGE=#{JUPYTER_X86_64}
-      fi
-    elif [ #{name} = "rstudio" ]; then
-      if [ `arch` = aarch64 ]; then
-        IMAGE=#{RSTUDIO_AARCH64}
-      else
-        IMAGE=#{RSTUDIO_X86_64}
-      fi
-    elif [ #{name} = "vscode" ]; then
-      if [ `arch` = aarch64 ]; then
-        IMAGE=#{VSCODE_AARCH64}
-      else
-        IMAGE=#{VSCODE_X86_64}
-      fi
+    if [ `arch` = aarch64 ]; then
+      IMAGE=#{IMAGE_AARCH64}
+    else
+      IMAGE=#{IMAGE_X86_64}
     fi
 EOF
 end
