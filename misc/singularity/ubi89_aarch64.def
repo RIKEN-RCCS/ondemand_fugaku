@@ -1,0 +1,69 @@
+Bootstrap: docker
+From: redhat/ubi8:8.9
+
+%files
+  /etc/pki/entitlement /etc/pki/
+  /etc/yum.repos.d/redhat.repo
+
+%post
+  rm -f /etc/yum.repos.d/ubi.repo
+  dnf -y --releasever=8.9 update
+  dnf -y --releasever=8.9 install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  dnf -y --releasever=8.9 install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh ksh tcsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname xorg-x11-apps evince glx-utils systemd-libs sssd Lmod glibc-langpack-en xdg-user-dirs mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs gnuplot ImageMagick ncview freeglut freeglut-devel vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts dbus-x11
+  dnf -y --releasever=8.9 groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
+  dnf -y --releasever=8.9 install python39 python39-devel python39-numpy python3.11 python3.11-devel python3.11-numpy
+  update-alternatives --set python /usr/bin/python3.11
+  dnf -y --releasever=8.9 install https://yum.osc.edu/ondemand/latest/compute/el8Server/aarch64/python3-websockify-0.10.0-1.el8.noarch.rpm
+  dnf -y --releasever=8.9 install https://yum.osc.edu/ondemand/latest/compute/el8Server/aarch64/turbovnc-2.2.5-1.el8.aarch64.rpm
+  dnf -y --releasever=8.9 install libX11-devel libXi-devel libXt-devel pam-devel java-1.8.0-openjdk-devel xterm
+  dnf -y remove xfce4-screensaver
+  # Slow startup when running paraview-mpich-devel with multiple processes
+  dnf -y --releasever=8.9 --skip-broken install paraview paraview-devel paraview-openmpi-devel paraview-doc qt5-devel protobuf-devel
+  #
+  # VSCode
+  dnf -y --releasever=8.9 install https://github.com/coder/code-server/releases/download/v4.23.1/code-server-4.23.1-arm64.rpm
+  #
+  # Jupyter
+  dnf -y --releasever=8.9 install python3.11-pip python3.11-devel python3.11-numpy python3.11-scipy python3-matplotlib
+  pip3.11 install jupyterlab
+  # widgetsnbextension for ASEAN HPC School
+  python3.11 -m ipykernel install --sys-prefix
+  pip3.11 install jsonschema[format] nglview
+  pip3.11 install --upgrade notebook==6.4.12
+  jupyter nbextension enable --py --sys-prefix widgetsnbextension
+  jupyter nbextension enable --py --sys-prefix nglview
+  #
+  # RStudio
+  # From https://dailies.rstudio.com
+  dnf -y --releasever=8.9 install R
+  dnf -y --releasever=8.9 install https://s3.amazonaws.com/rstudio-ide-build/server/rhel8/arm64/rstudio-server-rhel-2023.05.0-daily-92-aarch64.rpm
+  #
+  # Fujitsu TCS
+  cat <<EOF > /etc/yum.repos.d/Fugaku.repo
+[FUGAKU-AppStream]
+name=FUGAKU-AppStream
+baseurl=http://10.4.38.1/pxinst/repos/FUGAKU/AppStream
+enabled=1
+gpgcheck=0
+
+[FUGAKU-BaseOS]
+name=FUGAKU-BaseOS
+baseurl=http://10.4.38.1/pxinst/repos/FUGAKU/BaseOS
+enabled=1
+gpgcheck=0
+EOF
+  rpm -e --nodeps pmix
+  dnf -y --releasever=8.9 install xpmem libevent tcl less hwloc openssh-clients gcc-c++ elfutils-libelf-devel FJSVpxtof FJSVpxple FJSVpxpsm FJSVpxkrm FJSVxoslibmpg papi-devel
+  dnf -y --releasever=8.9 install rclone rclone-browser wayland-devel libxkbcommon-devel wayland-protocols-devel extra-cmake-modules
+  #
+  # GLFW
+  dnf -y install libXrandr-devel libXinerama-devel libXcursor-devel
+  wget https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.zip
+  unzip glfw-3.4.zip; cd glfw-3.4; cmake -DBUILD_SHARED_LIBS=ON -S . -B build; cd build; make install
+  cd ../../
+  rm -rf glfw-3.4 glfw-3.4.zip
+  #
+  dnf clean all
+  rm -f /etc/pki/entitlement/*
+  rm -f /etc/yum.repos.d/redhat.repo /etc/yum.repos.d/Fugaku.repo
+  

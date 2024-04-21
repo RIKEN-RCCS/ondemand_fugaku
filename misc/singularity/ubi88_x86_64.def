@@ -1,0 +1,149 @@
+Bootstrap: docker
+#From: redhat/ubi8:8.8
+From: redhat/ubi8:8.6
+
+%files
+  /etc/pki/entitlement /etc/pki/
+  /etc/yum.repos.d/redhat.repo
+
+%post
+  rm -f /etc/yum.repos.d/ubi.repo
+  dnf -y --releasever=8.8 update
+  dnf -y --releasever=8.8 install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms
+  dnf -y --releasever=8.8 install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh ksh tcsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname libatomic mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs xorg-x11-apps evince eog glx-utils systemd-libs sssd Lmod glibc-langpack-en xdg-user-dirs libevent xterm gnuplot ImageMagick ncview glfw glfw-devel dbus-x11 python3-numpy vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts
+  dnf -y --releasever=8.8 install rclone rclone-browser
+  dnf -y --releasever=8.8 groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
+  dnf -y remove xfce4-screensave
+  #
+  # VNC
+  dnf -y --releasever=8.8 install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python3-websockify-0.10.0-1.el8.noarch.rpm
+  dnf -y --releasever=8.8 install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-2.2.5-1.el8.x86_64.rpm
+  #
+  # Paraview
+  cd /opt
+  dnf -y --releasever=8.8 install python39 python39-devel python39-numpy python3.11 python3.11-devel python3.11-numpy
+  update-alternatives --set python /usr/bin/python3.9
+  #wget -O ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.11&type=binary&os=Linux&downloadFile=ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz"
+  #tar xfz ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz
+  #ln -s ParaView-5.11.2-MPI-Linux-Python3.9-x86_64 ParaView
+  #rm ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz
+  wget -O ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.10&type=binary&os=Linux&downloadFile=ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz"
+  tar xfz ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
+  ln -s ParaView-5.10.1-MPI-Linux-Python3.9-x86_64 ParaView
+  rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
+  #
+  # VisIt
+  wget https://github.com/visit-dav/visit/releases/download/v3.3.3/visit3_3_3.linux-x86_64-rhel7.tar.gz
+  tar xfz visit3_3_3.linux-x86_64-rhel7.tar.gz
+  ln -s visit3_3_3.linux-x86_64 visit
+  rm visit3_3_3.linux-x86_64-rhel7.tar.gz
+  #
+  # XCrySDen
+  dnf -y --releasever=8.8 install libXmu-devel tcl-devel tk-devel libGL-devel mesa-libGLU-devel fftw-devel
+  wget https://sourceforge.net/projects/togl/files/Togl/2.0/Togl2.0-src.tar.gz
+  tar xfz Togl2.0-src.tar.gz
+  cd Togl2.0
+  ./configure --prefix=/opt/togl2.0 --libdir=/usr/lib64
+  make; make install
+  cd ..
+  wget http://www.xcrysden.org/download/xcrysden-1.6.3-rc2.tar.gz
+  tar xfz xcrysden-1.6.3-rc2.tar.gz
+  mv xcrysden-1.6.3-rc2 tmp-1.6.3; cd tmp-1.6.3
+  cp system/Make.sys-shared Make.sys
+  make all GL_INCDIR=-I/opt/Togl2.0 TOGL_LIB=/opt/Togl2.0/libTogl2.0.so
+  prefix=/opt/xcrysden-1.6.3 make install
+  cd ..
+  ln -s /opt/xcrysden-1.6.3 /opt/xcrysden
+  rm -r Togl2.0-src.tar.gz xcrysden-1.6.3-rc2.tar.gz tmp-1.6.3
+  #
+  # VESTA
+  dnf -y --releasever=8.8 install http://jp-minerals.org/vesta/archives/3.5.8/vesta-3.5.8-1.x86_64.rpm
+  ln -s /usr/local/vesta-3.5.8 /usr/local/vesta
+  #
+  # SmokeView
+  dnf -y --releasever=8.8 install libXi-devel freeglut-devel
+  wget https://github.com/firemodels/smv/archive/refs/tags/SMV-6.9.1.tar.gz
+  tar xfz SMV-6.9.1.tar.gz
+  cd smv-SMV-6.9.1/Build/smokeview/gnu_linux_64
+  bash make_smokeview.sh
+  mkdir /opt/smokeview-6.9.1
+  mv smokeview_linux_64 /opt/smokeview-6.9.1/
+  ln -s /opt/smokeview-6.9.1/smokeview_linux_64 /opt/smokeview-6.9.1/smokeview
+  ln -s /opt/smokeview-6.9.1 /opt/smokeview
+  #
+  # EasyISTR
+  wget -O easyistr-3.43.240203-2.noarch.rpm --trust-server-names "http://opencae.gifu-nct.ac.jp/pukiwiki/index.php?plugin=attach&refer=AboutEasyISTR&openfile=easyistr-3.43.240203-2.noarch.rpm"
+  dnf -y --releasever=8.8 install easyistr-3.43.240203-2.noarch.rpm python3-vtk nautilus glibc-langpack-ja
+  rm easyistr-3.43.240203-2.noarch.rpm
+  #
+  # OVITO
+  cd /opt
+  dnf -y --releasever=8.8 install xcb-util-cursor
+  wget https://www.ovito.org/download/master/ovito-basic-3.10.5-x86_64.tar.xz
+  tar Jxf ovito-basic-3.10.5-x86_64.tar.xz
+  rm ovito-basic-3.10.5-x86_64.tar.xz
+  OVIT_DIRNAME=`ls -1 | grep ^ovito-basic`
+  ln -s ${OVIT_DIRNAME} ovito
+  #
+  # C-TOOLS
+  wget https://download.qt.io/archive/qt/4.8/4.8.6/qt-everywhere-opensource-src-4.8.6.tar.gz
+  tar xfz qt-everywhere-opensource-src-4.8.6.tar.gz
+  cd qt-everywhere-opensource-src-4.8.6
+  echo "QMAKE_CXX = g++ -std=gnu++98" >> mkspecs/common/g++-base.conf
+  ./configure --prefix=/usr/local/qt-4.8.6 -no-openssl -no-qt3support -nomake examples -nomake demos -opensource -confirm-license
+  make -j; make install
+  cd ..
+  wget -O C-TOOLS062.tgz --trust-server-names "https://sourceforge.net/projects/c-tools/files/C-TOOLS062.tgz/download"
+  tar xfz C-TOOLS062.tgz
+  cd C-TOOLS062/src
+  make -j CFLAGS="-O3 -Wall -static" INCS="-I/usr/local/qt-4.8.6/include" LIBS="-L/usr/local/qt-4.8.6/lib -lQtCore -lQtGui -lQtOpenGL -lQtXml -lGL -lGLU" MOC=/usr/local/qt-4.8.6/bin/moc
+  cd ../../
+  mkdir /usr/local/C-TOOLS062/
+  mv C-TOOLS062/src/c-tools /usr/local/C-TOOLS062/
+  rm -rf qt-everywhere-opensource-src-4.8.6.tar.gz qt-everywhere-opensource-src-4.8.6 C-TOOLS062.tgz C-TOOLS062
+  #
+  # PyMOL
+  pip3.9 install pmw
+  dnf -y --releasever=8.8 install glew-devel netcdf-devel glm-devel libxml2-devel python3-tkinter
+  wget https://github.com/schrodinger/pymol-open-source/archive/refs/tags/v2.5.0.tar.gz
+  tar xfz v2.5.0.tar.gz
+  cd pymol-open-source-2.5.0
+  python setup.py build install --prefix=/usr/local/pymol-2.5.0 --glut
+  cd ..
+  rm -rf v2.5.0.tar.gz pymol-open-source-2.5.0
+  #
+  # ImageJ
+  wget https://wsr.imagej.net/distros/linux/ij154-linux64-java8.zip
+  unzip ij154-linux64-java8.zip
+  rm -f ij154-linux64-java8.zip
+  #
+  # VirtaulGL
+  dnf config-manager --add-repo http://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo
+  dnf -y --releasever=8.8 install nvidia-driver-libs
+  wget https://sourceforge.net/projects/virtualgl/files/3.1/VirtualGL-3.1.x86_64.rpm/download
+  mv download VirtualGL-3.1.x86_64.rpm
+  rpm -ivh VirtualGL-3.1.x86_64.rpm
+  rm -f VirtualGL-3.1.x86_64.rpm
+  #
+  # Jupyter
+  pip3.9 install packaging
+  pip3.9 install jupyterlab pandas matplotlib scikit-learn seaborn tqdm pymatgen boto3 kaleido botocore mpcontribs-client
+  # widgetsnbextension for ASEAN HPC School
+  python3.9 -m ipykernel install --sys-prefix
+  pip3.9 install jsonschema[format] nglview
+  pip3.9 install --upgrade notebook==6.4.12 --use-feature=2020-resolver
+  jupyter nbextension enable --py --sys-prefix widgetsnbextension 
+  jupyter nbextension enable --py --sys-prefix nglview
+  #
+  # VSCode
+  dnf -y --releasever=8.8 install https://github.com/coder/code-server/releases/download/v4.23.1/code-server-4.23.1-amd64.rpm
+  #
+  # RStudio
+  dnf -y --releasever=8.8 install R
+  dnf -y --releasever=8.8 install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2023.12.1-402-x86_64.rpm
+  #
+  # Clean up
+  dnf clean all
+  rm -f /etc/pki/entitlement/*
+  rm -f /etc/yum.repos.d/redhat.repo
