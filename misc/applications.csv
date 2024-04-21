@@ -19,6 +19,7 @@ job_submitter,           ood_job_submitter,       Batch Jobs,       Utility
 Jupyter,                 ood_jupyter,             Interactive Apps, Development
 LAMMPS,                  ood_lammps,              Batch Jobs,       Molecular Dynamics
 MATLAB,                  ood_matlab,              Interactive Apps, Development
+MATLAB_BYOL,             ood_matlab_byol,         Interactive Apps, Development
 MODYLAS,                 ood_modylas,             Batch Jobs,       Molecular Dynamics
 mVMC,                    ood_mvmc,                Batch Jobs,       Condensed Matter Physics
 NTChem,                  ood_ntchem,              Batch Jobs,       Quantum Chemistry
