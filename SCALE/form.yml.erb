@@ -10,11 +10,11 @@ form:
 <%= form_queue("fugaku_small_and_large") %>
 <%= form_version(versions) %>
 <%= form_working_dir() %>
-<%= form_multi_input_files(false, "scale_rm_pp",   "for scale-rm_pp (If blank, scale-rm_pp will not run)") %>
-<%= form_multi_input_files(false, "scale_rm_init", "for scale-rm_init (If blank, scale-rm_init will not run)") %>
-<%= form_multi_input_files(false, "scale_rm",      "for scale-rm (If blank, scale-rm will not run)") %>
-<%= form_multi_input_files(false, "sno",           "for sno (If blank, sno will not run)") %>
-<%= form_multi_input_files(false, "net2g",         "for net2g (If blank, net2g will not run)") %>
+<%= form_multi_input_files2(false, "scale_rm_pp",   "for scale-rm_pp (If blank, scale-rm_pp will not run)") %>
+<%= form_multi_input_files2(false, "scale_rm_init", "for scale-rm_init (If blank, scale-rm_init will not run)") %>
+<%= form_multi_input_files2(false, "scale_rm",      "for scale-rm (If blank, scale-rm will not run)") %>
+<%= form_multi_input_files2(false, "sno",           "for sno (If blank, sno will not run)") %>
+<%= form_multi_input_files2(false, "net2g",         "for net2g (If blank, net2g will not run)") %>
 <%= form_fugaku_llio("working_dir") %>
 <%= form_email(false) %>
 attributes:

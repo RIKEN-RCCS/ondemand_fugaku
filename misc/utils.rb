@@ -787,6 +787,24 @@ EOF
   return "  - input_file"
 end
 
+def form_input_file2(required = true, memo = "")
+  memo = "(" + memo + ")" if memo != ""
+
+  $attr <<<<"EOF"
+  input_file:
+    label: Input file #{memo}
+    data-filepicker: true
+    data-target-file-type: files  # Valid values are: files, dirs, or both
+    # Optionally set a default directory
+    data-default-directory: #{ENV['HOME']}
+    # Optionally only allow editing through the file picker; defaults to false
+    data-file_picker_favorites: #{get_groups_fdirs()}
+    required: #{required.to_s}
+EOF
+
+  return "  - input_file"
+end
+
 def form_multi_input_files(required = true, prefix = "", label = "")
   $attr <<<<"EOF"
   input_file_#{prefix}:
@@ -796,6 +814,22 @@ def form_multi_input_files(required = true, prefix = "", label = "")
     required: #{required.to_s}
     show_hidden: false
     show_files: true
+EOF
+
+  return "  - input_file_" + prefix
+end
+
+def form_multi_input_files2(required = true, prefix = "", label = "")
+  $attr <<<<"EOF"
+  input_file_#{prefix}:
+    label: Input file #{label}
+    data-filepicker: true
+    data-target-file-type: files  # Valid values are: files, dirs, or both
+    # Optionally set a default directory
+    data-default-directory: #{ENV['HOME']}
+    # Optionally only allow editing through the file picker; defaults to false
+    data-file_picker_favorites: #{get_groups_fdirs()}
+    required: #{required.to_s}
 EOF
 
   return "  - input_file_" + prefix
@@ -825,6 +859,22 @@ def form_working_dir(required = true, label = "Working directory", type = "dirs"
     help: #{help}
     show_hidden: false
     show_files: #{show_files_flag}
+EOF
+
+  return "  - " + item
+end
+
+def form_working_dir2(required = true, label = "Working directory", type = "dirs", item = "working_dir", help = "")
+  $attr <<<<"EOF"
+  #{item}:
+    label: #{label}
+    value: #{ENV['HOME']}
+    data-target-file-type: #{type}
+    data-filepicker: true
+    data-default-directory: #{ENV['HOME']}
+    data-file_picker_favorites: #{get_groups_fdirs()}
+    required: #{required.to_s}
+    help: #{help}
 EOF
 
   return "  - " + item
