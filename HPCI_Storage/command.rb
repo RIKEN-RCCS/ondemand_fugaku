@@ -17,7 +17,7 @@ class Command
     FileUtils.touch(SAVE_FILE)
     FileUtils.chmod(0600, SAVE_FILE)
     data = open(SAVE_FILE, 'r') { |f| YAML.load(f) }
-    data = Hash.new if data == false
+    data = Hash.new if data.nil?
     
     if params != nil then
       if params['act'] == 'mount' then
@@ -48,7 +48,7 @@ class Command
     data.each do |k, v|
       data[k]['act'] = system("mount | grep #{data[k]['mount_path'][0]}")? 'unmount' : 'mount'
     end
-
+        
     [data, nil]
   end
 end

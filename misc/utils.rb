@@ -1082,8 +1082,6 @@ def _disk_info(file, group_name)
 end
 
 def get_disk_limit(kind, group_name, volume)
-  return -1 if volume == "vol0001"
-
   if kind == "capacity"
     file = ACC_GROUP_DIR + group_name + "/disk.csv"
   else
