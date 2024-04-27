@@ -2,9 +2,9 @@
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
 
   added_fugaku_queues = submit_added_fugaku_queues()
-  hours = submit_hours(queue, fugaku_small_hours, fugaku_small_free_hours, NOT_USED, NOT_USED, fugaku_cd_portal_hours, fugaku_pt_aug_hours, fugaku_pt_feb_hours, NOT_USED, NOT_USED, NOT_USED)
-  nodes = submit_nodes(queue, fugaku_small_nodes, NOT_USED, fugaku_cd_portal_nodes, fugaku_pt_aug_nodes, fugaku_pt_feb_nodes)
-  procs = submit_procs(queue, fugaku_small_procs, NOT_USED, fugaku_cd_portal_procs, fugaku_pt_aug_procs, fugaku_pt_feb_procs)
+  hours = submit_hours(queue, fugaku_small_hours, fugaku_small_free_hours, NOT_USED, NOT_USED, fugaku_cd_portal_hours, fugaku_pt_hours, NOT_USED, NOT_USED, NOT_USED)
+  nodes = submit_nodes(queue, fugaku_small_nodes, NOT_USED, fugaku_cd_portal_nodes, fugaku_pt_nodes)
+  procs = submit_procs(queue, fugaku_small_procs, NOT_USED, fugaku_cd_portal_procs, fugaku_pt_procs)
 -%>
 ---
 script:

@@ -65,7 +65,7 @@ mkdir -p ${GROUP_DIR} ${HOME_DIR}
 	{
 	    # グループ名1つ1つに対してaccountj -gを実行し、グループ毎のバジェットを取得
 	    FILE=${DIR}/resource.csv
-	    su - ktool -c "${REMOTE_SSH} ${ACCOUNTJ} -g ${II} -c -h -r 1 -e -E" | tr -d '"' | egrep '^SUBTHEME|^SUBTHEMEPERIOD|^EXCLUSIVEUSE|^RESOURCE_GROUP|^USER' | egrep -v '^USER_' > ${FILE}
+	    su - ktool -c "${REMOTE_SSH} ${ACCOUNTJ} -g ${II} -c -r 1 -e -E" | tr -d '"' | egrep '^SUBTHEME|^SUBTHEMEPERIOD|^EXCLUSIVEUSE|^RESOURCE_GROUP|^USER' | egrep -v '^USER_' > ${FILE}
 	    
 	    if [ $? -ne 0 ]; then
 	      rm ${LOCKFILE} ${GROUP_TMP}

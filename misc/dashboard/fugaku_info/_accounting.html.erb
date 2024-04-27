@@ -15,13 +15,7 @@
     <tr>
       <th>Limit</th><th>Usage</th><th>Avail.</th><th>Ratio</th>
       <th>Limit</th><th>Usage</th><th>Avail.</th><th>Ratio</th>
-      <%- if check_fugaku_pt_period("Feb") -%>
-      <th>Limit (pt-Feb)</th>
-      <%- elsif check_fugaku_pt_period("Aug") -%>
-      <th>Limit (pt-Aug)</th>
-      <%- else -%>
-      <th>Limit</th>
-      <%- end -%>
+      <th>Limit (f-pt)</th>
       <th>Usage</th><th>Avail.</th><th>Ratio</th>
     </tr>
     <%- groups = `groups`.split - ["fugaku", "f-op"]     -%>
@@ -71,13 +65,7 @@
 
     <%-     if i == 0 -%>
     <%-       unless resource_info == nil -%>
-    <%-         if check_fugaku_pt_period("Feb") -%>
-    <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.limit %> (<%= get_fugaku_pt_resource("Feb", group_name) %>)</td>
-    <%-         elsif check_fugaku_pt_period("Aug") -%>
-    <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.limit %> (<%= get_fugaku_pt_resource("Aug", group_name) %>)</td>
-    <%-         else -%>
-    <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.limit %></td>
-    <%-         end -%>
+      <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.limit %> (<%= get_fugaku_pt_resource(group_name) %>)</td>
       <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.usage %></td>
       <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.avail %></td>
       <td rowspan="<%= num_volumes %>"><div class="graph"><strong class="bar_<%= dashboard_color(resource_info.ratio) %>" style="width: <%= resource_info.ratio %>%;"><%= resource_info.ratio %>%</strong></div></td>
