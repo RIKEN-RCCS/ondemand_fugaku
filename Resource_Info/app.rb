@@ -22,7 +22,7 @@ helpers do
 
   def check_admin(group)
     cmd = "resourcemod -g #{group}"
-    o = (Socket.gethostname == "fn06sv04")? `cmd` : `ssh login #{cmd}`
+    o = (Socket.gethostname == "fn06sv04")? `#{cmd}` : `ssh login #{cmd}`
     return (o != "You have no authority to execute the tool.\n")
   end
   
