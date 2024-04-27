@@ -100,7 +100,7 @@ post '/' do
   voule_s = params['volume_NH'].to_i * 3600
 
   cmd  = "resourcemod -g #{group} -u #{user}"
-  cmd += " -resource #{voule_s}" if params['limit'] != params['volume_NH']
+  cmd += " -resource #{voule_s}" if params['volume_NH'] != get_resource_limit(group)
   (Socket.gethostname == "fn06sv04")? system(cmd) : system("ssh login #{cmd}")
   
   # Rewrite resource.csv

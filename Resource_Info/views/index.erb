@@ -69,7 +69,6 @@ input {
       <% if @is_admin[i] %>
       <td>
         <form action="" method="post">
-  	  <input type="hidden" name="limit"     value="<%= limit %>" required>
 	  <input type="hidden" name="group"     value="<%= g %>"     required>
   	  <input type="hidden" name="user"      value="<%= user %>"  required>
 	  <input type="number" name="volume_NH" max="<%= get_resource_limit(g).to_i %>" min="0" value="<%= limit %>" required>
