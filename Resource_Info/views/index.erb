@@ -25,6 +25,7 @@ input {
   outline: solid 1px #FFDBC9;
 }
 </style>
+
 <h1><%= title %> <font size="3">(Updated at <%= get_update_time() %>)</font></h1>
 <p>
 <font size="5">Resource usage for each user by group.</font>
@@ -35,7 +36,9 @@ input {
     <tr>
       <th style="vertical-align: middle;" rowspan="2">User</th>
       <th colspan="4">Resource (NH)</th>
-      <th style="vertical-align: middle;" rowspan="2">Change Limit</th>
+      <% if @is_admin[i] %>
+      <th width="250px" style="vertical-align: middle;" rowspan="2">Change Limit</th>
+      <% end %>
     </tr>
     <tr>
       <th>Limit</th>
@@ -63,20 +66,25 @@ input {
           <strong class="bar_<%= dashboard_color(ratio(usage, limit)) %>" style="width: <%= ratio(usage, limit, 100) %>%;"><%= ratio(usage, limit) %>%</strong>
         </div>
       </td>
+      <% if @is_admin[i] %>
       <td>
         <form action="" method="post">
-	  <input type="hidden" name="group"     value="<%= g %>"    required>
-  	  <input type="hidden" name="user"      value="<%= user %>" required>
+  	  <input type="hidden" name="limit"     value="<%= limit %>" required>
+	  <input type="hidden" name="group"     value="<%= g %>"     required>
+  	  <input type="hidden" name="user"      value="<%= user %>"  required>
 	  <input type="number" name="volume_NH" max="<%= get_resource_limit(g).to_i %>" min="0" value="<%= limit %>" required>
 	  <input type="submit" value="submit">
 	</form>
       </td>
+      <% end %>
       <% else %>
       <td> - </td>
       <td> - </td>
       <td> - </td>
       <td> - </td>
+      <% if @is_admin[i] %>
       <td> - </td>
+      <% end %>
       <% end %>
     </tr>
     <% end %>

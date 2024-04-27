@@ -20,7 +20,14 @@ helpers do
     return File.read(ACC_DIR + "date.txt")
   end
 
+  def check_admin(group)
+    cmd = "resourcemod -g #{group}"
+    o = (Socket.gethostname == "fn06sv04")? `cmd` : `ssh login #{cmd}`
+    return (o != "You have no authority to execute the tool.\n")
+  end
+  
   def output()
+    @is_admin  = []
     @resource_info = []
     @groups    = `groups`.split.reject { |e| e.start_with?("isv") } - ["fugaku"]
     month      = Time.now.month
@@ -51,7 +58,7 @@ helpers do
           avail = (defined_limit[user] == "unlimited")? dashboard_resource(g).avail : limit - usage
           tmp.push([user, limit, usage, avail])
         end
-        
+
         # Add Exclusive use
         if File.exist?(resource_file)
           sum = 0
@@ -70,6 +77,7 @@ helpers do
         end
         
         @resource_info.push(tmp)
+        @is_admin.push(check_admin(g))
       else
         unused_groups.push(g)
       end # if File.exist?(period_file)
@@ -89,8 +97,17 @@ end
 post '/' do
   group   = params['group']
   user    = params['user']
-  voule_s = params['volume_NH'] * 3600
-  `resourcemod -g #{group} -u #{user} -resource #{voule_s}`
+  voule_s = params['volume_NH'].to_i * 3600
+
+  cmd  = "resourcemod -g #{group} -u #{user}"
+  cmd += " -resource #{voule_s}" if params['limit'] != params['volume_NH']
+  (Socket.gethostname == "fn06sv04")? system(cmd) : system("ssh login #{cmd}")
+  
+  # Rewrite resource.csv
+  resource_file = ACC_GROUP_DIR + group + "/resource.csv"
+  cmd = "accountj -g #{group} -c -r 1 -e -E | tr -d '\"' | egrep '^SUBTHEME|^SUBTHEMEPERIOD|^EXCLUSIVEUSE|^RESOURCE_GROUP|^USER' | egrep -v '^USER_' > #{resource_file}"
+  (Socket.gethostname == "fn06sv04")? system(cmd) : system("ssh login #{cmd}")
+  
   output()
   # Render the view
   erb :index

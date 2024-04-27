@@ -70,7 +70,7 @@ mkdir -p ${GROUP_DIR} ${HOME_DIR}
 	      rm ${LOCKFILE} ${GROUP_TMP}
 	      exit 1
 	    fi
-	    chmod 640 ${FILE}
+	    chmod 660 ${FILE}
 	    chown root:${II} ${FILE}
 	} &
 

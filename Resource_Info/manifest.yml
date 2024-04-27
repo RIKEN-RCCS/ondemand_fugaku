@@ -1,6 +1,6 @@
 name: Resource Info
 description: Resource usage of users by group.
-icon: fa://dollar
+icon: fa://clipboard
 #category: Files
 #subcategory: Utilities
 category: Passenger Apps
