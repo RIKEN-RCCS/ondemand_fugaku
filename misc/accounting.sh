@@ -15,7 +15,6 @@ FREE_QUEUE_TMP=${ACCOUNTING_DIR}/free_queue.tmp
 ACCOUNTJ="/usr/local/bin/accountj"
 ACCOUNTD="/usr/local/bin/accountd"
 PJSTATA="/usr/local/bin/pjstata"
-CHKLOWPRIORITY="/usr/local/bin/chklowpriority"
 REMOTE_SSH=""
 [ "$HOSTNAME" != "fn06sv04" ] && REMOTE_SSH="ssh login"
 YEAR=$(date +%Y)
@@ -195,34 +194,6 @@ mkdir -p ${GROUP_DIR} ${HOME_DIR}
     done < ${INODE_TMP}
 
     rm ${INODE_TMP}
-} &
-
-#==============================================================================
-# 低優先度キュー
-#==============================================================================
-{
-    # グループが低優先度キューを利用しているかどうかを調べる
-    su - ktool -c "${REMOTE_SSH} ${CHKLOWPRIORITY} -a -c" | tr -d '"' | tail -n +2 > ${FREE_QUEUE_TMP}
-    
-    # 上コマンドが失敗した時、ファイルがない時、中身が空の時にスクリプトを終了する
-    if [ $? -ne 0 -o ! -e ${FREE_QUEUE_TMP} -o ! -s ${FREE_QUEUE_TMP} ]; then
-	rm -f ${LOCKFILE} ${FREE_QUEUE_TMP}
-	exit 1
-    fi
-    
-    # ファイルを一般ユーザが閲覧できないようにする
-    chown root:root ${FREE_QUEUE_TMP}
-    chmod 600 ${FREE_QUEUE_TMP}
-    
-    while read -r line; do
-	group=`echo $line | awk -F, '{print $3}'`
-	FILE=${GROUP_DIR}/${group}/free_queue.dat
-	echo "$line" | awk -F, '{print $8}' > ${FILE}
-	chmod 640 ${FILE}
-	chown root:${group} ${FILE}
-    done < ${FREE_QUEUE_TMP}
-
-    rm ${FREE_QUEUE_TMP}
 } &
 
 #==============================================================================
