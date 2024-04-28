@@ -56,6 +56,7 @@ helpers do
           limit = (defined_limit[user] == "unlimited")? get_resource_limit(g).to_i : defined_limit[user].to_i / 3600
           usage = row[1].to_i / 3600 # NH
           avail = (defined_limit[user] == "unlimited")? dashboard_resource(g).avail : limit - usage
+          avail = 0 if avail.to_i < 0
           tmp.push([user, limit, usage, avail])
         end
 

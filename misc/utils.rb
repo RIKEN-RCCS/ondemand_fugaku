@@ -1083,8 +1083,8 @@ def dashboard_date()
 end
 
 def ratio(a, b, limit = NOT_USED)
-  if b.to_i == 0
-    return 0
+  if a.to_i > b.to_i 
+    return 100
   else
     if limit != NOT_USED
       v = (a.to_f * 100/ b.to_f)
