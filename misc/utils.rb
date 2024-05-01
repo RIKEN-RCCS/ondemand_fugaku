@@ -1442,6 +1442,26 @@ EOF
   end
 end
 
+def submit_env_19(threads, app_name = "", version = "")
+  str =<<"EOF"
+#!/usr/bin/env bash
+    set -e
+    . /vol0004/apps/oss/spack-v0.19/share/spack/setup-env.sh
+EOF
+
+  if version == "" # app_name is hash
+    str << "    spack load /#{app_name}\n"
+  else
+    str << "    spack load #{app_name}@#{version}\n"
+  end
+
+  if threads != 0
+    return str << "    export OMP_NUM_THREADS=#{threads}"
+  else
+    return str
+  end
+end
+
 def submit_fugaku_llio_exec_file(queue, nodes, procs, exec_file)
   return if queue != "large" and queue != "spot-large"
   

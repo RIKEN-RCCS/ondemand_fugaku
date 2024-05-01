@@ -15,7 +15,7 @@ script:
 batch_connect:
   template: "basic"
   script_wrapper: |
-    <%= submit_env(fugaku_threads, "scale", version) %>
+    <%= submit_env_19(fugaku_threads, "scale", version) %>
     export FORT90L=-Wl,-T
     export PLE_MPI_STD_EMPTYFILE=off
     export OMP_WAIT_POLICY=active

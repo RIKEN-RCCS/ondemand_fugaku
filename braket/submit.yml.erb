@@ -15,6 +15,6 @@ script:
 batch_connect:
   template: "basic"
   script_wrapper: |
-    <%= submit_env(fugaku_threads, "braket", version) %>
+    <%= submit_env_19(fugaku_threads, "braket", version) %>
     <%= submit_working_dir(working_dir) %>
     mpiexec bra --mode simple --file "<%= input_file %>"

@@ -16,7 +16,7 @@ script:
 batch_connect:
   template: "basic"
   script_wrapper: |
-    <%= submit_env(fugaku_threads, "ntchem", version) %>
+    <%= submit_env_19(fugaku_threads, "ntchem", version) %>
     export OMP_STACKSIZE=128M
     
     function calc() {
