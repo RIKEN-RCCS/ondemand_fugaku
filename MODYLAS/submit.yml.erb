@@ -20,4 +20,4 @@ batch_connect:
     <%= submit_fugaku_llio(queue, fugaku_llio, working_dir) %>
         
     cd "<%= working_dir %>"
-    mpiexec <%= exec_110b %> <%= session_name %>
+    mpiexec <%= executable %> <%= session_name %>
