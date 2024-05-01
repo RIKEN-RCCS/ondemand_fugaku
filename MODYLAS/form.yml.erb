@@ -1,17 +1,17 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
   # spack versions modylas-new -s
-  versions = ["1.1.0b"]
-  # spack find --paths modylas-new@1.1.0b
-  modylas110b = form_load_cache("modylas110b")  
+  versions = [["1.1.0 (ff=charmm)", "qpbwc72"], ["1.1.0 (ff=gaff)", "inzalz2"], ["1.1.0 (ff=oplsaa)", "zhajus2"]]
+  # spack find --paths modylas-new@1.1.0
+  modylas110 = form_load_cache("modylas110")
 -%>
 ---
 title: MODYLAS
 form:
 <%= form_queue("fugaku_small_and_large") %>
 <%= form_working_dir() %>
-<%= form_version(versions) %>
-<%= form_exec(versions[0], modylas110b, "modylas") %>
+<%= form_select("version", "Version", versions) %>
+<%= form_select("executable", "Executable file", modylas110, "modylas") %>
 <%= form_session_name() %>
 <%= form_fugaku_llio("working_dir") %>
 <%= form_email(false) %>
