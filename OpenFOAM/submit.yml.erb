@@ -19,9 +19,9 @@ batch_connect:
     set -e
     . /vol0004/apps/oss/spack/share/spack/setup-env.sh
     if [ "<%= version %>" = "foundation" ]; then
-      spack load openfoam-org@<%= foundation_version %>
+      spack load openfoam-org@<%= foundation_version %> arch=linux-rhel8-a64fx
     else
-      spack load openfoam@<%= opencfd_version %>
+      spack load openfoam@<%= opencfd_version %> arch=linux-rhel8-a64fx
     fi
     <%= submit_fugaku_llio(queue, fugaku_llio, working_dir) %>
     
