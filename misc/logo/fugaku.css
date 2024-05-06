@@ -37,9 +37,7 @@ h4.fugaku_info {
     font-size: 1.2rem;
     padding-left: 20px;
 }
-.no_wrap{
-    white-space: nowrap;
-}
+
 .graph {
     position: relative; /* IE is dumb */
     /*width: 200px;*/
@@ -121,14 +119,12 @@ h4.fugaku_info {
 .link th {
     padding: 5px 10px;
     background: #2A2A2A;
-    /*background-color: #5507FF;*/
     border: 1px solid #AAAAAA;
     text-align: center;
 }
 .link td {
     padding: 5px 10px;
     border: 1px solid #AAAAAA;
-    white-space: nowrap;
 }
 .link img {
     border: 0.2px solid #333333;
