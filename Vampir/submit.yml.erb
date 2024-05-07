@@ -1,7 +1,7 @@
 <%-
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
 
-  hours  = submit_hours(queue, NOT_USED, NOT_USED, NOT_USED, NOT_USED, NOT_USED, NOT_USED, NOT_USED, prepost1_hours, prepost2_hours, reserved_hours)
+  hours  = submit_hours(queue, NOT_USED, NOT_USED, NOT_USED, NOT_USED, NOT_USED, NOT_USED, prepost1_hours, prepost2_hours, reserved_hours)
   cores  = submit_cores(queue, gpu1_cores, gpu2_cores, mem1_cores, mem2_cores, reserved_cores)
   memory = submit_memory(queue, gpu1_memory, gpu2_memory, mem1_memory, mem2_memory, reserved_memory)
 -%>
