@@ -81,8 +81,9 @@
     <%-   end -%>
     <%- end -%>
 
-    <%- home_disk_info  = dashboard_home_disk() -%>
-    <%- home_inode_info = dashboard_home_inode() -%>
+    <%- if dashboard_exist_user_info() -%>
+    <%-   home_disk_info  = dashboard_home_disk() -%>
+    <%-   home_inode_info = dashboard_home_inode() -%>
     <tr>
       <td>/home</td>
       <td><%= home_disk_info.volume %></td>
@@ -100,5 +101,6 @@
       <td> - </td>
       <td> - </td>
     </tr>
+    <%- end -%>
   </table>
 </div>

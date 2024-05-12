@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+CMD=`basename $0`
+ssh login.fugaku.r-ccs.riken.jp $CMD "$@"
+

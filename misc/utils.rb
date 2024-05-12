@@ -946,6 +946,11 @@ def form_load_cache(file)
   return cache
 end
 
+def dashboard_exist_user_info()
+  file = ACC_HOME_DIR + ENV['USER'] + ".disk"
+  return File.exist?(file)
+end
+
 def dashboard_info(file)
   info = []
   File.open(file, "r") do |f|
@@ -973,7 +978,7 @@ def dashboard_resource(group_name)
       i = l.split(",")
       if ((i[0] == "SUBTHEMEPERIOD" and i[2] == period) or i[0] == "SUBTHEME") and i[1] == group_name and i[3].to_i != 0
         limit = i[3].to_i/3600
-        usage = i[7].to_i/3600
+        usage = i[4].to_i/3600
         avail = i[6].to_i/3600
         ratio = ((usage * 100) / limit).round
         return Resource_info.new(num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), ratio)
