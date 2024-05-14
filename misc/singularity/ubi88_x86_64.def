@@ -143,6 +143,9 @@ From: redhat/ubi8:8.6
   dnf -y --releasever=8.8 install R
   dnf -y --releasever=8.8 install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2023.12.1-402-x86_64.rpm
   #
+  # TRAME
+  pip3.9 install trame trame-vuetify trame-matplotlib trame-vtk vtk
+  #
   # Clean up
   dnf clean all
   rm -f /etc/pki/entitlement/*
