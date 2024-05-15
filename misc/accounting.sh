@@ -116,10 +116,17 @@ mkdir -p ${GROUP_DIR} ${HOME_DIR}
 	    # rist-で始まるグループではディスクを利用していなくてもバジェットを利用しているので、それらは処理を行う
 	    if [[ -s ${FILE} || ${II} == rist-* ]]; then
 	      FILE=${DIR}/${YEAR}-${PERIOD}.csv
+	      FILE_R=${DIR}/resource.csv
 
-	      # メモ：awkコマンドで下記のresource_info.rbを代替すると、CSVの要素の中にカンマがある場合に
-	      # 対応できないため、rubyのCSVモジュールを使っている
-	      su - ktool -c "${REMOTE_SSH} ${PJSTATA} -c -g ${II} -d ${FIRSTDAY}:" | ruby ${OOD_BASE_DIR}/misc/resource_info.rb > ${FILE}
+	      if [ `egrep '^SUBTHEMEPERIOD' ${FILE_R} | wc -l` -eq 0 ]; then
+		# 随時課題の場合（前期・後期がない）
+		egrep '^USER' ${FILE_R} | awk -F, '{print $2","$4}' > ${FILE}
+	      else
+		# 前期後期のある課題の場合
+	        # メモ：awkコマンドで下記のresource_info.rbを代替すると、CSVの要素の中にカンマがある場合に
+	        # 対応できないため、rubyのCSVモジュールを使っている
+	        su - ktool -c "${REMOTE_SSH} ${PJSTATA} -c -g ${II} -d ${FIRSTDAY}:" | ruby ${OOD_BASE_DIR}/misc/resource_info.rb > ${FILE}
+	      fi
 
 	      if [ $? -ne 0 ]; then
                 rm ${LOCKFILE} ${GROUP_TMP}
