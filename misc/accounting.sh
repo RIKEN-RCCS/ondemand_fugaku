@@ -10,7 +10,6 @@ HOME_DIR=${ACCOUNTING_DIR}/home
 GROUP_TMP=${GROUP_DIR}/group.tmp
 DISK_TMP=${HOME_DIR}/disk.tmp
 INODE_TMP=${HOME_DIR}/inode.tmp
-FREE_QUEUE_TMP=${ACCOUNTING_DIR}/free_queue.tmp
 #=============================================================================
 ACCOUNTJ="/usr/local/bin/accountj"
 ACCOUNTD="/usr/local/bin/accountd"
@@ -21,7 +20,6 @@ YEAR=$(date +%Y)
 MONTH=$(date +%m)
 YEAR=$(( $MONTH >= 1 && $MONTH <= 3 ? `expr ${YEAR} - 1` : ${YEAR} ))  # 年度なので、1月から3月の場合はYEARを1つ少なくする
 FIRSTDAY=$(( $MONTH >= 4 && $MONTH <= 9 ? ${YEAR}0401 : ${YEAR}1001 )) # 前期の開始日は4/1、後期の開始日は10/1
-PERIOD=$((   $MONTH >= 4 && $MONTH <= 9 ? 1 : 2 )) # 前期は1、後期は2
 #=============================================================================
 # ディスク容量が95%以上の場合、スクリプトを停止
 VAR=$(df / | tail -n 1 | awk '{print $5}' | sed -r 's/%//g')
@@ -63,7 +61,7 @@ mkdir -p ${GROUP_DIR} ${HOME_DIR}
         chown root:${II} ${DIR}
 	{
 	    # グループ名1つ1つに対してaccountj -gを実行し、グループ毎のバジェットを取得
-	    FILE=${DIR}/resource.csv
+	    FILE=${DIR}/group_budget.csv
 	    su - ktool -c "${REMOTE_SSH} ${ACCOUNTJ} -g ${II} -c -r 1 -e -E" | tr -d '"' | egrep '^SUBTHEME|^SUBTHEMEPERIOD|^EXCLUSIVEUSE|^RESOURCE_GROUP|^USER' | egrep -v '^USER_' > ${FILE}
 	    
 	    if [ $? -ne 0 ]; then
@@ -111,21 +109,22 @@ mkdir -p ${GROUP_DIR} ${HOME_DIR}
               fi
 	    fi
 
-	    # グループ毎のバジェットを取得（前期 or 後期毎の各ユーザのリソース使用状況を取得）
+	    # ユーザ毎のバジェットを取得
 	    # 上と同様にディスクを使用しているグループだけ以降の処理を行うが、
 	    # rist-で始まるグループではディスクを利用していなくてもバジェットを利用しているので、それらは処理を行う
 	    if [[ -s ${FILE} || ${II} == rist-* ]]; then
-	      FILE=${DIR}/${YEAR}-${PERIOD}.csv
-	      FILE_R=${DIR}/resource.csv
+	      FILE_U=${DIR}/user_budget.csv
+	      FILE_G=${DIR}/group_budget.csv
 
-	      if [ `egrep '^SUBTHEMEPERIOD' ${FILE_R} | wc -l` -eq 0 ]; then
-		# 随時課題の場合（前期・後期がない）
-		egrep '^USER' ${FILE_R} | awk -F, '{print $2","$4}' > ${FILE}
+	      if [ `egrep '^SUBTHEMEPERIOD' ${FILE_G} | wc -l` -eq 0 ]; then
+		# 随時課題の場合（前期・後期がない）、ACCOUNTJの情報を用いる
+		egrep '^USER' ${FILE_G} | awk -F, '{print $2","$4}' > ${FILE_U}
 	      else
-		# 前期後期のある課題の場合
-	        # メモ：awkコマンドで下記のresource_info.rbを代替すると、CSVの要素の中にカンマがある場合に
+		# 前期後期のある課題の場合、後期にACCOUNTJを用いると前期との合計値が出てしまうため、
+		# PJSTATAを使って後期からの値を計算する（前期の場合も、上のif文内で処理しても良い）
+	        # awkコマンドで下記のresource_info.rbを代替すると、CSVの要素の中にカンマがある場合に
 	        # 対応できないため、rubyのCSVモジュールを使っている
-	        su - ktool -c "${REMOTE_SSH} ${PJSTATA} -c -g ${II} -d ${FIRSTDAY}:" | ruby ${OOD_BASE_DIR}/misc/resource_info.rb > ${FILE}
+	        su - ktool -c "${REMOTE_SSH} ${PJSTATA} -c -g ${II} -d ${FIRSTDAY}:" | ruby ${OOD_BASE_DIR}/misc/resource_info.rb > ${FILE_U}
 	      fi
 
 	      if [ $? -ne 0 ]; then
@@ -133,11 +132,11 @@ mkdir -p ${GROUP_DIR} ${HOME_DIR}
                 exit 1
 	      fi
 	      
-              if [ -s ${FILE} ]; then
-                chmod 640 ${FILE}
-                chown root:${II} ${FILE}
+              if [ -s ${FILE_U} ]; then
+                chmod 640 ${FILE_U}
+                chown root:${II} ${FILE_U}
               else
-                rm -f ${FILE}
+                rm -f ${FILE_U}
               fi
 	    fi
 	} &

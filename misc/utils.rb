@@ -14,7 +14,7 @@ ACC_DIR           = SYS_OOD_DIR + "accounting/"
 ACC_GROUP_DIR     = ACC_DIR + "group/"
 ACC_HOME_DIR      = ACC_DIR + "home/"
 APP_CACHE_DIR     = SYS_OOD_DIR + "app/"
-Resource_info     = Struct.new(:limit, :usage, :avail, :ratio)
+Budget_info       = Struct.new(:limit, :usage, :avail, :ratio)
 Disk_info         = Struct.new(:volume, :limit, :usage, :avail, :ratio)
 NOT_DEFINED       = -1
 NOT_USED          = -1
@@ -295,8 +295,8 @@ def check_cd_portal()
   return `groups`.split.include?("ra022310")
 end
 
-def get_fugaku_pt_resource(group, w_commas = true)
-  file = ACC_GROUP_DIR + group + "/resource.csv"
+def get_fugaku_pt(group, w_commas = true)
+  file = ACC_GROUP_DIR + group + "/group_budget.csv"
   if File.exist?(file)
     CSV.foreach(file) do |row|
       if row[0] == "RESOURCE_GROUP" and row[1] == "f-pt"
@@ -966,22 +966,22 @@ def num_with_commas(number)
   return number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
 end
 
-def dashboard_resource(group_name)
-  file = ACC_GROUP_DIR + group_name + "/resource.csv"
+def dashboard_budget(group_name)
+  file = ACC_GROUP_DIR + group_name + "/group_budget.csv"
   return nil unless File.exist?(file)
 
   period = Date.today.month.between?(4, 9)? "1" : "2"
   File.open(file, "r") do |f|
-    # Resources in Fugaku are divided into early and late periods.
+    # Budgets in Fugaku are divided into early and late periods.
     # The order is reversed to give priority to the later period.
     f.readlines.reverse_each do |l|
       i = l.split(",")
-      if ((i[0] == "SUBTHEMEPERIOD" and i[2] == period) or i[0] == "SUBTHEME") and i[1] == group_name and i[3].to_i != 0
+      if ((i[0] == "SUBTHEMEPERIOD" and i[2] == period) or i[0] == "SUBTHEME") and i[3].to_i != 0
         limit = i[3].to_i/3600
         usage = i[4].to_i/3600
         avail = i[6].to_i/3600
         ratio = ((usage * 100) / limit).round
-        return Resource_info.new(num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), ratio)
+        return Budget_info.new(num_with_commas(limit), num_with_commas(usage), num_with_commas(avail), ratio)
       end
     end
   end
@@ -989,8 +989,8 @@ def dashboard_resource(group_name)
   return nil
 end
 
-def get_resource_limit(group_name)
-  tmp = dashboard_resource(group_name)
+def get_budget_limit(group_name)
+  tmp = dashboard_budget(group_name)
   return tmp != nil ? tmp[0].gsub(",", "") : nil
 end
 

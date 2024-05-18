@@ -11,7 +11,7 @@
       <th rowspan="2">Volume</th>
       <th colspan="4">Capacity (GiB)</th>
       <th colspan="4">Inode</th>
-      <th colspan="4">Resource (NH)</th>
+      <th colspan="4">Budget (NH)</th>
     </tr>
     <tr>
       <th>Limit</th><th>Usage</th><th>Avail.</th><th>Ratio</th>
@@ -19,21 +19,21 @@
       <th>Limit (f-pt)</th>
       <th>Usage</th><th>Avail.</th><th>Ratio</th>
     </tr>
-    <%- groups = `groups`.split - ["fugaku", "f-op"]     -%>
-    <%- groups.delete_if { |i| i.start_with?("isv") }    -%>
-    <%- groups.each do |group_name|                      -%>
-    <%-   disk_info     = dashboard_disk(group_name)     -%>
-    <%-   inode_info    = dashboard_inode(group_name)    -%>
-    <%-   resource_info = dashboard_resource(group_name) -%>
-    <%-   if disk_info.empty? and resource_info == nil   -%>
-    <%-     next                                         -%>
-    <%-   elsif disk_info.empty?                         -%>
-    <%-     num_volumes = 1                              -%>
-    <%-   else                                           -%>
-    <%-     num_volumes = disk_info.size                 -%>
-    <%-   end                                            -%>
-    <%-                                                  -%>
-    <%-   num_volumes.times do |i|                       -%>
+    <%- groups = `groups`.split - ["fugaku", "f-op"]  -%>
+    <%- groups.delete_if { |i| i.start_with?("isv") } -%>
+    <%- groups.each do |group_name|                   -%>
+    <%-   disk_info   = dashboard_disk(group_name)    -%>
+    <%-   inode_info  = dashboard_inode(group_name)   -%>
+    <%-   budget_info = dashboard_budget(group_name)  -%>
+    <%-   if disk_info.empty? and budget_info == nil  -%>
+    <%-     next                                      -%>
+    <%-   elsif disk_info.empty?                      -%>
+    <%-     num_volumes = 1                           -%>
+    <%-   else                                        -%>
+    <%-     num_volumes = disk_info.size              -%>
+    <%-   end                                         -%>
+    <%-                                               -%>
+    <%-   num_volumes.times do |i|                    -%>
     <tr>
     <%-     if i == 0 -%>
       <td rowspan="<%= num_volumes %>"><%= group_name %></td>
@@ -65,11 +65,11 @@
     <%-     end -%>
 
     <%-     if i == 0 -%>
-    <%-       unless resource_info == nil -%>
-      <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.limit %> (<%= get_fugaku_pt_resource(group_name) %>)</td>
-      <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.usage %></td>
-      <td align="right" rowspan="<%= num_volumes %>"><%= resource_info.avail %></td>
-      <td rowspan="<%= num_volumes %>"><div class="graph"><strong class="bar_<%= dashboard_color(resource_info.ratio) %>" style="width: <%= resource_info.ratio %>%;"><%= resource_info.ratio %>%</strong></div></td>
+    <%-       unless budget_info == nil -%>
+      <td align="right" rowspan="<%= num_volumes %>"><%= budget_info.limit %> (<%= get_fugaku_pt(group_name) %>)</td>
+      <td align="right" rowspan="<%= num_volumes %>"><%= budget_info.usage %></td>
+      <td align="right" rowspan="<%= num_volumes %>"><%= budget_info.avail %></td>
+      <td rowspan="<%= num_volumes %>"><div class="graph"><strong class="bar_<%= dashboard_color(budget_info.ratio) %>" style="width: <%= budget_info.ratio %>%;"><%= budget_info.ratio %>%</strong></div></td>
     <%-       else -%>
       <td rowspan="<%= num_volumes %>"> - </td>
       <td rowspan="<%= num_volumes %>"> - </td>
