@@ -44,7 +44,7 @@
             <li>最新の富岳のインフォメーション</li>
             <li>富岳とプリポスト環境のキューの待ち状況</li>
             <li>富岳の運用スケジュール</li>
-            <li>ディスクとリソースの使用率</li>
+            <li>ディスクとバジェットの使用率</li>
             <li>最近利用したアプリケーション（最大4つ）</li>
             <li>Passenger Apps</li>
           </ol>
@@ -95,12 +95,20 @@
           <img style="border:solid 1px #000000" alt="active jobs" src="./img/activejobs.png" width="600" />
         </p>
 
+	<h3>Budget Info</h3>
+        <p>
+          グループ内の各ユーザのバジェット利用量を表示します。また、テーマ管理者は各ユーザのバジェットに上限値を設定できます。
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="budget info" src="./img/budget_info.png" width="600" />
+        </p>
+	
         <h3>Disk Info</h3>
         <p>
           グループ内の各ユーザのディスク利用量を表示します。
         </p>
         <p>
-          <img style="border:solid 1px #000000" alt="disk info" src="./img/diskinfo.png" width="600" />
+          <img style="border:solid 1px #000000" alt="disk info" src="./img/disk_info.png" width="600" />
         </p>
         
         <h3>Home Directory</h3>
@@ -146,23 +154,14 @@
           「mount」をクリックすると、HPCI共用ストレージが富岳にマウントされます。富岳上のパスは「Mount Path」に表示されます。
         </p>
 
-        <h3>Disk Info</h3>
+	
+        <h3>Job Composer</h3>
         <p>
-          グループ内の各ユーザのリソース利用量を表示します。
+          ジョブの作成と投入を行うことができます。
         </p>
         <p>
-          <img style="border:solid 1px #000000" alt="resource info" src="./img/resourceinfo.png" width="600" />
+          <img alt="job composer" src="./img/jobcomposer3.png" width="600" />
         </p>
-        
-        <!--
-        <h3>Job Submitter</h3>
-        <p>
-          ジョブの作成と投入を行うことができます。入力項目はBatch Jobsとほぼ同じですが、「Commands」というフィールドに複数行の命令を記述できます。
-        </p>
-        <p>
-          <img alt="job submitter" src="./img/job_submitter.png" width="600" />
-        </p>
-        -->
 
         <h3>Shell Access</h3>
         <p>
