@@ -27,11 +27,12 @@ td {
 <font size="5">Disk usage for each user by group.</font>
 </p>
 <% @groups.each_with_index do |g, i| %>
-  <h2><%= g %> <font size="3">(Updated at <%= @disk_info[i][0] %> (JST) )</font></h2>
+  <h2><%= g %> <font size="3">(Updated at <%= @disk_info[i][0] %>)</font></h2>
   <table class="table table-bordered" style="border: solid 2px #888888;">
     <tr>
       <th style="vertical-align: middle;" rowspan="2">User</th>
       <th style="vertical-align: middle;" rowspan="2">Volume</th>
+      <th style="vertical-align: middle;" rowspan="2">Path</th>
       <th colspan="4">Capacity (GiB)</th>
       <th colspan="4">Inode</th>
     </tr>
@@ -49,18 +50,20 @@ td {
     <tr>
       <% user           = d[0] %>
       <% volume         = d[1] %>
-      <% capacity       = d[2] %>
-      <% inode          = d[3] %>
-      <% capacity_limit = d[4] %>
-      <% inode_limit    = d[5] %>
-      <% capacity_avail = d[6] %>
-      <% inode_avail    = d[7] %>
+      <% path           = d[2] %>
+      <% capacity       = d[3] %>
+      <% inode          = d[4] %>
+      <% capacity_limit = d[5] %>
+      <% inode_limit    = d[6] %>
+      <% capacity_avail = d[7] %>
+      <% inode_avail    = d[8] %>
       <% if user == ENV['USER'] %>
       <td style="color: red; font-weight: bold"><%= user %></td>
       <% else %>
       <td><%= user %></td>
       <% end %>
-      <td>/<%= volume %></td>
+      <td><%= volume %></td>
+      <td><%= path %></td>
       <% if capacity_limit != -1 %>
       <td><%= num_with_commas(capacity_limit) %></td>
       <td><%= num_with_commas(capacity) %></td>
