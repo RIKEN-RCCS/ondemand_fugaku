@@ -1,29 +1,29 @@
 <style type="text/css">
-table tr:nth-child(even) td {
-  background: #FFDBC9;
-  border: solid 2px #888888;
-  vertical-align: middle;
-  font-size: 16px;
-}
-table tr:nth-child(odd) td {
-  border: solid 2px #888888;
-  vertical-align: middle;
-  font-size: 16px;
-}
-th {
-  background-color: #880000;
-  color: white;
-  text-align: center;
-  font-weight: bold;
-  vertical-align: middle;
-  font-size: 16px;
-}
-td {
-  text-align: right;
-}
-input {
-  outline: solid 1px #FFDBC9;
-}
+  table tr:nth-child(even) td {
+    background: #FFDBC9;
+    border: solid 2px #888888;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  table tr:nth-child(odd) td {
+    border: solid 2px #888888;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  th {
+    background-color: #880000;
+    color: white;
+    text-align: center;
+     font-weight: bold;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  td {
+    text-align: right;
+  }
+  input {
+    outline: solid 1px #FFDBC9;
+  }
 </style>
 
 <h1><%= title %> <font size="3">(Updated at <%= get_update_time() %>)</font></h1>
@@ -65,7 +65,7 @@ input {
         </div>
       </td>
       <td>
-        <form action="" method="post">
+        <form action="/pun/sys/Budget_Info/new" method="post">
 	<% if @is_admin[i] %>
 	<input type="hidden" name="group" value="<%= g %>"    required>
   	<input type="hidden" name="user"  value="<%= user %>" required>
