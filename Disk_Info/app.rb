@@ -35,7 +35,7 @@ get '/' do
       s        = l.split
       user     = s[1]
       volume   = s[0]
-      path     = (volume == "vol0001")? "/2ndfs/" + g : "/data/" + g + ", /share/" + g
+      path     = (volume == "vol0001")? ["/2ndfs/" + g] : ["/data/" + g,  "/share/" + g]
       capacity = s[3].gsub(",", "").to_i
       inode    = s[2].gsub(",", "").to_i
       capacity_limit = get_disk_limit("capacity", g, volume).to_i
@@ -64,7 +64,7 @@ get '/' do
     home_inode_info = dashboard_home_inode()
     user            = ENV['USER']
     volume          = home_disk_info.volume
-    path            = ENV['HOME']
+    path            = [ENV['HOME']]
     capacity        = home_disk_info.usage
     inode           = home_inode_info.usage
     capacity_limit  = home_disk_info.limit

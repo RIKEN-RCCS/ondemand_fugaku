@@ -1,27 +1,28 @@
 <style type="text/css">
-table tr:nth-child(even) td {
-  background: #FFEEFF;
-  border: solid 2px #888888;
-  vertical-align: middle;
-  font-size: 16px;
-}
-table tr:nth-child(odd) td {
-  border: solid 2px #888888;
-  vertical-align: middle;
-  font-size: 16px;
-}
-th {
-  background-color: purple;
-  color: white;
-  text-align: center;
-  font-weight: bold;
-  vertical-align: middle;
-  font-size: 16px;
-}
-td {
-  text-align: right;
-}
+  table tr:nth-child(even) td {
+    background: #FFEEFF;
+    border: solid 2px #888888;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  table tr:nth-child(odd) td {
+    border: solid 2px #888888;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  th {
+    background-color: purple;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  td {
+    text-align: right;
+  }
 </style>
+
 <h1><%= title %></h1>
 <p>
 <font size="5">Disk usage for each user by group.</font>
@@ -63,7 +64,11 @@ td {
       <td><%= user %></td>
       <% end %>
       <td><%= volume %></td>
-      <td><%= path %></td>
+      <td>
+      <% path.each_with_index do |p, i| %>
+        <a target="_blank" href="https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/dashboard/files/fs<%= p %>"><%= p %></a><% if path.size() - 1 != i %>, <% end %>
+      <% end %>
+      </td>
       <% if capacity_limit != -1 %>
       <td><%= num_with_commas(capacity_limit) %></td>
       <td><%= num_with_commas(capacity) %></td>
