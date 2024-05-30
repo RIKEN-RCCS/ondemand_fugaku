@@ -12,6 +12,18 @@
     <th>Passphrase</th>
     <th>Mount Path</th>
   </tr>
+  
+  <% if @data.empty? %>
+  <tr>
+    <form action="" method="post">
+      <td><input type="submit"   name="act"     value="mount"></td>
+      <td><input type="text"     name="hpci_id" id="hpci_id" required></td>
+      <td><input type="number"   name="time"    id="time" value="12" min="1" max="168" required></td>
+      <td><input type="password" name="pass"    id="pass"></td>
+      <td bgcolor="gray"></td>
+    </form>
+  </tr>
+  <% else %>
   <% @data.each do |k, v| %>
   <tr>
     <form action="" method="post">
@@ -23,7 +35,7 @@
       <td><input type="number"   name="time"    id="time"    value="<%= v['time'] %>" min="1" max="168" required></td>
       <td><input type="password" name="pass"    id="pass"></td>
       <td>
-      <% v['mount_path'].each_with_index{|d, index| %>
+      <% v['mount_path'].each_with_index do |d, index| %>
       <% if v['act'] == 'mount' then %>
       <%= d %>
       <% else %>
@@ -32,22 +44,10 @@
       <% if index < v['mount_path'].length - 1 then %>
       <br>
       <% end %>
-      <% } %>
+      <% end %>
       </td>
     </form>
   </tr>
   <% end %>
-
-  <% if @data.empty? %>
-  <tr>
-    <form action="" method="post">
-      <td><input type="submit"   name="act"     value="mount"></td>
-      <td><input type="text"     name="hpci_id" id="hpci_id" required></td>
-      <td><input type="number"   name="time"    id="time" value="12" min="1" max="168" required></td>
-      <td><input type="password" name="pass"    id="pass"></td>
-      <td bgcolor="#aaaaaa"></td>
-    </form>
-  </tr>
   <% end %>
-  <% @params %>
 </table>

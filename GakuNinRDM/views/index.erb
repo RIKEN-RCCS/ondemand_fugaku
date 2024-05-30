@@ -14,11 +14,11 @@
         <input type="<%= v['available_action'] == 'mount' ? 'submit' : 'hidden' %>" name="<%= v['available_action'] == 'mount' ? 'act' : 'dummy' %>" value="delete">
       </td>
       <% if v['available_action'] == 'mount' then %>
-      <td style="border: solid 2px #333333;"><input type="text" name="mount_path"  id="mount_path"  value="<%= k %>"required></td>
-      <td style="border: solid 2px #333333;"><input type="text" name="rdm_node_id" id="rdm_node_id" value="<%= v['rdm_node_id'] %>"required></td>
-      <td style="border: solid 2px #333333;"><input type="text" name="rdm_token"   id="rdm_token"   value="<%= v['rdm_token'] %>"required></td>
+      <td style="border: solid 2px #333333;"><input type="text" name="mount_path"  id="mount_path"  value="<%= k %>" required></td>
+      <td style="border: solid 2px #333333;"><input type="text" name="rdm_node_id" id="rdm_node_id" value="<%= v['rdm_node_id'] %>" required></td>
+      <td style="border: solid 2px #333333;"><input type="text" name="rdm_token"   id="rdm_token"   value="<%= v['rdm_token'] %>" required></td>
       <% else %>
-      <td style="border: solid 2px #333333;"><input type="hidden" name="mount_path"  id="mount_path"  value="<%= k %>"required>
+      <td style="border: solid 2px #333333;"><input type="hidden" name="mount_path"  id="mount_path"  value="<%= k %>" required>
         <a href="./dashboard/files/fs/<%= k %>" target="_blank">
           <%= k %>
 	</a>
@@ -37,7 +37,4 @@
       <td style="border: solid 2px #333333;"><input type="text"   name="rdm_token"   id="rdm_token"   required></td>
     </form>
   </tr>
-
-<% @params %>
-
 </table>

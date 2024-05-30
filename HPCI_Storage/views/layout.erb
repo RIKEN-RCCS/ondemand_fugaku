@@ -8,7 +8,7 @@
   </head>
   <body>
     <header>
-      <!-- navbar  -->
+    <!-- navbar  -->
       <nav class="ood-appkit navbar navbar-inverse navbar-static-top" role="navigation">
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
@@ -33,14 +33,11 @@
       </nav>
     </header>
 
-  <div class="container" role="main">
+    <div class="container" role="main">
     <% if @error %>
       <div class="alert alert-danger"><%= @error %></div>
     <% end %>
     <%== yield %>
-  </div>
-
-  <script src="<%= url("/jquery-3.2.1/jquery-3.2.1.min.js") %>"></script>
-  <script src="<%= url("/bootstrap-3.3.7-dist/js/bootstrap.min.js") %>"></script>
+    </div>
   </body>
 </html>
