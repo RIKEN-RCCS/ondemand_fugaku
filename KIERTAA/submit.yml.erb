@@ -41,7 +41,7 @@
       elsif line.match(/^#PJM -L "elapse/) or line.match(/^#PJM -S/) or line.match(/^#PJM -g/)
         # Do nothing
       elsif match = line.match(/^#PJM/)
-        options.append([line.split[1], line.split[2]])
+        options.append([line.split[1], line.split[2].gsub(/^"|"$/, '')]) # Remove the double quotes
       else
         output.puts line
       end
