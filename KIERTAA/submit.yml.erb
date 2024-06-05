@@ -1,0 +1,92 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+
+  fugaku_group      = sample_path.split("/")[2]
+  sample            = File.basename(sample_path)
+  datadir_base      = "/2ndfs/" + fugaku_group + "/" + ENV['USER']
+  enable_debug_mode = (debug_mode == "true")? "yes" : "no"
+  conf_file         = staged_root.to_s + "/ct.conf"
+  run_file          = staged_root.to_s + "/run.sh"
+  run_tmpfile       = staged_root.to_s + "/runtmp.sh"
+
+  FileUtils.mkdir_p(staged_root.to_s)
+  File.open(conf_file, 'w') do |f|
+    f.puts "group_id     = \"#{fugaku_group}\""
+    f.puts "sample       = \"#{sample}\""
+    f.puts "mode         = \"#{mode}\""
+    f.puts "pix_size     = #{pix_size}"
+    f.puts "center       = #{center}" if enable_center == "true"
+    f.puts "filter       = #{filter}"
+    f.puts "rmr          = #{rmr}" if enable_rmr == "true"
+    f.puts "binning      = #{binning}" if enable_binning == "true"
+    f.puts "rect         = (#{rect_orgx},#{rect_orgy}) (#{rect_roiw},#{rect_roih})" if enable_rect == "true"
+    f.puts "zero_padding = #{zero_padding}"
+    f.puts "debug_mode   = #{enable_debug_mode}"
+    f.puts "ppn          = #{ppn}" if enable_ppn == "true"
+    f.puts "job_type     = #{job_type}"
+    f.puts "datadir_base = #{datadir_base}"
+  end
+
+  o, e, s = Open3.capture3("PATH=/vol0004/apps/opt/KIERTAA/bin:$PATH genjs_ct #{conf_file} > #{run_tmpfile}")
+  raise(StandardError, e) unless s.success?
+  node   = ""
+  rscgrp = ""
+  options = []
+  File.open(run_file, 'w') do |output|
+    File.foreach(run_tmpfile) do |line|
+      if match = line.match(/^#PJM -L "node=(.+?)"/)
+        node = match[1]
+      elsif match = line.match(/^#PJM -L "rscgrp=(.+?)"/)
+        rscgrp = match[1]
+      elsif line.match(/^#PJM -L "elapse/) or line.match(/^#PJM -S/) or line.match(/^#PJM -g/)
+        # Do nothing
+      elsif match = line.match(/^#PJM/)
+        options.append([line.split[1], line.split[2]])
+      else
+        output.puts line
+      end
+    end
+  end
+  # File.delete(run_tmpfile)
+  
+  if job_type == "bulk"
+    if startbulkno.to_i > endbulkno.to_i
+      raise "Start bulk number must be smaller than end bulk number."
+    else
+      options.append(["--bulk --sparam #{startbulkno}-#{endbulkno}"])
+    end
+    output_file = datadir_base + "/kiertaa.%J.out"
+    error_file  = datadir_base + "/kiertaa.%J.err"
+    stat_file   = datadir_base + "/kiertaa.%J.stats"
+  else
+    output_file = datadir_base + "/kiertaa.%j.out"
+    error_file  = datadir_base + "/kiertaa.%j.err"
+    stat_file   = datadir_base + "/kiertaa.%j.stats"
+  end
+
+  hours  = elapsed_time.to_i / 60
+  minite = elapsed_time.to_i % 60
+-%>
+---
+script:
+<%= submit_job_name("ood_kiertaa_" + sample) %>
+<%= submit_email(email, false) %>
+  output_path: <%= output_file %>
+  error_path:  <%= error_file  %>
+  native:
+    - "-L node=<%= node %>"
+    - "-L rscgrp=<%= rscgrp %>"
+    - "-L elapse=<%= hours %>:<%= minite %>:00"
+    - "-S --spath <%= stat_file %>"
+    - "-g <%= fugaku_group %>"
+    - "--no-check-directory"
+<%- options.each do |i| -%>
+    - <%= i[0] %> <%= i[1] %>
+<%- end -%>
+batch_connect:
+  template: "basic"
+  script_wrapper: |
+    #!/usr/bin/env bash
+
+    cd <%= datadir_base %>
+    bash <%= run_file %>

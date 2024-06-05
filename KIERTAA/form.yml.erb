@@ -1,0 +1,52 @@
+<%-
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+  
+  select_mode   = [["Step", "jasri_iap_s"], ["Step: Averaged-Direct", "jasri_iap_sad"], ["Step: Multi-Exposure", "jasri_iap_sme"], ["Step: Multi-Exposure & Averaged-Direct", "jasri_iap_smead"], ["Continuous", "jasri_iap_c"], ["Continuous: Multi-Exposed-Direct", "jasri_iap_cmd"]]
+  select_filter = [["Ramp", "ramp"], ["Hanning", "hanning"]]
+  hide_list     = ["enable-ppn", "enable-center", "filter", "enable-rmr", "enable-binning", "enable-rect", "zero-padding", "debug-mode", "job-type"]
+  samples       = []
+  #
+  groups = `groups`.split - EXCLUDED_GROUPS
+  groups.delete_if { |i| i.start_with?("isv") }
+  groups.each do |g|
+    raw_dir = "/2ndfs/" + g + "/" + ENV['USER'] + "/raw/"
+    if Dir.exist?(raw_dir)
+      `ls -vl1 #{raw_dir} | grep ^d | awk '{print $9}'`.split("\n").each do |d|
+        samples << raw_dir + d
+      end
+    end
+  end
+  
+  raise StandardError, "Not samples found in \"/2ndfs/[Group]/[User]/raw/\"" if samples.empty?
+-%>
+---
+title: KIERTÄÄ
+cluster: "fugaku"
+form:
+<%= form_number("elapsed_time", "Elapsed Time (1 min. - 4,320 min.)", "1", "4320", "1", "10") %>
+<%= form_select("sample_path", "Sample", samples) %>
+<%= form_select("mode", "Mode", select_mode) %>
+<%= form_number("pix_size", "Pixel Size (0.10 - 9.00)", "0.10", "9.00", "0.01", "1.00") %>
+<%= form_email(false) %>
+<%= form_check("show_advanced_options", "Show advanced options", "", false, hide_list) %>
+<%= form_check("enable_ppn", "Process per node", "", false, ["ppn"]) %>
+<%= form_select("ppn", "Process per node", ["24", "12", "8", "6", "4", "2", "1"], "24") %>
+<%= form_check("enable_center", "Center", "", false, ["center"]) %>
+<%= form_number("center", "Point (0 - 9,999)", "0", "9999", "1", "1234") %>
+<%= form_check("enable_rmr", "Ring-Artifact Removal", "", false, ["rmr"]) %>
+<%= form_number("rmr", "Kernel Size (3 - 99)", "3", "99", "2", "21", "Input number must be odd.") %>
+<%= form_check("enable_binning", "Boxel Binning Filter", "", false, ["binning"]) %>
+<%= form_number("binning", "Binning Size (2 - 99)", "2", "99", "1", "3") %>
+<%= form_check("enable_rect", "Rect Filter", "", false, ["rect-orgx", "rect-orgy", "rect-roiw", "rect-roih"]) %>
+<%= form_number("rect_orgx", "Origin x: (0 - 9,999)", "0", "9999", "1", "0") %>
+<%= form_number("rect_orgy", "Origin y: (0 - 9,999)", "0", "9999", "1", "0") %>
+<%= form_number("rect_roiw", "ROI w: (0 - 9,999)", "0", "9999", "1", "0") %>
+<%= form_number("rect_roih", "ROI h: (0 - 9,999)", "0", "9999", "1", "0") %>
+<%= form_check("debug_mode", "Debug Mode", "", false) %>
+<%= form_select("filter", "Filter", select_filter, "ramp") %>
+<%= form_select("zero_padding", "Zero Padding", ["4", "10"], "4") %>
+<%= form_select("job_type", "Job Type", [["Single", "single", "data-hide-startbulkno: true, data-hide-endbulkno: true"], ["Bulk", "bulk", ""]], "Single") %>
+<%= form_number("startbulkno", "Start bulk number", "0", "", "1", "0") %>
+<%= form_number("endbulkno",   "End bulk number", "0", "", "1", "10") %>
+attributes:
+<%= form_attr() %>
