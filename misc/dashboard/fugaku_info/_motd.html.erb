@@ -1,4 +1,4 @@
-<%-
+<%
   require 'time'
   
   info = dashboard_info("/system/ood/motd/info.txt")
@@ -10,19 +10,19 @@
   one_month_ago = now - (30 * 24 * 60 * 60 * 1000)
 
   dashboard_url = "https://status.fugaku.r-ccs.riken.jp/d-solo/cf06d886-e672-41d8-a587-85ccb32fce7e/5a6f6KGM5b6F44Gh44K444On44OW5pWw?orgId=1"
--%>
+%>
 <div class="col-md-8 pb-3">
   <h4 class="fugaku_info">Information</h4>
   <div class="ps-3 pb-5">
     <table>
-      <%- info.each do |i| -%>
+      <% info.each do |i| %>
       <tr>
-	<%- c = i.split(":") -%>
+	<% c = i.split(":") %>
 	<td style="padding-left:15px; font-size:1rem; white-space: nowrap;"><%= c[0] %></td>
 	<td style="padding-left:15px; font-size:1rem; white-space: nowrap;"><%= c[1] %></td>
 	<td style="padding-left:15px; font-size:1rem;"><%= c[2] %></td>
       </tr>
-      <%- end -%>
+      <% end %>
     </table>
   </div>
   <h4 class="fugaku_info">Pending Jobs</h4>
