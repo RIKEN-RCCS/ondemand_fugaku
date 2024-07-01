@@ -1,4 +1,4 @@
-<%-
+<%
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
 
   fugaku_group      = sample_path.split("/")[2]
@@ -66,7 +66,7 @@
 
   hours  = elapsed_time.to_i / 60
   minite = elapsed_time.to_i % 60
--%>
+%>
 ---
 script:
 <%= submit_job_name("ood_kiertaa_" + sample) %>
@@ -80,9 +80,9 @@ script:
     - "-S --spath <%= stat_file %>"
     - "-g <%= fugaku_group %>"
     - "--no-check-directory"
-<%- options.each do |i| -%>
+<% options.each do |i| %>
     - <%= i[0] %> <%= i[1] %>
-<%- end -%>
+<% end %>
 batch_connect:
   template: "basic"
   script_wrapper: |

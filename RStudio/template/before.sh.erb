@@ -5,10 +5,10 @@ port=$(find_port ${host})
 password="$(create_passwd 16)"
 export RSTUDIO_PASSWORD="${password}"
 
-<%-
+<%
   require 'securerandom'
   csrf_token = SecureRandom.uuid
--%>
+%>
 export csrf_token="<%= csrf_token %>"
 
 ######################

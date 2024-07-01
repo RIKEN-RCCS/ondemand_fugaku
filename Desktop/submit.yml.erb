@@ -1,4 +1,4 @@
-<%-
+<%
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
 
   added_fugaku_queues = submit_added_fugaku_queues()
@@ -7,7 +7,7 @@
   procs  = submit_procs(queue, fugaku_small_procs, NOT_USED, fugaku_cd_portal_procs, fugaku_pt_procs)
   cores  = submit_cores(queue, gpu1_cores, gpu2_cores, mem1_cores, mem2_cores, reserved_cores)
   memory = submit_memory(queue, gpu1_memory, gpu2_memory, mem1_memory, mem2_memory, reserved_memory)
--%>
+%>
 ---
 script:
 <%= submit_job_name("ood_desktop") %>

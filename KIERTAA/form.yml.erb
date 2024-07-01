@@ -1,4 +1,4 @@
-<%-
+<%
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
   
   select_mode   = [["Step", "jasri_iap_s"], ["Step: Averaged-Direct", "jasri_iap_sad"], ["Step: Multi-Exposure", "jasri_iap_sme"], ["Step: Multi-Exposure & Averaged-Direct", "jasri_iap_smead"], ["Continuous", "jasri_iap_c"], ["Continuous: Multi-Exposed-Direct", "jasri_iap_cmd"]]
@@ -18,7 +18,7 @@
   end
   
   raise StandardError, "Not samples found in \"/2ndfs/[Group]/[User]/raw/\"" if samples.empty?
--%>
+%>
 ---
 title: KIERTÄÄ
 cluster: "fugaku"

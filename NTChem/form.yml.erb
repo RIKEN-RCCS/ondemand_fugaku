@@ -1,4 +1,4 @@
-<%-
+<%
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
   
   # spack versions ntchem -s
@@ -7,7 +7,7 @@
   #calcs = ["HF/DFT", "MP2", "Structure Optimization", "Nudged Elastic Band", "TDDFT"]
   calcs = [["HF/DFT (Hartree–Fock/Density Functional Theory)", "HF/DFT"]]
   working_dir_types = [["$HOME/$PJM_JOBID", "working_dir_jobid", "data-hide-working-dir-output: true, data-hide-working-dir-specified: true"], ["$PJM_SHAREDTMP", "working_dir_sharedtmp", "data-hide-working-dir-jobid: true, data-hide-working-dir-specified: true"], ["Specify a directory", "working_dir_specified", "data-hide-working-dir-jobid: true, data-hide-working-dir-output: true"]]
--%>
+%>
 ---
 title: NTChem
 form:
