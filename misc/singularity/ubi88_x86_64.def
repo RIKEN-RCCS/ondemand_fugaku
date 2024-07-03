@@ -8,6 +8,8 @@ From: redhat/ubi8:8.6
 
 %post
   rm -f /etc/yum.repos.d/ubi.repo
+  yum config-manager --enable rhel-8-for-x86_64-baseos-rpms
+  yum config-manager --enable rhel-8-for-x86_64-appstream-rpms
   dnf -y --releasever=8.8 update
   dnf -y --releasever=8.8 install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms
@@ -17,8 +19,8 @@ From: redhat/ubi8:8.6
   dnf -y remove xfce4-screensaver
   #
   # VNC
-  dnf -y --releasever=8.8 install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/python3-websockify-0.10.0-1.el8.noarch.rpm
   dnf -y --releasever=8.8 install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-2.2.5-1.el8.x86_64.rpm
+  dnf -y --releasever=8.8 install python3-websockify
   #
   # Paraview
   cd /opt
