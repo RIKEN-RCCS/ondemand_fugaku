@@ -1451,7 +1451,7 @@ def submit_env_19(threads, app_name = "", version = "")
   str =<<"EOF"
 #!/usr/bin/env bash
     set -e
-    . /vol0004/apps/oss/spack/share/spack/setup-env.sh
+    . /vol0004/apps/oss/spack-v0.19/share/spack/setup-env.sh
 EOF
 
   if version == "" # app_name is hash
