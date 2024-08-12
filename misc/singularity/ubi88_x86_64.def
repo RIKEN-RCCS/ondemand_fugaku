@@ -148,6 +148,22 @@ From: redhat/ubi8:8.6
   # TRAME
   pip3.9 install trame trame-vuetify trame-matplotlib trame-vtk vtk
   #
+  # GrADS
+  cd /opt
+  dnf -y --releasever=8.8 install libgeotiff-devel gd-devel cairo-devel libXmu-devel udunits2-devel
+  wget https://github.com/j-m-adams/GrADS/archive/refs/tags/v2.2.3.tar.gz
+  tar xfz v2.2.3.tar.gz
+  cd GrADS-2.2.3
+  mkdir lib
+  LIBS="-ludunits2" CPPFLAGS="-I /usr/include/udunits2" ./configure --prefix=/opt/grads-2.2.3
+  make; make install
+  cp -a data /opt/grads-2.2.3/
+  echo "gxdisplay    Cairo    /opt/grads/lib/libgxdCairo.so" >  /opt/grads-2.2.3/udpt
+  echo "gxprint      Cairo    /opt/grads/lib/libgxpCairo.so" >> /opt/grads-2.2.3/udpt
+  cd ../
+  ln -s /opt/grads-2.2.3 /opt/grads
+  rm -rf v2.2.3.tar.gz GrADS-2.2.3
+  #
   # Clean up
   dnf clean all
   rm -f /etc/pki/entitlement/*

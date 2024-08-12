@@ -1416,6 +1416,10 @@ def submit_vnc(staged_root)
     export PATH="$PATH:/usr/local/pymol-2.5.0/bin"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/pymol-2.5.0/lib64"
     export PATH="$PATH:/opt/ImageJ"
+    export PATH="$PATH:/opt/grads/bin"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/grads/lib"
+    export GAUDPT=/opt/grads/udpt
+    export GADDIR=/opt/grads/data
     %s
     CTRSCRIPT
 
