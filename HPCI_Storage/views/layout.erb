@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title><%= title %></title>
+    <title>HPCI Shared Storage</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="<%= url("/bootstrap-3.3.7/css/bootstrap.min.css") %>">
     <link rel="stylesheet" type="text/css" href="<%= url("/ood-bootstrap3-override-0.0.1/navbar.css") %>">
@@ -13,15 +13,15 @@
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <button tabindex="1" accesskey="P" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
             <ul class="navbar-breadcrumbs">
-              <li><a href="<%= dashboard_url %>"><%= dashboard_title %></a></li>
-              <li><a href="<%= url('/') %>"><%= title %></a></li>
+              <li><a href="/pun/sys/dashboard/">Open OnDemand</a></li>
+              <li><a href="<%= url('/') %>">HPCI Shared Storage</a></li>
             </ul>
           </div>
 

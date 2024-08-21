@@ -1,53 +1,44 @@
-<h1><%= title %></h1>
+<h1>HPCI Shared Storage</h1>
 
 <p>
-  Please issue a proxy certificate with the <a href="https://portal.hpci.nii.ac.jp/auth-portal/Proxycert/proxycert" target="_blank">HPCI Certificate Issuing System</a> before mounting the HPCI Shared Storage.
+  Please issue an access token from <a href="https://elpis.hpci.nii.ac.jp/"  target="_blank">https://elpis.hpci.nii.ac.jp</a>.
 </p>
 
 <table class="table table-bordered">
-  <tr bgcolor="blue" style="color:white;">
+  <% if @data.nil? || @data['next'] == "mount" %>
+  <tr style="background-color:blue; color:white;">
     <th>Action</th>
     <th>HPCI ID</th>
-    <th>Elapsed Time (up to 168 hours)</th>
     <th>Passphrase</th>
+  </tr>
+  <form action="" method="post">
+    <tr>
+      <td><input type="submit" name="act"  value="mount"></td>
+      <% if !@data.nil? && @data.key?("user") %>
+      <td><input type="text"   name="user" id="user" value="<%= @data['user'] %>"></td>
+      <% else %>
+      <td><input type="text"   name="user" id="user" placeholder="hpci00xxxx" required></td>
+      <% end %>
+      <td><input type="text"   name="pass" id="pass" required></td>
+    </tr>
+  </form>
+  <% else %>
+  <tr style="background-color:blue; color:white;">
+    <th>Action</th>
+    <th>HPCI ID</th>
     <th>Mount Path</th>
   </tr>
-  
-  <% if @data.empty? %>
+  <form action="" method="post">
   <tr>
-    <form action="" method="post">
-      <td><input type="submit"   name="act"     value="mount"></td>
-      <td><input type="text"     name="hpci_id" id="hpci_id" required></td>
-      <td><input type="number"   name="time"    id="time" value="12" min="1" max="168" required></td>
-      <td><input type="password" name="pass"    id="pass"></td>
-      <td bgcolor="gray"></td>
-    </form>
-  </tr>
-  <% else %>
-  <% @data.each do |k, v| %>
-  <tr>
-    <form action="" method="post">
-      <td>
-        <input type="submit" name="act" value="<%= v['act'] %>">
-        <input type="<%= v['act'] == 'mount' ? 'submit' : 'hidden' %>" name="<%= v['act'] == 'mount' ? 'act' : 'dummy' %>" value="delete">
-      </td>
-      <td><input type="text"     name="hpci_id" id="hpci_id" value="<%= v['hpci_id'] %>" required></td>
-      <td><input type="number"   name="time"    id="time"    value="<%= v['time'] %>" min="1" max="168" required></td>
-      <td><input type="password" name="pass"    id="pass"></td>
-      <td>
-      <% v['mount_path'].each_with_index do |d, index| %>
-      <% if v['act'] == 'mount' then %>
-      <%= d %>
-      <% else %>
-      <a href="./dashboard/files/fs/<%= d %>" target="_blank"><%= d %></a>
-      <% end %>
-      <% if index < v['mount_path'].length - 1 then %>
-      <br>
-      <% end %>
-      <% end %>
-      </td>
-    </form>
+    <td>
+      <input type="submit" name="act" value="umount">
+      <input type="submit" name="act" value="delete">
+    </td>
+    <td><%= @data['user'] %></td>
+    <td>
+      <a href="./dashboard/files/fs<%= @data['path'] %>" target="_blank"><%= @data['path'] %></a>
+    </td>
   </tr>
   <% end %>
-  <% end %>
+  </form>
 </table>
