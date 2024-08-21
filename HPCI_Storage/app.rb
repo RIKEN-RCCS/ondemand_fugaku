@@ -16,7 +16,6 @@ post '/' do
   @data = Hash.new
   case params['act']
   when 'mount'
-    p params
     `echo #{params['pass']} | #{JWT_AGENT} #{params['user']}`
     output = `mount.hpci`
     # The output is "Mount GfarmFS on /tmp/hp120273/hpci003062" or
@@ -24,7 +23,6 @@ post '/' do
     # Extract only the mount path.
     @data['path'] = output.match(/\/tmp\/\S+/)[0].gsub(/:$/, '') if output =~ /\/tmp\/\S+/
     @data['user'] = params['user']
-    p @data
     open(SAVE_FILE, 'w') { |f| YAML.dump(@data, f) }
     @data['next'] = "umount"
   when 'umount'
