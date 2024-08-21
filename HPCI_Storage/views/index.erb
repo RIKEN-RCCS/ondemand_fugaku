@@ -15,7 +15,7 @@
     <tr>
       <td><input type="submit" name="act"  value="mount"></td>
       <% if !@data.nil? && @data.key?("user") %>
-      <td><input type="text"   name="user" id="user" value="<%= @data['user'] %>"></td>
+      <td><input type="text"   name="user" id="user" placeholder="hpci00xxxx" value="<%= @data['user'] %>" required></td>
       <% else %>
       <td><input type="text"   name="user" id="user" placeholder="hpci00xxxx" required></td>
       <% end %>
