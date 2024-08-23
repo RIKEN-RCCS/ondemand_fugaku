@@ -30,11 +30,6 @@ post '/' do
     @data = (File.exist?(SAVE_FILE))? open(SAVE_FILE, 'r') { |f| YAML.load(f) } : nil
     @data = nil if @data.empty?
     @data['next'] = "mount" unless @data.nil?
-  when 'delete'
-    @data = Hash.new
-    open(SAVE_FILE, 'w') { |f| YAML.dump(@data, f) }
-    `umount.hpci`
-    @data['next'] = "mount"
   end
   
   erb :index

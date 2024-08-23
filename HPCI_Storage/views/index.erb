@@ -30,12 +30,7 @@
   </tr>
   <form action="" method="post">
   <tr>
-    <td>
-      <% unless @data['path'].nil? %>
-      <input type="submit" name="act" value="umount">
-      <% end %>
-      <input type="submit" name="act" value="delete">
-    </td>
+    <td><input type="submit" name="act" value="umount"></td>
     <td><%= @data['user'] %></td>
     <td>
       <% unless @data['path'].nil? %>
