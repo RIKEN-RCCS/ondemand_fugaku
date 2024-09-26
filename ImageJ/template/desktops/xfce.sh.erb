@@ -6,6 +6,6 @@
 
 <%= output_xfce() %>
 
-java -jar -Xmx<%= memory %>g /opt/ImageJ/ij.jar "<%= context.input_file %>" &
+java -jar -Xms<%= memory %>g -Xmx<%= memory %>g /opt/ImageJ/ij.jar "<%= context.input_file %>" &
 xfce4-session
 fg
