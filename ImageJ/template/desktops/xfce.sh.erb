@@ -1,9 +1,11 @@
 <%
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+  memory = submit_memory(context.queue, context.gpu1_memory, context.gpu2_memory, context.mem1_memory, context.mem2_memory, context.reserved_memory)
+  memory = (memory.to_i * 0.9).to_i
 %>
 
 <%= output_xfce() %>
 
-java -jar /opt/ImageJ/ij.jar "<%= context.input_file %>" &
+java -jar -Xmx<%= memory %>g /opt/ImageJ/ij.jar "<%= context.input_file %>" &
 xfce4-session
 fg
