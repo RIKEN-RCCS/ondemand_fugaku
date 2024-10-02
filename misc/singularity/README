@@ -1,3 +1,4 @@
 $ oodにログインする
 $ TMPDIR=/tmp singularity build --fakeroot ubi88_x86_64.sif ubi88_x86_64.def
 
+If pip is upgraded, please change PIP_VERSION=?? in Jupyter/template/script.sh.erb
