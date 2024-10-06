@@ -16,7 +16,7 @@ echo "$(date): Running on compute node ${compute_node}:$port"
 
 WORKING_DIR="<%= context.working_dir %>"
 mkdir -p $WORKING_DIR
-singularity run ${NV_OPTION} ${IMAGE} code-server \
+singularity exec --env PS1='\u@\h:\w\$ ' ${NV_OPTION} ${IMAGE} code-server \
     --auth="password" \
     --bind-addr="0.0.0.0:${port}" \
     --disable-telemetry \

@@ -11,7 +11,7 @@ BASE_BINARY_DIR=${HOME}/ondemand/jupyter
 PYTHONUSERBASE=${BASE_BINARY_DIR%/}/`arch`
 export SINGULARITYENV_PYTHONUSERBASE=${PYTHONUSERBASE}
 export SINGULARITYENV_JUPYTER_DATA_DIR=${PYTHONUSERBASE}/share/jupyter
-PIP_VERSION=$( [ `arch` = aarch64 ] && echo 3.11 || echo 3.9 )
+PIP_VERSION=`singularity exec ${IMAGE} pip --version | awk -F/ '{print $4}'`
 PYTHONPATH=${PYTHONUSERBASE}/lib/python${PIP_VERSION}/site-packages:${PYTHONPATH}
 export SINGULARITYENV_PYTHONPATH=$PYTHONPATH
 mkdir -p $SINGULARITYENV_JUPYTER_DATA_DIR
@@ -22,4 +22,4 @@ mkdir -p $SINGULARITYENV_JUPYTER_DATA_DIR
 export SINGULARITYENV_PFJSVXTCLANGA=$PFJSVXTCLANGA
 export SINGULARITYENV_PATH=$PATH
 export SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
-singularity run ${NV_OPTION} ${IMAGE} jupyter-lab --config="${CONFIG_FILE}"
+singularity exec --env PS1='\u@\h:\w\$ ' ${NV_OPTION} ${IMAGE} jupyter-lab --config="${CONFIG_FILE}"
