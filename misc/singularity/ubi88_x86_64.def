@@ -19,13 +19,14 @@ From: redhat/ubi8:8.6
   dnf -y remove xfce4-screensaver
   #
   # VNC
-  dnf -y --releasever=8.8 install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-2.2.5-1.el8.x86_64.rpm
+  dnf -y --releasever=8.8 install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-3.1.1-1.el8.x86_64.rpm
   dnf -y --releasever=8.8 install python3-websockify
   #
   # Paraview
   cd /opt
   dnf -y --releasever=8.8 install python39 python39-devel python39-numpy python3.11 python3.11-devel python3.11-numpy
   update-alternatives --set python /usr/bin/python3.9
+  update-alternatives --install /usr/bin/pip pip /usr/bin/pip3.9 1
   #wget -O ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.11&type=binary&os=Linux&downloadFile=ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz"
   #tar xfz ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz
   #ln -s ParaView-5.11.2-MPI-Linux-Python3.9-x86_64 ParaView
@@ -36,10 +37,10 @@ From: redhat/ubi8:8.6
   rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
   #
   # VisIt
-  wget https://github.com/visit-dav/visit/releases/download/v3.3.3/visit3_3_3.linux-x86_64-rhel7.tar.gz
-  tar xfz visit3_3_3.linux-x86_64-rhel7.tar.gz
-  ln -s visit3_3_3.linux-x86_64 visit
-  rm visit3_3_3.linux-x86_64-rhel7.tar.gz
+  wget https://github.com/visit-dav/visit/releases/download/v3.4.1/visit3.4.1.tar.gz
+  tar xfz visit3.4.1.tar.gz
+  ln -s visit3.4.1 visit
+  rm visit3.4.1.tar.gz
   #
   # XCrySDen
   dnf -y --releasever=8.8 install libXmu-devel tcl-devel tk-devel libGL-devel mesa-libGLU-devel fftw-devel
@@ -65,16 +66,17 @@ From: redhat/ubi8:8.6
   #
   # SmokeView
   dnf -y --releasever=8.8 install libXi-devel freeglut-devel
-  wget https://github.com/firemodels/smv/archive/refs/tags/SMV-6.9.1.tar.gz
-  tar xfz SMV-6.9.1.tar.gz
-  cd smv-SMV-6.9.1/Build/smokeview/gnu_linux_64
+  wget https://github.com/firemodels/smv/archive/refs/tags/SMV-6.9.3.tar.gz
+  tar xfz SMV-6.9.3.tar.gz
+  cd smv-SMV-6.9.3/Build/smokeview/gnu_linux_64
   bash make_smokeview.sh
-  mkdir /opt/smokeview-6.9.1
-  mv smokeview_linux_64 /opt/smokeview-6.9.1/
-  ln -s /opt/smokeview-6.9.1/smokeview_linux_64 /opt/smokeview-6.9.1/smokeview
-  ln -s /opt/smokeview-6.9.1 /opt/smokeview
+  mkdir /opt/smokeview-6.9.3
+  mv smokeview_linux_64 /opt/smokeview-6.9.3/
+  ln -s /opt/smokeview-6.9.3/smokeview_linux_64 /opt/smokeview-6.9.3/smokeview
+  ln -s /opt/smokeview-6.9.3 /opt/smokeview
   #
   # EasyISTR
+  #wget -O easyistr-3.47.240930-2.noarch.rpm --trust-server-names "http://opencae.gifu-nct.ac.jp/pukiwiki/index.php?plugin=attach&refer=AboutEasyISTR&openfile=easyistr-3.47.240930-2.noarch.rpm"
   wget -O easyistr-3.43.240203-2.noarch.rpm --trust-server-names "http://opencae.gifu-nct.ac.jp/pukiwiki/index.php?plugin=attach&refer=AboutEasyISTR&openfile=easyistr-3.43.240203-2.noarch.rpm"
   dnf -y --releasever=8.8 install easyistr-3.43.240203-2.noarch.rpm python3-vtk nautilus glibc-langpack-ja
   rm easyistr-3.43.240203-2.noarch.rpm
@@ -82,9 +84,9 @@ From: redhat/ubi8:8.6
   # OVITO
   cd /opt
   dnf -y --releasever=8.8 install xcb-util-cursor
-  wget https://www.ovito.org/download/master/ovito-basic-3.10.5-x86_64.tar.xz
-  tar Jxf ovito-basic-3.10.5-x86_64.tar.xz
-  rm ovito-basic-3.10.5-x86_64.tar.xz
+  wget https://www.ovito.org/download/master/ovito-basic-3.10.6-x86_64.tar.xz
+  tar Jxf ovito-basic-3.10.6-x86_64.tar.xz
+  rm ovito-basic-3.10.6-x86_64.tar.xz
   OVIT_DIRNAME=`ls -1 | grep ^ovito-basic`
   ln -s ${OVIT_DIRNAME} ovito
   #
@@ -139,11 +141,11 @@ From: redhat/ubi8:8.6
   jupyter nbextension enable --py --sys-prefix nglview
   #
   # VSCode
-  dnf -y --releasever=8.8 install https://github.com/coder/code-server/releases/download/v4.23.1/code-server-4.23.1-amd64.rpm
+  dnf -y --releasever=8.8 install https://github.com/coder/code-server/releases/download/v4.93.1/code-server-4.93.1-amd64.rpm
   #
   # RStudio
-  dnf -y --releasever=8.8 install R
-  dnf -y --releasever=8.8 install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2023.12.1-402-x86_64.rpm
+  # dnf -y --releasever=8.8 install R
+  # dnf -y --releasever=8.8 install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2023.12.1-402-x86_64.rpm
   #
   # TRAME
   pip3.9 install trame trame-vuetify trame-matplotlib trame-vtk vtk
@@ -163,6 +165,9 @@ From: redhat/ubi8:8.6
   cd ../
   ln -s /opt/grads-2.2.3 /opt/grads
   rm -rf v2.2.3.tar.gz GrADS-2.2.3
+  #
+  # For Terminal (ttyd)
+  dnf -y --releasever=8.8 install ttyd tmux screen libuv-devel libwebsockets-devel
   #
   # Clean up
   dnf clean all
