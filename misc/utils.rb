@@ -4,7 +4,7 @@ require 'date'
 require 'csv'
 require 'time'
 
-IMAGE_AARCH64     = "/home/apps/singularity/ondemand/ubi89_aarch64.sif"
+IMAGE_AARCH64     = "/home/apps/singularity/ondemand/ubi810_aarch64.sif"
 IMAGE_X86_64      = "/home/apps/singularity/ondemand/ubi88_x86_64.sif"
 LLIO_LBOUND_NODES = 7000
 LLIO_LBOUND_PROCS = 28000
