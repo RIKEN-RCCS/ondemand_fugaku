@@ -20,6 +20,7 @@ PASSWORD="$password"
 export password PASSWORD
 
 # Setup TMP Dir
+export TMPDIR=/worktmp
 TMPDIR="$(mktemp -d -p "/tmp" -t "$USER-tmpdir-XXXXXX")"
 TMP_DIR="$TMPDIR"
 chmod 700 "$TMPDIR"
