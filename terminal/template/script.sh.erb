@@ -36,5 +36,5 @@ singularity exec --env PS1='\u@\h:\w\$ ' ${NV_OPTION} ${IMAGE} ttyd \
 	-t 'cursorBlink=true' \
 	-t 'theme={"background": "#282a36", "foreground": "#f8f8f2"}' \
 	-c "ttyd:${PASSWORD}" \
-	-W -m 1 \
+	-W -m 1 -w '<%= context.working_dir %>'\
 	"$OOD_STAGED_ROOT/tmux.sh"
