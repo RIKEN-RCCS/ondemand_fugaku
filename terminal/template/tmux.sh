@@ -5,7 +5,7 @@
 #module -q load tmux/3.2a-2022a-gcc_12.1.0-jwjkrr7
 
 # set environment variables
-TMUX_PATH="$(which --skip-alias --skip-functions tmux)"
+TMUX_PATH="/opt/tmux/bin/tmux"
 TMUX_SOCKET="J${SLURM_JOB_ID}.sock"
 TMUX_SESSION="J${SLURM_JOB_ID}"
 export TMUX_PATH TMUX_SOCKET TMUX_SESSION

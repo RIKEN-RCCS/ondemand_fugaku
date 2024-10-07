@@ -12,11 +12,14 @@ export TERM="xterm-256color"
 
 # set singularity
 <%= setting_singularity("terminal") %>
+export SINGULARITYENV_PFJSVXTCLANGA=$PFJSVXTCLANGA
+export SINGULARITYENV_PATH=$PATH
+export SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 
 # source ttyd function setup
 #source "$OOD_STAGED_ROOT/ttyd.sh"
 
-singularity exec ${OPTION} ${IMAGE} /usr/bin/bash -c "source $OOD_STAGED_ROOT/ttyd.sh"
+singularity exec ${NV_OPTION} ${IMAGE} /usr/bin/bash -c "source $OOD_STAGED_ROOT/ttyd.sh"
 
 # set working directory
 cd "$HOME" || exit 7
@@ -25,7 +28,7 @@ cd "$HOME" || exit 7
 echo "TIMING - Starting ttyd at: $(date)"
 
 # launch ttyd
-singularity exec --env PS1='\u@\h:\w\$ ' ${OPTION} ${IMAGE} ttyd \
+singularity exec --env PS1='\u@\h:\w\$ ' ${NV_OPTION} ${IMAGE} ttyd \
 	-p "${PORT}" \
 	-b "/node/${HOST}/${PORT}" \
 	-t "fontSize=${OOD_FONT_SIZE}" \
