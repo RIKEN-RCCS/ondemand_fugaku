@@ -1,0 +1,21 @@
+<%
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+%>
+---
+title: Terminal
+form:
+<%= form_queue("fugaku_small_and_prepost", false) %>
+<%= form_gpus_per_node(false) %>
+<%= form_working_dir(false) %>
+<%= form_email() %>
+  - font_size
+attributes:
+<%= form_attr() %>
+  font_size:
+    id: font_size
+    label: Font Size
+    widget: number_field
+    max: 30
+    min: 10
+    step: 1
+    value: 16

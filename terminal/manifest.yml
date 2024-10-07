@@ -1,0 +1,13 @@
+---
+name: 3Terminal
+icon: icon.png
+category: Interactive Apps
+subcategory: Development
+tile:
+  sub_caption: |
+role: batch_connect
+description: |
+  This application launches an interactive shell on a compute node.
+  It is built using <a href="https://github.com/tmux/tmux/wiki">tmux</a> and <a href="https://github.com/tsl0922/ttyd">ttyd</a>.
+  Please note that this application does not support the Safari web browser.
+
