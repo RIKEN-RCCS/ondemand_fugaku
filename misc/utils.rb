@@ -111,7 +111,7 @@ def _form_hours(name, min = NOT_DEFINED, max = NOT_DEFINED)
 
   $attr <<<<"EOF"
   #{name}_hours:
-    label: Elapsed time (#{min} - #{max} hours)
+    label: Maximum run time (#{min} - #{max} hours)
     widget: number_field
     value: #{min}
     min: #{min}
