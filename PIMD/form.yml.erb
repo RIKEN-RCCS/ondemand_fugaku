@@ -1,0 +1,16 @@
+<%
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+  # spack versions pimd -s
+  versions = ["2.6.1-qe6.3", "2.6.1-cp2k", "2.6.1-aenet"]
+  binaries = ["calc.x", "convert_charmm.x", "convert_tinker.x", "gau.x", "pimd.mpi.x", "pimd.x", "polymers.x", "prep_best.x", "prep_liquid.x", "run_molpro.x"]
+%>
+---
+title: PIMD
+form:
+<%= form_queue("fugaku_small") %>
+<%= form_working_dir() %>
+<%= form_version(versions) %>
+<%= form_select("executable", "Executable file", binaries, "pimd.mpi.x") %>
+<%= form_email(false) %>
+attributes:
+<%= form_attr() %>

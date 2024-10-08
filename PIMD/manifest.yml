@@ -1,0 +1,9 @@
+---
+name: Mol-PIMD
+category: Batch Jobs
+subcategory: Molecular Dynamics
+role: batch_connect
+description: |
+  [PIMD](https://ccse.jaea.go.jp/software/PIMD/index.jp.html) is an open-source software for parallel molecular simulations.
+tile:
+  sub_caption: |
