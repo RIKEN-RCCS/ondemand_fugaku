@@ -35,7 +35,7 @@ form:
 <%= form_number("center", "Point (0 - 9,999)", "0", "9999", "1", "1234") %>
 <%= form_check("enable_rmr", "Ring-Artifact Removal", "", false, ["rmr"]) %>
 <%= form_number("rmr", "Kernel Size (3 - 99)", "3", "99", "2", "21", "Input number must be odd.") %>
-<%= form_check("enable_binning", "Boxel Binning Filter", "", false, ["binning"]) %>
+<%= form_check("enable_binning", "Voxel Binning Filter", "", false, ["binning"]) %>
 <%= form_number("binning", "Binning Size (2 - 99)", "2", "99", "1", "3") %>
 <%= form_check("enable_rect", "Rect Filter", "", false, ["rect-orgx", "rect-orgy", "rect-roiw", "rect-roih"]) %>
 <%= form_number("rect_orgx", "Origin x: (0 - 9,999)", "0", "9999", "1", "0") %>
