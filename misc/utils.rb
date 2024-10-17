@@ -308,7 +308,7 @@ def get_fugaku_pt(group, w_commas = true)
   return -1 # for debug
 end
 
-def form_queue(name, enable_fugaku_threads = true, added_fugaku_queues = [])
+def form_queue(name, enable_fugaku_threads = true, added_fugaku_queues = [], appname = nil)
   hide_elmts  = ["fugaku-small-hours",     "fugaku-small-nodes",     "fugaku-small-procs", "fugaku-spot-small-hours"]
   hide_elmts += ["fugaku-large-hours",     "fugaku-large-nodes",     "fugaku-large-procs", "fugaku-spot-large-hours"]
   hide_elmts += ["fugaku-cd-portal-hours", "fugaku-cd-portal-nodes", "fugaku-cd-portal-procs"]
@@ -506,11 +506,19 @@ EOF
     ret << _form_cores("mem1")
     ret << _form_cores("mem2")
     ret << _form_cores("reserved")
-    ret << _form_memory("gpu1")
-    ret << _form_memory("gpu2")
-    ret << _form_memory("mem1")
-    ret << _form_memory("mem2")
-    ret << _form_memory("reserved")
+    if appname == "ImageJ"
+      ret << _form_memory("gpu1", 25)
+      ret << _form_memory("gpu2", 25)
+      ret << _form_memory("mem1", 25)
+      ret << _form_memory("mem2", 25)
+      ret << _form_memory("reserved", 25)
+    else
+      ret << _form_memory("gpu1")
+      ret << _form_memory("gpu2")
+      ret << _form_memory("mem1")
+      ret << _form_memory("mem2")
+      ret << _form_memory("reserved")
+    end
   elsif name == "gpu"
     $attr << output_queue("prepost-gpu1", "gpu1", "prepost", hide_elmts - show_elmts_gpu1)
     $attr << output_queue("prepost-gpu2", "gpu2", "prepost", hide_elmts - show_elmts_gpu2)
@@ -1427,7 +1435,7 @@ def submit_vnc(staged_root)
     #{setting_singularity("remote_desktop")}
 
     chmod +x #{staged_root}/container.sh
-    singularity run ${NV_OPTION} ${IMAGE} #{staged_root}/container.sh
+    /bin/singularity-ce run ${NV_OPTION} ${IMAGE} #{staged_root}/container.sh
 EOF
 end
 
