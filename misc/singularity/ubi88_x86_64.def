@@ -27,14 +27,10 @@ From: redhat/ubi8:8.6
   dnf -y --releasever=8.8 install python39 python39-devel python39-numpy python3.11 python3.11-devel python3.11-numpy
   update-alternatives --set python /usr/bin/python3.9
   update-alternatives --install /usr/bin/pip pip /usr/bin/pip3.9 1
-  #wget -O ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.11&type=binary&os=Linux&downloadFile=ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz"
-  #tar xfz ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz
-  #ln -s ParaView-5.11.2-MPI-Linux-Python3.9-x86_64 ParaView
-  #rm ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz
-  wget -O ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.10&type=binary&os=Linux&downloadFile=ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz"
-  tar xfz ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
-  ln -s ParaView-5.10.1-MPI-Linux-Python3.9-x86_64 ParaView
-  rm ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz
+  wget -O ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.11&type=binary&os=Linux&downloadFile=ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz"
+  tar xfz ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz
+  ln -s ParaView-5.11.2-MPI-Linux-Python3.9-x86_64 ParaView
+  rm ParaView-5.11.2-MPI-Linux-Python3.9-x86_64.tar.gz ParaView/bin/mpiexec
   #
   # VisIt
   wget https://github.com/visit-dav/visit/releases/download/v3.4.1/visit3.4.1.tar.gz
