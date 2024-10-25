@@ -215,7 +215,7 @@ EOF
   return "  - #{name}_cores\n"
 end
 
-def _form_memory(name, min = NOT_DEFINED, max = NOT_DEFINED)
+def _form_memory(name, min = NOT_DEFINED, max = NOT_DEFINED, appname = nil)
   if name == "gpu1"
     min = 5    if min == NOT_DEFINED
     max = 186  if max == NOT_DEFINED
@@ -233,9 +233,11 @@ def _form_memory(name, min = NOT_DEFINED, max = NOT_DEFINED)
     max = 32   if max == NOT_DEFINED
   end
 
+  addlabel = (appname == "ParaView")? "10GB or more is recommended." : ""
+  
   $attr <<<<"EOF"
   #{name}_memory:
-    label: Required memory (#{min} - #{num_with_commas(max)} GB)
+    label: Required memory (#{min} - #{num_with_commas(max)} GB) #{addlabel}
     widget: number_field
     value: #{min}
     min: #{min}
@@ -455,11 +457,11 @@ EOF
     ret << _form_cores("mem1")
     ret << _form_cores("mem2")
     ret << _form_cores("reserved")
-    ret << _form_memory("gpu1")
-    ret << _form_memory("gpu2")
-    ret << _form_memory("mem1")
-    ret << _form_memory("mem2")
-    ret << _form_memory("reserved")
+    ret << _form_memory("gpu1", NOT_DEFINED, NOT_DEFINED, appname)
+    ret << _form_memory("gpu2", NOT_DEFINED, NOT_DEFINED, appname)
+    ret << _form_memory("mem1", NOT_DEFINED, NOT_DEFINED, appname)
+    ret << _form_memory("mem2", NOT_DEFINED, NOT_DEFINED, appname)
+    ret << _form_memory("reserved", NOT_DEFINED, NOT_DEFINED, appname)
     ret << _form_fugaku_threads("") if enable_fugaku_threads
     ret << _form_fugaku_mode()
     ret << _form_fugaku_statistical_info()
