@@ -16,3 +16,6 @@ category: Passenger Apps
 tile:
   sub_caption: |
 ---
+
+Set the timeout time to about 30 seconds.
+/opt/ood/ondemand/root/usr/share/gems/[VER]/ondemand/[VER]/gems/ood_core-[VER]/lib/ood_core/batch_connect/templates/vnc.rb
