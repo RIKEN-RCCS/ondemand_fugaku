@@ -1,16 +1,15 @@
-<%
+<%-
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
-  # spack versions fds -s
-  versions = ["6.7.9"]
-%>
+  # spack versions smash -s
+  versions = ["3.0.2", "3.0.0"]
+-%>
 ---
-title: FDS
+title: SMASH
 form:
-<%= form_queue("fugaku_small_and_large") %>
+<%= form_queue("fugaku_small") %>
 <%= form_version(versions) %>
-<%= form_working_dir2(false) %>
-<%= form_input_file2() %>
-<%= form_fugaku_llio("input_file") %>
+<%= form_working_dir(false) %>
+<%= form_input_file(true, "mpiexec smash [input]") %>
 <%= form_email(false) %>
 attributes:
 <%= form_attr() %>
