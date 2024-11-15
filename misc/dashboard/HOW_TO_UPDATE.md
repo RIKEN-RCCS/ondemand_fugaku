@@ -1,5 +1,8 @@
 When updating Open OnDemand
 
+# Check whether an active user is or not
+/opt/ood/nginx_stage/sbin/nginx_stage nginx_list
+
 mv /var/www/ood/apps/sys/dashboard/app/views/shared/_welcome.html.erb /var/www/ood/apps/sys/dashboard/app/views/shared/_welcome.html.erb.bak
 ln -s /var/www/ood/apps/sys/ondemand_fugaku/misc/dashboard/_welcome.html.erb /var/www/ood/apps/sys/dashboard/app/views/shared/
 

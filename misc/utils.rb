@@ -1437,7 +1437,7 @@ def submit_vnc(staged_root)
     #{setting_singularity("remote_desktop")}
 
     chmod +x #{staged_root}/container.sh
-    /bin/singularity-ce run ${NV_OPTION} ${IMAGE} #{staged_root}/container.sh
+    /bin/singularity run ${NV_OPTION} ${IMAGE} #{staged_root}/container.sh
 EOF
 end
 
