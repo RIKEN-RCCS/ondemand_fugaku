@@ -1,30 +1,32 @@
 <%
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
 
-  fugaku_group      = sample_path.split("/")[2]
-  sample            = File.basename(sample_path)
-  datadir_base      = "/2ndfs/" + fugaku_group + "/" + ENV['USER']
-  enable_debug_mode = (debug_mode == "true")? "yes" : "no"
-  conf_file         = staged_root.to_s + "/ct.conf"
-  run_file          = staged_root.to_s + "/run.sh"
-  run_tmpfile       = staged_root.to_s + "/runtmp.sh"
+  fugaku_group = sample_path.split("/")[2]
+  sample       = File.basename(sample_path)
+  datadir_base = sample_path.split('/')[0..3].join('/')
+  conf_file    = staged_root.to_s + "/ct.conf"
+  run_file     = staged_root.to_s + "/run.sh"
+  run_tmpfile  = staged_root.to_s + "/runtmp.sh"
 
   FileUtils.mkdir_p(staged_root.to_s)
   File.open(conf_file, 'w') do |f|
+    f.puts "user_id      = \"#{ENV['USER']}\""
     f.puts "group_id     = \"#{fugaku_group}\""
     f.puts "sample       = \"#{sample}\""
     f.puts "mode         = \"#{mode}\""
     f.puts "pix_size     = #{pix_size}"
     f.puts "center       = #{center}" if enable_center == "true"
     f.puts "filter       = #{filter2}"
-    f.puts "rmr          = #{rmr}" if enable_rmr == "true"
+    f.puts "zero_padding = #{zero_padding}"
+    f.puts "median       = #{median}" if enable_median == "true"
+    f.puts "gaussian     = #{gaussian}" if enable_gaussian == "true"
+    f.puts "rmr          = #{rmr}" if enable_intermediate_filter == "true"
     f.puts "binning      = #{binning}" if enable_binning == "true"
     f.puts "rect         = (#{rect_orgx},#{rect_orgy}) (#{rect_roiw},#{rect_roih})" if enable_rect == "true"
-    f.puts "zero_padding = #{zero_padding}"
-    f.puts "debug_mode   = #{enable_debug_mode}"
     f.puts "ppn          = #{ppn}" if enable_ppn == "true"
+    f.puts "debug_mode   = #{debug_mode}"
     f.puts "job_type     = #{job_type}"
-    f.puts "datadir_base = #{datadir_base}"
+    f.puts "output       = \"#{output}\"" if job_type == "single" && "#{output}" != ""
   end
 
   o, e, s = Open3.capture3("PATH=/vol0004/apps/opt/KIERTAA/bin:$PATH genjs_ct #{conf_file} > #{run_tmpfile}")

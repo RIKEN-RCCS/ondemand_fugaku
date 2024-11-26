@@ -882,6 +882,15 @@ EOF
   return "  - commands"
 end
 
+def form_text_field(item, label)
+  $attr <<<<"EOF"
+  #{item}:
+    label: #{label}
+    widget: "text_field"
+EOF
+  return "  - #{item}"
+end
+
 def form_session_name()
   $attr <<<<"EOF"
   session_name:
