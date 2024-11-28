@@ -119,6 +119,11 @@ def _form_hours(name, min = NOT_DEFINED, max = NOT_DEFINED)
     step: 1
     required: true
 EOF
+
+  if name == "fugaku_spot_small" or name == "fugaku_spot_large"
+    $attr << "    help: After 4 hours your job may be terminated. [<a href=\"https://www.fugaku.r-ccs.riken.jp/en/operation/20241122_01\">Detail</a>]\n"
+  end
+  
   return "  - #{name}_hours\n"
 end
 
@@ -1303,8 +1308,10 @@ end
 def _submit_native_fugaku(queue, hours, nodes, procs, fugaku_group, fugaku_mode, fugaku_statistical_info,
                           fugaku_statistical_path, added_fugaku_queues, added_options)
   ret = "  native:\n"
-  if queue == "small" or queue == "spot-small" or queue == "large" or queue == "spot-large" or queue == "cd-portal" or queue == "f-pt"
-    ret << "    - -L elapse=#{hours}:00:00,node=#{nodes},jobenv=singularity --mpi proc=#{procs}\n"
+  if queue == "small" or queue == "large" or queue == "cd-portal" or queue == "f-pt" or ((queue == "spot-small" or queue == "spot-large") and hours.to_i <= 4)
+    ret << "    - -L elapse=#{hours}:00:00,node=#{nodes} --mpi proc=#{procs}\n"
+  elsif (queue == "spot-small" or queue == "spot-large")
+    ret << "    - -L elapse=4:00:00-#{hours}:00:00,node=#{nodes} --mpi proc=#{procs}\n"
   else # For added_fugaku_queues
     # q1 = {"procs" => q1_procs, "nodes" => q1_nodes, "hours" => q1_hours}
     # q2 = {"procs" => q2_procs, "nodes" => q2_nodes, "hours" => q2_hours}
@@ -1314,7 +1321,7 @@ def _submit_native_fugaku(queue, hours, nodes, procs, fugaku_group, fugaku_mode,
     _hours = added_fugaku_queues[_queue]["hours"]
     _nodes = added_fugaku_queues[_queue]["nodes"]
     _procs = added_fugaku_queues[_queue]["procs"]
-    ret << "    - -L elapse=#{_hours}:00:00,node=#{_nodes},jobenv=singularity --mpi proc=#{_procs}\n"
+    ret << "    - -L elapse=#{_hours}:00:00,node=#{_nodes} --mpi proc=#{_procs}\n"
   end
   
   ret << "    - --no-check-directory\n"
