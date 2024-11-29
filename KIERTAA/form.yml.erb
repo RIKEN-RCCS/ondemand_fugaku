@@ -32,9 +32,9 @@ form:
 <%= form_select("filter2", "Filter", select_filter, "ramp") %>
 <%= form_select("zero_padding", "Zero Padding", ["4", "10"], "4") %>
 <%= form_check("enable_pre_filter", "Pre-Filter", "", false, ["enable_median", "enable_gaussian"]) %>
-<%= form_check("enable_median", "Mediam Filter", "", false, ["median"]) %>
+<%= form_check("enable_median", "Median Filter", "", false, ["median"]) %>
 <%= form_number("median", "Median Kernel Size (3 - 99)",   "3", "99", "2", "3", "Input number must be odd.") %>
-<%= form_check("enable_gaussian", "Mediam Gaussian", "", false, ["gaussian"]) %>
+<%= form_check("enable_gaussian", "Gaussian Filter", "", false, ["gaussian"]) %>
 <%= form_number("gaussian", "Gaussian Kernel Size (3 - 99)", "3", "99", "2", "3", "Input number must be odd.") %>
 <%= form_check("enable_intermediate_filter", "Intermediate Filter", "", false, ["rmr"]) %>
 <%= form_number("rmr", "Ring-Artifact Removal Kernel Size (3 - 99)", "3", "99", "2", "21", "Input number must be odd.") %>
