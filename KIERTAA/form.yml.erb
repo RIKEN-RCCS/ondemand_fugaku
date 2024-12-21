@@ -24,7 +24,8 @@ cluster: "fugaku"
 form:
 <%= form_number("elapsed_time", "Maximum run time (1 min. - 4,320 min.)", "1", "4320", "1", "10") %>
 <% if samples.empty? %>
-<%= form_select("sample_path", "Sample", samples, "", "<font color='red'>No samples found in /2ndfs/[Group]/[User]/raw/</font>") %>
+<% help_msg = "<font color='red'>The directory /2ndfs/[Group]/" + ENV['USER'] + "/raw/ cannot be found.</font>" %>
+<%= form_select("sample_path", "Sample", samples, "", help_msg) %>
 <% else %>
 <%= form_select("sample_path", "Sample", samples) %>
 <% end %>
