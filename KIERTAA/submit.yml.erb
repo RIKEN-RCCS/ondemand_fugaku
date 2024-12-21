@@ -1,6 +1,8 @@
 <%
   require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
 
+  raise StandardError, "The directory /2ndfs/[Group]/a03011/raw/ cannot be found." if sample_path.empty?
+
   fugaku_group = sample_path.split("/")[2]
   sample       = File.basename(sample_path)
   datadir_base = sample_path.split('/')[0..3].join('/')
