@@ -16,14 +16,18 @@
     end
   end
   
-  raise StandardError, "Not samples found in \"/2ndfs/[Group]/[User]/raw/\"" if samples.empty?
+#  raise StandardError, "No samples found in \"/2ndfs/[Group]/[User]/raw/\"" if samples.empty?
 %>
 ---
 title: KIERTÄÄ
 cluster: "fugaku"
 form:
 <%= form_number("elapsed_time", "Maximum run time (1 min. - 4,320 min.)", "1", "4320", "1", "10") %>
+<% if samples.empty? %>
+<%= form_select("sample_path", "Sample", samples, "", "<font color='red'>No samples found in /2ndfs/[Group]/[User]/raw/</font>") %>
+<% else %>
 <%= form_select("sample_path", "Sample", samples) %>
+<% end %>
 <%= form_select("mode", "Mode", select_mode) %>
 <%= form_number("pix_size", "Pixel Size (0.10 - 9.00)", "0.10", "9.00", "0.01", "1.00") %>
 <%= form_check("enable_reconstruction", "Reconstruction Parameters", "", false, ["enable_center", "filter2", "zero_padding"]) %>
