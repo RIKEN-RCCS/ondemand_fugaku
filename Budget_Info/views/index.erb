@@ -53,8 +53,6 @@
       <% if user == ENV['USER'] %>
       <td style="color: red; font-weight: bold"><%= user %></td>
       <% else %>
-      <%  next if g == "rist-s" %>
-      <%# Since the rist-s group is a service provider, it only displays its own information. %>
       <td><%= user %></td>
       <% end %>
       <% if limit != -1 %>
