@@ -5,6 +5,7 @@
   hours  = submit_hours(queue, fugaku_small_hours, fugaku_spot_small_hours, NOT_USED, NOT_USED, fugaku_cd_portal_hours, fugaku_pt_hours, prepost1_hours, prepost2_hours, reserved_hours)
   cores  = submit_cores(queue, gpu1_cores, gpu2_cores, mem1_cores, mem2_cores, reserved_cores)
   memory = submit_memory(queue, gpu1_memory, gpu2_memory, mem1_memory, mem2_memory, reserved_memory)
+  memory = 10 if memory.to_i <= 5
 %>
 ---
 script:
