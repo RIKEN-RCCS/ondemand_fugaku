@@ -238,7 +238,7 @@ def _form_memory(name, min = NOT_DEFINED, max = NOT_DEFINED, appname = nil)
     max = 32   if max == NOT_DEFINED
   end
 
-  addlabel = (appname == "ParaView")? "10GB or more is recommended." : ""
+  addlabel = (appname == "ParaView")? "10GB or more is recommended. If you set it to 5-9GB, it will automatically become 10GB." : ""
   
   $attr <<<<"EOF"
   #{name}_memory:
