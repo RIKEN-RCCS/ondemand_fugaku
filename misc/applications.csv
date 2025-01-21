@@ -48,5 +48,8 @@ VSCode,                  ood_vscode,              Interactive Apps, Development
 WHEEL,                   ood_wheel,               Interactive Apps, Workflow
 XCrySDen,                ood_xcrysden,            Interactive Apps, Viewer
 Gnuplot,                 ood_gnuplot,             Interactive Apps, Viewer
-KIERTTA,                 ood_kiertaa,             Batch Jobs,       Computer Aided Engineering
+KIERTTA,                 ood_kiertta,             Batch Jobs,       Experimental Data Processing
 FFVHC-ACE,               ood_ffvhc_ace,           Batch Jobs,       Computer Aided Engineering
+terminal,                ood_terminal,            Interactive Apps, Development
+PIMD,                    ood_pimd,                Batch Jobs,       Molecular Dynamics
+GrADS,                   ood_grads,               Interactive Apps, Viewer

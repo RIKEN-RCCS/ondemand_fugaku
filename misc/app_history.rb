@@ -7,10 +7,10 @@ require "csv"
 ###
 Exclusive_appname = ["ood_job_submitter_supercon2023", "ood_openfoam", "ood_vscode_supercon2023", "ood_openfoam_fundation", "ood_desktop_meeting", "--bulk", "--data", "-L", "-L rscgrp=small", "gpu1", "BatchMode=yes"]
 ###
-Fugaku = true
-PrePost = false
-#Fugaku = false
-#PrePost = true
+#Fugaku = true
+#PrePost = false
+Fugaku = false
+PrePost = true
 ###
 
 APPNAME     = 0
@@ -28,7 +28,8 @@ def fugaku_grep(prepost, line)
     appname = line.split(",")[6][3..-3] if appname.include?("@") # specified mail address
     appname = line.split(",")[7][3..-3] if appname.include?("-N")
     return if(Exclusive_appname.include?(appname) || appname.include?("\"ood_desktop"))
-    appname = "ood_h_phi" if appname == "ood_hphi"
+    appname = "ood_h_phi"   if appname == "ood_hphi"
+    appname = "ood_kiertta" if appname.start_with?("ood_kiertaa")
     prepost.push([year_month, appname])
   end
 end
@@ -38,8 +39,8 @@ def prepost_grep(prepost, line)
   if line.include?("sbatch") && line.include?("execve")
     year_month = line.split("\[")[1].split[0].split("-")[0..1]
     return if line.split(",").size <= 5
-    appname    = line.split(",")[5][3..-3]
-    appname    = line.split(",")[9][3..-3] if appname.include?("@") # specified mail address
+    appname = line.split(",")[5][3..-3]
+    appname = line.split(",")[9][3..-3] if appname.include?("@") # specified mail address
     return if(Exclusive_appname.include?(appname))
     prepost.push([year_month, appname])
   end
