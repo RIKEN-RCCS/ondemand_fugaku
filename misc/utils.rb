@@ -1428,6 +1428,7 @@ def submit_vnc(staged_root)
   script_wrapper: |
     cat << "CTRSCRIPT" > #{staged_root}/container.sh
     #!/usr/bin/env bash
+    unset PYTHONPATH
     export PATH="$PATH:/opt/TurboVNC/bin"
     export PATH="$PATH:/opt/ParaView/bin"
     export PATH="$PATH:/opt/visit/bin"
