@@ -1412,6 +1412,8 @@ def setting_singularity(name)
       [ -e $i ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,$i
     done
     [ -e /usr/bin/xospastop ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/usr/bin/xospastop
+    [ -e /var/lib/slurm     ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/var/lib/slurm
+    [ -e /var/run/munge     ] && export SINGULARITY_BINDPATH=$SINGULARITY_BINDPATH,/var/run/munge
 
     if [ `arch` = aarch64 ]; then
       IMAGE=#{IMAGE_AARCH64}
