@@ -1,9 +1,8 @@
 ---
-name: Mol-GENESIS
+name: GENESIS
 category: Batch Jobs
 subcategory: Molecular Dynamics
-role: batch_connect
-description: |
-  [GENESIS (GENeralized-Ensemble SImulation System)](https://www.r-ccs.riken.jp/labs/cbrt/) is a program package for molecular dynamics simulation and modeling of various biomolecular systems.
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/GENESIS
 tile:
   sub_caption: |
+  

@@ -10,8 +10,9 @@ mv /var/www/ood/apps/sys/dashboard/app/views/widgets/_pinned_apps.html.erb /var/
 ln -s /var/www/ood/apps/sys/ondemand_fugaku/misc/dashboard/_pinned_apps.html.erb /var/www/ood/apps/sys/dashboard/app/views/widgets/
 
 cd /var/www/ood/apps/sys
-rm -rf bc_desktop.bak
+rm -rf bc_desktop.bak myjobs.bak
 mv bc_desktop bc_desktop.bak
+mv myjobs myjobs.bak
 
 The manifest.yml in files activejobs shell are changed as following.
 ---
