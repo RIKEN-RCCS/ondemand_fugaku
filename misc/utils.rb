@@ -519,6 +519,12 @@ EOF
       ret << _form_memory("mem1", 25)
       ret << _form_memory("mem2", 25)
       ret << _form_memory("reserved", 25)
+    elsif appname == "Qiskit"
+      ret << _form_memory("gpu1", 25)
+      ret << _form_memory("gpu2", 25)
+      ret << _form_memory("mem1", 25)
+      ret << _form_memory("mem2", 25)
+      ret << _form_memory("reserved", 25)
     else
       ret << _form_memory("gpu1")
       ret << _form_memory("gpu2")

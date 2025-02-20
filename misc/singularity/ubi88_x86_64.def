@@ -13,7 +13,7 @@ From: redhat/ubi8:8.6
   dnf -y --releasever=8.8 update
   dnf -y --releasever=8.8 install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms
-  dnf -y --releasever=8.8 install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh ksh tcsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname libatomic mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs xorg-x11-apps evince eog glx-utils systemd-libs sssd Lmod glibc-langpack-en xdg-user-dirs libevent xterm gnuplot ImageMagick ncview glfw glfw-devel dbus-x11 python3-numpy vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts
+  dnf -y --releasever=8.8 install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh ksh tcsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname libatomic mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs xorg-x11-apps evince eog glx-utils systemd-libs sssd Lmod glibc-langpack-en xdg-user-dirs libevent xterm gnuplot ImageMagick ncview glfw glfw-devel dbus-x11 python3-numpy vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts gimp
   dnf -y --releasever=8.8 install rclone rclone-browser
   dnf -y --releasever=8.8 groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
   dnf -y remove xfce4-screensaver

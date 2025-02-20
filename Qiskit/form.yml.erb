@@ -1,0 +1,12 @@
+<%
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+%>
+---
+title: Qiskit
+form:
+<%= form_queue("prepost", true, [], "Qiskit") %>
+<%= form_gpus_per_node(true) %>
+<%= form_working_dir(false) %>
+<%= form_email() %>
+attributes:
+<%= form_attr() %>

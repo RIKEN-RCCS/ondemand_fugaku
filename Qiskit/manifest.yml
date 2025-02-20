@@ -1,0 +1,9 @@
+---
+name: Qiskit
+category: Interactive Apps
+subcategory: Development
+role: batch_connect
+description: |
+  [Qiskit](https://www.ibm.com/quantum/qiskit) is the world’s most popular software stack for quantum computing.
+tile:
+  sub_caption: |

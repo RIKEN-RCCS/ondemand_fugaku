@@ -1,0 +1,41 @@
+Bootstrap: docker
+From: rockylinux/rockylinux:9.4
+
+%post
+        dnf -y install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh git cmake numactl boost boost-devel epel-release dnf-plugins-core wget rdma-core-devel librdmacm libibverbs
+	dnf -y install mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs rclone
+	dnf config-manager --set-enabled crb
+        dnf -y install evince glx-utils systemd-libs sssd Lmod xdg-user-dirs
+        dnf -y groupinstall 'Development Tools'
+        dnf -y install python3.11-pip python3.11-devel python3.11-numpy python3.11-scipy python3-matplotlib
+        pip3.11 install jupyterlab
+        #
+	# Install Qiskit
+	dnf -y install cmake gmp-devel
+	pip3.11 install Cython
+        pip3.11 install qiskit[visualization]
+        pip3.11 install qiskit-ibm-runtime
+	mkdir /opt/sym
+	cd /opt/sym
+	git clone https://github.com/symengine/symengine.git
+	cd symengine
+	mkdir build && cd build
+	cmake ..
+	make -j
+	make install
+	mkdir /opt/sympy
+	cd /opt/sympy
+	git clone https://github.com/symengine/symengine.py.git
+	cd symengine.py
+	git checkout v0.11.0
+	sed -i 's/-DSYMENGINE_INSTALL_PY_FILES=OFF/-DSYMENGINE_INSTALL_PY_FILES=ON/' setup.py
+	python3.11 setup.py install
+	rm -rf /otp/sym
+	rm -rf /otp/sympy
+	#
+	# Setting for Slurm
+	dnf -y install munge-libs hwloc
+        groupadd -g 2224 slurm
+        useradd slurm -u 2224 -g slurm
+        #
+        dnf clean all
