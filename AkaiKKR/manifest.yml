@@ -1,9 +1,8 @@
 ---
-name: Co-AkaiKKR
+name: AkaiKKR
 category: Batch Jobs
 subcategory: Condensed Matter Physics
-role: batch_connect
-description: |
-  [AkaiKKR](http://kkr.issp.u-tokyo.ac.jp) is an ab-initio electronic-structure calculation code.
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/AkaiKKR
 tile:
   sub_caption: |
+  
