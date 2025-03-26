@@ -1,9 +1,7 @@
 ---
-name: Co-mVMC
+name: mVMC
 category: Batch Jobs
 subcategory: Condensed Matter Physics
-role: batch_connect
-description: |
-  The [mVMC](https://www.pasums.issp.u-tokyo.ac.jp/mvmc/) is a low-energy solver for a wide ranger of quantum lattice models by using variational Monte Carlo method.
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/mVMC
 tile:
   sub_caption: |
