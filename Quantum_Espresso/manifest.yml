@@ -1,9 +1,7 @@
 ---
-name: Co-Quantum Espresso
+name: Quantum Espresso
 category: Batch Jobs
 subcategory: Condensed Matter Physics
-role: batch_connect
-description: |
-  [Quantum Espresso](https://www.quantum-espresso.org) is an integrated suite for electronic-structure calculations and materials modeling.
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/Quantum_Espresso
 tile:
   sub_caption: |
