@@ -1,9 +1,7 @@
 ---
-name: Co-HPhi
+name: HPhi
 category: Batch Jobs
 subcategory: Condensed Matter Physics
-role: batch_connect
-description: |
-  [H&Phi;](https://www.pasums.issp.u-tokyo.ac.jp/hphi/) is a numerical diagonalization package for parallel computers.
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/HPhi
 tile:
   sub_caption: |
