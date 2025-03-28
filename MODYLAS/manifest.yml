@@ -1,9 +1,7 @@
 ---
-name: Mol-MODYLAS
+name: MODYLAS
 category: Batch Jobs
 subcategory: Molecular Dynamics
-role: batch_connect
-description: |
-  [MODYLAS](http://www.modylas.org) is a general-purpose molecular dynamics simulation program.
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/MODYLAS
 tile:
   sub_caption: |
