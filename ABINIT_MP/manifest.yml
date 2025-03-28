@@ -1,9 +1,7 @@
 ---
-name: QC-ABINIT-MP
+name: ABINIT-MP
 category: Batch Jobs
 subcategory: Quantum Chemistry
-role: batch_connect
-description: |
-  [ABINIT-MP](https://www.hpci-office.jp/for_users/appli_software/appli_abinit-mp) is a software for Fragment Molecular Orbital (FMO) calculations.
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/ABINIT-MP
 tile:
   sub_caption: |
