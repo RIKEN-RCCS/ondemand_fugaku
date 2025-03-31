@@ -178,13 +178,6 @@ From: redhat/ubi8:8.6
   ln -s /opt/tmux-3.2a /opt/tmux
   rm -rf tmux-3.2a_src 3.2a.tar.gz
   #
-  # GROMACS-Viewer
-  cd /opt
-  wget http://www.scls.riken.jp/wp-content/uploads/sites/3/2014/03/gromacs-viewer-1.0.1.zip
-  unzip gromacs-viewer-1.0.1.zip
-  ln -s gromacs-viewer-1.0.1 gromacs-viewer
-  rm -f gromacs-viewer-1.0.1.zip
-  #
   # Setting for Slurm
   dnf -y --releasever=8.8 install munge-libs hwloc
   groupadd -g 2224 slurm
