@@ -5,7 +5,7 @@ require 'csv'
 require 'time'
 
 IMAGE_AARCH64     = "/home/apps/singularity/ondemand/ubi810_aarch64.sif"
-IMAGE_X86_64      = "/home/apps/singularity/ondemand/ubi88_x86_64.sif"
+IMAGE_X86_64      = "/home/apps/singularity/ondemand/ubi810_x86_64.sif"
 LLIO_LBOUND_NODES = 7000
 LLIO_LBOUND_PROCS = 28000
 EXCLUDED_GROUPS   = ["f-op", "fugaku", "oss-adm"] # "Group names starting with "isv" are deleted in the code.
@@ -513,13 +513,7 @@ EOF
     ret << _form_cores("mem1")
     ret << _form_cores("mem2")
     ret << _form_cores("reserved")
-    if appname == "ImageJ"
-      ret << _form_memory("gpu1", 25)
-      ret << _form_memory("gpu2", 25)
-      ret << _form_memory("mem1", 25)
-      ret << _form_memory("mem2", 25)
-      ret << _form_memory("reserved", 25)
-    elsif appname == "Qiskit"
+    if appname == "ImageJ" || appname == "Qiskit" || appname == "GROMACS-viewer"
       ret << _form_memory("gpu1", 25)
       ret << _form_memory("gpu2", 25)
       ret << _form_memory("mem1", 25)
