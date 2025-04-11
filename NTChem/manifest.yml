@@ -1,9 +1,7 @@
 ---
-name: QC-NTChem
+name: NTChem
 category: Batch Jobs
 subcategory: Quantum Chemistry
-role: batch_connect
-description: |
-  [NTChem](https://molsc.riken.jp/en/software.html) is a high-performance software package for molecular electronic structure calculation.
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/NTChem
 tile:
   sub_caption: |
