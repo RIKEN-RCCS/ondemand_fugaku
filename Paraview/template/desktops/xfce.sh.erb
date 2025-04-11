@@ -10,7 +10,11 @@ if [ "$ARCH" = "aarch64" ]; then
 #  spack load paraview@5.10.1%fj@4.8.1/oh5qwq
 #  which paraview
 #  mpiexec paraview <%= context.input_file %> &
-  paraview "<%= context.input_file %>" &
+  if [ "<%= context.input_file %>" = "" ]; then
+    paraview &
+  else
+    paraview "<%= context.input_file %>" &
+  fi
 else
   if [ "<%= context.input_file %>" = "" ]; then
     ${_VIRTUALGL} /opt/ParaView/bin/paraview &

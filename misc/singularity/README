@@ -1,3 +1,6 @@
-$ oodにログインする
-$ TMPDIR=/tmp singularity build --fakeroot ubi88_x86_64.sif ubi88_x86_64.def
-
+#!/bin/bash
+#SBATCH -p mem2
+#SBATCH -n 48
+#SBATCH --mem 502G
+#SBATCH -t 01:00:00
+time TMPDIR=/tmp singularity build --fakeroot a.sif ubi810_x86_64.def
