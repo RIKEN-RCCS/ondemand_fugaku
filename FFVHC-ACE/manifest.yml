@@ -1,10 +1,8 @@
 ---
-name: CAE-FFVHC-ACE
+name: FFVHC-ACE
 icon: fa://plane
 category: Batch Jobs
 subcategory: Computer Aided Engineering
-role: batch_connect
-description: |
-  [FFVHC-ACE](https://www.hpci-office.jp/en/for_users/appli_software/appli_ffvhc-ace) is a high-fidelity compressible flow solver.
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/FFVHC-ACE
 tile:
   sub_caption: |
