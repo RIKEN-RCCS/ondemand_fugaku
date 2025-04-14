@@ -1,9 +1,7 @@
 ---
-name: CAE-FrontISTR
+name: FrontISTR
 category: Batch Jobs
 subcategory: Computer Aided Engineering
-role: batch_connect
-description: |
-  [FrontISTR](https://www.frontistr.org) is an open source structural analysis solver.
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/FrontISTR
 tile:
   sub_caption: |
