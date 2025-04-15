@@ -1,9 +1,7 @@
 ---
-name: C-SCALE
+name: SCALE
 category: Batch Jobs
 subcategory: Climate
-role: batch_connect
-description: |
-  [SCALE (Scalable Computing for Advanced Library and Environment)](https://scale.riken.jp) is a basic library for weather and climate model.
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/SCALE
 tile:
   sub_caption: |
