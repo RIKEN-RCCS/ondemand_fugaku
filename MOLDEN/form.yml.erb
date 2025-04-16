@@ -1,0 +1,20 @@
+<%
+  require '/var/www/ood/apps/sys/ondemand_fugaku/misc/utils.rb'
+%>
+---
+title: MOLDEN
+form:
+<%= form_queue("prepost") %>
+  - command
+<%= form_gpus_per_node(true) %>
+<%= form_input_file(false) %>
+<%= form_email() %>
+<%= form_desktop() %>
+attributes:
+<%= form_attr() %>
+  command:
+    widget: "select"
+    value: "molden"
+    options:
+      - ["molden",  "molden"]
+      - ["gmolden (OpenGL)", "gmolden"]
