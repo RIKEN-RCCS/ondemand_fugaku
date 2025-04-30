@@ -1,0 +1,9 @@
+---
+name: VisIt
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
+description: |
+  [VisIt](https://visit-dav.github.io/visit-website/index.html) is an interactive, scalable, visualization, animation and analysis tool.
+tile:
+  sub_caption: |

@@ -1,0 +1,9 @@
+<%= output_xfce(context.global_prepost_gpus) %>
+
+if [ "<%= context.global_input_file %>" = "" ]; then
+  /opt/visit/bin/visit &
+else
+  /opt/visit/bin/visit -o "<%= context.global_input_file %>" &
+fi
+xfce4-session
+fg

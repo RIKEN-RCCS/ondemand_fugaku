@@ -1,0 +1,7 @@
+---
+name: MODYLAS
+category: Batch Jobs
+subcategory: Molecular Dynamics
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/MODYLAS
+tile:
+  sub_caption: |

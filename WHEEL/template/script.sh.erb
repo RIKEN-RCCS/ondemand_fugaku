@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set +x
+SIF=/home/apps/singularity/ondemand/wheel_debian10.13_x86_64.sif
+
+# Benchmark info
+echo "TIMING - Starting main script at: $(date)"
+
+# Set working directory to home directory
+cd "${HOME}"
+
+#
+# Start WHEEL Server
+#
+
+# Benchmark info
+echo "TIMING - Starting WHEEL at: $(date)"
+
+# Launch the Jupyter Notebook Server
+echo "port in main script = ${port}"
+export WHEEL_USE_HTTP=1
+export WHEEL_BASE_URL="/node/${host}/${port}/"
+export WHEEL_TEMPD="${HOME}/.wheel"
+export WHEEL_LOGLEVEL="debug"
+export WHEEL_PORT=${port}
+
+#singularity run  -w --pwd /usr/src/server ${SIF}
+#singularity run  --pwd /usr/src/server ${SIF}
+singularity run  --writable-tmpfs --pwd /usr/src/server ${SIF}

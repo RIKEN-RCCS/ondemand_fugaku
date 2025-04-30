@@ -1,0 +1,10 @@
+<%= output_xfce(context.global_prepost_gpus) %>
+
+module use /vol0004/apps/isv/Gaussian/modulefiles
+module load GaussView
+. $g16root/g16/bsd/g16.profile
+# For some reason it doesn't work with the gv command (alias).
+/vol0004/apps/isv/Gaussian/GaussView/6.1.1/gv/gview.sh "<%= context.global_input_file %>" &
+
+xfce4-session
+fg

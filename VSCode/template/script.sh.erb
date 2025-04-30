@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+<%= setting_singularity("vscode") %>
+
+CODE_SERVER_DATAROOT="$HOME/ondemand/vscode/${ARCH}"
+mkdir -p "$CODE_SERVER_DATAROOT/extensions"
+
+# Expose the password to the server.
+export PASSWORD="$password"
+
+# Print compute node.
+echo "$(date): Running on compute node ${compute_node}:$port"
+
+WORKING_DIR="<%= context.global_working_dir %>"
+mkdir -p $WORKING_DIR
+
+# module load lang
+export SINGULARITYENV_PFJSVXTCLANGA=$PFJSVXTCLANGA
+export SINGULARITYENV_PATH=$PATH
+export SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+singularity exec --env PS1='\u@\h:\w\$ ' ${NV_OPTION} ${IMAGE} code-server \
+    --auth="password" \
+    --bind-addr="0.0.0.0:${port}" \
+    --disable-telemetry \
+    --extensions-dir="$CODE_SERVER_DATAROOT/extensions" \
+    --user-data-dir="$CODE_SERVER_DATAROOT" \
+    --log debug --disable-update-check --ignore-last-opened \
+    "$WORKING_DIR"

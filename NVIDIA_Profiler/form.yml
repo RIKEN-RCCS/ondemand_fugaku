@@ -1,0 +1,20 @@
+---
+title: NVIDIA Profiler
+form:
+  - global_prepost_gpu_queue
+  - global_prepost_hours
+  - global_prepost_cores
+  - global_prepost_memory
+  - global_prepost_gpus
+  - application
+  - global_email
+
+attributes:
+  application:
+    widget: select
+    label: Application
+    options:
+      - ["NVIDIA Visual Profiler", "nvvp"   ]
+      - ["NVIDIA Nsight Compute",  "ncu-ui" ]
+      - ["NVIDIA Nsight Systems",  "nsys-ui"]
+

@@ -1,0 +1,91 @@
+<style type="text/css">
+  table tr:nth-child(even) td {
+    background: #FFDBC9;
+    border: solid 2px #888888;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  table tr:nth-child(odd) td {
+    border: solid 2px #888888;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  th {
+    background-color: #880000;
+    color: white;
+    text-align: center;
+     font-weight: bold;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  td {
+    text-align: right;
+  }
+  input {
+    outline: solid 1px #FFDBC9;
+  }
+</style>
+
+<h1><%= title %> <font size="3">(Updated at <%= get_update_time() %>)</font></h1>
+<p>
+<font size="5">Budget usage for each user by group.</font>
+</p>
+<% @groups.each_with_index do |g, i| %>
+  <h2><%= g %></h2>
+  <table class="table table-bordered" style="border: solid 2px #888888;">
+    <tr>
+      <th style="vertical-align: middle;" rowspan="2">User</th>
+      <th colspan="5">Budget [NH]</th>
+    </tr>
+    <tr>
+      <th style="vertical-align: middle;">Limit</th>
+      <th style="vertical-align: middle;">Usage</th>
+      <th style="vertical-align: middle;">Available</th>
+      <th style="vertical-align: middle;">Ratio</th>
+      <th width="280px">Change Limit<br>(For only a theme manager)</th>
+    </tr>
+    <% @budget_info[i].each do |d| %>
+    <tr>
+      <% user  = d[0] %>
+      <% limit = d[1] %>
+      <% usage = d[2] %>
+      <% avail = d[3] %>
+      <% if user == ENV['USER'] %>
+      <td style="color: red; font-weight: bold"><%= user %></td>
+      <% else %>
+      <td><%= user %></td>
+      <% end %>
+      <% if limit != -1 %>
+      <td><%= num_with_commas(limit) %></td>
+      <td><%= num_with_commas(usage) %></td>
+      <td><%= num_with_commas(avail) %></td>
+      <td>
+        <div class="graph">
+          <strong class="bar_<%= dashboard_color(ratio(usage, limit)) %>" style="width: <%= ratio(usage, limit, 100) %>%;"><%= ratio(usage, limit) %>%</strong>
+        </div>
+      </td>
+      <td>
+        <form action="/pun/sys/Budget_Info/new" method="post">
+	<% if @is_admin[i] %>
+	<input type="hidden" name="group" value="<%= g %>"    required>
+  	<input type="hidden" name="user"  value="<%= user %>" required>
+	<input type="number" name="volume_NH" max="<%= get_budget_limit(g).to_i %>" min="0" value="<%= limit %>" required>
+	<input type="submit" value="submit">
+        <% else %>
+	<input type="number" name="volume_NH" max="<%= get_budget_limit(g).to_i %>" min="0" value="<%= limit %>" disabled>
+	<input type="submit" value="submit" disabled>
+	<% end %>
+	</form>
+      </td>
+      <% else %>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
+<br>

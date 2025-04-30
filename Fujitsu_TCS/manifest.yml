@@ -1,0 +1,8 @@
+name: Job script for Fugaku
+category: Passenger Apps
+description: |-
+  Open Composer allows the creation and submission of batch jobs
+icon: fas://scroll
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/Fujitsu_TCS
+tile:
+  sub_caption: |

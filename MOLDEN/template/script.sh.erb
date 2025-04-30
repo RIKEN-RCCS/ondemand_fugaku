@@ -1,0 +1,9 @@
+<%= output_xfce(context.global_prepost_vgl) %>
+
+if [ "<%= context.global_input_file %>" = "" ]; then
+  ${_VIRTUALGL} /opt/molden/bin/<%= context.application %> &
+else
+  ${_VIRTUALGL} /opt/molden/bin/<%= context.application %> "<%= context.global_input_file %>" &
+fi
+${_VIRTUALGL} xfce4-session
+fg

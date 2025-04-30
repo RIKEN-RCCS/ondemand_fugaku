@@ -1,0 +1,140 @@
+body {
+    margin:0px;
+    padding:0px;
+    text-align:center;
+}
+#outer {
+    font-size:13px;
+    line-height:150%;
+    text-align:left;
+}
+#header {
+    text-align:left;
+    background-color:#214555;
+}
+#head-inner {
+    margin:0px auto 0px auto;
+    padding:10px 0px 0px 0px;
+    width:694px;
+    background-color:#214555;
+    padding:25px;
+}
+.description {
+    padding-left:10px;
+    line-height:140%;
+    color:#ffffff;
+}
+#contents {
+    margin:0px auto 0px auto;
+    padding:15px 0px 0px 0px;
+    width:694px;
+    line-height:200%;
+    color:#111111;
+    font-size:14px;
+}
+p {
+    margin:1em 0 1em 0;
+    line-height:150%;
+    text-align:justify;
+}
+img {
+    border:0px;
+}
+hr {
+    border-width: 1px 0px 0px 0px;
+    border-style: solid;
+    border-color: #333333;
+    height: 1px;
+}
+a {
+    font-weight:normal;
+}
+h1 {
+    font-size:24px;
+    font-weight:bold;
+    text-align:left;
+    padding:15px 0px 15px 10px;
+    margin:0px;
+    color:#ffffff;
+}
+h1 a{
+    font-weight:bold;
+    color:#ffffff;
+    text-decoration:none;
+}
+h1 a:hover{
+    font-weight:bold;
+    color:#ffffff;
+    text-decoration:underline;
+}
+h2 {
+    font-size:22px;
+    margin:20px 0px 0px 0px;
+    padding:4px 0px 4px 0px;
+    border-bottom:2px solid #111111;
+}
+.green {
+    color:#008800;
+    font-weight:bold;
+}
+h3 {
+    font-size:18px;
+    border-left: 8px solid #333;
+    padding-left: 5px;
+}
+#middle {
+    margin:0px auto 0px auto;
+    padding:10px 0px 20px 0px;
+    width:694px;
+}
+.side-title {
+    width:540px;
+    padding:4px 10px 4px 10px;
+    background-color:#f1f1f1;
+    font-weight:bold;
+    border:1px solid #999999;
+    margin-bottom:10px;
+}
+.side {
+    margin:0px 0px 10px 0px;
+    padding:2px 8px 8px 7px;
+    line-height:150%;
+}
+ul {
+    margin: 0 0 0 1em;
+    padding: 0px;
+}
+li {
+
+    margin-left: 10px;
+}
+#footer {
+    font-size:12px;
+    height:100px;
+    clear:left;
+    text-align:center;
+}
+blockquote{
+    border:1px solid #ccc;
+    padding:5px;
+    margin:10px;
+}
+
+.design01 {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.design01 th {
+    padding: 3px 10px;
+    background: #214555;
+    color: #ffffff;
+    border: solid 1px black;
+}
+
+.design01 td {
+    padding: 3px 10px;
+    border: solid 1px black;
+}

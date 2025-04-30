@@ -1,0 +1,28 @@
+---
+title: Terminal
+form:
+  - global_system
+  - global_fugaku_queue
+  - global_fugaku_group
+  - global_fugaku_hours
+  - global_fugaku_nodes
+  - global_fugaku_procs
+  - global_fugaku_mode
+  - global_prepost_queue
+  - global_prepost_hours
+  - global_prepost_cores
+  - global_prepost_memory
+  - global_prepost_gpus
+  - global_working_dir
+  - font_size
+  - global_email
+
+attributes:
+  font_size:
+    id: font_size
+    label: Font Size
+    widget: number_field
+    max: 30
+    min: 10
+    step: 1
+    value: 16

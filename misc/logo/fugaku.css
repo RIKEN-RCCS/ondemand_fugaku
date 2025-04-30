@@ -1,0 +1,131 @@
+.fugaku_logo {
+    width: 100%;
+    padding-right: 12px;
+}
+.fugaku_logo img {
+    max-width: 800px;
+    width: 100%;
+    height: auto;
+}
+.apps-section-header-blue {
+    margin-top: 10px;
+    padding-left: 20px;
+    font-weight: bold;
+    background-color: #0000B0;
+}
+h4.fugaku_info {
+    padding: 0rem .5rem;
+    border-left: 10px solid #000;
+}
+.fugaku_info table{
+    width: 100%;
+    word-break: break-word;
+    word-wrap: break-word;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+.fugaku_motd table {
+    word-break: break-word;
+    word-wrap: break-word;
+    margin-bottom: 25px;
+}
+
+.fugaku_motd td {
+    word-break: break-word;
+    word-wrap: break-word;
+    font-size: 1.2rem;
+    padding-left: 20px;
+}
+
+.graph {
+    position: relative; /* IE is dumb */
+    /*width: 200px;*/
+    border: 1px solid #bbb;
+    padding: 2px;
+}
+.graph .bar_red {
+    display: block;
+    position: relative;
+    background: #ff3051;
+    text-align: center;
+    color: #333;
+    height: 2em;
+    line-height: 2em;
+}
+.graph .bar_green {
+    display: block;
+    position: relative;
+    background: #1fd26c;
+    text-align: center;
+    color: #333;
+    height: 2em;
+    line-height: 2em;
+}
+.graph .bar_blue {
+    display: block;
+    position: relative;
+    background: #03a9f4;
+    text-align: center;
+    color: #333;
+    height: 2em;
+    line-height: 2em;
+}
+.design01 {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 8px;
+}
+.design01 th {
+    padding: 4px;
+    background: #2A2A2A;
+    border: solid 1px #AAAAAA;
+    color: #ffffff;
+    white-space: nowrap;
+}
+.design01 td {
+    padding: 0px 4px;
+    border: solid 1px #AAAAAA;
+    white-space: nowrap;
+    width: 100px;
+}
+@media (max-width: 1459.98px) {
+    .fugaku_motd td{
+	font-size: 1.0rem;
+    }
+    .design01{
+	font-size: 0.9rem;
+    }
+    .design01 th {
+        padding: 0px;
+	white-space: nowrap;
+    }
+    .design01 td{
+        padding: 0px;
+    }
+}
+.link table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    border: 1px solid #AAAAAA;
+}
+.link thead {
+    color: white;
+    border: 1px solid #AAAAAA;
+}
+.link th {
+    padding: 5px 10px;
+    background: #2A2A2A;
+    border: 1px solid #AAAAAA;
+    text-align: center;
+}
+.link td {
+    padding: 5px 10px;
+    border: 1px solid #AAAAAA;
+}
+.link img {
+    border: 0.2px solid #333333;
+}

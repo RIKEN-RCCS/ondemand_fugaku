@@ -1,0 +1,9 @@
+---
+name: SALMON View
+description: |-
+  A interactive visualization tool for SALMON inputfile.
+url: https://uemoto1.github.io/wsview/
+category: Interactive Apps
+subcategory: Viewer
+tile:
+  sub_caption: |

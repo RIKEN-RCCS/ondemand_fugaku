@@ -1,0 +1,11 @@
+---
+name: AVS/Express
+#icon: fa://binoculars
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
+description: |
+  [AVS/Express](https://www.avs.com/avs-express/) is a visualization software operated by visual programming.
+ 
+tile:
+  sub_caption: |

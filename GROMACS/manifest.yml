@@ -1,0 +1,7 @@
+---
+name: GROMACS
+category: Batch Jobs
+subcategory: Molecular Dynamics
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/GROMACS
+tile:
+  sub_caption: |

@@ -1,0 +1,7 @@
+---
+name: NTChem
+category: Batch Jobs
+subcategory: Quantum Chemistry
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/NTChem
+tile:
+  sub_caption: |

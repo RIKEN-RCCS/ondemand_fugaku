@@ -1,0 +1,1 @@
+The icon.png is obtained from https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Slurm_logo.svg/262px-Slurm_logo.svg.png

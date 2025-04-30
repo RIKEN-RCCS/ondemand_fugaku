@@ -1,0 +1,22 @@
+<%= output_xfce(context.global_prepost_vgl) %>
+
+ARCH=`arch`
+if [ `arch` = "aarch64" ]; then
+#  . /vol0004/apps/oss/spack/share/spack/setup-env.sh
+#  spack load paraview@5.10.1%fj@4.8.1/oh5qwq
+#  which paraview
+#  mpiexec paraview <%= context.global_input_file %> &
+  if [ "<%= context.global_input_file %>" = "" ]; then
+    paraview &
+  else
+    paraview "<%= context.global_input_file %>" &
+  fi
+else
+  if [ "<%= context.global_input_file %>" = "" ]; then
+    ${_VIRTUALGL} /opt/ParaView/bin/paraview &
+  else
+    ${_VIRTUALGL} /opt/ParaView/bin/paraview "<%= context.global_input_file %>" &
+  fi
+fi
+${_VIRTUALGL} xfce4-session
+fg

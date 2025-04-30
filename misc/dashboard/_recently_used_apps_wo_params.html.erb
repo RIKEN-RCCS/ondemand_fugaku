@@ -1,0 +1,28 @@
+<% apps = recently_used_apps %>
+<% unless apps.empty? %>
+  <div class="recently-used-apps-header">
+    <h4 class="apps-section-header-blue"><%= t('dashboard.recently_used_apps_title') %></h4>
+    <div class="row">
+    <% apps.each do |app| %>
+      <% link = app.link %>
+      <% tile_data = link.tile %>
+      <div class="col-sm-3 col-md-3 app-launcher-container">
+        <div class="app-launcher app-launcher-hover" data-toggle="launcher-button">
+          <%=
+	    link_to(
+	    link.url.to_s,
+	    class: ['launcher-click', tile_data[:border_color]],
+	    target: link.new_tab? ? "_blank" : nil,
+	    data: link.data
+	    ) do
+          %>
+
+          <%= render partial: "/widgets/pinned_apps/app_content", locals: { link: link } %>
+
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    </div>
+  </div>
+<% end %>

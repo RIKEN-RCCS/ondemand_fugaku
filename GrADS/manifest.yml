@@ -1,0 +1,10 @@
+---
+name: GrADS
+icon: fa://border-all
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
+description: |
+  [GrADS](http://cola.gmu.edu/grads/) is an interactive desktop tool that is used for easy access, manipulation, and visualization of earth science data. 
+tile:
+  sub_caption: |

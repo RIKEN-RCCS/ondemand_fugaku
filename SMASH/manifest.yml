@@ -1,0 +1,7 @@
+---
+name: SMASH
+category: Batch Jobs
+subcategory: Quantum Chemistry
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/SMASH
+tile:
+  sub_caption: |

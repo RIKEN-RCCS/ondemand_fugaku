@@ -1,0 +1,7 @@
+---
+name: Quantum Espresso
+category: Batch Jobs
+subcategory: Condensed Matter Physics
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/Quantum_Espresso
+tile:
+  sub_caption: |

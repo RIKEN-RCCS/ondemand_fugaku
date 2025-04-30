@@ -1,0 +1,10 @@
+<%
+  require '/var/www/ood/apps/sys/ondemand_fugaku/utils.rb'
+%>
+---
+cluster: prepost
+script:
+<%= submit_script_prepost("ood_#{application}", global_prepost_gpu_queue, global_prepost_hours, global_prepost_cores,
+                          global_prepost_memory, global_prepost_gpus, global_email) %>
+batch_connect:
+<%= submit_vnc(staged_root) %>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="google-site-verification" content="eCZFJQ8nWGvoPy_SCvHXpC4DJdZU6aKXIUjcZxewh9E" />
+    <title>Open OnDemandの利用方法</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <div id="outer">
+      <div id="header">
+        <div id="head-inner">
+          <h1>Open OnDemandの利用方法</h1>
+        </div>
+      </div>
+      <div id="contents">
+        <ul>
+          <li><a href="#overview">はじめに</a></li>
+          <li><a href="#batch">Batch Jobs</a></li>
+          <li><a href="#interactive">Interactive Apps</a></li>
+          <li><a href="#passenger">Passenger Apps</a></li>
+          <li><a href="#material">資料</a></li>
+          <li><a href="#note">補足</a></li>
+        </ul>
+        <h2><a id="overview" name="overview">はじめに</a></h2>
+        <p>
+          <a href="https://openondemand.org">Open OnDemand</a>は、Webブラウザから並列計算機システムを利用するためのWebポータルです。富岳のOpen OnDemandで提供しているアプリケーションは下記の通りにグループ分けしています。
+          <ul>
+            <li>Batch Jobs：富岳の計算ノードに投入する実アプリケーション</li>
+            <li>Interactive Apps：富岳やプリポスト環境で動作する対話的アプリケーション</li>
+            <li>Passenger Apps：Open OnDemandがインストールされたサーバで動作するユーティリティ</li>
+          </ul>
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="dashboard" src="./img/dashboard.png" width="600" />
+        </p>
+        <p>
+          上図はOpen OnDemandのダッシュボードです。最上部のナビゲーションバーから，各アプリを起動させることができます。
+          図中の数字の項目の意味は下記の通りです。
+          <ol>
+            <li>外部リンク</li>
+            <li>最新の富岳のインフォメーション</li>
+            <li>富岳とプリポスト環境のキューの待ち状況</li>
+            <li>富岳の運用スケジュール</li>
+            <li>ディスクとバジェットの使用率</li>
+            <li>最近利用したアプリケーション（最大4つ）</li>
+            <li>Passenger Apps</li>
+          </ol>
+        </p>
+        
+        <h2><a id="batch" name="batch">Batch Jobs</a></h2>
+        <p>
+          下記のアプリケーションが利用可能です。追加したいアプリケーションがある場合は<a href="https://fugaku.zendesk.com/hc/ja/">富岳サポートサイト</a>に連絡ください。
+        </p>
+        <table class="design01">
+          <tr><th>Category</th><th>Application</th></tr>
+          <tr><td>Climate</td><td>SCALE</td></tr>
+	  <tr><td>Computer Aided Engineering</td><td>FDS, FFVHC-ACE, FrontFlow (blue/X), FrontISTR, OpenFOAM (Foundation/OpenCFD)</td></tr>
+	  <tr><td>Condensed Matter Physics</td><td>ALAMODE, AkaiKKR, H&Phi; mVMC, OpenMX, PHASE/0, Quantum Espresso, SALMON</td></tr>
+	  <tr><td>Experimental Data Processing</td><td>KIERTÄÄ</td></tr>
+	  <tr><td>Molecular Dynamics</td><td>GENESIS, GROMACS, LAMMPS, MODYLAS, PIMD</td></tr>
+	  <tr><td>Quantum Chemistry</td><td>ABINIT-MP, Gaussian, NTChem, SMASH</td></tr>
+	  <tr><td>Quantum Simulation</td><td>braket</td></tr>
+        </table>
+        <p>
+          アイコンをクリックすると、計算リソースなどを入力するためのWebフォームが表示されます。入力項目はアプリケーション毎に異なります。入力後に「Launch」をクリックすると、富岳にジョブが投入されます。
+        </p>
+        
+        <h2><a id="interactive" name="interactive">Interactive Apps</a></h2>
+        <p>
+          下記のアプリケーションが利用可能です。
+        </p>
+        <table class="design01">
+          <tr><th>Category</th><th>Application</th></tr>
+          <tr><td>Development</td><td>Remote Desktop, JupyterLab, MATLAB, VSCode, Qiskit, Terminal (ttyd)</td></tr>
+          <tr><td>Profiler</td><td>NVIDIA Visual Profiler, NVIDIA Nsight Compute, NVIDIA Nsight Systems, Vampir</td></tr>
+          <tr><td>Viewer</td><td>AVS/Express, C-Tools, GaussView, Gnuplot, GrADS, ImageJ, MOLDEN, OpenMX viewer, OVITO, Paraview, PyMOL, SALMON view, Smokeview, VESTA, VMD, VisIt, XCrySDen</td></tr>
+          <tr><td>Workflow</td><td>WHEEL</td></tr>
+        </table>
+        <p>
+          WebフォームはBatch Jobsと同じですが、「Launch」をクリック後、計算ノード上でジョブが起動するとアプリケーションへのリンクが表示されます。そのリンクをクリックすると、該当のアプリケーションをWebブラウザから利用できます。
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="launch" src="./img/launch.png" width="400" />
+        </p>
+        
+        <h2><a id="passenger" name="passenger">Passenger Apps</a></h2>
+        <h3>Active Jobs</h3>
+        <p>
+          ジョブの情報を閲覧できます。ジョブの削除も可能です。
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="active jobs" src="./img/activejobs.png" width="600" />
+        </p>
+
+	<h3>Budget Info</h3>
+        <p>
+          グループ内の各ユーザのバジェット利用量を表示します。また、テーマ管理者は各ユーザのバジェットに上限値を設定できます。
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="budget info" src="./img/budget_info.png" width="600" />
+        </p>
+	
+        <h3>Disk Info</h3>
+        <p>
+          グループ内の各ユーザのディスク利用量を表示します。
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="disk info" src="./img/disk_info.png" width="600" />
+        </p>
+        
+        <h3>Home Directory</h3>
+        <p>
+          ファイルのアップロード・ダウンロード・削除・編集を行えます。アップロード・ダウンロード可能な最大サイズは10GBです。
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="home directory" src="./img/homedirectory.png" width="600" />
+        </p>
+        <p>
+          <a href="https://rclone.org">rclone</a>を用いたクラウドストレージに対するファイル操作も可能です。Interactive AppsのRemote Desktopを起動し、ターミナルからrcloneもしくはrclone-browserを実行すると、rcloneの設定を行うことができます。設定後にOpen OnDemandの再起動を行い（ナビゲーションバーの「Help」->「Restart Web Server」をクリック）、Home Directoryを起動すると、設定されたクラウドストレージにアクセスできます。なお、富岳ヘルプデスクではrcloneの設定のサポートは行っておりませんのでご了承ください。
+        </p>
+
+        <h3>GakuNin RDM</h3>
+        <p>
+          国立情報学研究所が提供する研究データ管理基盤である<a href="https://rdm.nii.ac.jp">GakuNin RDM</a>に対するファイル操作を行えます。
+        </p>
+        <ul>
+          <li>Mount Path：富岳側のマウントパス（例：/home/rccs-aot/a00000/abc）</li>
+          <li>RDM Node ID：GakuNin RDMのプロジェクトのURL（https://rdm.nii.ac.jp/xxx/）のxxxの箇所</li>
+          <li>ROM Token：GakuNin RDMのパーソナルアクセストークン</li>
+        </ul>
+        <p>
+          <img style="border:solid 1px #000000" alt="GakuNin RDM" src="./img/grdm.png" width="600" />
+        </p>
+        <p>
+          「mount」をクリックすると、指定したGakuNin RDMのプロジェクトが富岳にマウントされます。
+        </p>
+        
+        <h3>HPCI共用ストレージ</h3>
+        <p>
+          <a href="https://www.hpci-office.jp">HPCI (High Performance Computing Infrastructure)</a>が提供するHPCI共用ストレージに対するファイル操作を行えます。本アプリを利用するためには、<a href=" https://elpis.hpci.nii.ac.jp">JWT-SERVER</a>からパスフレーズを事前に発行しておく必要があります。
+        </p>
+        <ul>
+          <li>HPCI ID：JWT-SERVERでパスフレーズを生成したときに表示される「hpcixxxxxx」という文字列（xxxxxxは数字）</li>
+          <li>Passphrase：パスフレーズ</li>
+        </ul>
+        <p>
+          <img style="border:solid 1px #000000" alt="HPCI Shared Storage" src="./img/hpci.png" width="600" />
+        </p>
+        <p>
+          「mount」をクリックすると、HPCI共用ストレージが富岳にマウントされます。
+        </p>
+
+	
+        <h3>Job Composer</h3>
+        <p>
+          ジョブの作成と投入を行うことができます。
+        </p>
+        <p>
+          <img alt="job composer" src="./img/jobcomposer3.png" width="600" />
+        </p>
+
+        <h3>Shell Access</h3>
+        <p>
+          Webブラウザ上でコマンドラインインタフェースを用いた操作を行うことができます。
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="shell access" src="./img/shellaccess.png" width="600" />
+        </p>
+
+        <h2><a id="material" name="material">資料</a></h2>
+        <p>
+          <ul>
+            <li><a href="https://github.com/RIKEN-RCCS/ondemand_fugaku_demo/blob/main/slide.pdf">スライド（英語）</a></li>
+            <li><a href="https://github.com/RIKEN-RCCS/ondemand_fugaku_demo/blob/main/slide.mp4">デモ1（英語）</a></li>
+            <li><a href="https://github.com/RIKEN-RCCS/ondemand_fugaku_demo/blob/main/demo.mp4">デモ2（英語）</a></li>
+          </ul>
+        </p>
+        
+        <h2><a id="note" name="note">補足</a></h2>
+        <div id="middle">
+          <div class="side">
+            <ul>
+              <li>Open OnDemandのテンポラル用のディレクトリは<span style="background-color:#dddddd;">${HOME}/ondemand</span>です。Open OnDemandを利用すると自動生成されます。削除しても問題ありませんが、履歴やInteractive Appsでユーザがインストールした拡張機能も削除されます。</li>
+              <li>もし不具合が発生した場合、<span style="background-color:#dddddd;">${HOME}/ondemand</span>を削除する、もしくは上のバーの「Help」の「Restart Web Server」をクリック下さい。</li>
+              <li>Internet Explorer 11はサポートしていません。</li>
+              <li>Remote Desktopでコピーアンドペーストを利用したい場合は、Chromeブラウザをご利用ください。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div id="footer">&copy; 理化学研究所 計算科学研究センター</div>
+    </div>
+  </body>
+</html>

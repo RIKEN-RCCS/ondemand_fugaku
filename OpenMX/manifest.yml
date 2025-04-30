@@ -1,0 +1,7 @@
+---
+name: OpenMX
+category: Batch Jobs
+subcategory: Condensed Matter Physics
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/OpenMX
+tile:
+  sub_caption: |

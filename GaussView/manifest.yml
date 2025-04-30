@@ -1,0 +1,10 @@
+---
+name: GaussView
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
+icon: fa://microscope
+description: |
+  [GaussView](https://gaussian.com) is a pre/post program for Gaussian.
+tile:
+  sub_caption: |

@@ -1,0 +1,20 @@
+---
+title: MOLDEN
+form:
+  - global_prepost_queue
+  - global_prepost_hours
+  - global_prepost_cores
+  - global_prepost_memory
+  - global_prepost_vgl
+  - application
+  - global_input_file
+  - global_email
+
+attributes:
+  application:
+    widget: select
+    label: Application
+    value: "molden"
+    options:
+      - ["molden",  "molden"]
+      - ["gmolden (OpenGL)", "gmolden"]

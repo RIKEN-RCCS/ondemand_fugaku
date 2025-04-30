@@ -1,0 +1,9 @@
+---
+name: MOLDEN
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
+description: |
+  [MOLDEN](https://www.theochem.ru.nl/molden/) is a pre-/post-processing program of molecular and electronic structure.
+tile:
+  sub_caption: |

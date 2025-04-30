@@ -1,0 +1,32 @@
+---
+title: MATLAB (BYOL)
+form:
+  - global_prepost_queue
+  - nodelist
+  - global_prepost_hours
+  - global_prepost_cores
+  - global_prepost_memory
+  - global_prepost_vgl
+  - global_working_dir
+  - global_email
+
+attributes:
+  nodelist:
+    label: Specified node
+    widget: select
+    help: This option is useful if you want to fix the MAC address.
+    options:
+      - [ "(Not specified)", "not_specified" ]
+      - [ "pps01",  "pps01",  data-option-for-global-prepost-queue-gpu2: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-mem2: false, data-option-for-global-prepost-queue-ondemand-reserved: false ]
+      - [ "pps02",  "pps02",  data-option-for-global-prepost-queue-gpu2: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-mem2: false, data-option-for-global-prepost-queue-ondemand-reserved: false ]
+      - [ "pps03",  "pps03",  data-option-for-global-prepost-queue-gpu2: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-mem2: false, data-option-for-global-prepost-queue-ondemand-reserved: false ]
+      - [ "pps04",  "pps04",  data-option-for-global-prepost-queue-gpu2: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-mem2: false, data-option-for-global-prepost-queue-ondemand-reserved: false ]
+      - [ "pps05",  "pps05",  data-option-for-global-prepost-queue-gpu2: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-mem2: false, data-option-for-global-prepost-queue-ondemand-reserved: false ]
+      - [ "pps06",  "pps06",  data-option-for-global-prepost-queue-gpu2: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-mem2: false, data-option-for-global-prepost-queue-ondemand-reserved: false ]
+      - [ "pps07",  "pps07",  data-option-for-global-prepost-queue-gpu1: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-mem2: false, data-option-for-global-prepost-queue-ondemand-reserved: false ]
+      - [ "pps08",  "pps08",  data-option-for-global-prepost-queue-gpu1: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-mem2: false, data-option-for-global-prepost-queue-ondemand-reserved: false ]
+      - [ "ppm01",  "ppm01",  data-option-for-global-prepost-queue-gpu1: false, data-option-for-global-prepost-queue-gpu2: false, data-option-for-global-prepost-queue-mem2: false, data-option-for-global-prepost-queue-ondemand-reserved: false ]
+      - [ "ppm02",  "ppm02",  data-option-for-global-prepost-queue-gpu1: false, data-option-for-global-prepost-queue-gpu2: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-ondemand-reserved: false ]
+      - [ "ppm03",  "ppm03",  data-option-for-global-prepost-queue-gpu1: false, data-option-for-global-prepost-queue-gpu2: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-ondemand-reserved: false ]
+      - [ "wheel1", "wheel1", data-option-for-global-prepost-queue-gpu1: false, data-option-for-global-prepost-queue-gpu2: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-mem2: false]
+      - [ "wheel2", "wheel2", data-option-for-global-prepost-queue-gpu1: false, data-option-for-global-prepost-queue-gpu2: false, data-option-for-global-prepost-queue-mem1: false, data-option-for-global-prepost-queue-mem2: false]

@@ -1,0 +1,9 @@
+<%= output_xfce(context.global_prepost_vgl) %>
+
+if [ "<%= context.global_input_file %>" = "" ]; then
+  ${_VIRTUALGL} /opt/ovito/bin/ovito &
+else
+  ${_VIRTUALGL} /opt/ovito/bin/ovito "<%= context.global_input_file %>" &
+fi
+${_VIRTUALGL} xfce4-session
+fg

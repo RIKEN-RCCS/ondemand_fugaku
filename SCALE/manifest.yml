@@ -1,0 +1,7 @@
+---
+name: SCALE
+category: Batch Jobs
+subcategory: Climate
+url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/SCALE
+tile:
+  sub_caption: |

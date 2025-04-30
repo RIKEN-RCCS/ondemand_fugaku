@@ -1,0 +1,8 @@
+name: Budget Info
+description: Budget usage of users by group.
+icon: fa://clipboard
+#category: Files
+#subcategory: Utilities
+category: Passenger Apps
+tile:
+  sub_caption: |

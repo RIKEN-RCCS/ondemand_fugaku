@@ -1,0 +1,9 @@
+---
+name: WHEEL Workflow Management Tool
+category: Interactive Apps
+subcategory: Workflow
+role: batch_connect
+description: |
+  [WHEEL](https://github.com/RIKEN-RCCS/OPEN-WHEEL) is a workflow management tool.
+tile:
+  sub_caption: |

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+cd ${HOME}
+
+# https://qiita.com/ronin_gw/items/cdf8112b61649ca455f5
+BASE_BINARY_DIR=${HOME}/ondemand/jupyter
+PYTHONUSERBASE=${BASE_BINARY_DIR%/}/`arch`
+export SINGULARITYENV_PYTHONUSERBASE=${PYTHONUSERBASE}
+export SINGULARITYENV_JUPYTER_DATA_DIR=${PYTHONUSERBASE}/share/jupyter
+PIP_VERSION=`singularity exec ${IMAGE} pip --version | awk -F/ '{print $4}'`
+PYTHONPATH=${PYTHONUSERBASE}/lib/python${PIP_VERSION}/site-packages:${PYTHONPATH}
+export SINGULARITYENV_PYTHONPATH=$PYTHONPATH
+mkdir -p $SINGULARITYENV_JUPYTER_DATA_DIR
+
+<%= setting_singularity("jupyter") %>
+
+# module load lang
+export SINGULARITYENV_PFJSVXTCLANGA=$PFJSVXTCLANGA
+export SINGULARITYENV_PATH=$PATH
+export SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+singularity exec --env PS1='\u@\h:\w\$ ' ${NV_OPTION} ${IMAGE} jupyter-lab --config="${CONFIG_FILE}"

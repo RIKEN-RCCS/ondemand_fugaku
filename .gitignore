@@ -1,0 +1,5 @@
+*~
+*.sif
+.DS_Store
+/GakuNinRDM/tmp/*
+!/GakuNinRDM/tmp/.keep

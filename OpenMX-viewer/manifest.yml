@@ -1,0 +1,9 @@
+---
+name: OpenMX Viewer
+description: |-
+  A visualization tool for OpenMX.
+url: https://www.openmx-square.org/viewer/index.html
+category: Interactive Apps
+subcategory: Viewer
+tile:
+  sub_caption: |

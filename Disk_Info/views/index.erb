@@ -1,0 +1,107 @@
+<style type="text/css">
+  table tr:nth-child(even) td {
+    background: #FFEEFF;
+    border: solid 2px #888888;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  table tr:nth-child(odd) td {
+    border: solid 2px #888888;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  th {
+    background-color: purple;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  td {
+    text-align: right;
+  }
+</style>
+
+<h1><%= title %></h1>
+<p>
+<font size="5">Disk usage for each user by group.</font>
+</p>
+<% @groups.each_with_index do |g, i| %>
+  <h2><%= g %> <font size="3">(Updated at <%= @disk_info[i][0] %>)</font></h2>
+  <table class="table table-bordered" style="border: solid 2px #888888;">
+    <tr>
+      <th style="vertical-align: middle;" rowspan="2">User</th>
+      <th style="vertical-align: middle;" rowspan="2">Volume</th>
+      <th style="vertical-align: middle;" rowspan="2">Path</th>
+      <th colspan="4">Capacity [GiB]</th>
+      <th colspan="4">Inode</th>
+    </tr>
+    <tr>
+      <th>Limit</th>
+      <th>Usage</th>
+      <th>Avail.</th>
+      <th>Ratio</th>
+      <th>Limit</th>
+      <th>Usage</th>
+      <th>Avail.</th>
+      <th>Ratio</th>
+    </tr>
+    <% @disk_info[i][1..-1].each do |d| %>
+    <tr>
+      <% user           = d[0] %>
+      <% volume         = d[1] %>
+      <% path           = d[2] %>
+      <% capacity       = d[3] %>
+      <% inode          = d[4] %>
+      <% capacity_limit = d[5] %>
+      <% inode_limit    = d[6] %>
+      <% capacity_avail = d[7] %>
+      <% inode_avail    = d[8] %>
+      <% if user == ENV['USER'] %>
+      <td style="color: red; font-weight: bold"><%= user %></td>
+      <% else %>
+      <td><%= user %></td>
+      <% end %>
+      <td><%= volume %></td>
+      <td>
+      <% path.each_with_index do |p, i| %>
+        <a target="_blank" href="https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/dashboard/files/fs<%= p %>"><%= p %></a><% if path.size() - 1 != i %>, <% end %>
+      <% end %>
+      </td>
+      <% if capacity_limit != -1 %>
+      <td><%= num_with_commas(capacity_limit) %></td>
+      <td><%= num_with_commas(capacity) %></td>
+      <td><%= num_with_commas(capacity_avail) %></td>
+      <td>
+        <div class="graph">
+          <strong class="bar_<%= dashboard_color(ratio(capacity, capacity_limit)) %>" style="width: <%= ratio(capacity, capacity_limit, 100) %>%;"><%= ratio(capacity, capacity_limit) %>%</strong>
+        </div>
+      </td>
+      <% else %>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <% end %>
+      
+      <% if inode_limit != -1 %>
+      <td><%= num_with_commas(inode_limit) %></td>
+      <td><%= num_with_commas(inode) %></td>
+      <td><%= num_with_commas(inode_avail) %></td>
+      <td>
+        <div class="graph">
+          <strong class="bar_<%= dashboard_color(ratio(inode, inode_limit)) %>" style="width: <%= ratio(inode, inode_limit, 100) %>%;"><%= ratio(inode, inode_limit) %>%</strong>
+        </div>
+      </td>
+      <% else %>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
+<br>

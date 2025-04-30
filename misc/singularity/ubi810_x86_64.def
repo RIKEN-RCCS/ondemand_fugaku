@@ -1,0 +1,195 @@
+Bootstrap: docker
+From: redhat/ubi8:8.10
+
+%files
+  /etc/pki/entitlement /etc/pki/
+  /etc/yum.repos.d/redhat.repo
+
+%post
+  rm -f /etc/yum.repos.d/ubi.repo
+  yum config-manager --enable rhel-8-for-x86_64-baseos-rpms
+  yum config-manager --enable rhel-8-for-x86_64-appstream-rpms
+  dnf -y --releasever=8.10 update
+  dnf -y --releasever=8.10 install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms
+  dnf -y --releasever=8.10 install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh ksh tcsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname libatomic mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs xorg-x11-apps evince eog glx-utils systemd-libs sssd Lmod glibc-langpack-en xdg-user-dirs libevent xterm gnuplot ImageMagick ncview glfw glfw-devel dbus-x11 python3-numpy vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts gimp
+  dnf -y --releasever=8.10 install rclone rclone-browser
+  dnf -y --releasever=8.10 groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
+  dnf -y remove xfce4-screensaver
+  #
+  # VNC
+  dnf -y --releasever=8.10 install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-3.1.1-1.el8.x86_64.rpm
+  dnf -y --releasever=8.10 install python3-websockify
+  #
+  # Paraview
+  cd /opt
+  dnf -y --releasever=8.10 install python3.12-devel python3.12-numpy python3.12-pip
+  update-alternatives --set python /usr/bin/python3.12
+  update-alternatives --install /usr/bin/pip pip /usr/bin/pip3.12 1
+  wget -O ParaView-5.13.20250404-MPI-Linux-Python3.12-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=nightly&type=binary&os=Linux&downloadFile=ParaView-5.13.20250404-MPI-Linux-Python3.12-x86_64.tar.gz"
+  tar xfz ParaView-5.13.20250404-MPI-Linux-Python3.12-x86_64.tar.gz
+  ln -s ParaView-5.13.20250404-MPI-Linux-Python3.12-x86_64 ParaView
+  rm ParaView-5.13.20250404-MPI-Linux-Python3.12-x86_64.tar.gz ParaView/bin/mpiexec
+  #
+  # VisIt
+  wget https://github.com/visit-dav/visit/releases/download/v3.4.2/visit3_4_2.linux-x86_64-rocky8.tar.gz
+  tar xfz visit3_4_2.linux-x86_64-rocky8.tar.gz
+  ln -s visit3_4_2.linux-x86_64 visit
+  rm visit3_4_2.linux-x86_64-rocky8.tar.gz
+  #
+  # XCrySDen
+  dnf -y --releasever=8.10 install libXmu-devel tcl-devel tk-devel libGL-devel mesa-libGLU-devel fftw-devel
+  wget https://sourceforge.net/projects/togl/files/Togl/2.0/Togl2.0-src.tar.gz
+  tar xfz Togl2.0-src.tar.gz
+  cd Togl2.0
+  ./configure --prefix=/opt/togl2.0 --libdir=/usr/lib64
+  make; make install
+  cd ..
+  wget http://www.xcrysden.org/download/xcrysden-1.6.3-rc2.tar.gz
+  tar xfz xcrysden-1.6.3-rc2.tar.gz
+  mv xcrysden-1.6.3-rc2 tmp-1.6.3; cd tmp-1.6.3
+  cp system/Make.sys-shared Make.sys
+  make all GL_INCDIR=-I/opt/Togl2.0 TOGL_LIB=/opt/Togl2.0/libTogl2.0.so
+  prefix=/opt/xcrysden-1.6.3 make install
+  cd ..
+  ln -s /opt/xcrysden-1.6.3 /opt/xcrysden
+  rm -r Togl2.0-src.tar.gz xcrysden-1.6.3-rc2.tar.gz tmp-1.6.3
+  #
+  # VESTA
+  dnf -y --releasever=8.10 install http://jp-minerals.org/vesta/archives/3.5.8/vesta-3.5.8-1.x86_64.rpm
+  ln -s /usr/local/vesta-3.5.8 /usr/local/vesta
+  #
+  # SmokeView
+  dnf -y --releasever=8.10 install libXi-devel freeglut-devel
+  wget https://github.com/firemodels/smv/archive/refs/tags/SMV-6.10.0.tar.gz
+  tar xfz SMV-6.10.0.tar.gz
+  cd smv-SMV-6.10.0/Build/smokeview/gnu_linux_64
+  bash make_smokeview.sh
+  mkdir /opt/smokeview-6.10.0
+  mv smokeview_linux_64 /opt/smokeview-6.10.0/
+  ln -s /opt/smokeview-6.10.0/smokeview_linux_64 /opt/smokeview-6.10.0/smokeview
+  ln -s /opt/smokeview-6.10.0 /opt/smokeview
+  #
+  # EasyISTR
+  # I tried to access it on April 4, 2025, but I couldn't connect.
+  #wget -O easyistr-3.47.240930-2.noarch.rpm --trust-server-names "http://opencae.gifu-nct.ac.jp/pukiwiki/index.php?plugin=attach&refer=AboutEasyISTR&openfile=easyistr-3.47.240930-2.noarch.rpm"
+  #wget -O easyistr-3.43.240203-2.noarch.rpm --trust-server-names "http://opencae.gifu-nct.ac.jp/pukiwiki/index.php?plugin=attach&refer=AboutEasyISTR&openfile=easyistr-3.43.240203-2.noarch.rpm"
+  #dnf -y --releasever=8.10 install easyistr-3.43.240203-2.noarch.rpm python3-vtk nautilus glibc-langpack-ja
+  #rm easyistr-3.43.240203-2.noarch.rpm
+  #
+  # OVITO
+  cd /opt
+  dnf -y --releasever=8.10 install xcb-util-cursor
+  wget https://www.ovito.org/download/master/ovito-basic-3.12.1-x86_64.tar.xz
+  tar Jxf ovito-basic-3.12.1-x86_64.tar.xz
+  rm ovito-basic-3.12.1-x86_64.tar.xz
+  OVIT_DIRNAME=`ls -1 | grep ^ovito-basic`
+  ln -s ${OVIT_DIRNAME} ovito
+  #
+  # C-TOOLS
+  wget https://download.qt.io/archive/qt/4.8/4.8.6/qt-everywhere-opensource-src-4.8.6.tar.gz
+  tar xfz qt-everywhere-opensource-src-4.8.6.tar.gz
+  cd qt-everywhere-opensource-src-4.8.6
+  echo "QMAKE_CXX = g++ -std=gnu++98" >> mkspecs/common/g++-base.conf
+  ./configure --prefix=/usr/local/qt-4.8.6 -no-openssl -no-qt3support -nomake examples -nomake demos -opensource -confirm-license
+  make -j; make install
+  cd ..
+  wget -O C-TOOLS062.tgz --trust-server-names "https://sourceforge.net/projects/c-tools/files/C-TOOLS062.tgz/download"
+  tar xfz C-TOOLS062.tgz
+  cd C-TOOLS062/src
+  make -j CFLAGS="-O3 -Wall -static" INCS="-I/usr/local/qt-4.8.6/include" LIBS="-L/usr/local/qt-4.8.6/lib -lQtCore -lQtGui -lQtOpenGL -lQtXml -lGL -lGLU" MOC=/usr/local/qt-4.8.6/bin/moc
+  cd ../../
+  mkdir /usr/local/C-TOOLS062/
+  mv C-TOOLS062/src/c-tools /usr/local/C-TOOLS062/
+  rm -rf qt-everywhere-opensource-src-4.8.6.tar.gz qt-everywhere-opensource-src-4.8.6 C-TOOLS062.tgz C-TOOLS062
+  #
+  # PyMOL
+  pip install pmw
+  dnf -y --releasever=8.10 install glew-devel netcdf-devel glm-devel libxml2-devel python3.12-tkinter
+  wget https://github.com/schrodinger/pymol-open-source/archive/refs/tags/v2.5.0.tar.gz
+  tar xfz v2.5.0.tar.gz
+  cd pymol-open-source-2.5.0
+  python setup.py build install --prefix=/usr/local/pymol-2.5.0 --glut
+  cd ..
+  rm -rf v2.5.0.tar.gz pymol-open-source-2.5.0
+  #
+  # ImageJ
+  wget https://wsr.imagej.net/distros/linux/ij154-linux64-java8.zip
+  unzip ij154-linux64-java8.zip
+  rm -f ij154-linux64-java8.zip
+  #
+  # VirtaulGL
+  dnf config-manager --add-repo http://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo
+  dnf -y --releasever=8.10 install nvidia-driver-libs
+  wget https://sourceforge.net/projects/virtualgl/files/3.1/VirtualGL-3.1.x86_64.rpm/download
+  mv download VirtualGL-3.1.x86_64.rpm
+  rpm -ivh VirtualGL-3.1.x86_64.rpm
+  rm -f VirtualGL-3.1.x86_64.rpm
+  #
+  # Jupyter
+  pip install packaging
+  pip install jupyterlab pandas matplotlib scikit-learn seaborn tqdm pymatgen boto3 kaleido botocore mpcontribs-client
+  # widgetsnbextension for ASEAN HPC School
+  python -m ipykernel install --sys-prefix
+  pip install jsonschema[format] nglview
+  #pip install --upgrade notebook==6.4.12 --use-feature=2020-resolver
+  #jupyter nbextension enable --py --sys-prefix widgetsnbextension 
+  #jupyter nbextension enable --py --sys-prefix nglview
+  #
+  # VSCode
+  dnf -y --releasever=8.10 install https://github.com/coder/code-server/releases/download/v4.98.2/code-server-4.98.2-amd64.rpm
+  #
+  # RStudio
+  # dnf -y --releasever=8.10 install R
+  # dnf -y --releasever=8.10 install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2023.12.1-402-x86_64.rpm
+  #
+  # TRAME
+  pip install trame trame-vuetify trame-matplotlib trame-vtk vtk
+  #
+  # GrADS
+  cd /opt
+  dnf -y --releasever=8.10 install libgeotiff-devel gd-devel cairo-devel libXmu-devel udunits2-devel
+  wget https://github.com/j-m-adams/GrADS/archive/refs/tags/v2.2.3.tar.gz
+  tar xfz v2.2.3.tar.gz
+  cd GrADS-2.2.3
+  mkdir lib
+  LIBS="-ludunits2" CPPFLAGS="-I /usr/include/udunits2" ./configure --prefix=/opt/grads-2.2.3
+  make; make install
+  cp -a data /opt/grads-2.2.3/
+  echo "gxdisplay    Cairo    /opt/grads/lib/libgxdCairo.so" >  /opt/grads-2.2.3/udpt
+  echo "gxprint      Cairo    /opt/grads/lib/libgxpCairo.so" >> /opt/grads-2.2.3/udpt
+  cd ../
+  ln -s /opt/grads-2.2.3 /opt/grads
+  rm -rf v2.2.3.tar.gz GrADS-2.2.3
+  #
+  # For Terminal (ttyd)
+  # Since RedHat 8 pachage of tmux is too old (ver. 2.7), new one (ver. 3.2a) is compiled to use.
+  # The new one is not the latest, but this version is used RedHat 9.
+  dnf -y --releasever=8.10 install ttyd screen libuv-devel libwebsockets-devel libevent-devel ncurses-devel
+  cd /opt
+  wget https://github.com/tmux/tmux/archive/refs/tags/3.5a.tar.gz
+  tar xfz 3.5a.tar.gz
+  mv tmux-3.5a tmux-3.5a_src
+  cd tmux-3.5a_src
+  sh autogen.sh
+  ./configure --prefix=/opt/tmux-3.5a
+  make; make install
+  cd ../
+  ln -s /opt/tmux-3.5a /opt/tmux
+  rm -rf tmux-3.5a_src 3.5a.tar.gz
+  #
+  # MOLDEN
+  dnf -y install imake
+  cd /opt
+  wget https://ftp.science.ru.nl/Molden/molden7.3.tar.gz
+  tar xfz molden7.3.tar.gz; rm molden7.3.tar.gz
+  chown	root:root -R molden7.3
+  cd molden7.3; make; cd ..
+  chmod 755 molden7.3
+  chmod 755 -R molden7.3/bin
+  ln -s /opt/molden7.3 /opt/molden
+  #
+  # Clean up
+  dnf clean all
+  rm -f /etc/pki/entitlement/*
+  rm -f /etc/yum.repos.d/redhat.repo

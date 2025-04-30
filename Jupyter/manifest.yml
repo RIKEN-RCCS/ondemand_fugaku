@@ -1,0 +1,9 @@
+---
+name: 2Jupyter
+category: Interactive Apps
+subcategory: Development
+role: batch_connect
+description: |
+  [Jupyter](https://jupyter.org) is a web-based interactive computing platform.
+tile:
+  sub_caption: |

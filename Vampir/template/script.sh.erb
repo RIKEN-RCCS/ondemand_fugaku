@@ -1,0 +1,14 @@
+<%= output_xfce(context.global_prepost_gpus) %>
+
+#unset XDG_SESSION_ID
+#unset XDG_DATA_DIRS
+#unset XDG_RUNTIME_DIR
+export PATH=/vol0004/apps/vampir/x86_64/latest/bin:$PATH
+
+if [ "<%= context.global_input_file %>" != "" ]; then
+  vampir "<%= context.global_input_file %>" &
+else
+  vampir &
+fi
+xfce4-session
+fg

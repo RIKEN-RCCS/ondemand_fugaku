@@ -1,0 +1,55 @@
+ABINIT_MP,               ood_abinitmp,            Batch Jobs,       Quantum Chemistry
+AkaiKKR,                 ood_akaikkr,             Batch Jobs,       Condensed Matter Physics
+ALAMODE,                 ood_alamode,             Batch Jobs,       Condensed Matter Physics
+AVS/Express,             ood_avs_express,         Interactive Apps, Viewer
+braket,                  ood_braket,              Batch Jobs,       Quantum Simulation
+C-Tools,                 ood_ctools,              Interactive Apps, Viewer
+Desktop,                 ood_desktop,             Interactive Apps, Development
+FDS,                     ood_fds,                 Batch Jobs,       Computer Aided Engineering
+FrontFlow_blue,          ood_frontflow_blue,      Batch Jobs,       Computer Aided Engineering
+FrontFlow_x,             ood_frontflow_x,         Batch Jobs,       Computer Aided Engineering
+FrontISTR,               ood_frontistr,           Batch Jobs,       Computer Aided Engineering
+Gaussian,                ood_gaussian,            Batch Jobs,       Quantum Chemistry
+GaussView,               ood_gaussview,           Interactive Apps, Viewer
+GENESIS,                 ood_genesis,             Batch Jobs,       Molecular Dynamics
+GROMACS,                 ood_gromacs,             Batch Jobs,       Molecular Dynamics
+HPhi,                    ood_h_phi,               Batch Jobs,       Condensed Matter Physics
+ImageJ,                  ood_imagej,              Interactive Apps, Viewer
+job_submitter,           ood_job_submitter,       Batch Jobs,       Utility
+Jupyter,                 ood_jupyter,             Interactive Apps, Development
+LAMMPS,                  ood_lammps,              Batch Jobs,       Molecular Dynamics
+MATLAB,                  ood_matlab,              Interactive Apps, Development
+MATLAB_BYOL,             ood_matlab_byol,         Interactive Apps, Development
+MODYLAS,                 ood_modylas,             Batch Jobs,       Molecular Dynamics
+mVMC,                    ood_mvmc,                Batch Jobs,       Condensed Matter Physics
+NTChem,                  ood_ntchem,              Batch Jobs,       Quantum Chemistry
+NVIDIA Visual Profiler,  ood_nvvp,                Interactive Apps, Profiler
+NVIDIA Nsight Compute,   ood_ncu-ui,              Interactive Apps, Profiler
+NVIDIA Nsight Systems,   ood_nsys-ui,             Interactive Apps, Profiler
+OpenFOAM_Foundation,     ood_openfoam_foundation, Batch Jobs,       Computer Aided Engineering
+OpenFOAM_OpenCFD,        ood_openfoam_opencfd,    Batch Jobs,       Computer Aided Engineering
+OpenMX,                  ood_openmx,              Batch Jobs,       Condensed Matter Physics
+OVITO,                   ood_ovito,               Interactive Apps, Viewer
+Paraview,                ood_paraview,            Interactive Apps, Viewer
+PHASE0_2D,               ood_phase0_2D,           Batch Jobs,       Condensed Matter Physics
+PHASE0_3D,               ood_phase0_3D,           Batch Jobs,       Condensed Matter Physics
+PyMOL,                   ood_pymol,               Interactive Apps, Viewer
+Quantum Espresso,        ood_quantum_espresso,    Batch Jobs,       Condensed Matter Physics
+RStudio,                 ood_rstudio,             Interactive Apps, Development
+SALMON,                  ood_salmon,              Batch Jobs,       Condensed Matter Physics
+SCALE,                   ood_scale,               Batch Jobs,       Climate
+SMASH,                   ood_smash,               Batch Jobs,       Quantum Chemistry
+Smokeview,               ood_smokeview,           Interactive Apps, Viewer
+Vampir,                  ood_vampir,              Interactive Apps, Profiler
+VESTA,                   ood_vesta,               Interactive Apps, Viewer
+VisIt,                   ood_visit,               Interactive Apps, Viewer
+VMD,                     ood_vmd,                 Interactive Apps, Viewer
+VSCode,                  ood_vscode,              Interactive Apps, Development
+WHEEL,                   ood_wheel,               Interactive Apps, Workflow
+XCrySDen,                ood_xcrysden,            Interactive Apps, Viewer
+Gnuplot,                 ood_gnuplot,             Interactive Apps, Viewer
+KIERTTA,                 ood_kiertta,             Batch Jobs,       Experimental Data Processing
+FFVHC-ACE,               ood_ffvhc_ace,           Batch Jobs,       Computer Aided Engineering
+terminal,                ood_terminal,            Interactive Apps, Development
+PIMD,                    ood_pimd,                Batch Jobs,       Molecular Dynamics
+GrADS,                   ood_grads,               Interactive Apps, Viewer

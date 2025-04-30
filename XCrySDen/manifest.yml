@@ -1,0 +1,9 @@
+---
+name: XCrySDen
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
+description: |
+  [XCrySDen](http://www.xcrysden.org) is a crystalline and molecular structure visualisation program.
+tile:
+  sub_caption: |

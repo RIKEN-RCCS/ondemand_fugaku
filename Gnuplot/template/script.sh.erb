@@ -1,0 +1,5 @@
+<%= output_xfce(context.global_prepost_vgl) %>
+
+${_VIRTUALGL} gnuplot "<%= context.global_input_file_required %>" -p &
+${_VIRTUALGL} xfce4-session
+fg

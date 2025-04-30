@@ -1,0 +1,9 @@
+---
+name: C-Tools
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
+description: |
+  [C-Tools](https://sourceforge.net/projects/c-tools/) can produce input files of various applications for density functional theory calculations.
+tile:
+  sub_caption: |

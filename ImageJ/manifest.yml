@@ -1,0 +1,9 @@
+---
+name: ImageJ
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
+description: |
+  [ImageJ](https://imagej.net/ij/index.html) is image processing software that runs on a Java VM.
+tile:
+  sub_caption: |

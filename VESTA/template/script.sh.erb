@@ -1,0 +1,10 @@
+<%= output_xfce(context.global_prepost_vgl) %>
+
+if [ "<%= context.global_input_file %>" = "" ]; then
+  ${_VIRTUALGL} /usr/local/vesta/VESTA &
+else
+  ${_VIRTUALGL} /usr/local/vesta/VESTA "<%= context.global_input_file %>" &
+fi
+
+${_VIRTUALGL} xfce4-session
+fg

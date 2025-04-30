@@ -1,0 +1,318 @@
+<%
+  require '/var/www/ood/apps/sys/ondemand_fugaku/utils.rb'
+  groups = get_groups()
+  favorites_dirs = get_favorites_dirs()
+%>
+---
+global_bc_form_items:
+  global_system:
+    label: System
+    widget: select
+    options:
+      - ['Fugaku', 'Fugaku',
+         data-hide-global-prepost-queue:    true,
+	 data-hide-global-prepost-hours:    true,
+	 data-hide-global-prepost-cores:    true,
+	 data-hide-global-prepost-memory:   true,
+	 data-hide-global-prepost-gpus:     true,
+	 data-hide-global-prepost-vgl: true
+        ]
+      - ['Prepost', 'Prepost',
+         data-hide-global-fugaku-queue: true,
+	 data-hide-global-fugaku-single-queue: true,
+	 data-hide-global-fugaku-group: true,
+	 data-hide-global-fugaku-hours: true,
+	 data-hide-global-fugaku-nodes: true,
+	 data-hide-global-fugaku-procs: true,
+	 data-hide-global-fugaku-mode:  true
+       ]
+
+  global_fugaku_queue:
+    label: Resource group
+    widget: select
+    help: Please refer to the document (<a href="https://www.fugaku.r-ccs.riken.jp/en/resource_group_config">English</a> or <a href="https://www.fugaku.r-ccs.riken.jp/resource_group_config">Japanese</a>).
+    options:
+      - ['small', 'small',
+         data-label-global-fugaku-hours: Maximum run time (1 - 72 hours),
+	 data-max-global-fugaku-hours: 72,
+	 data-label-global-fugaku-nodes: Number of nodes (1 - 384),
+	 data-max-global-fugaku-nodes: 384,
+	 data-label-global-fugaku-procs: Number of processes (1 - 18432),
+	 data-max-global-fugaku-procs: 18432
+        ]
+      - ['spot-small', 'spot-small',
+         data-label-global-fugaku-hours: Maximum run time (1 - 4 hours),
+	 data-max-global-fugaku-hours: 4,
+	 data-label-global-fugaku-nodes: Number of nodes (1 - 384),
+	 data-max-global-fugaku-nodes: 384,
+	 data-label-global-fugaku-procs: Number of processes (1 - 18432),
+	 data-max-global-fugaku-procs: 18432
+        ]
+      - ['f-pt', 'f-pt',
+         data-label-global-fugaku-hours: Maximum run time (1 - 24 hours),
+	 data-max-global-fugaku-hours: 24,
+	 data-label-global-fugaku-nodes: Number of nodes (1 - 12288),
+	 data-max-global-fugaku-nodes: 12288,
+	 data-label-global-fugaku-procs: Number of processes (1 - 589824),
+	 data-max-global-fugaku-procs: 589824
+        ]
+
+  global_fugaku_single_queue:
+    label: Resource group
+    widget: select
+    help: Please refer to the document (<a href="https://www.fugaku.r-ccs.riken.jp/en/resource_group_config">English</a> or <a href="https://www.fugaku.r-ccs.riken.jp/resource_group_config">Japanese</a>).
+    options:
+      - ['small', 'small',
+         data-label-global-fugaku-hours: Maximum run time (1 - 72 hours),
+         data-max-global-fugaku-hours: 72
+        ]
+      - ['spot-small', 'spot-small',
+         data-label-global-fugaku-hours: Maximum run time (1 - 4 hours),
+         data-max-global-fugaku-hours: 4
+        ]
+      - ['f-pt', 'f-pt',
+         data-label-global-fugaku-hours: Maximum run time (1 - 24 hours),
+         data-max-global-fugaku-hours: 24
+        ]
+
+  global_fugaku_group:
+    label: Group
+    widget: select
+    options:
+<% groups.each do |n| %>
+      - ['<%= n %>', '<%= n %>']
+<% end %>
+
+  global_fugaku_hours:
+    widget: number_field
+    value: 1
+    min: 1
+    required: true
+
+  global_fugaku_nodes:
+    widget: number_field
+    value: 1
+    min: 1
+    required: true
+
+  global_fugaku_procs:
+    widget: number_field
+    help: Total number of processes <= Number of nodes x 48.
+    value: 1
+    min: 1
+    required: true
+
+  global_fugaku_mode:
+    widget: select
+    label: Execution mode
+    help: Please refer to the document (<a href="https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/use_latest/PowerControlFunction/index.html">English</a> or <a href="https://www.fugaku.r-ccs.riken.jp/doc_root/ja/user_guides/use_latest/PowerControlFunction/index.html">Japanese</a>).
+    options:
+      - ['Boost-Eco', 'Boost-Eco']
+      - ['Normal',    'Normal']
+      - ['Eco',       'Eco']
+      - ['Boost',     'Boost']
+
+  global_prepost_queue:
+    label: Partition
+    widget: select
+    help: Please refer to the document (<a href="https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/pps-slurm/usage.html#job-queue-partition">English</a> or <a href="https://www.fugaku.r-ccs.riken.jp/doc_root/ja/user_guides/pps-slurm/usage.html#id11">Japanese</a>).
+    options:
+      - ['gpu1', 'gpu1',
+         data-label-global-prepost-hours: Maximum run time (1 - 3 hours),
+         data-max-global-prepost-hours: 3,
+	 data-label-global-prepost-cores: Number of CPU cores (1 - 72),
+	 data-max-global-prepost-cores: 72,
+	 data-label-global-prepost-memory: Number of memory (10 - 186 GB),
+         data-max-global-prepost-memory: 186
+        ]
+      - ['gpu2', 'gpu2',
+         data-label-global-prepost-hours: Maximum run time (1 - 24 hours),
+         data-max-global-prepost-hours: 24,
+         data-label-global-prepost-cores: Number of CPU cores (1 - 36),
+         data-max-global-prepost-cores: 36,
+	 data-label-global-prepost-memory: Number of memory (10 - 93 GB),
+         data-max-global-prepost-memory: 93
+        ]
+      - ['mem1', 'mem1',
+         data-label-global-prepost-hours: Maximum run time (1 - 3 hours),
+         data-max-global-prepost-hours: 3,
+         data-label-global-prepost-cores: Number of CPU cores (1 - 224),
+         data-max-global-prepost-cores:	224,
+	 data-label-global-prepost-memory: Number of memory (10 - 5020 GB),
+         data-max-global-prepost-memory: 5020,
+	 data-hide-global-prepost-gpus: true,
+	 data-hide-global-prepost-vgl: true
+        ]
+      - ['mem2', 'mem2',
+         data-label-global-prepost-hours: Maximum run time (1 - 24 hours),
+         data-max-global-prepost-hours: 24,
+	 data-label-global-prepost-cores: Number of CPU cores (1 - 56),
+         data-max-global-prepost-cores:	56,
+	 data-label-global-prepost-memory: Number of memory (10 - 1500 GB),
+         data-max-global-prepost-memory: 1500,
+	 data-hide-global-prepost-gpus:	true,
+	 data-hide-global-prepost-vgl: true
+        ]
+      - ['ondemand-reserved', 'ondemand-reserved',
+         data-label-global-prepost-hours: Maximum run time (1 - 720 hours),
+         data-max-global-prepost-hours: 720,
+ 	 data-label-global-prepost-cores: Number of CPU cores (1 - 8),
+         data-max-global-prepost-cores:	8,
+	 data-label-global-prepost-memory: Number of memory (10 - 32 GB),
+         data-max-global-prepost-memory: 32,
+	 data-hide-global-prepost-gpus:	true,
+	 data-hide-global-prepost-vgl: true
+        ]
+
+  global_prepost_queue_reserved:
+    label: Partition
+    widget: select
+    help: Please refer to the document (<a href="https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/pps-slurm/usage.html#job-queue-partition">English</a> or <a href="https://www.fugaku.r-ccs.riken.jp/doc_root/ja/user_guides/pps-slurm/usage.html#id11">Japanese</a>).
+    options:
+      - ['ondemand-reserved', 'ondemand-reserved',
+         data-label-global-prepost-hours: Maximum run time (1 - 720 hours),
+         data-max-global-prepost-hours: 720,
+         data-label-global-prepost-cores: Number of CPU cores (2 - 8),
+	 data-min-global-prepost-cores: 2,
+         data-max-global-prepost-cores: 8,
+         data-label-global-prepost-memory: Number of memory (10 - 32 GB),
+         data-max-global-prepost-memory: 32,
+         data-hide-global-prepost-gpus: true,
+         data-hide-global-prepost-vgl: true
+        ]
+      - ['gpu1', 'gpu1',
+         data-label-global-prepost-hours: Maximum run time (1 - 3 hours),
+         data-max-global-prepost-hours: 3,
+         data-label-global-prepost-cores: Number of CPU cores (2 - 72),
+	 data-min-global-prepost-cores: 2,
+         data-max-global-prepost-cores: 72,
+         data-label-global-prepost-memory: Number of memory (10 - 186 GB),
+         data-max-global-prepost-memory: 186
+        ]
+      - ['gpu2', 'gpu2',
+         data-label-global-prepost-hours: Maximum run time (1 - 24 hours),
+         data-max-global-prepost-hours: 24,
+         data-label-global-prepost-cores: Number of CPU cores (2 - 36),
+	 data-min-global-prepost-cores: 2,
+         data-max-global-prepost-cores: 36,
+         data-label-global-prepost-memory: Number of memory (10 - 93 GB),
+         data-max-global-prepost-memory: 93
+        ]
+      - ['mem1', 'mem1',
+         data-label-global-prepost-hours: Maximum run time (1 - 3 hours),
+         data-max-global-prepost-hours: 3,
+         data-label-global-prepost-cores: Number of CPU cores (2 - 224),
+	 data-min-global-prepost-cores: 2,
+         data-max-global-prepost-cores: 224,
+         data-label-global-prepost-memory: Number of memory (10 - 5020 GB),
+         data-max-global-prepost-memory: 5020,
+         data-hide-global-prepost-gpus: true,
+         data-hide-global-prepost-vgl: true
+        ]
+      - ['mem2', 'mem2',
+         data-label-global-prepost-hours: Maximum run time (1 - 24 hours),
+         data-max-global-prepost-hours: 24,
+         data-label-global-prepost-cores: Number of CPU cores (2 - 56),
+	 data-min-global-prepost-cores: 2,
+         data-max-global-prepost-cores: 56,
+         data-label-global-prepost-memory: Number of memory (10 - 1500 GB),
+         data-max-global-prepost-memory: 1500,
+         data-hide-global-prepost-gpus: true,
+         data-hide-global-prepost-vgl: true
+        ]
+
+  global_prepost_gpu_queue:
+    label: Partition
+    widget: select
+    help: Please refer to the document (<a href="https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/pps-slurm/usage.html#job-queue-partition">English</a> or <a href="https://www.fugaku.r-ccs.riken.jp/doc_root/ja/user_guides/pps-slurm/usage.html#id11">Japanese</a>).
+    options:
+      - ['gpu1', 'gpu1',
+         data-label-global-prepost-hours: Maximum run time (1 - 3 hours),
+         data-max-global-prepost-hours: 3,
+         data-label-global-prepost-cores: Number of CPU cores (1 - 72),
+         data-max-global-prepost-cores: 72,
+         data-label-global-prepost-memory: Number of memory (10 - 186 GB),
+         data-max-global-prepost-memory: 186
+        ]
+      - ['gpu2', 'gpu2',
+         data-label-global-prepost-hours: Maximum run time (1 - 24 hours),
+         data-max-global-prepost-hours: 24,
+         data-label-global-prepost-cores: Number of CPU cores (1 - 36),
+         data-max-global-prepost-cores: 36,
+         data-label-global-prepost-memory: Number of memory (10 - 93 GB),
+         data-max-global-prepost-memory: 93
+        ]
+
+  global_prepost_hours:
+    widget: number_field
+    value: 1
+    min: 1
+    required: true
+
+  global_prepost_cores:
+    widget: number_field
+    value: 1
+    min: 1
+    required: true
+
+  global_prepost_memory:
+    widget: number_field
+    value: 10
+    min: 10
+    required: true
+
+  global_prepost_gpus:
+    widget: select
+    label: Number of GPUs (0 - 2)
+    options:
+      - ['0', '0']
+      - ['1', '1']
+      - ['2', '2']
+
+  global_prepost_vgl:
+    widget: select
+    label: Number of GPUs (0 - 2)
+    options:
+      - ['0', '0']
+      - ['1', '1_VGL']
+      - ['2', '2_VGL']
+    help: When GPU >= 1, X rendering is accelerated using GPU.
+
+  global_input_file:
+    label: Input file
+    widget: path_selector
+    directory: <%= Dir.home %>
+    show_hidden: false
+    show_files: true
+    favorites:
+    <% favorites_dirs.each do |dir| %>
+      - <%= dir %>
+    <% end %>
+
+  global_input_file_required:
+    label: Input file
+    widget: path_selector
+    directory: <%= Dir.home %>
+    show_hidden: false
+    show_files: true
+    required: true
+    favorites:
+    <% favorites_dirs.each do |dir| %>
+      - <%= dir %>
+    <% end %>
+
+  global_working_dir:
+    label: Working directory
+    widget: path_selector
+    value: <%= Dir.home %>
+    directory: <%= Dir.home %>
+    show_hidden: false
+    show_files: false
+    favorites:
+    <% favorites_dirs.each do |dir| %>
+      - <%= dir %>
+    <% end %>
+      
+  global_email:
+    widget: text_field
+    label: Email (You will receive an email when it starts)

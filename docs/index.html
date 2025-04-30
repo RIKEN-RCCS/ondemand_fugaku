@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="google-site-verification" content="eCZFJQ8nWGvoPy_SCvHXpC4DJdZU6aKXIUjcZxewh9E" />
+    <title>Open OnDemand on Fugaku</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <div id="outer">
+      <div id="header">
+        <div id="head-inner">
+          <h1>Open OnDemand on Fugaku</h1>
+        </div>
+      </div>
+      <div id="contents">
+        <ul>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#batch">Batch Jobs</a></li>
+          <li><a href="#interactive">Interactive Apps</a></li>
+          <li><a href="#passenger">Passenger Apps</a></li>
+          <li><a href="#material">Material</a></li>
+          <li><a href="#note">Note</a></li>
+        </ul>
+        <h2><a id="overview" name="overview">Overview</a></h2>
+        <p>
+          <a href="https://openondemand.org">Open OnDemand</a> is a web portal for using parallel computer systems via a web browser.
+          The applications provided by Fugaku Open OnDemand are divided into the following groups.
+          <ul>
+            <li>Batch Jobs : Real world applications that run on Fugaku</li>
+            <li>Interactive Apps : Interactive applications that run on Fugaku and pre-post environment</li>
+            <li>Passenger Apps : Utilities that run on the server where Open OnDemand is installed</li>
+          </ul>
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="dashboard" src="./img/dashboard.png" width="600" />
+        </p>
+
+        <p>
+          The figure above shows the Open OnDemand dashboard. From the top navigation bar, you can launch the applications.
+          The meanings of the numerical items in the figure are as follows.
+          <ol>
+            <li>External links</li>
+	    <li>The latest information of Fugaku</li>
+	    <li>Fugaku and pre-post environment queue pending status</li>
+	    <li>Fugaku operation schedule</li>
+	    <li>Disk and budget usage</li>
+	    <li>Recently used applications (up to 4)</li>
+	    <li>Passenger Apps</li>
+          </ol>
+	</p>
+        
+        <h2><a id="batch" name="batch">Batch Jobs</a></h2>
+        <p>
+          The following applications are available.
+					If you have any applications you would like to add, please contact the <a href="https://fugaku.zendesk.com/hc/en-us/">Fugaku support site</a>.
+        </p>
+        <table class="design01">
+          <tr><th>Category</th><th>Application</th></tr>
+          <tr><td>Climate</td><td>SCALE</td></tr>
+          <tr><td>Computer Aided Engineering</td><td>FDS, FFVHC-ACE, FrontFlow (blue/X), FrontISTR, OpenFOAM (Foundation/OpenCFD)</td></tr>
+          <tr><td>Condensed Matter Physics</td><td>ALAMODE, AkaiKKR, H&Phi;, mVMC, OpenMX, PHASE/0, Quantum Espresso, SALMON</td></tr>
+	  <tr><td>Experimental Data Processing</td><td>KIERTÄÄ</td></tr>
+          <tr><td>Molecular Dynamics</td><td>GENESIS, GROMACS, LAMMPS, MODYLAS, PIMD</td></tr>
+          <tr><td>Quantum Chemistry</td><td>ABINIT-MP, Gaussian, NTChem, SMASH</td></tr>
+          <tr><td>Quantum Simulation</td><td>braket</td></tr>
+        </table>
+        <p>
+          Click the icon to display a web form for entering computational resources.
+          Input items differ for each application.
+          Clicking Launch bottom will submit the job to Fugaku.
+        </p>
+        
+        <h2><a id="interactive" name="interactive">Interactive Apps</a></h2>
+        <p>
+          The following applications are available.
+        </p>
+        <table class="design01">
+	  <tr><th>Category</th><th>Application</th></tr>
+	  <tr><td>Development</td><td>Remote Desktop, JupyterLab, MATLAB, VSCode, Qiskit, Terminal (ttyd)</td></tr>
+          <tr><td>Profiler</td><td>NVIDIA Visual Profiler, NVIDIA Nsight Compute, NVIDIA Nsight Systems, Vampir</td></tr>
+          <tr><td>Viewer</td><td>AVS/Express, C-Tools, GaussView, Gnuplot, GrADS, ImageJ, MOLDEN, OpenMX viewer, OVITO, Paraview, PyMOL, SALMON view, Smokeview, VESTA, VMD, VisIt, XCrySDen</td></tr>
+          <tr><td>Workflow</td><td>WHEEL</td></tr>
+        </table>
+
+        <p>
+          The web form is the same as Batch Jobs, but after clicking Launch the link to the application will be displayed when the job is launched on the compute node. By clicking on the link, you can use the corresponding application from your web browser.
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="launch" src="./img/launch.png" width="400" />
+        </p>
+        
+        <h2><a id="passenger" name="passenger">Passenger Apps</a></h2>
+        <h3>Active Jobs</h3>
+        <p>
+          You can view job information, and delete your jobs.
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="active jobs" src="./img/activejobs.png" width="600" />
+        </p>
+	
+        <h3>Budget Info</h3>
+        <p>
+          Displays the amount of budget usage for each user in the group. A theme manager can set budget limit.
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="budget info" src="./img/budget_info.png" width="600" />
+        </p>
+	
+        <h3>Disk Info</h3>
+        <p>
+          Displays the amount of disk usage for each user in the group.
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="disk info" src="./img/disk_info.png" width="600" />
+        </p>
+        
+        <h3>Home Directory</h3>
+        <p>
+          You can upload, download, delete, and edit files. The maximum file size for upload and download is 10GB.
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="home directory" src="./img/homedirectory.png" width="600" />
+        </p>
+        <p>
+          File operations for cloud storage using <a href="https://rclone.org">rclone</a> are also possible.
+          You can set up rclone by starting Remote Desktop in Interactive Apps and running rclone or rclone-browser from the terminal.
+          After the configuration, restart Open OnDemand (click "Help" -> "Restart Web Server" on the navigation bar) and start the Home Directory to access the configured cloud storage.
+          Please note that Fugaku Help Desk does not support rclone settings.
+        </p>
+
+        <h3>GakuNin RDM</h3>
+        <p>
+          You can perform file operations on <a href="https://rdm.nii.ac.jp">GakuNin RDM</a>, a research data management platform provided by the National Institute of Informatics.
+        </p>
+        <ul>
+          <li>Mount Path : Mount path on Fugaku (e.g. /home/rccs-aot/a00000/abc)</li>
+          <li>RDM Node ID : A part of URL of your project in GakuNin RDM (xxx in https://rdm.nii.ac.jp/xxx/)</li>
+          <li>ROM Token : Parsonal access token in GakuNin RDM</li>
+        </ul>
+        <p>
+          <img style="border:solid 1px #000000" alt="GakuNin RDM" src="./img/grdm.png" width="600" />
+        </p>
+        <p>
+          When clicking mount botton, a project directory in GakuNin RDM is mounted to Fugaku.
+        </p>
+        
+        <h3>HPCI Shared Storage</h3>
+        <p>
+          You can perform file operations on HPCI Shared Storage provided by <a href="https://www.hpci-office.jp">HPCI (High Performance Computing Infrastructure)</a>.
+          To use this application, a passphrase must be issued in advance from <a href="https://elpis.hpci.nii.ac.jp">JWT-SERVER</a>.
+        </p>
+        <p>
+          HPCI ID is a string "hpcixxxxxx" (where xxxxxx is a number) displayed when the passphrase is issued on JWT-SERVER.
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="HPCI Shared Storage" src="./img/hpci.png" width="600" />
+        </p>
+        <p>
+          When clicking mount botton, a project directory in HPCI Shared Storage is mounted to Fugaku.
+        </p>
+
+        <h3>Job Composer</h3>
+        <p>
+          You can create and submit jobs.
+        </p>
+	<p>
+	  <img alt="job composer" src="./img/jobcomposer3.png" width="600" />
+        </p>
+
+        <h3>Shell Access</h3>
+        <p>
+          You can perform operations using a command line interface on your web browser.
+        </p>
+        <p>
+          <img style="border:solid 1px #000000" alt="shell access" src="./img/shellaccess.png" width="600" />
+        </p>
+
+        <h2><a id="material" name="material">Material</a></h2>
+        <p>
+          <ul>
+            <li><a href="https://github.com/RIKEN-RCCS/ondemand_fugaku_demo/blob/main/slide.pdf">Slide</a></li>
+            <li><a href="https://github.com/RIKEN-RCCS/ondemand_fugaku_demo/blob/main/slide.mp4">Demo1</a></li>
+            <li><a href="https://github.com/RIKEN-RCCS/ondemand_fugaku_demo/blob/main/demo.mp4">Demo2</a></li>
+          </ul>
+        </p>
+        
+        <h2><a id="note" name="note">Note</a></h2>
+        <div id="middle">
+          <div class="side">
+            <ul>
+              <li>The temporal directory for Open OnDemand is <span style="background-color:#dddddd;">${HOME}/ondemand</span>, which is automatically created. There is no problem to delete it, but it also deletes user-installed extensions in Interactive Apps and history files.</li>
+              <li>If a problem occurs, delete <span style="background-color:#dddddd;">${HOME}/ondemand</span>, or click "Restart Web Server" in "Help" on the top bar.</li>
+              <li>Internet Explorer 11 is not supported</li>
+              <li>If you want to use copy and paste in Remote Desktop, please use the Chrome browser.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div id="footer">&copy; RIKEN Center for Computational Science</div>
+    </div>
+  </body>
+</html>

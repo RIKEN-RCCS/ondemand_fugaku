@@ -1,0 +1,102 @@
+<div class="col-12">
+<h4 class="fugaku_info">Accounting <span style="font-size: 0.9rem;">(Updated at <%= dashboard_date() %>)</span></h4>
+<p>
+  <table class="design01">
+    <tr>
+      <th rowspan="2">Group</th>
+      <th rowspan="2">Volume</th>
+      <th colspan="4">Capacity [GiB]</th>
+      <th colspan="4">Inode</th>
+      <th colspan="4">Budget [NH]</th>
+    </tr>
+    <tr>
+      <th>Limit</th><th>Usage</th><th>Avail.</th><th>Ratio</th>
+      <th>Limit</th><th>Usage</th><th>Avail.</th><th>Ratio</th>
+      <th>Limit (f-pt)</th>
+      <th>Usage</th><th>Avail.</th><th>Ratio</th>
+    </tr>
+    <% groups = `groups`.split - ["fugaku", "f-op"]  %>
+    <% groups.delete_if { |i| i.start_with?("isv") } %>
+    <% groups.each do |group_name|                   %>
+    <%   disk_info   = dashboard_disk(group_name)    %>
+    <%   inode_info  = dashboard_inode(group_name)   %>
+    <%   budget_info = dashboard_budget(group_name)  %>
+    <%   if disk_info.empty? and budget_info == nil  %>
+    <%     next                                      %>
+    <%   elsif disk_info.empty?                      %>
+    <%     num_volumes = 1                           %>
+    <%   else                                        %>
+    <%     num_volumes = disk_info.size              %>
+    <%   end                                         %>
+    <%                                               %>
+    <%   num_volumes.times do |i|                    %>
+    <tr>
+    <%     if i == 0 %>
+      <td rowspan="<%= num_volumes %>"><%= group_name %></td>
+    <%     end %>
+    <%     unless disk_info.empty? %>
+      <td><%= disk_info[i].volume %></td>
+      <td align="right"><%= disk_info[i].limit %></td>
+      <td align="right"><%= disk_info[i].usage %></td>
+      <td align="right"><%= disk_info[i].avail %></td>
+      <td><div class="graph"><strong class="bar_<%= dashboard_color(disk_info[i].ratio) %>" style="width: <%= disk_info[i].ratio %>%;"><%= disk_info[i].ratio %>%</strong></div></td>
+    <%     else %>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+    <%     end %>
+      
+    <%     unless inode_info.empty? %>
+      <td align="right"><%= inode_info[i].limit %></td>
+      <td align="right"><%= inode_info[i].usage %></td>
+      <td align="right"><%= inode_info[i].avail %></td>
+      <td><div class="graph"><strong class="bar_<%= dashboard_color(inode_info[i].ratio) %>" style="width: <%= inode_info[i].ratio %>%;"><%= inode_info[i].ratio %>%</strong></div></td>
+    <%     else %>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+    <%     end %>
+
+    <%     if i == 0 %>
+    <%       unless budget_info == nil %>
+      <td align="right" rowspan="<%= num_volumes %>"><%= budget_info.limit %> (<%= get_fugaku_pt(group_name) %>)</td>
+      <td align="right" rowspan="<%= num_volumes %>"><%= budget_info.usage %></td>
+      <td align="right" rowspan="<%= num_volumes %>"><%= budget_info.avail %></td>
+      <td rowspan="<%= num_volumes %>"><div class="graph"><strong class="bar_<%= dashboard_color(budget_info.ratio) %>" style="width: <%= budget_info.ratio %>%;"><%= budget_info.ratio %>%</strong></div></td>
+    <%       else %>
+      <td rowspan="<%= num_volumes %>"> - </td>
+      <td rowspan="<%= num_volumes %>"> - </td>
+      <td rowspan="<%= num_volumes %>"> - </td>
+      <td rowspan="<%= num_volumes %>"> - </td>
+    <%       end %>
+    <%     end %>
+    </tr>
+    <%   end %>
+    <% end %>
+
+    <% if dashboard_exist_user_info() %>
+    <%   home_disk_info  = dashboard_home_disk() %>
+    <%   home_inode_info = dashboard_home_inode() %>
+    <tr>
+      <td>/home</td>
+      <td><%= home_disk_info.volume %></td>
+      <td align="right"><%= home_disk_info.limit %></td>
+      <td align="right"><%= home_disk_info.usage %></td>
+      <td align="right"><%= home_disk_info.avail %></td>
+      <td><div class="graph"><strong class="bar_<%= dashboard_color(home_disk_info.ratio) %>" style="width: <%= home_disk_info.ratio %>%;"><%= home_disk_info.ratio %>%</strong></div></td>
+
+      <td align="right"><%= home_inode_info.limit %></td>
+      <td align="right"><%= home_inode_info.usage %></td>
+      <td align="right"><%= home_inode_info.avail %></td>
+      <td><div class="graph"><strong class="bar_<%= dashboard_color(home_inode_info.ratio) %>" style="width: <%= home_inode_info.ratio %>%;"><%= home_inode_info.ratio %>%</strong></div></td>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+      <td> - </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

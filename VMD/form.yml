@@ -1,0 +1,29 @@
+---
+title: VMD
+form:
+  - license
+  - global_prepost_queue
+  - global_prepost_hours
+  - global_prepost_cores
+  - global_prepost_memory
+  - global_prepost_vgl
+  - file_type
+  - global_input_file
+  - global_email
+
+attributes:
+  license:
+    widget: check_box
+    label: Do you accept the VMD license?
+    help: If you want to use VMD, you need to agree to [the VMD License](https://www.ks.uiuc.edu/Research/vmd/current/LICENSE.html), and questions regarding the license should be addressed to the VMD Team (described in the license)."
+    required: true
+
+  file_type:
+    widget: select
+    label: File type
+    options:
+      - ["(auto)", "auto"]
+      - ["psf",    "psf"]
+      - ["pdb",    "pdb"]
+      - ["dcd",    "dcd"]
+    help: "If nothing is output, select [File] -> [New Molecule] in the VMD window and load the file manually."

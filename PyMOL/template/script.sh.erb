@@ -1,0 +1,9 @@
+<%= output_xfce(context.global_prepost_vgl) %>
+
+if [ "<%= context.global_input_file %>" = "" ]; then
+  ${_VIRTUALGL} /usr/local/pymol-2.5.0/bin/pymol &
+else
+  ${_VIRTUALGL} /usr/local/pymol-2.5.0/bin/pymol "<%= context.global_input_file %>" &
+fi
+${_VIRTUALGL} xfce4-session
+fg

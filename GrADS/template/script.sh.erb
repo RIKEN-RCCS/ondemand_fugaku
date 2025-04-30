@@ -1,0 +1,10 @@
+<%= output_xfce(context.global_prepost_vgl) %>
+
+if [ "${_VIRTUALGL}" = "" ]; then
+  xfce4-terminal -e "bash -c \"/opt/grads/bin/grads -b; exec bash\"" -T "GrADS Terminal" &
+else
+  xfce4-terminal -e "${_VIRTUALGL} bash -c \"/opt/grads/bin/grads -b; exec bash\"" -T "GrADS Terminal" &
+fi
+
+${_VIRTUALGL} xfce4-session
+fg

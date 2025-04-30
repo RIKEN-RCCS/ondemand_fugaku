@@ -1,0 +1,3 @@
+Bootstrap: docker
+#From: naoso5/wheel-tmp
+From: tmkawanabe/wheel

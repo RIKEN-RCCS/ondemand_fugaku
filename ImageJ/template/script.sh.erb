@@ -1,0 +1,5 @@
+<%= output_xfce(context.global_prepost_gpus) %>
+
+java -jar -Xmx<%= (context.global_prepost_memory.to_i - 3).to_i %>g /opt/ImageJ/ij.jar "<%= context.global_input_file %>" &
+${_VIRTUALGL} xfce4-session
+fg

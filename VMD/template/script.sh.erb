@@ -1,0 +1,19 @@
+<%= output_xfce(context.global_prepost_vgl) %>
+
+FILE_TYPE=""
+if [ "<%= context.file_type %>" = "psf" ]; then
+  FILE_TYPE="-psf"
+elif [ "<%= context.file_type %>" = "pdb" ]; then
+  FILE_TYPE="-pdb"
+elif [ "<%= context.file_type %>" = "dcd" ]; then
+  FILE_TYPE="-dcd"
+fi
+
+if [ "${_VIRTUALGL}" = "" ]; then
+  xfce4-terminal -e "bash -c \"/vol0004/apps/oss/vmd/bin/vmd ${FILE_TYPE} <%= context.global_input_file %>; exec bash\"" -T "VMD Terminal" --disable-server &
+else
+  xfce4-terminal -e "${_VIRTUALGL} bash -c \"/vol0004/apps/oss/vmd/bin/vmd ${FILE_TYPE} <%= context.global_input_file %>; exec bash\"" -T "VMD Terminal" --disable-server &
+fi
+
+${_VIRTUALGL} xfce4-session
+fg

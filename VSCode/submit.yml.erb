@@ -1,0 +1,12 @@
+<%
+  require '/var/www/ood/apps/sys/ondemand_fugaku/utils.rb'
+%>
+---
+cluster: <%= global_system.downcase %>
+script:
+<%= submit_script_both("ood_vscode", global_system, global_fugaku_group, global_fugaku_queue,
+                       global_fugaku_hours, global_fugaku_nodes, global_fugaku_procs, global_fugaku_mode,
+                       global_prepost_queue, global_prepost_hours, global_prepost_cores,
+                       global_prepost_memory, global_prepost_gpus, global_email) %>
+batch_connect:
+  template: "basic"

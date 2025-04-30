@@ -1,0 +1,9 @@
+---
+name: Gnuplot
+category: Interactive Apps
+subcategory: Viewer
+role: batch_connect
+description: |
+  [Gnuplot](http://www.gnuplot.info) is a portable command-line driven graphing utility.
+tile:
+  sub_caption: |
