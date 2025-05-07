@@ -1,0 +1,9 @@
+---
+name: RStudio
+category: Interactive Apps
+subcategory: Development
+role: batch_connect
+description: |
+  [RStudio](https://posit.co/download/rstudio-desktop/) is an integrated development environment for R.
+tile:
+  sub_caption: |

@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# https://gitlab.com/nmsu_hpc/ood_bc_rstudio
+
+<%= setting_singularity("rstudio") %>
+
+export SINGULARITYENV_PATH=$PATH:/usr/lib/rstudio-server/bin
+export SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+export SINGULARITYENV_MODULEPATH=$MODULEPATH
+
+python3 -c 'from uuid import uuid4; print(uuid4())' > "${PWD}/secure-cookie-key"
+chmod 0600 "$PWD/secure-cookie-key"
+
+# Create Config File
+cat <<-EOF >./rserver.conf
+	www-port=${port}
+	auth-none=0
+	auth-pam-helper-path=${PWD}/bin/auth
+	auth-encrypt-password=0
+        server-data-dir=${SINGULARITYENV_TMPDIR}/rstudio-server
+        secure-cookie-key-file=${PWD}/secure-cookie-key
+        server-user=${USER}
+	auth-timeout-minutes=0
+	server-app-armor-enabled=0
+EOF
+
+# Create Session Config File
+cat <<-EOF >./rsession.conf
+	session-timeout-minutes=0
+	session-save-action-default=no
+        session-default-working-dir=<%= context.global_working_dir %>
+        session-default-new-project-dir=<%= context.global_working_dir %>
+EOF
+
+# Create Log Config File (debug, info, warn, error)
+mkdir -p $PWD/sessions
+cat <<-EOF >./logging.conf
+	[*]
+	log-level=info
+	logger-type=file
+	log-dir=$PWD/sessions
+EOF
+
+# Create RStudio Writable Directories and Helper Files
+mkdir -p "$SINGULARITYENV_TMPDIR/lib"
+mkdir -p "$SINGULARITYENV_TMPDIR/run"
+
+singularity exec --bind="$SINGULARITYENV_TMPDIR:/tmp" $IMAGE bash ./genenv.sh
+
+renv_path="$(cat ./Renviron.path)"
+echo MODULEPATH="$MODULEPATH" >> ./Renviron.site
+
+export SINGULARITY_BINDPATH=${SINGULARITY_BINDPATH},${SINGULARITYENV_TMPDIR}:/tmp,${SINGULARITYENV_TMPDIR}/lib:/var/lib/rstudio-server,${SINGULARITYENV_TMPDIR}/run:/var/run/rstudio-server,logging.conf:/etc/rstudio/logging.conf,rsession.conf:/etc/rstudio/rsession.conf,rserver.conf:/etc/rstudio/rserver.conf,Renviron.site:$renv_path
+
+singularity run $NV_OPTION $IMAGE rserver

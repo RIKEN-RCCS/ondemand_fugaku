@@ -21,15 +21,19 @@ From: redhat/ubi8:8.10
   dnf -y --releasever=8.10 install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-3.1.1-1.el8.x86_64.rpm
   dnf -y --releasever=8.10 install python3-websockify
   #
+  # R
+  dnf -y --releasever=8.10 install R
+  dnf -y --releasever=8.10 install https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2025.05.0-496-x86_64.rpm
+  #
   # Paraview
   cd /opt
   dnf -y --releasever=8.10 install python3.12-devel python3.12-numpy python3.12-pip
   update-alternatives --set python /usr/bin/python3.12
   update-alternatives --install /usr/bin/pip pip /usr/bin/pip3.12 1
-  wget -O ParaView-5.13.20250404-MPI-Linux-Python3.12-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=nightly&type=binary&os=Linux&downloadFile=ParaView-5.13.20250404-MPI-Linux-Python3.12-x86_64.tar.gz"
-  tar xfz ParaView-5.13.20250404-MPI-Linux-Python3.12-x86_64.tar.gz
-  ln -s ParaView-5.13.20250404-MPI-Linux-Python3.12-x86_64 ParaView
-  rm ParaView-5.13.20250404-MPI-Linux-Python3.12-x86_64.tar.gz ParaView/bin/mpiexec
+  wget -O ParaView-5.13.20250506-MPI-Linux-Python3.12-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=nightly&type=binary&os=Linux&downloadFile=ParaView-5.13.20250506-MPI-Linux-Python3.12-x86_64.tar.gz"
+  tar xfz ParaView-5.13.20250506-MPI-Linux-Python3.12-x86_64.tar.gz
+  ln -s ParaView-5.13.20250506-MPI-Linux-Python3.12-x86_64 ParaView
+  rm ParaView-5.13.20250506-MPI-Linux-Python3.12-x86_64.tar.gz ParaView/bin/mpiexec
   #
   # VisIt
   wget https://github.com/visit-dav/visit/releases/download/v3.4.2/visit3_4_2.linux-x86_64-rocky8.tar.gz
@@ -109,7 +113,7 @@ From: redhat/ubi8:8.10
   wget https://github.com/schrodinger/pymol-open-source/archive/refs/tags/v2.5.0.tar.gz
   tar xfz v2.5.0.tar.gz
   cd pymol-open-source-2.5.0
-  python setup.py build install --prefix=/usr/local/pymol-2.5.0 --glut
+  python setup.py build install --prefix=/usr/local/pymol-2.5.0 --glut --jobs=1
   cd ..
   rm -rf v2.5.0.tar.gz pymol-open-source-2.5.0
   #
