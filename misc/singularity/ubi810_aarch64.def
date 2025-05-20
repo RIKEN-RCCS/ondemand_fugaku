@@ -8,6 +8,7 @@ From: redhat/ubi8:8.10
 %post
   rm -f /etc/yum.repos.d/ubi.repo
   dnf -y --releasever=8.10 update
+  subscription-manager repos --enable=codeready-builder-for-rhel-8-aarch64-rpms
   dnf -y --releasever=8.10 install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   dnf -y --releasever=8.10 install gcc gcc-gfortran gcc-c++ perl java vim emacs zsh ksh tcsh git cmake numactl boost boost-devel dnf-plugins-core wget hostname xorg-x11-apps evince glx-utils systemd-libs sssd Lmod glibc-langpack-en xdg-user-dirs mesa-libGLU hwloc-libs lm_sensors-libs libXp ghostscript gedit gedit-plugins pcre2-utf16 ncurses-compat-libs gnuplot ImageMagick ncview freeglut freeglut-devel vlgothic-fonts vlgothic-p-fonts google-noto-sans-cjk-jp-fonts adobe-source-han-sans-jp-fonts dbus-x11
   dnf -y --releasever=8.10 groupinstall 'Development Tools' 'Infiniband Support' 'base-x' 'Internet Browser' 'Base' 'Xfce'
