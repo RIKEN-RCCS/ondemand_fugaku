@@ -30,10 +30,10 @@ From: redhat/ubi8:8.10
   dnf -y --releasever=8.10 install python3.12-devel python3.12-numpy python3.12-pip
   update-alternatives --set python /usr/bin/python3.12
   update-alternatives --install /usr/bin/pip pip /usr/bin/pip3.12 1
-  wget -O ParaView-5.13.20250506-MPI-Linux-Python3.12-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=nightly&type=binary&os=Linux&downloadFile=ParaView-5.13.20250506-MPI-Linux-Python3.12-x86_64.tar.gz"
-  tar xfz ParaView-5.13.20250506-MPI-Linux-Python3.12-x86_64.tar.gz
-  ln -s ParaView-5.13.20250506-MPI-Linux-Python3.12-x86_64 ParaView
-  rm ParaView-5.13.20250506-MPI-Linux-Python3.12-x86_64.tar.gz ParaView/bin/mpiexec
+  wget -O ParaView-6.0.MPI-Linux-Python3.12-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v6.0&type=binary&os=Linux&downloadFile=ParaView-6.0.0-RC1-MPI-Linux-Python3.12-x86_64.tar.gz"
+  tar xfz ParaView-6.0.MPI-Linux-Python3.12-x86_64.tar.gz
+  ln -s ParaView-6.0.0-RC1-MPI-Linux-Python3.12-x86_64 ParaView
+  rm ParaView-6.0.MPI-Linux-Python3.12-x86_64.tar.gz ParaView/bin/mpiexec
   #
   # VisIt
   wget https://github.com/visit-dav/visit/releases/download/v3.4.2/visit3_4_2.linux-x86_64-rocky8.tar.gz
@@ -140,8 +140,11 @@ From: redhat/ubi8:8.10
   #jupyter nbextension enable --py --sys-prefix widgetsnbextension 
   #jupyter nbextension enable --py --sys-prefix nglview
   #
+  # Atomic Simulation Environment at the request of Yoshizawa-san of RIST
+  pip install ase==3.21.1
+  #
   # VSCode
-  dnf -y --releasever=8.10 install https://github.com/coder/code-server/releases/download/v4.98.2/code-server-4.98.2-amd64.rpm
+  dnf -y --releasever=8.10 install https://github.com/coder/code-server/releases/download/v4.100.2/code-server-4.100.2-amd64.rpm
   #
   # RStudio
   # dnf -y --releasever=8.10 install R

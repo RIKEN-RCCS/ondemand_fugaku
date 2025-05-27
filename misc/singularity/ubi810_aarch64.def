@@ -22,7 +22,7 @@ From: redhat/ubi8:8.10
   dnf -y --releasever=8.10 --skip-broken install paraview paraview-devel paraview-openmpi-devel paraview-doc qt5-devel protobuf-devel
   #
   # VSCode
-  dnf -y --releasever=8.10 install https://github.com/coder/code-server/releases/download/v4.93.1/code-server-4.93.1-arm64.rpm
+  dnf -y --releasever=8.10 install https://github.com/coder/code-server/releases/download/v4.100.2/code-server-4.100.2-arm64.rpm
   #
   # Jupyter
   dnf -y --releasever=8.10 install python3.11-pip python3.11-devel python3.11-numpy python3.11-scipy python3-matplotlib
@@ -34,9 +34,11 @@ From: redhat/ubi8:8.10
   jupyter nbextension enable --py --sys-prefix widgetsnbextension
   jupyter nbextension enable --py --sys-prefix nglview
   #
-  # RStudio
-  # From https://dailies.rstudio.com
-  # dnf -y --releasever=8.10 install R
+  # Atomic Simulation Environment at the request of Yoshizawa-san of RIST
+  pip install ase==3.21.1
+  #
+  # RStudio (https://dailies.rstudio.com)
+  dnf -y --releasever=8.10 install R
   # dnf -y --releasever=8.10 install https://s3.amazonaws.com/rstudio-ide-build/server/rhel8/arm64/rstudio-server-rhel-2023.05.0-daily-92-aarch64.rpm
   #
   # Fujitsu TCS
