@@ -50,7 +50,7 @@ get '/' do
       t.push(t[6] - inode_sum)    # Add inode avail.    (inode_limit    - inode_sum)
     end
 
-    @disk_info.push(tmp.sort_by { |e| e[0] })
+    @disk_info.push([tmp[0]] + tmp[1..].sort_by { |e| e[0] })
   end
 
   @groups -= unused_groups
