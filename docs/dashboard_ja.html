@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>「富岳」Open OnDemand利用マニュアル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container-fluid">
+    <nav class="sidebar bg-body-secondary">
+      <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="dashboard.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
+      <ul class="nav flex-column px-3 py-2">
+        <li class="nav-item"><a href="index_ja.html" class="nav-link">1. はじめに</a></li>
+        <li class="nav-item"><a href="dashboard_ja.html" class="nav-link">2. 画面構成</a></li>
+        <li class="nav-item"><a href="interactive_ja.html" class="nav-link">3. 対話アプリケーション</a></li>
+        <li class="nav-item"><a href="batch_ja.html" class="nav-link">4. バッチジョブ</a></li>
+        <li class="nav-item"><a href="passenger_ja.html" class="nav-link">5. Passenger Apps</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#file" class="nav-link">5.1. ファイル操作</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#hpci" class="nav-link">5.2. HPCI共用ストレージ</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#shell" class="nav-link">5.4. シェルアクセス</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#composer" class="nav-link">5.5. Open Composer</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#active" class="nav-link">5.6. ジョブのモニタリング</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#budget" class="nav-link">5.7. バジェットの情報</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#disk" class="nav-link">5.8. ディスクの情報</a></li>
+        <li class="nav-item"><a href="supplement_ja.html" class="nav-link">6. 補足</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+      <h2>2. 画面構成</h2>
+      <img width="600" alt="Dashboard" src="img/dashboard.png">
+      <p>
+        上図は「富岳」Open OnDemandのダッシュボードです。上部のメニューバーの意味は下記の通りです（ブラウザの幅が狭くなると、アイコン表示に変わるものもあります）。
+      </p>
+      <table class="table">
+        <tr><th>項目</th><th>意味</th></tr>
+        <tr><td>Batch Jobs</td><td>「富岳」やプリポスト環境に投入するバッチジョブ</td></tr>
+        <tr><td>Interactive Apps</td><td>「富岳」やプリポスト環境で動作する対話アプリケーション</td></tr>
+        <tr><td>Passenger Apps</td><td>Open OnDemandサーバで動作するアプリケーション</td></tr>
+        <tr><td>My Interactive Sessions</td><td>対話アプリケーションのセッション情報の一覧</td></tr>
+        <tr><td>Help &rarr; Restart Web Server</td><td>Open OnDemandを再起動する</td></tr>
+        <tr><td>Help &rarr; Profiles</td><td>「All apps」をクリックすると、Batch JobsとInteractive Appsのすべてのアイコンがダッシュボードに表示される。元に戻すには、「Default」をクリックする</td></tr>
+      </table>
+      <p>
+        図中の数字の意味は下記の通りです。
+      </p>
+      <ol>
+        <li>外部リンク</li>
+        <li>最新情報</li>
+        <li>ジョブスケジューラのキューの待ち状況</li>
+        <li>運用スケジュール</li>
+        <li>ディスクとバジェットの使用率</li>
+        <li>最近利用した対話アプリケーション（最大4つ）</li>
+        <li>Passenger Apps</li>
+      </ol>
+      <p>
+        メニューバー、もしくは6と7のアイコンからアプリケーションを起動できます。
+      </p>
+
+    </main>
+  </div>
+
+  <footer class="text-muted text-center" style="background-color: darkblue;">
+    <p>&copy; RIKEN Center for Computational Science</p>
+  </footer>
+</body>
+</html>

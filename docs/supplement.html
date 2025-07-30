@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>「富岳」Open OnDemand利用マニュアル</title>
+  <title>Fugaku Open OnDemand User Manual</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
@@ -11,34 +11,34 @@
 
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
-      <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="supplement-en.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
+      <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="supplement_ja.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
       <ul class="nav flex-column px-3 py-2">
-        <li class="nav-item"><a href="index.html" class="nav-link">1. はじめに</a></li>
-        <li class="nav-item"><a href="dashboard.html" class="nav-link">2. 画面構成</a></li>
-        <li class="nav-item"><a href="interactive.html" class="nav-link">3. 対話アプリケーション</a></li>
-        <li class="nav-item"><a href="batch.html" class="nav-link">4. バッチジョブ</a></li>
+        <li class="nav-item"><a href="index.html" class="nav-link">1. Introduction</a></li>
+        <li class="nav-item"><a href="dashboard.html" class="nav-link">2. Dashboard Layout</a></li>
+        <li class="nav-item"><a href="interactive.html" class="nav-link">3. Interactive Applications</a></li>
+        <li class="nav-item"><a href="batch.html" class="nav-link">4. Batch Jobs</a></li>
         <li class="nav-item"><a href="passenger.html" class="nav-link">5. Passenger Apps</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#file" class="nav-link">5.1. ファイル操作</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.2. HPCI共用ストレージ</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#file" class="nav-link">5.1. File Operations</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.2. HPCI Shared Storage</a></li>
         <li class="nav-item ms-3"><a href="passenger.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#shell" class="nav-link">5.4. シェルアクセス</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#shell" class="nav-link">5.4. Shell Access</a></li>
         <li class="nav-item ms-3"><a href="passenger.html#composer" class="nav-link">5.5. Open Composer</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.6. ジョブのモニタリング</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.7. バジェットの情報</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.8. ディスクの情報</a></li>
-        <li class="nav-item"><a href="supplement.html" class="nav-link">6. 補足</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.6. Job Monitoring</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.7. Budget Usage</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.8. Disk Usage</a></li>
+        <li class="nav-item"><a href="supplement.html" class="nav-link">6. Supplement</a></li>
       </ul>
     </nav>
 
     <main class="main-content">
-      <h2>6. 補足</h2>
+      <h2>6. Supplement</h2>
       <ul class="supplement-list">
-        <li>Open OnDemandの一時的なディレクトリは<code>${HOME}/ondemand</code>です。Open OnDemandを利用すると自動生成されます。JupyterLabなどの対話アプリケーションにインストールした拡張機能や利用履歴などが保存されています。</li>
-        <li>バッチジョブの一時的なディレクトリは<code>${HOME}/composer</code>です。バッチジョブを利用すると自動生成されます。バッチジョブの履歴などが保存されています。
-        <li>もし不具合が発生した場合、メニューバーの「Help」の「Restart Web Server」をクリック下さい。それでも直らない場合は<a href="https://fugaku.zendesk.com/hc/ja/">富岳サポートサイト</a>にご連絡ください。</li>
-        <li>追加して欲しい対話アプリケーション、バッチジョブがある場合も<a href="https://fugaku.zendesk.com/hc/ja/">富岳サポートサイト</a>にご連絡ください。</li>
+        <li>The temporary directory for Open OnDemand is <code>${HOME}/ondemand</code>. It is automatically created when using Open OnDemand. This directory stores things like extensions installed in interactive applications such as JupyterLab, and usage history.</li>
+        <li>The temporary directory for batch jobs is <code>${HOME}/composer</code>. It is automatically created when using batch jobs. It stores batch job history and related data.</li>
+        <li>If a problem occurs, please click  "Help" &rarr; "Restart Web Server" in the menu bar. If the issue persists, please contact the <a href="https://fugaku.zendesk.com/hc/en/">Fugaku Support Site</a>.</li>
+        <li>If you would like to request the addition of an interactive application or batch job, please also contact the <a href="https://fugaku.zendesk.com/hc/en/">Fugaku Support Site</a>.</li>
       </ul>
-    </main>
+    </main>    
   </div>
 
   <footer class="text-muted text-center" style="background-color: darkblue;">

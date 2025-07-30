@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>「富岳」Open OnDemand利用マニュアル</title>
+  <title>Fugaku Open OnDemand User Manual</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
@@ -11,29 +11,30 @@
 
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
-      <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="interactive-en.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
+      <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="interactive_ja.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
       <ul class="nav flex-column px-3 py-2">
-        <li class="nav-item"><a href="index.html" class="nav-link">1. はじめに</a></li>
-        <li class="nav-item"><a href="dashboard.html" class="nav-link">2. 画面構成</a></li>
-        <li class="nav-item"><a href="interactive.html" class="nav-link">3. 対話アプリケーション</a></li>
-        <li class="nav-item"><a href="batch.html" class="nav-link">4. バッチジョブ</a></li>
+        <li class="nav-item"><a href="index.html" class="nav-link">1. Introduction</a></li>
+        <li class="nav-item"><a href="dashboard.html" class="nav-link">2. Dashboard Layout</a></li>
+        <li class="nav-item"><a href="interactive.html" class="nav-link">3. Interactive Applications</a></li>
+        <li class="nav-item"><a href="batch.html" class="nav-link">4. Batch Jobs</a></li>
         <li class="nav-item"><a href="passenger.html" class="nav-link">5. Passenger Apps</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#file" class="nav-link">5.1. ファイル操作</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.2. HPCI共用ストレージ</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#file" class="nav-link">5.1. File Operations</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.2. HPCI Shared Storage</a></li>
         <li class="nav-item ms-3"><a href="passenger.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#shell" class="nav-link">5.4. シェルアクセス</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#shell" class="nav-link">5.4. Shell Access</a></li>
         <li class="nav-item ms-3"><a href="passenger.html#composer" class="nav-link">5.5. Open Composer</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.6. ジョブのモニタリング</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.7. バジェットの情報</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.8. ディスクの情報</a></li>
-        <li class="nav-item"><a href="supplement.html" class="nav-link">6. 補足</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.6. Job Monitoring</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.7. Budget Usage</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.8. Disk Usage</a></li>
+        <li class="nav-item"><a href="supplement.html" class="nav-link">6. Supplement</a></li>
       </ul>
     </nav>
 
     <main class="main-content">
-      <h2>3. 対話アプリケーション</h2>
+      <h2>3. Interactive Applications</h2>
       <p>
-        対話アプリケーションとは、「富岳」やプリポスト環境の計算ノード上で実行されるアプリケーションを、ユーザが対話的に操作・制御しながら計算を進める形式のアプリケーションです。下記の対話アプリケーションが利用可能です。
+        Interactive applications are programs that run on compute nodes in the Fugaku or Prepost environment, allowing users to interactively operate and control the computation. 
+        The following interactive applications are available:
       </p>
       <table class="table">
         <tr><th>Category</th><th>Application</th></tr>
@@ -43,30 +44,31 @@
         <tr><td>Workflow</td><td>WHEEL</td></tr>
       </table>
       <p>
-        例として、リモートデスクトップの利用方法を説明します。メニューバーの「Interactive Apps」から「Desktop」を選択します。
+        As an example, here is how to use Remote Desktop. From the menu bar, select "Interactive Apps" &rarr; "Desktop".
       </p>
       <img width="400" alt="Click Remote Desktop" src="img/remote_desktop_click.png">
       <p>
-        計算リソースなどを入力するためのWebフォームが表示されます。入力項目はアプリケーション毎に異なりますが、可視化アプリケーションの場合、GPU数を1以上に設定するとVirtualGLが自動的に利用されるため、高速化が見込めます。入力後に「Submit」をクリックすると、「富岳」にジョブが投入されます。
+        A web form will appear for specifying computing resources. Input fields vary depending on the application, but for visualization applications, 
+        setting the number of GPUs to 1 or more enables VirtualGL automatically, which can improve performance. After filling out the form, click "Submit" to submit the job to Fugaku.
       </p>
       <img width="400" alt="Webform of Remote Desktop" src="img/remote_desktop_webform.png">
       <p>
-        ジョブ投入直後は、右上に「Queued」と記述された画面が表示されます。これは、ジョブは実行待ちであることを表しています。
+        Immediately after submission, a screen labeled "Queued" will appear, indicating that the job is waiting to be executed.
       </p>
       <img width="600" alt="Queued Status" src="img/remote_desktop_queued.png">
       <p>
-        ジョブが計算ノードで起動すると「Running」という表示に変わり、「Launch Desktop」というボタンが表示されます。「Commpression（圧縮レベル）と「Image Quality（画質レベル）」を適当な値に設定して、「Launch Desktop」のボタンをクリックします。
+        Once the job starts on the compute node, the label changes to "Running" and a "Launch Desktop" button appears. Adjust the "Compression" and "Image Quality" to suitable levels and click the "Launch Desktop" button.
       </p>
       <img width="600" alt="Running Status" src="img/remote_desktop_running.png">
       <p>
-        リモートデスクトップがWebブラウザに表示されます。リモートデスクトップを終了させたい場合は、「Delete」ボタンをクリックするか、リモートデスクトップの左上の「Applications」から「Log Out」をクリックしてください。Webブラウザのリモートデスクトップのタブを消すだけでは終了されないことに注意してください。
+        The remote desktop will launch in the web browser. To end the session, click the "Delete" button or go to "Applications" &rarr; "Log Out" in the upper-left corner of the remote desktop. Simply closing the browser tab will not terminate the session.
       </p>
       <p>
-        「View Only (Share-able Link) 」ボタンをクリックすると、ミラーリングされたリモートデスクトップが新しいタブで開きます。ミラーリングされた画面は操作できません。このタブのURLをメール等で送信することで、画面共有を行うことができます（「富岳」にアカウントを持っているユーザ間でのみ画面共有が可能です）。
+        Clicking "View Only (Share-able Link)" button opens a mirrored version of the remote desktop in a new tab. The mirrored screen is view-only and not interactive. By sharing this tab’s URL via email, screen sharing is possible (only among users with Fugaku accounts).
       </p>
       <img width="600" alt="Remote Desktop" src="img/remote_desktop.png">
       <p>
-        メニューバーの「My Interactive Sessions」をクリックすると、実行中の対話アプリケーションの一覧が表示されます。この画面から対話アプリケーションを終了させることも可能です。
+        Clicking "My Interactive Sessions" from the menu bar shows a list of active interactive sessions. You can also terminate sessions from this screen.
       </p>
       <img width="600" alt="Remote Desktop" src="img/sessions.png">
     </main>

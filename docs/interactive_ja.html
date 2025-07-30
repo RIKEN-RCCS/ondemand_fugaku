@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>「富岳」Open OnDemand利用マニュアル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container-fluid">
+    <nav class="sidebar bg-body-secondary">
+      <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="interactive.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
+      <ul class="nav flex-column px-3 py-2">
+        <li class="nav-item"><a href="index_ja.html" class="nav-link">1. はじめに</a></li>
+        <li class="nav-item"><a href="dashboard_ja.html" class="nav-link">2. 画面構成</a></li>
+        <li class="nav-item"><a href="interactive_ja.html" class="nav-link">3. 対話アプリケーション</a></li>
+        <li class="nav-item"><a href="batch_ja.html" class="nav-link">4. バッチジョブ</a></li>
+        <li class="nav-item"><a href="passenger_ja.html" class="nav-link">5. Passenger Apps</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#file" class="nav-link">5.1. ファイル操作</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#hpci" class="nav-link">5.2. HPCI共用ストレージ</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#shell" class="nav-link">5.4. シェルアクセス</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#composer" class="nav-link">5.5. Open Composer</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#active" class="nav-link">5.6. ジョブのモニタリング</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#budget" class="nav-link">5.7. バジェットの情報</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#disk" class="nav-link">5.8. ディスクの情報</a></li>
+        <li class="nav-item"><a href="supplement_ja.html" class="nav-link">6. 補足</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+      <h2>3. 対話アプリケーション</h2>
+      <p>
+        対話アプリケーションとは、「富岳」やプリポスト環境の計算ノード上で実行されるアプリケーションを、ユーザが対話的に操作・制御しながら計算を進める形式のアプリケーションです。下記の対話アプリケーションが利用可能です。
+      </p>
+      <table class="table">
+        <tr><th>Category</th><th>Application</th></tr>
+        <tr><td>Development</td><td>Remote Desktop, JupyterLab, MATLAB, VSCode, RStudio, Terminal (ttyd)</td></tr>
+        <tr><td>Profiler</td><td>NVIDIA Visual Profiler, NVIDIA Nsight Compute, NVIDIA Nsight Systems, Vampir</td></tr>
+        <tr><td>Viewer</td><td>AVS/Express, C-Tools, GaussView, Gnuplot, GrADS, ImageJ, MOLDEN, OpenMX viewer, OVITO, Paraview, PyMOL, SALMON view, Smokeview, VESTA, VMD, VisIt, XCrySDen</td></tr>
+        <tr><td>Workflow</td><td>WHEEL</td></tr>
+      </table>
+      <p>
+        例として、リモートデスクトップの利用方法を説明します。メニューバーの「Interactive Apps」から「Desktop」を選択します。
+      </p>
+      <img width="400" alt="Click Remote Desktop" src="img/remote_desktop_click.png">
+      <p>
+        計算リソースなどを入力するためのWebフォームが表示されます。入力項目はアプリケーション毎に異なりますが、可視化アプリケーションの場合、GPU数を1以上に設定するとVirtualGLが自動的に利用されるため、高速化が見込めます。入力後に「Submit」をクリックすると、「富岳」にジョブが投入されます。
+      </p>
+      <img width="400" alt="Webform of Remote Desktop" src="img/remote_desktop_webform.png">
+      <p>
+        ジョブ投入直後は、右上に「Queued」と記述された画面が表示されます。これは、ジョブは実行待ちであることを表しています。
+      </p>
+      <img width="600" alt="Queued Status" src="img/remote_desktop_queued.png">
+      <p>
+        ジョブが計算ノードで起動すると「Running」という表示に変わり、「Launch Desktop」というボタンが表示されます。「Commpression（圧縮レベル）と「Image Quality（画質レベル）」を適当な値に設定して、「Launch Desktop」のボタンをクリックします。
+      </p>
+      <img width="600" alt="Running Status" src="img/remote_desktop_running.png">
+      <p>
+        リモートデスクトップがWebブラウザに表示されます。リモートデスクトップを終了させたい場合は、「Delete」ボタンをクリックするか、リモートデスクトップの左上の「Applications」から「Log Out」をクリックしてください。Webブラウザのリモートデスクトップのタブを消すだけでは終了されないことに注意してください。
+      </p>
+      <p>
+        「View Only (Share-able Link) 」ボタンをクリックすると、ミラーリングされたリモートデスクトップが新しいタブで開きます。ミラーリングされた画面は操作できません。このタブのURLをメール等で送信することで、画面共有を行うことができます（「富岳」にアカウントを持っているユーザ間でのみ画面共有が可能です）。
+      </p>
+      <img width="600" alt="Remote Desktop" src="img/remote_desktop.png">
+      <p>
+        メニューバーの「My Interactive Sessions」をクリックすると、実行中の対話アプリケーションの一覧が表示されます。この画面から対話アプリケーションを終了させることも可能です。
+      </p>
+      <img width="600" alt="Remote Desktop" src="img/sessions.png">
+    </main>
+  </div>
+
+  <footer class="text-muted text-center" style="background-color: darkblue;">
+    <p>&copy; RIKEN Center for Computational Science</p>
+  </footer>
+</body>
+</html>

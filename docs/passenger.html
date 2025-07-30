@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>「富岳」Open OnDemand利用マニュアル</title>
+  <title>Fugaku Open OnDemand User Manual</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
@@ -11,95 +11,95 @@
 
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
-      <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="passenger-en.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
+      <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="passenger_ja.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
       <ul class="nav flex-column px-3 py-2">
-        <li class="nav-item"><a href="index.html" class="nav-link">1. はじめに</a></li>
-        <li class="nav-item"><a href="dashboard.html" class="nav-link">2. 画面構成</a></li>
-        <li class="nav-item"><a href="interactive.html" class="nav-link">3. 対話アプリケーション</a></li>
-        <li class="nav-item"><a href="batch.html" class="nav-link">4. バッチジョブ</a></li>
+        <li class="nav-item"><a href="index.html" class="nav-link">1. Introduction</a></li>
+        <li class="nav-item"><a href="dashboard.html" class="nav-link">2. Dashboard Layout</a></li>
+        <li class="nav-item"><a href="interactive.html" class="nav-link">3. Interactive Applications</a></li>
+        <li class="nav-item"><a href="batch.html" class="nav-link">4. Batch Jobs</a></li>
         <li class="nav-item"><a href="passenger.html" class="nav-link">5. Passenger Apps</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#file" class="nav-link">5.1. ファイル操作</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.2. HPCI共用ストレージ</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#file" class="nav-link">5.1. File Operations</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.2. HPCI Shared Storage</a></li>
         <li class="nav-item ms-3"><a href="passenger.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#shell" class="nav-link">5.4. シェルアクセス</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#shell" class="nav-link">5.4. Shell Access</a></li>
         <li class="nav-item ms-3"><a href="passenger.html#composer" class="nav-link">5.5. Open Composer</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.6. ジョブのモニタリング</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.7. バジェットの情報</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.8. ディスクの情報</a></li>
-        <li class="nav-item"><a href="supplement.html" class="nav-link">6. 補足</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.6. Job Monitoring</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.7. Budget Usage</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.8. Disk Usage</a></li>
+        <li class="nav-item"><a href="supplement.html" class="nav-link">6. Supplement</a></li>
       </ul>
     </nav>
 
     <main class="main-content">
       <h2>5. Passenger Apps</h2>
-      <h3 id="file">5.1. ファイル操作</h3>
-      <p>Home Directoryのアイコンをクリックしてください。「富岳」に対するファイルのアップロード・ダウンロード・編集などを行えます。アップロード・ダウンロード可能な最大サイズは10GBです。</p>
+
+      <h3 id="file">5.1. File Operations</h3>
+      <p>Click the Home Directory icon to upload, download, and edit files on Fugaku. The maximum upload/download file size is 10GB.</p>
       <img width="600" alt="Home Directory" src="img/home_directory.png">
-      <p>Home Directoryの各機能は下記の通りです。個別のファイルやディレクトリに対する操作は「3点＋下三角」のメニューから行えます。</p>
+      <p>The Home Directory functions are described below. Operations for individual files or directories can be performed from the “three-dot and down-arrow” menu.</p>
+
       <table class="table">
-        <tr><th>ツールバー</th><th>説明</th></tr>
-        <tr><td>Open in Terminal</td><td><a href="#shell">シェルアクセス</a>を起動</td></tr>
-        <tr><td>Refresh</td><td>ページを再描画</td></tr>
-        <tr><td>New File</td><td>新規ファイル作成</td></tr>
-        <tr><td>New Directory</td><td>新規ディレクトリ作成</td></tr>
-        <tr><td>Upload</td><td>ファイルのアップロード</td></tr>
-        <tr><td>Download</td><td>ファイルのダウンロード</td></tr>
-        <tr><td>Copy/Move</td><td>ファイルのコピー、移動</td></tr>
-        <tr><td>Delete</td><td>ファイルの削除</td></tr>
+        <tr><th>Toolbar</th><th>Description</th></tr>
+        <tr><td>Open in Terminal</td><td>Launch <a href="#shell">Shell Access</a></td></tr>
+        <tr><td>Refresh</td><td>Redraw the page</td></tr>
+        <tr><td>New File</td><td>Create a new file</td></tr>
+        <tr><td>New Directory</td><td>Create a new directory</td></tr>
+        <tr><td>Upload</td><td>Upload a file</td></tr>
+        <tr><td>Download</td><td>Download a file</td></tr>
+        <tr><td>Copy/Move</td><td>Copy or move a file</td></tr>
+        <tr><td>Delete</td><td>Delete a file</td></tr>
       </table>
 
       <table class="table">
-        <tr><th>パスバー</th><th>説明</th></tr>
-        <tr><td>&uarr;</td><td>1つ上のディレクトリに移動</td></tr>
-        <tr><td>Change directry</td><td>ディレクトリの移動</td></tr>
-        <tr><td>Copy path</td><td>現在のパスをクリップボードにコピー</td></tr>
+        <tr><th>Path Bar</th><th>Description</th></tr>
+        <tr><td>&uarr;</td><td>Move up one directory level</td></tr>
+        <tr><td>Change directory</td><td>Navigate to another directory</td></tr>
+        <tr><td>Copy path</td><td>Copy the current path to clipboard</td></tr>
       </table>
 
       <table class="table">
-        <tr><th>表示オプション</th><th>説明</th></tr>
-        <tr><td>Show Owner/Mode</td><td>所有者とパーミッションの表示</td></tr>
-        <tr><td>Show Dotfiles</td><td>ドットファイル（隠しファイル）の表示</td></tr>
-        <tr><td>Filter</td><td>ファイル名による絞り込み</td></tr>
+        <tr><th>View Options</th><th>Description</th></tr>
+        <tr><td>Show Owner/Mode</td><td>Display owner and permissions</td></tr>
+        <tr><td>Show Dotfiles</td><td>Show dotfiles (hidden files)</td></tr>
+        <tr><td>Filter</td><td>Filter by file name</td></tr>
       </table>
 
-      <p>メニューバーの「Passenger Apps」にあるパスをクリックすると、そのパスを起点としたHome Directoryが起動します。</p>
+      <p>Clicking a path under "Passenger Apps" in the menu bar launches the Home Directory starting from that path.</p>
       <img width="200" alt="Click to Home Directory" src="img/home_directory_click.png">
-      <p>
-      <a href="https://rclone.org">Rclone</a>を用いたクラウドストレージに対するファイルの操作も可能です。Rcloneの設定を行うには、対話アプリケーションのリモートデスクトップを起動し、そのターミナルから<code>rclone</code>もしくは<code>rclone-browser</code>を実行します。設定後にOpen OnDemandのメニューバーの「Help」 -> 「Restart Web Server」をクリックし、Home Directoryを起動すると、設定されたクラウドストレージにアクセスできます。なお、富岳ヘルプデスクではRcloneの設定のサポートは行っておりませんのでご了承ください。
-      </p>
 
-      <h3 id="hpci">5.2. HPCI共用ストレージ</h3>
-      <p>HPCI Shared Strageのアイコンをクリックください。<a href="https://www.hpci-office.jp">HPCI（High Performance Computing Infrastructure）</a>が提供するHPCI共用ストレージに対するファイル操作を行えます。本アプリケーションを利用するためには、<a href="https://elpis.hpci.nii.ac.jp/">JWT-SERVER</a>からパスフレーズを事前に発行しておく必要があります。</p>
+      <p>You can also manage files on cloud storages using <a href="https://rclone.org">Rclone</a>. To configure Rclone, launch a remote desktop from the interactive applications and execute <code>rclone</code> or <code>rclone-browser</code> from the terminal. After setup, click "Help" → "Restart Web Server" in the Open OnDemand menu bar and relaunch the Home Directory to access the configured cloud storage. Note that RIKEN’s Fugaku help desk does not provide support for configuring Rclone.</p>
+
+      <h3 id="hpci">5.2. HPCI Shared Storage</h3>
+      <p>Click the HPCI Shared Storage icon to manage files on the shared storage provided by <a href="https://www.hpci-office.jp">HPCI (High Performance Computing Infrastructure)</a>. You must first obtain a passphrase from the <a href="https://elpis.hpci.nii.ac.jp/">JWT-SERVER</a>.</p>
       <img width="600" alt="HPCI Shared Storage" src="img/hpci.png">
-      <p>「HPCI ID」にはJWT-SERVERでパスフレーズを生成したときに表示される<code>hpcixxxxxx</code>という文字列（<code>xxxxxx</code>は数字）を、「Passphrase」には生成されたパスフレーズを入力した後、「mount」ボタンをクリックください。</p>
+      <p>Enter the string like <code>hpcixxxxxx</code> (where <code>xxxxxx</code> are digits) shown when generating the passphrase into the "HPCI ID" field, and the passphrase into the "Passphrase" field, then click the "mount" button.</p>
 
       <h3 id="gakunin">5.3. GakuNin RDM</h3>
-      <p>GakuNin RDMのアイコンをクリックください。国立情報学研究所が提供する研究データ管理基盤である<a href="https://rdm.nii.ac.jp">GakuNin RDM</a>に対するファイル操作を行えます。本アプリケーションを利用するためには、GakuNin RDMのプロジェクトを事前に作成しておく必要があります。</p>
+      <p>Click the GakuNin RDM icon to manage files on <a href="https://rdm.nii.ac.jp">GakuNin RDM</a>, the research data management platform provided by the National Institute of Informatics. You must create a project in GakuNin RDM in advance to use this application.</p>
       <img width="600" alt="GakuNin RDM" src="img/grdm.png">
-      <p>「Mount Path」には「富岳」側のファイルシステムのマウントパス（例：<code>/home/rccs-aot/a00000/abc</code>）を、「RDM Node ID」はGakuNin RDMのプロジェクトのURL（<code>https://rdm.nii.ac.jp/xxx/</code>）の<code>xxx</code>の箇所を、「ROM Token」はGakuNin RDMのパーソナルアクセストークンを入力した後、「mount」ボタンをクリックください。</p>
+      <p>Enter the mount path on Fugaku (e.g., <code>/home/rccs-aot/a00000/abc</code>) in "Mount Path", the <code>xxx</code> part from the GakuNin RDM project URL (<code>https://rdm.nii.ac.jp/xxx/</code>) in "RDM Node ID", and your personal access token in "ROM Token", then click the "mount" button.</p>
 
-      <h3 id="shell">5.4. シェルアクセス</h3>
-      <p>Fugaku Shell Accessのアイコンをクリックください。WebブラウザからログインノードにSSHアクセスし、コマンドラインインタフェースを用いた操作を行うことができます。</p>
+      <h3 id="shell">5.4. Shell Access</h3>
+      <p>Click the Fugaku Shell Access icon to SSH into a login node from your web browser and use the command-line interface.</p>
       <img width="600" alt="Shell Access" src="img/shell_access.png">
 
       <h3 id="composer">5.5. Open Composer</h3>
-      <p>Open Composerアイコンをクリックください。バッチジョブを実行・管理するためのアプリケーションです。詳細は<a href="./batch.html">4. バッチジョブ</a>を参照ください。</p>
+      <p>Click the Open Composer icon to launch the application for managing and executing batch jobs. For more details, see <a href="batch.html">Section 4. Batch Jobs</a>.</p>
       <img width="600" alt="Open Composer" src="img/opencomposer.png">
-      <p>各アプリケーションがカテゴリ毎に表示されます。アプリケーションのアイコンをクリックすると、そのアプリケーション用のWebフォームが表示されます。</p>
-      <p>ダッシュボードの「Job Script for Fugaku」と「Job Script for Prepost」のアイコンをクリックすると、「富岳」とプリポスト環境で使われているジョブスケジューラであるFujitsu TCSとSlurmの指示文を主に作成するWebフォームが表示されます。</p>
+      <p>Applications are displayed by category. Clicking an application icon opens a web form for that application.</p>
+      <p>Clicking the "Job Script for Fugaku" or "Job Script for Prepost" icons in the dashboard opens a web form for creating directives for the Fujitsu TCS and Slurm job schedulers used on Fugaku and the Prepost environment, respectively.</p>
       <img width="600" alt="Fujitsu TCS" src="img/fujitsu_tcs.png">
 
-      <h3 id="active">5.6. ジョブのモニタリング</h3>
-      <p>Active Jobsのアイコンをクリックください。ジョブの情報を閲覧や削除を行うことができます。「ID」の列の左側のボタンをクリックすると、ジョブ詳細情報を表示できます。「Actions」の列のボタンをクリックすると、ジョブの削除を行えます。</p>
+      <h3 id="active">5.6. Job Monitoring</h3>
+      <p>Click the Active Jobs icon to view and delete job information. Click the button on the left of the "ID" column to view job details. Click the button in the "Actions" column to delete a job.</p>
       <img width="600" alt="Active Jobs" src="img/activejobs.png">
-      
-      <h3 id="budget">5.7. バジェットの情報</h3>
-      <p>Budget Infoのアイコンをクリックください。グループ内の各ユーザのバジェット利用量を表示します。ただし、アプリケーション課題の場合は、管理者以外は自分の情報しか表示されません。管理者は各ユーザのバジェットに上限値を設定できます。</p>
-      <p></p>
+
+      <h3 id="budget">5.7. Budget Usage</h3>
+      <p>Click the Budget Info icon to view budget usage for each user in the group. In the case of project-based applications, only administrators can view data for other users in the same group. Administrators can also set budget limits for users.</p>
       <img width="600" alt="Budget Info" src="img/budget_info.png">
-      
-      <h3 id="disk">5.8. ディスクの情報</h3>
-      <p>Disk Infoのアイコンをクリックください。グループ内の各ユーザのディスク利用量を表示します。ただし、アプリケーション課題の場合は、管理者以外は自分の情報しか表示されません。</p>
+
+      <h3 id="disk">5.8. Disk Usage</h3>
+      <p>Click the Disk Info icon to view disk usage for each user in the group. In project-based applications, only administrators can view data for other users in the same group.</p>
       <img width="600" alt="Disk Info" src="img/disk_info.png">
     </main>
   </div>

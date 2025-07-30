@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>「富岳」Open OnDemand利用マニュアル</title>
+  <title>Fugaku Open OnDemand User Manual</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
@@ -11,54 +11,54 @@
 
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
-      <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="dashboard-en.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
+      <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="dashboard_ja.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
       <ul class="nav flex-column px-3 py-2">
-        <li class="nav-item"><a href="index.html" class="nav-link">1. はじめに</a></li>
-        <li class="nav-item"><a href="dashboard.html" class="nav-link">2. 画面構成</a></li>
-        <li class="nav-item"><a href="interactive.html" class="nav-link">3. 対話アプリケーション</a></li>
-        <li class="nav-item"><a href="batch.html" class="nav-link">4. バッチジョブ</a></li>
+        <li class="nav-item"><a href="index.html" class="nav-link">1. Introduction</a></li>
+        <li class="nav-item"><a href="dashboard.html" class="nav-link">2. Dashboard Layout</a></li>
+        <li class="nav-item"><a href="interactive.html" class="nav-link">3. Interactive Applications</a></li>
+        <li class="nav-item"><a href="batch.html" class="nav-link">4. Batch Jobs</a></li>
         <li class="nav-item"><a href="passenger.html" class="nav-link">5. Passenger Apps</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#file" class="nav-link">5.1. ファイル操作</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.2. HPCI共用ストレージ</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#file" class="nav-link">5.1. File Operations</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.2. HPCI Shared Storage</a></li>
         <li class="nav-item ms-3"><a href="passenger.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#shell" class="nav-link">5.4. シェルアクセス</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#shell" class="nav-link">5.4. Shell Access</a></li>
         <li class="nav-item ms-3"><a href="passenger.html#composer" class="nav-link">5.5. Open Composer</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.6. ジョブのモニタリング</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.7. バジェットの情報</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.8. ディスクの情報</a></li>
-        <li class="nav-item"><a href="supplement.html" class="nav-link">6. 補足</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.6. Job Monitoring</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.7. Budget Usage</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.8. Disk Usage</a></li>
+        <li class="nav-item"><a href="supplement.html" class="nav-link">6. Supplement</a></li>
       </ul>
     </nav>
 
     <main class="main-content">
-      <h2>2. 画面構成</h2>
+      <h2>2. Dashboard Layout</h2>
       <img width="600" alt="Dashboard" src="img/dashboard.png">
       <p>
-        上図は「富岳」Open OnDemandのダッシュボードです。上部のメニューバーの意味は下記の通りです（ブラウザの幅が狭くなると、アイコン表示に変わるものもあります）。
+        The image above shows the dashboard of Fugaku Open OnDemand. The meanings of the items in the top menu bar are as follows (some may switch to icons if the browser window is narrow):
       </p>
       <table class="table">
-        <tr><th>項目</th><th>意味</th></tr>
-        <tr><td>Batch Jobs</td><td>「富岳」やプリポスト環境に投入するバッチジョブ</td></tr>
-        <tr><td>Interactive Apps</td><td>「富岳」やプリポスト環境で動作する対話アプリケーション</td></tr>
-        <tr><td>Passenger Apps</td><td>Open OnDemandサーバで動作するアプリケーション</td></tr>
-        <tr><td>My Interactive Sessions</td><td>対話アプリケーションのセッション情報の一覧</td></tr>
-        <tr><td>Help &rarr; Restart Web Server</td><td>Open OnDemandを再起動する</td></tr>
-        <tr><td>Help &rarr; Profiles</td><td>「All apps」をクリックすると、Batch JobsとInteractive Appsのすべてのアイコンがダッシュボードに表示される。元に戻すには、「Default」をクリックする</td></tr>
+        <tr><th>Item</th><th>Description</th></tr>
+        <tr><td>Batch Jobs</td><td>Batch jobs submitted to Fugaku or the Prepost environment</td></tr>
+        <tr><td>Interactive Apps</td><td>Interactive applications running on Fugaku or in the Prepost environment</td></tr>
+        <tr><td>Passenger Apps</td><td>Applications running on the Open OnDemand server</td></tr>
+        <tr><td>My Interactive Sessions</td><td>A list of interactive application session information</td></tr>
+        <tr><td>Help &rarr; Restart Web Server</td><td>Restart Open OnDemand</td></tr>
+        <tr><td>Help &rarr; Profiles</td><td>Click "All apps" to display all icons for Batch Jobs and Interactive Apps on the dashboard. Click "Default" to revert.</td></tr>
       </table>
       <p>
-        図中の数字の意味は下記の通りです。
+        The numbers in the image correspond to the following items:
       </p>
       <ol>
-        <li>外部リンク</li>
-        <li>最新情報</li>
-        <li>ジョブスケジューラのキューの待ち状況</li>
-        <li>運用スケジュール</li>
-        <li>ディスクとバジェットの使用率</li>
-        <li>最近利用した対話アプリケーション（最大4つ）</li>
+        <li>External Links</li>
+        <li>Latest News</li>
+        <li>Job Scheduler Queue Status</li>
+        <li>Operational Schedule</li>
+        <li>Disk and Budget Usage</li>
+        <li>Recently Used Interactive Applications (up to 4)</li>
         <li>Passenger Apps</li>
       </ol>
       <p>
-        メニューバー、もしくは6と7のアイコンからアプリケーションを起動できます。
+        Applications can be launched from the menu bar or from the icons in items 6 and 7.
       </p>
 
     </main>
