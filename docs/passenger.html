@@ -67,10 +67,10 @@
       <p>Clicking a path under "Passenger Apps" in the menu bar launches the Home Directory starting from that path.</p>
       <img width="200" alt="Click to Home Directory" src="img/home_directory_click.png">
 
-      <p>You can also manage files on cloud storages using <a href="https://rclone.org">Rclone</a>. To configure Rclone, launch a remote desktop from the interactive applications and execute <code>rclone</code> or <code>rclone-browser</code> from the terminal. After setup, click "Help" → "Restart Web Server" in the Open OnDemand menu bar and relaunch the Home Directory to access the configured cloud storage. Note that RIKEN’s Fugaku help desk does not provide support for configuring Rclone.</p>
+      <p>You can also manage files on cloud storages using <a href="https://rclone.org">Rclone</a>. To configure Rclone, launch a remote desktop from <a href="interactive.html">Interactive Applications</a> and execute <code>rclone</code> or <code>rclone-browser</code> from the terminal. After setup, click "Help" → "Restart Web Server" in the Open OnDemand menu bar and relaunch the Home Directory to access the configured cloud storage. Note that RIKEN’s Fugaku help desk does not provide support for configuring Rclone.</p>
 
       <h3 id="hpci">5.2. HPCI Shared Storage</h3>
-      <p>Click the HPCI Shared Storage icon to manage files on the shared storage provided by <a href="https://www.hpci-office.jp">HPCI (High Performance Computing Infrastructure)</a>. You must first obtain a passphrase from the <a href="https://elpis.hpci.nii.ac.jp/">JWT-SERVER</a>.</p>
+      <p>Click the HPCI Shared Storage icon to manage files on the shared storage provided by <a href="https://www.hpci-office.jp/en">HPCI (High Performance Computing Infrastructure)</a>. You must first obtain a passphrase from the <a href="https://elpis.hpci.nii.ac.jp/">JWT-SERVER</a>.</p>
       <img width="600" alt="HPCI Shared Storage" src="img/hpci.png">
       <p>Enter the string like <code>hpcixxxxxx</code> (where <code>xxxxxx</code> are digits) shown when generating the passphrase into the "HPCI ID" field, and the passphrase into the "Passphrase" field, then click the "mount" button.</p>
 
@@ -80,18 +80,18 @@
       <p>Enter the mount path on Fugaku (e.g., <code>/home/rccs-aot/a00000/abc</code>) in "Mount Path", the <code>xxx</code> part from the GakuNin RDM project URL (<code>https://rdm.nii.ac.jp/xxx/</code>) in "RDM Node ID", and your personal access token in "ROM Token", then click the "mount" button.</p>
 
       <h3 id="shell">5.4. Shell Access</h3>
-      <p>Click the Fugaku Shell Access icon to SSH into a login node from your web browser and use the command-line interface.</p>
+      <p>Click the Fugaku Shell Access icon to open an SSH session to a login node from your web browser and use the command-line interface.</p>
       <img width="600" alt="Shell Access" src="img/shell_access.png">
 
       <h3 id="composer">5.5. Open Composer</h3>
-      <p>Click the Open Composer icon to launch the application for managing and executing batch jobs. For more details, see <a href="batch.html">Section 4. Batch Jobs</a>.</p>
+      <p>Click the Open Composer icon to launch the application for managing and executing batch jobs. For more details, see <a href="batch.html">4. Batch Jobs</a>.</p>
       <img width="600" alt="Open Composer" src="img/opencomposer.png">
       <p>Applications are displayed by category. Clicking an application icon opens a web form for that application.</p>
       <p>Clicking the "Job Script for Fugaku" or "Job Script for Prepost" icons in the dashboard opens a web form for creating directives for the Fujitsu TCS and Slurm job schedulers used on Fugaku and the Prepost environment, respectively.</p>
       <img width="600" alt="Fujitsu TCS" src="img/fujitsu_tcs.png">
 
       <h3 id="active">5.6. Job Monitoring</h3>
-      <p>Click the Active Jobs icon to view and delete job information. Click the button on the left of the "ID" column to view job details. Click the button in the "Actions" column to delete a job.</p>
+      <p>Click the Active Jobs icon to view job information and delete a job. Click the button on the left of the "ID" column to view job details. Click the button in the "Actions" column to delete a job.</p>
       <img width="600" alt="Active Jobs" src="img/activejobs.png">
 
       <h3 id="budget">5.7. Budget Usage</h3>
