@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fugaku Open OnDemand User Manual</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container-fluid">
+    <nav class="sidebar bg-body-secondary">
+      <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="passenger.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
+      <ul class="nav flex-column px-3 py-2">
+        <li class="nav-item"><a href="index-en.html" class="nav-link">1. Introduction</a></li>
+        <li class="nav-item"><a href="dashboard-en.html" class="nav-link">2. Dashboard Layout</a></li>
+        <li class="nav-item"><a href="interactive-en.html" class="nav-link">3. Interactive Applications</a></li>
+        <li class="nav-item"><a href="batch-en.html" class="nav-link">4. Batch Jobs</a></li>
+        <li class="nav-item"><a href="passenger-en.html" class="nav-link">5. Passenger Apps</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#file" class="nav-link">5.1. File Operations</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#hpci" class="nav-link">5.2. HPCI Shared Storage</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#shell" class="nav-link">5.4. Shell Access</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#composer" class="nav-link">5.5. Open Composer</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#active" class="nav-link">5.6. Job Monitoring</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#budget" class="nav-link">5.7. Budget Usage</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#disk" class="nav-link">5.8. Disk Usage</a></li>
+        <li class="nav-item"><a href="supplement-en.html" class="nav-link">6. Supplement</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+      <h2>5. Passenger Apps</h2>
+
+      <h3 id="file">5.1. File Operations</h3>
+      <p>Click the Home Directory icon to upload, download, and edit files on Fugaku. The maximum upload/download file size is 10GB.</p>
+      <img width="600" alt="Home Directory" src="img/home_directory.png">
+      <p>The Home Directory functions are described below. Operations for individual files or directories can be performed from the “three-dot and down-arrow” menu.</p>
+
+      <table class="table">
+        <tr><th>Toolbar</th><th>Description</th></tr>
+        <tr><td>Open in Terminal</td><td>Launch <a href="#shell">Shell Access</a></td></tr>
+        <tr><td>Refresh</td><td>Redraw the page</td></tr>
+        <tr><td>New File</td><td>Create a new file</td></tr>
+        <tr><td>New Directory</td><td>Create a new directory</td></tr>
+        <tr><td>Upload</td><td>Upload a file</td></tr>
+        <tr><td>Download</td><td>Download a file</td></tr>
+        <tr><td>Copy/Move</td><td>Copy or move a file</td></tr>
+        <tr><td>Delete</td><td>Delete a file</td></tr>
+      </table>
+
+      <table class="table">
+        <tr><th>Path Bar</th><th>Description</th></tr>
+        <tr><td>&uarr;</td><td>Move up one directory level</td></tr>
+        <tr><td>Change directory</td><td>Navigate to another directory</td></tr>
+        <tr><td>Copy path</td><td>Copy the current path to clipboard</td></tr>
+      </table>
+
+      <table class="table">
+        <tr><th>View Options</th><th>Description</th></tr>
+        <tr><td>Show Owner/Mode</td><td>Display owner and permissions</td></tr>
+        <tr><td>Show Dotfiles</td><td>Show dotfiles (hidden files)</td></tr>
+        <tr><td>Filter</td><td>Filter by file name</td></tr>
+      </table>
+
+      <p>Clicking a path under "Passenger Apps" in the menu bar launches the Home Directory starting from that path.</p>
+      <img width="200" alt="Click to Home Directory" src="img/home_directory_click.png">
+
+      <p>You can also manage files on cloud storages using <a href="https://rclone.org">Rclone</a>. To configure Rclone, launch a remote desktop from the interactive applications and execute <code>rclone</code> or <code>rclone-browser</code> from the terminal. After setup, click "Help" → "Restart Web Server" in the Open OnDemand menu bar and relaunch the Home Directory to access the configured cloud storage. Note that RIKEN’s Fugaku help desk does not provide support for configuring Rclone.</p>
+
+      <h3 id="hpci">5.2. HPCI Shared Storage</h3>
+      <p>Click the HPCI Shared Storage icon to manage files on the shared storage provided by <a href="https://www.hpci-office.jp">HPCI (High Performance Computing Infrastructure)</a>. You must first obtain a passphrase from the <a href="https://elpis.hpci.nii.ac.jp/">JWT-SERVER</a>.</p>
+      <img width="600" alt="HPCI Shared Storage" src="img/hpci.png">
+      <p>Enter the string like <code>hpcixxxxxx</code> (where <code>xxxxxx</code> are digits) shown when generating the passphrase into the "HPCI ID" field, and the passphrase into the "Passphrase" field, then click the "mount" button.</p>
+
+      <h3 id="gakunin">5.3. GakuNin RDM</h3>
+      <p>Click the GakuNin RDM icon to manage files on <a href="https://rdm.nii.ac.jp">GakuNin RDM</a>, the research data management platform provided by the National Institute of Informatics. You must create a project in GakuNin RDM in advance to use this application.</p>
+      <img width="600" alt="GakuNin RDM" src="img/grdm.png">
+      <p>Enter the mount path on Fugaku (e.g., <code>/home/rccs-aot/a00000/abc</code>) in "Mount Path", the <code>xxx</code> part from the GakuNin RDM project URL (<code>https://rdm.nii.ac.jp/xxx/</code>) in "RDM Node ID", and your personal access token in "ROM Token", then click the "mount" button.</p>
+
+      <h3 id="shell">5.4. Shell Access</h3>
+      <p>Click the Fugaku Shell Access icon to SSH into a login node from your web browser and use the command-line interface.</p>
+      <img width="600" alt="Shell Access" src="img/shell_access.png">
+
+      <h3 id="composer">5.5. Open Composer</h3>
+      <p>Click the Open Composer icon to launch the application for managing and executing batch jobs. For more details, see <a href="./batch-en.html">Section 4. Batch Jobs</a>.</p>
+      <img width="600" alt="Open Composer" src="img/opencomposer.png">
+      <p>Applications are displayed by category. Clicking an application icon opens a web form for that application.</p>
+      <p>Clicking the "Job Script for Fugaku" or "Job Script for Prepost" icons in the dashboard opens a web form for creating directives for the Fujitsu TCS and Slurm job schedulers used on Fugaku and the Prepost environment, respectively.</p>
+      <img width="600" alt="Fujitsu TCS" src="img/fujitsu_tcs.png">
+
+      <h3 id="active">5.6. Job Monitoring</h3>
+      <p>Click the Active Jobs icon to view and delete job information. Click the button on the left of the "ID" column to view job details. Click the button in the "Actions" column to delete a job.</p>
+      <img width="600" alt="Active Jobs" src="img/activejobs.png">
+
+      <h3 id="budget">5.7. Budget Usage</h3>
+      <p>Click the Budget Info icon to view budget usage for each user in the group. In the case of project-based applications, only administrators can view data for other users in the same group. Administrators can also set budget limits for users.</p>
+      <img width="600" alt="Budget Info" src="img/budget_info.png">
+
+      <h3 id="disk">5.8. Disk Usage</h3>
+      <p>Click the Disk Info icon to view disk usage for each user in the group. In project-based applications, only administrators can view data for other users in the same group.</p>
+      <img width="600" alt="Disk Info" src="img/disk_info.png">
+    </main>
+  </div>
+
+  <footer class="text-muted text-center" style="background-color: darkblue;">
+    <p>&copy; RIKEN Center for Computational Science</p>
+  </footer>
+</body>
+</html>

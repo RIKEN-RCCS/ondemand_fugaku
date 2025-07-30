@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fugaku Open OnDemand User Manual</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container-fluid">
+    <nav class="sidebar bg-body-secondary">
+      <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="interactive.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
+      <ul class="nav flex-column px-3 py-2">
+        <li class="nav-item"><a href="index-en.html" class="nav-link">1. Introduction</a></li>
+        <li class="nav-item"><a href="dashboard-en.html" class="nav-link">2. Dashboard Layout</a></li>
+        <li class="nav-item"><a href="interactive-en.html" class="nav-link">3. Interactive Applications</a></li>
+        <li class="nav-item"><a href="batch-en.html" class="nav-link">4. Batch Jobs</a></li>
+        <li class="nav-item"><a href="passenger-en.html" class="nav-link">5. Passenger Apps</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#file" class="nav-link">5.1. File Operations</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#hpci" class="nav-link">5.2. HPCI Shared Storage</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#shell" class="nav-link">5.4. Shell Access</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#composer" class="nav-link">5.5. Open Composer</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#active" class="nav-link">5.6. Job Monitoring</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#budget" class="nav-link">5.7. Budget Usage</a></li>
+        <li class="nav-item ms-3"><a href="passenger-en.html#disk" class="nav-link">5.8. Disk Usage</a></li>
+        <li class="nav-item"><a href="supplement-en.html" class="nav-link">6. Supplement</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+      <h2>3. Interactive Applications</h2>
+      <p>
+        Interactive applications are programs that run on compute nodes in the Fugaku or Prepost environment, allowing users to interactively operate and control the computation. 
+        The following interactive applications are available:
+      </p>
+      <table class="table">
+        <tr><th>Category</th><th>Application</th></tr>
+        <tr><td>Development</td><td>Remote Desktop, JupyterLab, MATLAB, VSCode, RStudio, Terminal (ttyd)</td></tr>
+        <tr><td>Profiler</td><td>NVIDIA Visual Profiler, NVIDIA Nsight Compute, NVIDIA Nsight Systems, Vampir</td></tr>
+        <tr><td>Viewer</td><td>AVS/Express, C-Tools, GaussView, Gnuplot, GrADS, ImageJ, MOLDEN, OpenMX viewer, OVITO, Paraview, PyMOL, SALMON view, Smokeview, VESTA, VMD, VisIt, XCrySDen</td></tr>
+        <tr><td>Workflow</td><td>WHEEL</td></tr>
+      </table>
+      <p>
+        As an example, here is how to use Remote Desktop. From the menu bar, select "Interactive Apps" &rarr; "Desktop".
+      </p>
+      <img width="400" alt="Click Remote Desktop" src="img/remote_desktop_click.png">
+      <p>
+        A web form will appear for specifying computing resources. Input fields vary depending on the application, but for visualization applications, 
+        setting the number of GPUs to 1 or more enables VirtualGL automatically, which can improve performance. After filling out the form, click "Submit" to submit the job to Fugaku.
+      </p>
+      <img width="400" alt="Webform of Remote Desktop" src="img/remote_desktop_webform.png">
+      <p>
+        Immediately after submission, a screen labeled "Queued" will appear, indicating that the job is waiting to be executed.
+      </p>
+      <img width="600" alt="Queued Status" src="img/remote_desktop_queued.png">
+      <p>
+        Once the job starts on the compute node, the label changes to "Running" and a "Launch Desktop" button appears. Adjust the "Compression" and "Image Quality" to suitable levels and click the "Launch Desktop" button.
+      </p>
+      <img width="600" alt="Running Status" src="img/remote_desktop_running.png">
+      <p>
+        The remote desktop will launch in the web browser. To end the session, click the "Delete" button or go to "Applications" &rarr; "Log Out" in the upper-left corner of the remote desktop. Simply closing the browser tab will not terminate the session.
+      </p>
+      <p>
+        Clicking "View Only (Share-able Link)" button opens a mirrored version of the remote desktop in a new tab. The mirrored screen is view-only and not interactive. By sharing this tab’s URL via email, screen sharing is possible (only among users with Fugaku accounts).
+      </p>
+      <img width="600" alt="Remote Desktop" src="img/remote_desktop.png">
+      <p>
+        Clicking "My Interactive Sessions" from the menu bar shows a list of active interactive sessions. You can also terminate sessions from this screen.
+      </p>
+      <img width="600" alt="Remote Desktop" src="img/sessions.png">
+    </main>
+  </div>
+
+  <footer class="text-muted text-center" style="background-color: darkblue;">
+    <p>&copy; RIKEN Center for Computational Science</p>
+  </footer>
+</body>
+</html>

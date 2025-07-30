@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>「富岳」Open OnDemand利用マニュアル</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container-fluid">
+    <nav class="sidebar bg-body-secondary">
+      <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="passenger-en.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
+      <ul class="nav flex-column px-3 py-2">
+        <li class="nav-item"><a href="index.html" class="nav-link">1. はじめに</a></li>
+        <li class="nav-item"><a href="dashboard.html" class="nav-link">2. 画面構成</a></li>
+        <li class="nav-item"><a href="interactive.html" class="nav-link">3. 対話アプリケーション</a></li>
+        <li class="nav-item"><a href="batch.html" class="nav-link">4. バッチジョブ</a></li>
+        <li class="nav-item"><a href="passenger.html" class="nav-link">5. Passenger Apps</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#file" class="nav-link">5.1. ファイル操作</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.2. HPCI共用ストレージ</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#shell" class="nav-link">5.4. シェルアクセス</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#composer" class="nav-link">5.5. Open Composer</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.6. ジョブのモニタリング</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.7. バジェットの情報</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.8. ディスクの情報</a></li>
+        <li class="nav-item"><a href="supplement.html" class="nav-link">6. 補足</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+      <h2>5. Passenger Apps</h2>
+      <h3 id="file">5.1. ファイル操作</h3>
+      <p>Home Directoryのアイコンをクリックしてください。「富岳」に対するファイルのアップロード・ダウンロード・編集などを行えます。アップロード・ダウンロード可能な最大サイズは10GBです。</p>
+      <img width="600" alt="Home Directory" src="img/home_directory.png">
+      <p>Home Directoryの各機能は下記の通りです。個別のファイルやディレクトリに対する操作は「3点＋下三角」のメニューから行えます。</p>
+      <table class="table">
+        <tr><th>ツールバー</th><th>説明</th></tr>
+        <tr><td>Open in Terminal</td><td><a href="#shell">シェルアクセス</a>を起動</td></tr>
+        <tr><td>Refresh</td><td>ページを再描画</td></tr>
+        <tr><td>New File</td><td>新規ファイル作成</td></tr>
+        <tr><td>New Directory</td><td>新規ディレクトリ作成</td></tr>
+        <tr><td>Upload</td><td>ファイルのアップロード</td></tr>
+        <tr><td>Download</td><td>ファイルのダウンロード</td></tr>
+        <tr><td>Copy/Move</td><td>ファイルのコピー、移動</td></tr>
+        <tr><td>Delete</td><td>ファイルの削除</td></tr>
+      </table>
+
+      <table class="table">
+        <tr><th>パスバー</th><th>説明</th></tr>
+        <tr><td>&uarr;</td><td>1つ上のディレクトリに移動</td></tr>
+        <tr><td>Change directry</td><td>ディレクトリの移動</td></tr>
+        <tr><td>Copy path</td><td>現在のパスをクリップボードにコピー</td></tr>
+      </table>
+
+      <table class="table">
+        <tr><th>表示オプション</th><th>説明</th></tr>
+        <tr><td>Show Owner/Mode</td><td>所有者とパーミッションの表示</td></tr>
+        <tr><td>Show Dotfiles</td><td>ドットファイル（隠しファイル）の表示</td></tr>
+        <tr><td>Filter</td><td>ファイル名による絞り込み</td></tr>
+      </table>
+
+      <p>メニューバーの「Passenger Apps」にあるパスをクリックすると、そのパスを起点としたHome Directoryが起動します。</p>
+      <img width="200" alt="Click to Home Directory" src="img/home_directory_click.png">
+      <p>
+      <a href="https://rclone.org">Rclone</a>を用いたクラウドストレージに対するファイルの操作も可能です。Rcloneの設定を行うには、対話アプリケーションのリモートデスクトップを起動し、そのターミナルから<code>rclone</code>もしくは<code>rclone-browser</code>を実行します。設定後にOpen OnDemandのメニューバーの「Help」 -> 「Restart Web Server」をクリックし、Home Directoryを起動すると、設定されたクラウドストレージにアクセスできます。なお、富岳ヘルプデスクではRcloneの設定のサポートは行っておりませんのでご了承ください。
+      </p>
+
+      <h3 id="hpci">5.2. HPCI共用ストレージ</h3>
+      <p>HPCI Shared Strageのアイコンをクリックください。<a href="https://www.hpci-office.jp">HPCI（High Performance Computing Infrastructure）</a>が提供するHPCI共用ストレージに対するファイル操作を行えます。本アプリケーションを利用するためには、<a href="https://elpis.hpci.nii.ac.jp/">JWT-SERVER</a>からパスフレーズを事前に発行しておく必要があります。</p>
+      <img width="600" alt="HPCI Shared Storage" src="img/hpci.png">
+      <p>「HPCI ID」にはJWT-SERVERでパスフレーズを生成したときに表示される<code>hpcixxxxxx</code>という文字列（<code>xxxxxx</code>は数字）を、「Passphrase」には生成されたパスフレーズを入力した後、「mount」ボタンをクリックください。</p>
+
+      <h3 id="gakunin">5.3. GakuNin RDM</h3>
+      <p>GakuNin RDMのアイコンをクリックください。国立情報学研究所が提供する研究データ管理基盤である<a href="https://rdm.nii.ac.jp">GakuNin RDM</a>に対するファイル操作を行えます。本アプリケーションを利用するためには、GakuNin RDMのプロジェクトを事前に作成しておく必要があります。</p>
+      <img width="600" alt="GakuNin RDM" src="img/grdm.png">
+      <p>「Mount Path」には「富岳」側のファイルシステムのマウントパス（例：<code>/home/rccs-aot/a00000/abc</code>）を、「RDM Node ID」はGakuNin RDMのプロジェクトのURL（<code>https://rdm.nii.ac.jp/xxx/</code>）の<code>xxx</code>の箇所を、「ROM Token」はGakuNin RDMのパーソナルアクセストークンを入力した後、「mount」ボタンをクリックください。</p>
+
+      <h3 id="shell">5.4. シェルアクセス</h3>
+      <p>Fugaku Shell Accessのアイコンをクリックください。WebブラウザからログインノードにSSHアクセスし、コマンドラインインタフェースを用いた操作を行うことができます。</p>
+      <img width="600" alt="Shell Access" src="img/shell_access.png">
+
+      <h3 id="composer">5.5. Open Composer</h3>
+      <p>Open Composerアイコンをクリックください。バッチジョブを実行・管理するためのアプリケーションです。詳細は<a href="./batch.html">4. バッチジョブ</a>を参照ください。</p>
+      <img width="600" alt="Open Composer" src="img/opencomposer.png">
+      <p>各アプリケーションがカテゴリ毎に表示されます。アプリケーションのアイコンをクリックすると、そのアプリケーション用のWebフォームが表示されます。</p>
+      <p>ダッシュボードの「Job Script for Fugaku」と「Job Script for Prepost」のアイコンをクリックすると、「富岳」とプリポスト環境で使われているジョブスケジューラであるFujitsu TCSとSlurmの指示文を主に作成するWebフォームが表示されます。</p>
+      <img width="600" alt="Fujitsu TCS" src="img/fujitsu_tcs.png">
+
+      <h3 id="active">5.6. ジョブのモニタリング</h3>
+      <p>Active Jobsのアイコンをクリックください。ジョブの情報を閲覧や削除を行うことができます。「ID」の列の左側のボタンをクリックすると、ジョブ詳細情報を表示できます。「Actions」の列のボタンをクリックすると、ジョブの削除を行えます。</p>
+      <img width="600" alt="Active Jobs" src="img/activejobs.png">
+      
+      <h3 id="budget">5.7. バジェットの情報</h3>
+      <p>Budget Infoのアイコンをクリックください。グループ内の各ユーザのバジェット利用量を表示します。ただし、アプリケーション課題の場合は、管理者以外は自分の情報しか表示されません。管理者は各ユーザのバジェットに上限値を設定できます。</p>
+      <p></p>
+      <img width="600" alt="Budget Info" src="img/budget_info.png">
+      
+      <h3 id="disk">5.8. ディスクの情報</h3>
+      <p>Disk Infoのアイコンをクリックください。グループ内の各ユーザのディスク利用量を表示します。ただし、アプリケーション課題の場合は、管理者以外は自分の情報しか表示されません。</p>
+      <img width="600" alt="Disk Info" src="img/disk_info.png">
+    </main>
+  </div>
+
+  <footer class="text-muted text-center" style="background-color: darkblue;">
+    <p>&copy; RIKEN Center for Computational Science</p>
+  </footer>
+</body>
+</html>
