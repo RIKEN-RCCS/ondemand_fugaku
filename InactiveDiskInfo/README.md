@@ -1,4 +1,4 @@
-# Inactive Disk View
+# Inactive Disk Info
 
 This is a lightweight web application for visualizing disk usage and identifying inactive or large datasets across file systems.
 
@@ -15,7 +15,7 @@ This is a lightweight web application for visualizing disk usage and identifying
 ## How to install
 
 ```
-# cd InactiveDataView/
+# cd InactiveDiskInfo/
 # npm ci
 # (edit if needed) manifest.yml
 ```
