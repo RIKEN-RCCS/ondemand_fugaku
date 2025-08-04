@@ -1,0 +1,8 @@
+name: Inactive Data View
+description: This application visualizes disk usage activity over time. Filter by period, count, size, or user to identify inactive or large datasets.
+icon: fa://folder-open
+#category: Files
+#subcategory: Utilities
+category: Passenger Apps
+tile:
+  sub_caption: |
