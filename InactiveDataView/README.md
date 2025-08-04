@@ -45,11 +45,15 @@ The sample is `data/sample.json`.
 
 Select a dataset from the dropdown at the top. Data will automatically be loaded from a JSON file.
 
-### 2. Use Filters
+### 2. Apply Filters
 
-- **Inactive Period**: Shows directories that haven't been accessed for at least the selected time.
-- **Count / Size**: Filters out entries with fewer files or smaller disk usage.
-- **Upper/Lower bounds**: Filters apply inclusively between the selected bounds.
+Each of the following fields can be adjusted using range sliders with dual handles for lower and upper bounds:
+
+- **Inactive Period**: Filters by time since last access.
+- **Count**: Filters by number of files per entry.
+- **Size (TiB)**: Filters by directory size.
+
+You can also narrow the results by selecting a specific user or group.
 
 ### 3. Table Content
 
