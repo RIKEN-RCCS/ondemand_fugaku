@@ -11,7 +11,7 @@
 
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
-      <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="index.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
+      <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="dashboard.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
       <ul class="nav flex-column px-3 py-2">
         <li class="nav-item"><a href="index_ja.html" class="nav-link">1. はじめに</a></li>
         <li class="nav-item"><a href="dashboard_ja.html" class="nav-link">2. 画面構成</a></li>
@@ -31,22 +31,36 @@
     </nav>
 
     <main class="main-content">
-      <h2>1. はじめに</h2>
-      <p><a target="_blank" href="https://openondemand.org">Open OnDemand</a>は、Webブラウザからスーパーコンピュータを利用できるWebポータルです。ユーザはWebブラウザから下記の機能を利用できます。</p>
-      <ul>
-        <li>ファイルのアップロード・ダウンロード・編集</li>
-        <li>ターミナルの利用</li>
-        <li>対話アプリケーション（リモートデスクトップなど）やバッチジョブの投入と管理</li>
-        <li>ユーザ情報（バジェットやディスク利用率）などの表示</li>
-      </ul>
+      <h2>2. 画面構成</h2>
+      <img width="600" alt="Dashboard" src="img/dashboard.png">
       <p>
-        Open OnDemandは、Google Chrome、Mozilla Firefox、Microsoft Edgeなどの主要なWebブラウザに対応しています（注：Internet Explorer 11は対応していません）。
-        中でもChromeは、リモートデスクトップなどにおける文字列のコピー & ペースト機能をネイティブにサポートしていますので、Chromeのご利用をお勧めします。
+        上図は「富岳」Open OnDemandのダッシュボードです。上部のメニューバーの意味は下記の通りです（ブラウザの幅が狭くなると、アイコン表示に変わるものもあります）。
       </p>
-      <p>本サイトでは<a target="_blank" href="https://www.r-ccs.riken.jp/fugaku/">スーパーコンピュータ「富岳」</a>で動作するOpen OnDemand（「富岳」Open OnDemand）の利用方法について説明します。</p>
-      <!-- <p>
-        「富岳」Open OnDemandへの接続方法は、<a href="...">スーパーコンピュータ「富岳」スタートアップガイド</a>を参照してください。
-      </p> -->
+      <table class="table">
+        <tr><th>項目</th><th>意味</th></tr>
+        <tr><td>Batch Jobs</td><td>「富岳」やプリポスト環境に投入するバッチジョブ</td></tr>
+        <tr><td>Interactive Apps</td><td>「富岳」やプリポスト環境で動作する対話アプリケーション</td></tr>
+        <tr><td>Passenger Apps</td><td>Open OnDemandサーバで動作するアプリケーション</td></tr>
+        <tr><td>My Interactive Sessions</td><td>対話アプリケーションのセッション情報の一覧</td></tr>
+        <tr><td>Help &rarr; Restart Web Server</td><td>Open OnDemandを再起動する</td></tr>
+        <tr><td>Help &rarr; Profiles</td><td>「All apps」をクリックすると、Batch JobsとInteractive Appsのすべてのアイコンがダッシュボードに表示される。元に戻すには、「Default」をクリックする</td></tr>
+      </table>
+      <p>
+        図中の数字の意味は下記の通りです。
+      </p>
+      <ol>
+        <li>外部リンク</li>
+        <li>最新情報</li>
+        <li>ジョブスケジューラのキューの待ち状況</li>
+        <li>運用スケジュール</li>
+        <li>ディスクとバジェットの使用率</li>
+        <li>最近利用した対話アプリケーション（最大4つ）</li>
+        <li>Passenger Apps</li>
+      </ol>
+      <p>
+        メニューバー、もしくは6と7のアイコンからアプリケーションを起動できます。
+      </p>
+
     </main>
   </div>
 

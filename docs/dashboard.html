@@ -11,7 +11,7 @@
 
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
-      <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="index_ja.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
+      <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="dashboard_ja.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
       <ul class="nav flex-column px-3 py-2">
         <li class="nav-item"><a href="index.html" class="nav-link">1. Introduction</a></li>
         <li class="nav-item"><a href="dashboard.html" class="nav-link">2. Dashboard Layout</a></li>
@@ -31,23 +31,36 @@
     </nav>
 
     <main class="main-content">
-      <h2>1. Introduction</h2>
-      <p><a target="_blank" href="https://openondemand.org">Open OnDemand</a> is a web portal that allows users to access supercomputers via a web browser. Users can perform the following actions via their browser:</p>
-      <ul>
-        <li>Upload, download, and edit files</li>
-        <li>Use the terminal</li>
-        <li>Submit and manage interactive applications (such as a remote desktop) and batch jobs</li>
-        <li>View user information (e.g., budget and disk usage)</li>
-      </ul>
+      <h2>2. Dashboard Layout</h2>
+      <img width="600" alt="Dashboard" src="img/dashboard.png">
       <p>
-        Open OnDemand supports major web browsers including Google Chrome, Mozilla Firefox, and Microsoft Edge (Note: Internet Explorer 11 is not supported).
-        Among these, Chrome is recommended as it natively supports copy and paste functionality in the remote desktop.
+        The image above shows the dashboard of Fugaku Open OnDemand. The meanings of the items in the top menu bar are as follows (some may switch to icons if the browser window is narrow):
       </p>
-      <p>This site explains how to use Open OnDemand on <a target="_blank" href="https://www.r-ccs.riken.jp/en/fugaku/">the supercomputer Fugaku</a>, referred to as Fugaku Open OnDemand.</a>
-      <!-- <p>
-        For instructions on how to connect to Fugaku's Open OnDemand, please refer to the
-        <a href="...">Supercomputer Fugaku Startup Guide</a>.
-      </p> -->
+      <table class="table">
+        <tr><th>Item</th><th>Description</th></tr>
+        <tr><td>Batch Jobs</td><td>Batch jobs submitted to Fugaku or the Prepost environment</td></tr>
+        <tr><td>Interactive Apps</td><td>Interactive applications running on Fugaku or the Prepost environment</td></tr>
+        <tr><td>Passenger Apps</td><td>Applications running on the Open OnDemand server</td></tr>
+        <tr><td>My Interactive Sessions</td><td>A list of session information for interactive applications</td></tr>
+        <tr><td>Help &rarr; Restart Web Server</td><td>Restart Open OnDemand</td></tr>
+        <tr><td>Help &rarr; Profiles</td><td>Click "All apps" to display all icons for Batch Jobs and Interactive Apps on the dashboard. Click "Default" to revert.</td></tr>
+      </table>
+      <p>
+        The numbers in the image correspond to the following items:
+      </p>
+      <ol>
+        <li>External Links</li>
+        <li>Latest News</li>
+        <li>Queue Status in Job Scheduler</li>
+        <li>Operational Schedule</li>
+        <li>Disk and Budget Usage</li>
+        <li>Recently Used Interactive Applications (up to 4)</li>
+        <li>Passenger Apps</li>
+      </ol>
+      <p>
+        Applications can be launched from the menu bar or from the icons in items 6 and 7.
+      </p>
+
     </main>
   </div>
 

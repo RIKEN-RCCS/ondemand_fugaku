@@ -11,7 +11,7 @@
 
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
-      <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="index_ja.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
+      <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="supplement_ja.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
       <ul class="nav flex-column px-3 py-2">
         <li class="nav-item"><a href="index.html" class="nav-link">1. Introduction</a></li>
         <li class="nav-item"><a href="dashboard.html" class="nav-link">2. Dashboard Layout</a></li>
@@ -31,24 +31,14 @@
     </nav>
 
     <main class="main-content">
-      <h2>1. Introduction</h2>
-      <p><a target="_blank" href="https://openondemand.org">Open OnDemand</a> is a web portal that allows users to access supercomputers via a web browser. Users can perform the following actions via their browser:</p>
-      <ul>
-        <li>Upload, download, and edit files</li>
-        <li>Use the terminal</li>
-        <li>Submit and manage interactive applications (such as a remote desktop) and batch jobs</li>
-        <li>View user information (e.g., budget and disk usage)</li>
+      <h2>6. Supplement</h2>
+      <ul class="supplement-list">
+        <li>The temporary directory for Open OnDemand is <code>${HOME}/ondemand</code>. It is automatically created when using Open OnDemand. This directory stores things like extensions installed in interactive applications such as JupyterLab, and usage history.</li>
+        <li>The temporary directory for batch jobs is <code>${HOME}/composer</code>. It is automatically created when using batch jobs. It stores batch job history and related data.</li>
+        <li>If a problem occurs, please click  "Help" &rarr; "Restart Web Server" in the menu bar. If the issue persists, please contact the <a href="https://fugaku.zendesk.com/hc/en-us/">Fugaku Support Site</a>.</li>
+        <li>If you would like to request the addition of an interactive application or batch job, please also contact the <a href="https://fugaku.zendesk.com/hc/en-us/">Fugaku Support Site</a>.</li>
       </ul>
-      <p>
-        Open OnDemand supports major web browsers including Google Chrome, Mozilla Firefox, and Microsoft Edge (Note: Internet Explorer 11 is not supported).
-        Among these, Chrome is recommended as it natively supports copy and paste functionality in the remote desktop.
-      </p>
-      <p>This site explains how to use Open OnDemand on <a target="_blank" href="https://www.r-ccs.riken.jp/en/fugaku/">the supercomputer Fugaku</a>, referred to as Fugaku Open OnDemand.</a>
-      <!-- <p>
-        For instructions on how to connect to Fugaku's Open OnDemand, please refer to the
-        <a href="...">Supercomputer Fugaku Startup Guide</a>.
-      </p> -->
-    </main>
+    </main>    
   </div>
 
   <footer class="text-muted text-center" style="background-color: darkblue;">

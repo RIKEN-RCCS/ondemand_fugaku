@@ -11,7 +11,7 @@
 
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
-      <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="index.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
+      <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="supplement.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
       <ul class="nav flex-column px-3 py-2">
         <li class="nav-item"><a href="index_ja.html" class="nav-link">1. はじめに</a></li>
         <li class="nav-item"><a href="dashboard_ja.html" class="nav-link">2. 画面構成</a></li>
@@ -31,22 +31,13 @@
     </nav>
 
     <main class="main-content">
-      <h2>1. はじめに</h2>
-      <p><a target="_blank" href="https://openondemand.org">Open OnDemand</a>は、Webブラウザからスーパーコンピュータを利用できるWebポータルです。ユーザはWebブラウザから下記の機能を利用できます。</p>
-      <ul>
-        <li>ファイルのアップロード・ダウンロード・編集</li>
-        <li>ターミナルの利用</li>
-        <li>対話アプリケーション（リモートデスクトップなど）やバッチジョブの投入と管理</li>
-        <li>ユーザ情報（バジェットやディスク利用率）などの表示</li>
+      <h2>6. 補足</h2>
+      <ul class="supplement-list">
+        <li>Open OnDemandの一時的なディレクトリは<code>${HOME}/ondemand</code>です。Open OnDemandを利用すると自動生成されます。JupyterLabなどの対話アプリケーションにインストールした拡張機能や利用履歴などが保存されています。</li>
+        <li>バッチジョブの一時的なディレクトリは<code>${HOME}/composer</code>です。バッチジョブを利用すると自動生成されます。バッチジョブの履歴などが保存されています。
+        <li>もし不具合が発生した場合、メニューバーの「Help」の「Restart Web Server」をクリック下さい。それでも直らない場合は<a href="https://fugaku.zendesk.com/hc/ja/">富岳サポートサイト</a>にご連絡ください。</li>
+        <li>追加して欲しい対話アプリケーション、バッチジョブがある場合も<a href="https://fugaku.zendesk.com/hc/ja/">富岳サポートサイト</a>にご連絡ください。</li>
       </ul>
-      <p>
-        Open OnDemandは、Google Chrome、Mozilla Firefox、Microsoft Edgeなどの主要なWebブラウザに対応しています（注：Internet Explorer 11は対応していません）。
-        中でもChromeは、リモートデスクトップなどにおける文字列のコピー & ペースト機能をネイティブにサポートしていますので、Chromeのご利用をお勧めします。
-      </p>
-      <p>本サイトでは<a target="_blank" href="https://www.r-ccs.riken.jp/fugaku/">スーパーコンピュータ「富岳」</a>で動作するOpen OnDemand（「富岳」Open OnDemand）の利用方法について説明します。</p>
-      <!-- <p>
-        「富岳」Open OnDemandへの接続方法は、<a href="...">スーパーコンピュータ「富岳」スタートアップガイド</a>を参照してください。
-      </p> -->
     </main>
   </div>
 
