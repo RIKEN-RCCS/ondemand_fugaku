@@ -17,7 +17,7 @@ def get_disk_limit(kind, group_name, volume)
   else
     file = ACC_GROUP_DIR + group_name + "/inode.csv"
   end
-  return -1 unless File.exist?(file)
+  return nil unless File.exist?(file) && File.readable?(file)
 
   File.open(file, "r") do |f|
     f.each_line do |l|
@@ -31,11 +31,11 @@ end
 
 def get_fugaku_pt(group, w_commas = true)
   file = ACC_GROUP_DIR + group + "/group_budget.csv"
-  if File.exist?(file)
-    CSV.foreach(file) do |row|
-      if row[0] == "RESOURCE_GROUP" and row[1] == "f-pt"
-	return (w_commas)? num_with_commas(row[2].to_i/3600) : row[2].to_i/3600
-      end
+  return nil unless File.exist?(file) && File.readable?(file)
+
+  CSV.foreach(file) do |row|
+    if row[0] == "RESOURCE_GROUP" and row[1] == "f-pt"
+      return (w_commas)? num_with_commas(row[2].to_i/3600) : row[2].to_i/3600
     end
   end
 
@@ -44,7 +44,7 @@ end
 
 def dashboard_exist_user_info()
   file = ACC_HOME_DIR + ENV['USER'] + ".disk"
-  return File.exist?(file)
+  return File.exist?(file) && File.readable?(file)
 end
 
 def dashboard_info(file)
@@ -64,7 +64,7 @@ end
 
 def dashboard_budget(group_name)
   file = ACC_GROUP_DIR + group_name + "/group_budget.csv"
-  return nil unless File.exist?(file)
+  return nil unless File.exist?(file) && File.readable?(file)
 
   period = Date.today.month.between?(4, 9)? "1" : "2"
   File.open(file, "r") do |f|
@@ -91,7 +91,7 @@ def get_budget_limit(group_name)
 end
 
 def _disk_info(file, group_name)
-  return [] unless File.exist?(file)
+  return [] unless File.exist?(file) && File.readable?(file)
   
   info = []
   File.open(file, "r") do |f|
@@ -122,6 +122,8 @@ def dashboard_inode(group_name)
 end
 
 def _home_info(file)
+  return nil unless File.exist?(file) && File.readable?(file)
+  
   File.open(file, "r") do |f|
     f.each_line do |l|
       i = l.split(",")
@@ -159,6 +161,8 @@ end
 
 def dashboard_date()
   file = ACC_DIR + "date.txt"
+  return nil unless File.exist?(file) && File.readable?(file)
+
   File.open(file, 'r') do |f|
     first_line = f.gets
     return first_line

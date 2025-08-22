@@ -41,7 +41,7 @@ get '/' do
       
     user_budget_file  = ACC_GROUP_DIR + g + "/user_budget.csv"
     group_budget_file = ACC_GROUP_DIR + g + "/group_budget.csv"
-    if File.exist?(user_budget_file) and File.exist?(group_budget_file)
+    if File.exist?(user_budget_file) and File.exist?(group_budget_file) and File.readable?(user_budget_file) and File.readable?(group_budget_file)
       defined_limit = {}
       CSV.foreach(group_budget_file, headers: true) do |row|
         defined_limit[row[1]] = row[2] if row[0].start_with?("USER")
