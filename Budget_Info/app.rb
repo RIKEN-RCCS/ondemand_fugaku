@@ -16,9 +16,10 @@ helpers do
   end
 
   def get_update_time()
-    return File.read(ACC_DIR + "date.txt")
+    file = File.join(ACC_DIR, "date.txt")
+    File.read(file) if File.file?(file) && File.readable?(file)
   end
-
+  
   def check_admin(group)
     cmd = "resourcemod -g #{group}"
     o = (Socket.gethostname == "fn06sv04")? `#{cmd}` : `ssh login #{cmd}`
