@@ -29,12 +29,12 @@
 .table td {
   padding: 3px 10px;
   border: solid 1px black;
+  font-size: 0.9rem;
 }
 .table th {
   background: darkblue;
   color: #ffffff;
 }
-
 .supplement-list li {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -58,6 +58,7 @@ h3 {
 p {
   padding-left: 1rem;
   margin: 0.5rem 0;
+  text-align: justify;
 }
 img {
   margin: 0rem 1rem;
