@@ -1,6 +1,7 @@
 ---
 title: MOLDEN
 form:
+  - license
   - global_prepost_queue
   - global_prepost_hours
   - global_prepost_cores
@@ -11,6 +12,12 @@ form:
   - global_email
 
 attributes:
+  license:
+    widget: check_box
+    label: Are you an Academic (Non-profit / Non-commercial) user ?
+    help: MOLDEN is free of charge for academic, non-profit, and non-commercial use only. Commercial use is not permitted. See the [MOLDEN Copyright & License](https://www.theochem.ru.nl/molden/CopyRight.html) for details.
+    required: true
+
   application:
     widget: select
     label: Application
