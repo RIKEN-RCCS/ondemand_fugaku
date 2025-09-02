@@ -1,6 +1,7 @@
 ---
 title: MATLAB (BYOL)
 form:
+  - activation
   - global_prepost_queue
   - nodelist
   - global_prepost_hours
@@ -11,6 +12,13 @@ form:
   - global_email
 
 attributes:
+  activation:
+    label: Activation
+    widget: check_box
+    checked_value: 1
+    unchecked_value: 0
+    cacheable: false
+      
   nodelist:
     label: Specified node
     widget: select

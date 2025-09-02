@@ -4,6 +4,8 @@ category: Interactive Apps
 subcategory: Development
 role: batch_connect
 description: |
-  [MATLAB](http://matlab.mathworks.com) is numerical analysis software. This MATLAB is a BYOL version, so a license is required.
+  [MATLAB](http://matlab.mathworks.com) is numerical analysis software. The license is required since this MATLAB is a BYOL version.
+  Check the Activation checkbox only the first time you run it. From the second time onward, leave it unchecked.
+  If you encounter any issues, please refer to the manual ([Japanese](https://www.fugaku.r-ccs.riken.jp/doc_root/ja/user_guides/Commercial_Software/matlab.html), [English](https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/Commercial_Software/matlab.html))
 tile:
   sub_caption: |

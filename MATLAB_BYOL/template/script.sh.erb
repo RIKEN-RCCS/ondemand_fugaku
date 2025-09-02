@@ -1,17 +1,24 @@
 <%= output_xfce(context.global_prepost_vgl) %>
 
 VERSION=R2023a
-if [ "${_VIRTUALGL}" != "" ]; then
-  if [ "<%= context.global_working_dir %>" != "" ]; then
-    TMPDIR=/tmp /vol0004/apps/MATLAB/${VERSION}/bin/matlab -desktop -nosoftwareopengl -sd "<%= context.global_working_dir %>" &
-  else
-    TMPDIR=/tmp /vol0004/apps/MATLAB/${VERSION}/bin/matlab -desktop -nosoftwareopengl &
-  fi
+MATLAB_ACTIVATE="/vol0004/apps/MATLAB/${VERSION}/bin/activate_matlab.sh"
+MATLAB_EXEC="/vol0004/apps/MATLAB/${VERSION}/bin/matlab"
+
+if [ "<%= context.activation %>" == "1" ]; then
+  TMPDIR=/tmp ${MATLAB_ACTIVATE} &
 else
-  if [ "<%= context.global_working_dir %>" != "" ]; then
-    TMPDIR=/tmp /vol0004/apps/MATLAB/${VERSION}/bin/matlab -desktop -sd "<%= context.global_working_dir %>" &
+  if [ "${_VIRTUALGL}" != "" ]; then
+    if [ "<%= context.global_working_dir %>" != "" ]; then
+      TMPDIR=/tmp ${MATLAB_EXEC} -desktop -nosoftwareopengl -sd "<%= context.global_working_dir %>" &
+    else
+      TMPDIR=/tmp ${MATLAB_EXEC} -desktop -nosoftwareopengl &
+    fi
   else
-    TMPDIR=/tmp /vol0004/apps/MATLAB/${VERSION}/bin/matlab -desktop &
+    if [ "<%= context.global_working_dir %>" != "" ]; then
+      TMPDIR=/tmp ${MATLAB_EXEC} -desktop -sd "<%= context.global_working_dir %>" &
+    else
+      TMPDIR=/tmp ${MATLAB_EXEC} -desktop &
+    fi
   fi
 fi
 
