@@ -18,7 +18,7 @@ From: redhat/ubi8:8.10
   dnf -y remove xfce4-screensaver
   #
   # VNC
-  dnf -y --releasever=8.10 install https://yum.osc.edu/ondemand/latest/compute/el8Server/x86_64/turbovnc-3.1.1-1.el8.x86_64.rpm
+  dnf -y --releasever=8.10 install https://github.com/TurboVNC/turbovnc/releases/download/3.2/turbovnc-3.2.x86_64.rpm
   dnf -y --releasever=8.10 install python3-websockify
   #
   # R
@@ -30,9 +30,9 @@ From: redhat/ubi8:8.10
   dnf -y --releasever=8.10 install python3.12-devel python3.12-numpy python3.12-pip
   update-alternatives --set python /usr/bin/python3.12
   update-alternatives --install /usr/bin/pip pip /usr/bin/pip3.12 1
-  wget -O ParaView-6.0.MPI-Linux-Python3.12-x86_64.tar.gz --trust-server-names "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v6.0&type=binary&os=Linux&downloadFile=ParaView-6.0.0-RC1-MPI-Linux-Python3.12-x86_64.tar.gz"
+  wget -O ParaView-6.0.MPI-Linux-Python3.12-x86_64.tar.gz --trust-server-names 'https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v6.0&type=binary&os=Linux&downloadFile=ParaView-6.0.0-MPI-Linux-Python3.12-x86_64.tar.gz'
   tar xfz ParaView-6.0.MPI-Linux-Python3.12-x86_64.tar.gz
-  ln -s ParaView-6.0.0-RC1-MPI-Linux-Python3.12-x86_64 ParaView
+  ln -s ParaView-6.0.0-MPI-Linux-Python3.12-x86_64 ParaView
   rm ParaView-6.0.MPI-Linux-Python3.12-x86_64.tar.gz ParaView/bin/mpiexec
   #
   # VisIt

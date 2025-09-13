@@ -15,7 +15,7 @@ From: redhat/ubi8:8.10
   dnf -y --releasever=8.10 install python39 python39-devel python39-numpy python3.11 python3.11-devel python3.11-numpy
   update-alternatives --set python /usr/bin/python3.11
   update-alternatives --install /usr/bin/pip pip /usr/bin/pip3.11 1
-  dnf -y --releasever=8.10 install https://yum.osc.edu/ondemand/latest/compute/el8Server/aarch64/turbovnc-3.1.1-1.el8.aarch64.rpm
+  dnf -y --releasever=8.10 install https://github.com/TurboVNC/turbovnc/releases/download/3.2/turbovnc-3.2.aarch64.rpm
   dnf -y --releasever=8.10 install libX11-devel libXi-devel libXt-devel pam-devel java-1.8.0-openjdk-devel xterm python3-websockify
   dnf -y remove xfce4-screensaver
   # Slow startup when running paraview-mpich-devel with multiple processes

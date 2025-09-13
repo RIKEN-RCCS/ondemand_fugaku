@@ -4,3 +4,7 @@
 #SBATCH --mem 502G
 #SBATCH -t 02:00:00
 time TMPDIR=/tmp singularity build --fakeroot ubi810_x86_64.sif ubi810_x86_64.def
+
+# On Fugaku, although /home/apps is not subject to quota management, if you "mv" a file from the normal user area,
+# the quota ID will be pulled and it will become subject to management.
+# If you use "cp" to move a file to /home/apps, the settings of the parent folder will be inherited, so it will not be added to the user's quota.
