@@ -2,6 +2,6 @@
 name: PHASE/0
 category: Batch Jobs
 subcategory: Condensed Matter Physics
-url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/PHASE0
+url: /pun/sys/OpenComposer/PHASE0
 tile:
   sub_caption: |

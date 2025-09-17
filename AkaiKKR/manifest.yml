@@ -2,7 +2,7 @@
 name: AkaiKKR
 category: Batch Jobs
 subcategory: Condensed Matter Physics
-url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/AkaiKKR
+url: /pun/sys/OpenComposer/AkaiKKR
 tile:
   sub_caption: |
   

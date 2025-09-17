@@ -3,6 +3,6 @@ name: FFVHC-ACE
 icon: fa://plane
 category: Batch Jobs
 subcategory: Computer Aided Engineering
-url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/FFVHC-ACE
+url: /pun/sys/OpenComposer/FFVHC-ACE
 tile:
   sub_caption: |

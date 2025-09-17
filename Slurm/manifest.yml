@@ -2,6 +2,6 @@ name: Job script for Prepost
 category: Passenger Apps
 description: |-
   Open Composer allows the creation and submission of batch jobs
-url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/Slurm
+url: /pun/sys/OpenComposer/Slurm
 tile:
   sub_caption: |

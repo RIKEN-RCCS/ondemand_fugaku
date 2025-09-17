@@ -2,6 +2,6 @@
 name: LAMMPS
 category: Batch Jobs
 subcategory: Molecular Dynamics
-url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/LAMMPS
+url: /pun/sys/OpenComposer/LAMMPS
 tile:
   sub_caption: |

@@ -2,7 +2,7 @@
 name: GENESIS
 category: Batch Jobs
 subcategory: Molecular Dynamics
-url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/GENESIS
+url: /pun/sys/OpenComposer/GENESIS
 tile:
   sub_caption: |
   

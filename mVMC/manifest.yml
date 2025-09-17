@@ -2,6 +2,6 @@
 name: mVMC
 category: Batch Jobs
 subcategory: Condensed Matter Physics
-url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/mVMC
+url: /pun/sys/OpenComposer/mVMC
 tile:
   sub_caption: |

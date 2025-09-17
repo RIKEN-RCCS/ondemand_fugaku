@@ -2,6 +2,6 @@
 name: FrontFlow
 category: Batch Jobs
 subcategory: Computer Aided Engineering
-url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/FrontFlow
+url: /pun/sys/OpenComposer/FrontFlow
 tile:
   sub_caption: |

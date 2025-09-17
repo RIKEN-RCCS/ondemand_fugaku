@@ -3,6 +3,6 @@ name: Gaussian
 category: Batch Jobs
 subcategory: Quantum Chemistry
 #icon: fa://atom
-url: https://ondemand.fugaku.r-ccs.riken.jp/pun/sys/OpenComposer/Gaussian
+url: /pun/sys/OpenComposer/Gaussian
 tile:
   sub_caption: |
