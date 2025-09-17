@@ -7,6 +7,9 @@ ln -s /var/www/ood/apps/sys/ondemand_fugaku/misc/dashboard/_welcome.html.erb /va
 mv /var/www/ood/apps/sys/dashboard/app/views/widgets/_pinned_apps.html.erb /var/www/ood/apps/sys/dashboard/app/views/widgets/_pinned_apps.html.erb.bak
 ln -s /var/www/ood/apps/sys/ondemand_fugaku/misc/dashboard/_pinned_apps.html.erb /var/www/ood/apps/sys/dashboard/app/views/widgets/
 
+mv /var/www/ood/apps/sys/dashboard/app/views/layouts/_footer.html.erb /var/www/ood/apps/sys/dashboard/app/views/layouts/_footer.html.erb.bak
+ln -s /var/www/ood/apps/sys/ondemand_fugaku/misc/dashboard/_footer.html.erb /var/www/ood/apps/sys/dashboard/app/views/layouts/
+
 ln -s /var/www/ood/apps/sys/ondemand_fugaku/misc/global_bc_items.yml.erb /etc/ood/config/ondemand.d/
 
 cd /var/www/ood/apps/sys
