@@ -66,23 +66,6 @@ EOF
   cd ../../
   rm -rf glfw-3.4 glfw-3.4.zip
   #
-  # For Terminal (ttyd)
-  # Since RedHat 8 pachage of tmux is too old (ver. 2.7), new one (ver. 3.2a) is compiled to use.
-  # The new one is not the latest, but this version is used RedHat 9.
-  dnf -y install ttyd screen libuv-devel libwebsockets-devel libevent-devel ncurses-devel
-  dnf -y --releasever=8.10 install ttyd screen libuv-devel libwebsockets-devel libevent-devel ncurses-devel
-  cd /opt
-  wget https://github.com/tmux/tmux/archive/refs/tags/3.2a.tar.gz
-  tar xfz 3.2a.tar.gz
-  mv tmux-3.2a tmux-3.2a_src
-  cd tmux-3.2a_src
-  sh autogen.sh
-  ./configure --prefix=/opt/tmux-3.2a
-  make; make install
-  cd ../
-  ln -s /opt/tmux-3.2a /opt/tmux
-  rm -rf tmux-3.2a_src 3.2a.tar.gz
-  #
   # Clean up
   dnf clean all
   rm -f /etc/pki/entitlement/*

@@ -169,22 +169,6 @@ From: redhat/ubi8:8.10
   ln -s /opt/grads-2.2.3 /opt/grads
   rm -rf v2.2.3.tar.gz GrADS-2.2.3
   #
-  # For Terminal (ttyd)
-  # Since RedHat 8 pachage of tmux is too old (ver. 2.7), new one (ver. 3.2a) is compiled to use.
-  # The new one is not the latest, but this version is used RedHat 9.
-  dnf -y --releasever=8.10 install ttyd screen libuv-devel libwebsockets-devel libevent-devel ncurses-devel
-  cd /opt
-  wget https://github.com/tmux/tmux/archive/refs/tags/3.5a.tar.gz
-  tar xfz 3.5a.tar.gz
-  mv tmux-3.5a tmux-3.5a_src
-  cd tmux-3.5a_src
-  sh autogen.sh
-  ./configure --prefix=/opt/tmux-3.5a
-  make; make install
-  cd ../
-  ln -s /opt/tmux-3.5a /opt/tmux
-  rm -rf tmux-3.5a_src 3.5a.tar.gz
-  #
   # MOLDEN
   dnf -y install imake
   cd /opt
