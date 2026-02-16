@@ -1,0 +1,3 @@
+Source: ./images/xcrysden_kpath.gif from xcrysden-1.6.2
+License: GNUv2
+

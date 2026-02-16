@@ -1,0 +1,2 @@
+Source: https://imagej.net/ij/images/ImageJ.png
+License: Public Domain

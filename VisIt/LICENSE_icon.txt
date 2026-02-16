@@ -1,0 +1,2 @@
+Source: https://github.com/visit-dav/visit/blob/develop/src/resources/images/VisIt4.png
+License: BSD

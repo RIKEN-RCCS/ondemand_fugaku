@@ -1,0 +1,3 @@
+Source: fds-FDS-6.10.1/Manuals/Sphinx_Online_Docs/source/FDS-logos/FDS-logos_black_small_square.png
+License: Public Domain (https://pages.nist.gov/fds-smv/)
+

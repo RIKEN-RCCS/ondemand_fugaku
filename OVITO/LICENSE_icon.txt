@@ -1,0 +1,3 @@
+Source: ovito-basic-3.14.1-x86_64/./share/ovito/doc/manual/html/_images/ovito_logo_128.png
+License: MIT
+

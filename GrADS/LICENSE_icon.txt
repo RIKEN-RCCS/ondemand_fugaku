@@ -1,0 +1,3 @@
+Source: ./doc/images/tutorial_fig1.gif from https://github.com/j-m-adams/GrADS/archive/refs/tags/v2.2.3.tar.gz
+License: GPLv2
+

@@ -1,0 +1,2 @@
+Source: https://upload.wikimedia.org/wikipedia/commons/3/38/Jupyter_logo.svg
+License: BSD

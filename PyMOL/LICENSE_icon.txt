@@ -1,0 +1,3 @@
+Source: https://commons.wikimedia.org/wiki/File:PyMOL_logo.svg
+License: Public Domain
+

@@ -1,0 +1,2 @@
+Source: https://www.svgrepo.com/svg/373631/gnuplot
+License: MIT

@@ -1,0 +1,2 @@
+Source: https://ja.wikipedia.org/wiki/Visual_Studio_Code
+License: Public Domain
