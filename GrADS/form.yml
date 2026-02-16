@@ -5,5 +5,5 @@ form:
   - global_prepost_hours
   - global_prepost_cores
   - global_prepost_memory
-  - global_prepost_vgl
+  - global_prepost_gpus
   - global_email

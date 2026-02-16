@@ -5,6 +5,6 @@
 cluster: prepost
 script:
 <%= submit_script_prepost("ood_gnuplot", global_prepost_queue, global_prepost_hours, global_prepost_cores,
-                          global_prepost_memory, global_prepost_vgl, global_email) %>
+                          global_prepost_memory, global_prepost_gpus, global_email) %>
 batch_connect:
 <%= submit_vnc(staged_root) %>
