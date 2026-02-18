@@ -12,29 +12,73 @@
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
       <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="passenger_ja.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
-      <ul class="nav flex-column px-3 py-2">
+      <ul class="nav flex-column px-2 py-2">
         <li class="nav-item"><a href="index.html" class="nav-link">1. Introduction</a></li>
         <li class="nav-item"><a href="dashboard.html" class="nav-link">2. Dashboard Layout</a></li>
         <li class="nav-item"><a href="interactive.html" class="nav-link">3. Interactive Applications</a></li>
         <li class="nav-item"><a href="batch.html" class="nav-link">4. Batch Jobs</a></li>
-        <li class="nav-item"><a href="passenger.html" class="nav-link">5. Passenger Apps</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#file" class="nav-link">5.1. File Operations</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.2. HPCI Shared Storage</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#shell" class="nav-link">5.4. Shell Access</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#composer" class="nav-link">5.5. Open Composer</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.6. Job Monitoring</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.7. Budget Usage</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.8. Disk Usage</a></li>
+        <li class="nav-item"><a href="passenger.html" class="nav-link">5. Passenger Applications</a></li>
+	    <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.1. Active Jobs</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.2. Budget Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.3. Disk Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#fugaku" class="nav-link">5.4. Fugaku Shell Access</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#gakunin" class="nav-link">5.5. GakuNin RDM</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.6. HPCI Shared Storage</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#home" class="nav-link">5.7. Home Directory</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#inactive" class="nav-link">5.8. Inactive Disk Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#composer" class="nav-link">5.9. Open Composer</a></li>
         <li class="nav-item"><a href="supplement.html" class="nav-link">6. Supplement</a></li>
       </ul>
     </nav>
 
     <main class="main-content">
-      <h2>5. Passenger Apps</h2>
+      <h2>5. Passenger Applications</h2>
+      <p>
+	Passenger applications are applications that run on the server running Open OnDemand.
+	The following Passenger applications are available.
+      </p>
+      <table class="table">
+        <tr><th>Name</th><th>Description</th></tr>
+        <tr><td><a href="#active">Active Jobs</a></td><td>Monitoring Jobs</td></tr>
+        <tr><td><a href="#budget">Budget Info</a></td><td>Display budget information</td></tr>
+        <tr><td><a href="#disk">Disk Info</a></td><td>Display disk information</td></tr>
+        <tr><td><a href="#fugaku">Fugaku Shell Access / Satelite Fugaku Shell Access</a></td><td>Terminal</td></tr>
+        <tr><td><a href="#gakunin">GakuNin RDM</a></td><td>Access to GakuNin RDM</td></tr>
+        <tr><td><a href="#hpci">HPCI Shared Storage</a></td><td>Access to HPCI Shared Storage</td></tr>
+        <tr><td><a href="#home">Home Directory</a></td><td>File Operations</td></tr>
+        <tr><td><a href="#inactive">Inactive Disk Info</a></td><td>Display unused disk information</td></tr>
+        <tr><td><a href="#composer">Open Composer / Job Script for Fugaku / Job Script for Prepost</a></td><td>Creating and submitting a batch job</td></tr>
+      </table>
+      
+      <h3 id="active">5.1. Active Jobs</h3>
+      <p>This application allows you to view job information and cancel a job. Click the button on the left of the "ID" column to view job details. Click the button in the "Actions" column to cancel a job.</p>
+      <img width="600" alt="Active Jobs" src="img/activejobs.png">
 
-      <h3 id="file">5.1. File Operations</h3>
-      <p>Click the Home Directory icon to upload, download, and edit files on Fugaku. The maximum upload/download file size is 10GB.</p>
+      <h3 id="budget">5.2. Budget Info</h3>
+      <p>This application allows you to view budget usage for each user in the group. Administrators can also set budget limits for users. However, project-based applications are not supported.</p>
+      <img width="600" alt="Budget Info" src="img/budget_info.png">
+      
+      <h3 id="disk">5.3. Disk Info</h3>
+      <p>This application allows you to view disk usage for each user in the group.</p>
+      <img width="600" alt="Disk Info" src="img/disk_info.png">
+      
+      <h3 id="fugaku">5.4. Fugaku Shell Access</h3>
+      <p>This application allows you to open an SSH session to a login node from your web browser and use the command-line interface.
+      "Fugaku Shell Access" provides SSH access to "Fugaku," and "Satelite Fugaku Shell Access" provides SSH access to Satellite Fugaku.</p>
+      <img width="600" alt="Shell Access" src="img/shell_access.png">
+      
+      <h3 id="gakunin">5.5. GakuNin RDM</h3>
+      <p>This application allows you to manage files on <a href="https://rdm.nii.ac.jp">GakuNin RDM</a>, the research data management platform provided by the National Institute of Informatics. You must create a project in GakuNin RDM in advance to use this application.</p>
+      <img width="400" alt="GakuNin RDM" src="img/grdm.png">
+      <p>Input "Node ID" and "Personal Access Token", then click the "mount" button.</p>
+      
+      <h3 id="hpci">5.6. HPCI Shared Storage</h3>
+      <p>This application allows you to manage files on the shared storage provided by <a href="https://www.hpci-office.jp/en">HPCI (High Performance Computing Infrastructure)</a>. You must first generate a refresh token from the <a href="https://elpis.hpci.nii.ac.jp">https://elpis.hpci.nii.ac.jp</a>.</p>
+      <img width="400" alt="HPCI Shared Storage" src="img/hpci.png">
+      <p>Enter the string like <code>hpcixxxxxx</code> (where <code>xxxxxx</code> are digits) shown when generating the passphrase into the "HPCI ID" field, and the passphrase into the "Passphrase" field, then click the "Mount" button.</p>
+      
+      <h3 id="home">5.7. Home Directory</h3>
+      <p>This application allows you to upload, download, and edit files on Fugaku. The maximum upload/download file size is 10GB.</p>
       <img width="600" alt="Home Directory" src="img/home_directory.png">
       <p>The Home Directory functions are described below. Operations for individual files or directories can be performed from the "three-dot and down-arrow" menu.</p>
 
@@ -69,41 +113,17 @@
 
       <p>You can also manage files on cloud storages using <a href="https://rclone.org">Rclone</a>. To configure Rclone, launch a remote desktop from <a href="interactive.html">Interactive Applications</a> and execute <code>rclone</code> or <code>rclone-browser</code> from the terminal. After setup, click "Help" &rarr; "Restart Web Server" in the Open OnDemand menu bar and relaunch the Home Directory to access the configured cloud storage. Note that RIKEN’s Fugaku help desk does not provide support for configuring Rclone.</p>
 
-      <h3 id="hpci">5.2. HPCI Shared Storage</h3>
-      <p>Click the HPCI Shared Storage icon to manage files on the shared storage provided by <a href="https://www.hpci-office.jp/en">HPCI (High Performance Computing Infrastructure)</a>. You must first generate a refresh token from the <a href="https://elpis.hpci.nii.ac.jp">https://elpis.hpci.nii.ac.jp</a>.</p>
-      <img width="400" alt="HPCI Shared Storage" src="img/hpci.png">
-      <p>Enter the string like <code>hpcixxxxxx</code> (where <code>xxxxxx</code> are digits) shown when generating the passphrase into the "HPCI ID" field, and the passphrase into the "Passphrase" field, then click the "Mount" button.</p>
-
-      <h3 id="gakunin">5.3. GakuNin RDM</h3>
-      <p>Click the GakuNin RDM icon to manage files on <a href="https://rdm.nii.ac.jp">GakuNin RDM</a>, the research data management platform provided by the National Institute of Informatics. You must create a project in GakuNin RDM in advance to use this application.</p>
-      <img width="400" alt="GakuNin RDM" src="img/grdm.png">
-      <p>Input "Node ID" and "Personal Access Token", then click the "mount" button.</p>
-
-      <h3 id="shell">5.4. Shell Access</h3>
-      <p>Click the Fugaku Shell Access icon to open an SSH session to a login node from your web browser and use the command-line interface.</p>
-      <img width="600" alt="Shell Access" src="img/shell_access.png">
-
-      <h3 id="composer">5.5. Open Composer</h3>
-      <p>Click the Open Composer icon to launch the application for managing and executing batch jobs. For more details, see <a href="batch.html">4. Batch Jobs</a>.</p>
+      <h3 id="inactive">5.8. Inactive Disk Info</h3>
+      <p>This application allows you to display information about disks that contain unused files.</p>
+      <img width="600" alt="Inactive Disk Info" src="img/inactivediskinfo.png">
+      <p>The data selected in "Select Dataset" will be loaded. You can also filter by "Group" and "User". Furthermore, by using the sliders for "Inactive Period", "Count", and "Size (TiB)", you can filter the data based on "the time elapsed since last access", "the number of files", and "the disk usage", respectively. </p>
+      
+      <h3 id="composer">5.9. Open Composer</h3>
+      <p>This application allows you to launch the application for managing and executing batch jobs. For more details, see <a href="batch.html">4. Batch Jobs</a>.</p>
       <img width="600" alt="Open Composer" src="img/opencomposer.png">
       <p>Applications are displayed by category. Clicking an application icon opens a web form for that application.</p>
       <p>Clicking the "Job Script for Fugaku" or "Job Script for Prepost" icons in the dashboard opens a web form for creating directives for the Fujitsu TCS and Slurm job schedulers used on Fugaku and the Prepost environment, respectively.</p>
       <img width="600" alt="Fujitsu TCS" src="img/fujitsu_tcs.png">
-
-      <h3 id="active">5.6. Job Monitoring</h3>
-      <p>Click the Active Jobs icon to view job information and cancel a job. Click the button on the left of the "ID" column to view job details. Click the button in the "Actions" column to cancel a job.</p>
-      <img width="600" alt="Active Jobs" src="img/activejobs.png">
-
-      <h3 id="budget">5.7. Budget Usage</h3>
-      <p>Click the Budget Info icon to view budget usage for each user in the group. Administrators can also set budget limits for users. However, project-based applications are not supported.</p>
-      <img width="600" alt="Budget Info" src="img/budget_info.png">
-
-      <h3 id="disk">5.8. Disk Usage</h3>
-      <p>Click the Disk Info icon to view disk usage for each user in the group.</p>
-      <img width="600" alt="Disk Info" src="img/disk_info.png">
-      <p>Click the Inactive Disk Info icon to display information about disks that contain unused files.</p>
-      <img width="600" alt="Inactive Disk Info" src="img/inactivediskinfo.png">
-      <p>The data selected in "Select Dataset" will be loaded. You can also filter by "Group" and "User". Furthermore, by using the sliders for "Inactive Period", "Count", and "Size (TiB)", you can filter the data based on "the time elapsed since last access", "the number of files", and "the disk usage", respectively. </p>
     </main>
   </div>
 
