@@ -17,11 +17,10 @@ echo "TIMING - Starting ttyd at: $(date)"
 TTYD_PATH=/home/apps/oss/ttyd/`arch`/ttyd-1.7.7/bin/ttyd
 $TTYD_PATH \
   -p "${PORT}" \
-  -b "/node/${HOST}/${PORT}" \
+  -b "/node/${HOST}/${PORT}/${PASSWORD}" \
   -t "fontSize=${OOD_FONT_SIZE}" \
   -t 'cursorStyle=bar' \
   -t 'cursorBlink=true' \
   -t 'theme={"background": "#282a36", "foreground": "#f8f8f2"}' \
-  -c "ttyd:${PASSWORD}" \
   -W -m 1 -w '<%= context.global_working_dir %>'\
   "$OOD_STAGED_ROOT/tmux.sh"

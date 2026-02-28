@@ -15,7 +15,7 @@ PORT="$port"
 export port PORT
 
 # Generate SHA1 encrypted password (requires OpenSSL installed)
-password="$(create_passwd 16)"
+password="$(create_passwd 24)"
 PASSWORD="$password"
 export password PASSWORD
 
@@ -40,11 +40,11 @@ fi
 unset OOD_SR
 
 # Create Function for Slurm Cleanup
-function slurm_env_clean {
-  eval "$(printenv | grep -i ^slurm | sed 's/^SLURM/export OOD_SLURM/')"
-  # shellcheck disable=SC2046
-  unset $(compgen -v 'SLURM')
-  echo "All environment variables starting with 'SLURM' have been renamed to be prefixed with 'OOD_'."
-  printenv | grep -i '^OOD_SLURM'
-}
-export -f slurm_env_clean
+#function slurm_env_clean {
+#  eval "$(printenv | grep -i ^slurm | sed 's/^SLURM/export OOD_SLURM/')"
+#  # shellcheck disable=SC2046
+#  unset $(compgen -v 'SLURM')
+#  echo "All environment variables starting with 'SLURM' have been renamed to be prefixed with 'OOD_'."
+#  printenv | grep -i '^OOD_SLURM'
+#}
+#export -f slurm_env_clean
