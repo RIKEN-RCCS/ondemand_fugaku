@@ -12,20 +12,21 @@
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
       <h5 class="ps-3 pe-1 d-inline">Table of Contents</h5><a href="batch_ja.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[Japanese]</a>
-      <ul class="nav flex-column px-3 py-2">
+      <ul class="nav flex-column px-2 py-2">
         <li class="nav-item"><a href="index.html" class="nav-link">1. Introduction</a></li>
         <li class="nav-item"><a href="dashboard.html" class="nav-link">2. Dashboard Layout</a></li>
         <li class="nav-item"><a href="interactive.html" class="nav-link">3. Interactive Applications</a></li>
         <li class="nav-item"><a href="batch.html" class="nav-link">4. Batch Jobs</a></li>
-        <li class="nav-item"><a href="passenger.html" class="nav-link">5. Passenger Apps</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#file" class="nav-link">5.1. File Operations</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.2. HPCI Shared Storage</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#shell" class="nav-link">5.4. Shell Access</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#composer" class="nav-link">5.5. Open Composer</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.6. Job Monitoring</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.7. Budget Usage</a></li>
-        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.8. Disk Usage</a></li>
+        <li class="nav-item"><a href="passenger.html" class="nav-link">5. Passenger Applications</a></li>
+	    <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.1. Active Jobs</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.2. Budget Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.3. Disk Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#fugaku" class="nav-link">5.4. Fugaku Shell Access</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#gakunin" class="nav-link">5.5. GakuNin RDM</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#hpci" class="nav-link">5.6. HPCI Shared Storage</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#home" class="nav-link">5.7. Home Directory</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#inactive" class="nav-link">5.8. Inactive Disk Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger.html#composer" class="nav-link">5.9. Open Composer</a></li>
         <li class="nav-item"><a href="supplement.html" class="nav-link">6. Supplement</a></li>
       </ul>
     </nav>
@@ -56,6 +57,7 @@
       <img width="400" alt="Click FDS" src="img/fds_click.png">
       <p>
         A web form for generating a job script will appear. The top-right fields are common across applications: "Script Location" specifies where the script will be saved, "Script Name" is the file name, and "Job Name" is an optional job title. The lower-left section contains application-specific inputs, which automatically update the job script preview on the lower right. After filling in the form, click "Submit" to submit the job to Fugaku.
+	The submitted job script will be saved under "Script Location" with the file name "Script Name".
       </p>
       <img width="600" alt="Web form of FDS" src="img/fds_webform.png">
       <p>
@@ -69,7 +71,7 @@
         The "Cancel Job" and "Delete Info" buttons at the top-left are used to cancel a running job or delete a job entry from the table, respectively. To use these buttons, check the checkbox in the leftmost column of the job row.
       </p>
       <p>
-        The text input and radio buttons at the top-right are used to filter jobs shown in the table. Entering text in the "Filter" field narrows the list to jobs that include that text. The "All", "Running", "Queued", and "Completed" radio buttons filter by job status. The "Fugaku" and "Prepost" radio buttons filter jobs by system.
+        The text input and radio buttons at the top-right are used to filter jobs shown in the table. Entering text in the "Filter" field narrows the list to jobs that include that text. The "All", "Running", "Queued", "Completed", and "Failed" radio buttons filter by job status. The "Fugaku" and "Prepost" radio buttons filter jobs by system.
       </p>
       <img width="600" alt="History Page" src="img/history.png">
       <p>

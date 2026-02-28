@@ -12,20 +12,21 @@
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
       <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="batch.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
-      <ul class="nav flex-column px-3 py-2">
+      <ul class="nav flex-column px-2 py-2">
         <li class="nav-item"><a href="index_ja.html" class="nav-link">1. はじめに</a></li>
         <li class="nav-item"><a href="dashboard_ja.html" class="nav-link">2. 画面構成</a></li>
         <li class="nav-item"><a href="interactive_ja.html" class="nav-link">3. 対話アプリケーション</a></li>
         <li class="nav-item"><a href="batch_ja.html" class="nav-link">4. バッチジョブ</a></li>
-        <li class="nav-item"><a href="passenger_ja.html" class="nav-link">5. Passenger Apps</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#file" class="nav-link">5.1. ファイル操作</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#hpci" class="nav-link">5.2. HPCI共用ストレージ</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#shell" class="nav-link">5.4. シェルアクセス</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#composer" class="nav-link">5.5. Open Composer</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#active" class="nav-link">5.6. ジョブのモニタリング</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#budget" class="nav-link">5.7. バジェットの情報</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#disk" class="nav-link">5.8. ディスクの情報</a></li>
+        <li class="nav-item"><a href="passenger_ja.html" class="nav-link">5. Passengerアプリケーション</a></li>
+	    <li class="nav-item ms-3"><a href="passenger_ja.html#active" class="nav-link">5.1. Active Jobs</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#budget" class="nav-link">5.2. Budget Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#disk" class="nav-link">5.3. Disk Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#fugaku" class="nav-link">5.4. Fugaku Shell Access</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#gakunin" class="nav-link">5.5. GakuNin RDM</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#hpci" class="nav-link">5.6. HPCI Shared Storage</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#home" class="nav-link">5.7. Home Directory</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#inactive" class="nav-link">5.8. Inactive Disk Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#composer" class="nav-link">5.9. Open Composer</a></li>
         <li class="nav-item"><a href="supplement_ja.html" class="nav-link">6. 補足</a></li>
       </ul>
     </nav>
@@ -55,6 +56,7 @@
       <img width="400" alt="Click FDS" src="img/fds_click.png">
       <p>
         ジョブスクリプトを生成するためのWebフォームが表示されます。右上はアプリケーション共通の入力項目であり、「Script Location」はジョブスクリプトの保存場所、「Script Name」はジョブスクリプトのファイル名、「Job Name」はジョブの名前（省略可能）を指定します。左下はアプリケーション固有の入力項目であり、入力すると右下のジョブスクリプトが自動更新されます。入力後に「Submit」をクリックすると、「富岳」にジョブが投入されます。
+	投入されたジョブスクリプトは、「Script Location」以下に「Script Name」のファイル名で保存されます。
       </p>
       <img width="600" alt="Web form of FDS" src="img/fds_webform.png">
       <p>
@@ -71,7 +73,7 @@
       <p>
       右上にあるテキストエリアとラジオボタンは、表に表示されるジョブをフィルタリングするために使用します。
       「Filter」に文字列を入力すると、その文字列に関係するジョブだけが表示されます。
-      「All」、「Running」、「Queued」、「Completed」のラジオボタンはジョブの状態を表しており、その状態のジョブだけが表示されます。
+      「All」、「Running」、「Queued」、「Completed」、「Failed」のラジオボタンはジョブの状態を表しており、その状態のジョブだけが表示されます。
      「Fugaku」と「Prepost」のラジオボタンは、それぞれのシステムに投入したジョブだけが表示されます。
       </p>
       <img width="600" alt="Histroy Page" src="img/history.png">

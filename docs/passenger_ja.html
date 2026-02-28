@@ -12,28 +12,73 @@
   <div class="container-fluid">
     <nav class="sidebar bg-body-secondary">
       <h5 class="ps-3 pe-1 d-inline">目次</h5><a href="passenger.html" style="font-size: 0.75rem;" class="text-decoration-none ms-0">[English]</a>
-      <ul class="nav flex-column px-3 py-2">
+      <ul class="nav flex-column px-2 py-2">
         <li class="nav-item"><a href="index_ja.html" class="nav-link">1. はじめに</a></li>
         <li class="nav-item"><a href="dashboard_ja.html" class="nav-link">2. 画面構成</a></li>
         <li class="nav-item"><a href="interactive_ja.html" class="nav-link">3. 対話アプリケーション</a></li>
         <li class="nav-item"><a href="batch_ja.html" class="nav-link">4. バッチジョブ</a></li>
-        <li class="nav-item"><a href="passenger_ja.html" class="nav-link">5. Passenger Apps</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#file" class="nav-link">5.1. ファイル操作</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#hpci" class="nav-link">5.2. HPCI共用ストレージ</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#gakunin" class="nav-link">5.3. GakuNin RDM</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#shell" class="nav-link">5.4. シェルアクセス</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#composer" class="nav-link">5.5. Open Composer</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#active" class="nav-link">5.6. ジョブのモニタリング</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#budget" class="nav-link">5.7. バジェットの情報</a></li>
-        <li class="nav-item ms-3"><a href="passenger_ja.html#disk" class="nav-link">5.8. ディスクの情報</a></li>
+        <li class="nav-item"><a href="passenger_ja.html" class="nav-link">5. Passengerアプリケーション</a></li>
+	    <li class="nav-item ms-3"><a href="passenger_ja.html#active" class="nav-link">5.1. Active Jobs</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#budget" class="nav-link">5.2. Budget Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#disk" class="nav-link">5.3. Disk Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#fugaku" class="nav-link">5.4. Fugaku Shell Access</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#gakunin" class="nav-link">5.5. GakuNin RDM</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#hpci" class="nav-link">5.6. HPCI Shared Storage</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#home" class="nav-link">5.7. Home Directory</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#inactive" class="nav-link">5.8. Inactive Disk Info</a></li>
+        <li class="nav-item ms-3"><a href="passenger_ja.html#composer" class="nav-link">5.9. Open Composer</a></li>
         <li class="nav-item"><a href="supplement_ja.html" class="nav-link">6. 補足</a></li>
       </ul>
     </nav>
 
     <main class="main-content">
-      <h2>5. Passenger Apps</h2>
-      <h3 id="file">5.1. ファイル操作</h3>
-      <p>Home Directoryのアイコンをクリックしてください。「富岳」に対するファイルのアップロード・ダウンロード・編集などを行えます。アップロード・ダウンロード可能な最大サイズは10GBです。</p>
+      <h2>5. Passengerアプリケーション</h2>
+      <p>
+	PassengerアプリケーションとはOpen OnDemandが動作しているサーバで動作するアプリケーションです。
+	下記のPassengerアプリケーションが利用可能です。
+      </p>
+      <table class="table">
+        <tr><th>名前</th><th>説明</th></tr>
+        <tr><td><a href="#active">Active Jobs</a></td><td>ジョブのモニタリング</td></tr>
+        <tr><td><a href="#budget">Budget Info</a></td><td>バジェットの表示</td></tr>
+        <tr><td><a href="#disk">Disk Info</a></td><td>ディスクの表示</td></tr>
+        <tr><td><a href="#fugaku">Fugaku Shell Access / Satelite Fugaku Shell Access</a></td><td>ターミナル</td></tr>
+        <tr><td><a href="#gakunin">GakuNin RDM</a></td><td>GakuNin RDMへのアクセス</td></tr>
+        <tr><td><a href="#hpci">HPCI Shared Storage</a></td><td>HPCI共用ストレージへのアクセス</td></tr>
+        <tr><td><a href="#home">Home Directory</a></td><td>ファイル操作</td></tr>
+        <tr><td><a href="#inactive">Inactive Disk Info</a></td><td>利用されていないディスクの情報の表示</td></tr>
+        <tr><td><a href="#composer">Open Composer / Job Script for Fugaku / Job Script for Prepost</a></td><td>バッチジョブの作成と投入</td></tr>
+      </table>
+
+      <h3 id="active">5.1. Active Jobs</h3>
+      <p>ジョブの情報を閲覧や削除を行うことができます。「ID」の列の左側のボタンをクリックすると、ジョブ詳細情報を表示できます。「Actions」の列のボタンをクリックすると、ジョブの削除を行えます。</p>
+      <img width="600" alt="Active Jobs" src="img/activejobs.png">
+      
+      <h3 id="budget">5.2. Budget Info</h3>
+      <p>グループ内の各ユーザのバジェット利用量を表示します。管理者は各ユーザのバジェットに上限値を設定できます。ただし、アプリケーションサービス課題については対応していません。</p>
+      <p></p>
+      <img width="600" alt="Budget Info" src="img/budget_info.png">
+      
+      <h3 id="disk">5.3. Disk Info</h3>
+      <p>グループ内の各ユーザのディスク利用量を表示します。</p>
+      <img width="600" alt="Disk Info" src="img/disk_info.png">
+      
+       <h3 id="fugaku">5.4. Fugaku Shell Access</h3>
+      <p>WebブラウザからログインノードにSSHアクセスし、コマンドラインインタフェースを用いた操作を行うことができます。「Fugaku Shell Access」は「富岳」に、「Satelite Fugaku Shell Access」はサテライト富岳にSSHアクセスします。</p>
+      <img width="600" alt="Shell Access" src="img/shell_access.png">
+      
+      <h3 id="gakunin">5.5. GakuNin RDM</h3>
+      <p>国立情報学研究所が提供する研究データ管理基盤である<a href="https://rdm.nii.ac.jp">GakuNin RDM</a>に対するファイル操作を行えます。本アプリケーションを利用するためには、GakuNin RDMのプロジェクトを事前に作成しておく必要があります。</p>
+      <img width="400" alt="GakuNin RDM" src="img/grdm.png">
+      <p>「Node ID」と「Personal Acccess Token」を入力した後、「mount」ボタンをクリックください。</p>
+      
+      <h3 id="hpci">5.6. HPCI Shared Strage</h3>
+      <p><a href="https://www.hpci-office.jp">HPCI（High Performance Computing Infrastructure）</a>が提供するHPCI共用ストレージに対するファイル操作を行えます。本アプリケーションを利用するためには、<a href="https://elpis.hpci.nii.ac.jp">https://elpis.hpci.nii.ac.jp</a>でリフレッシュトークンを事前に生成しておく必要があります。</p>
+      <img width="400" alt="HPCI Shared Storage" src="img/hpci.png">
+      <p>「HPCI ID」にはJWT-SERVERでパスフレーズを生成したときに表示される<code>hpcixxxxxx</code>という文字列（<code>xxxxxx</code>は数字）を、「Passphrase」には生成されたパスフレーズを入力した後、「Mount」ボタンをクリックください。</p>
+      
+      <h3 id="home">5.7. Home Directory</h3>
+      <p>「富岳」に対するファイルのアップロード・ダウンロード・編集などを行えます。アップロード・ダウンロード可能な最大サイズは10GBです。</p>
       <img width="600" alt="Home Directory" src="img/home_directory.png">
       <p>Home Directoryの各機能は下記の通りです。個別のファイルやディレクトリに対する操作は「3点＋下三角」のメニューから行えます。</p>
       <table class="table">
@@ -68,44 +113,19 @@
       <a href="https://rclone.org">Rclone</a>を用いたクラウドストレージに対するファイルの操作も可能です。Rcloneの設定を行うには、<a href="interactive_ja.html">対話アプリケーション</a>のリモートデスクトップを起動し、そのターミナルから<code>rclone</code>もしくは<code>rclone-browser</code>を実行します。設定後にOpen OnDemandのメニューバーの「Help」 &rarr; 「Restart Web Server」をクリックし、Home Directoryを起動すると、設定されたクラウドストレージにアクセスできます。なお、富岳ヘルプデスクではRcloneの設定のサポートは行っておりませんのでご了承ください。
       </p>
 
-      <h3 id="hpci">5.2. HPCI共用ストレージ</h3>
-      <p>HPCI Shared Strageのアイコンをクリックください。<a href="https://www.hpci-office.jp">HPCI（High Performance Computing Infrastructure）</a>が提供するHPCI共用ストレージに対するファイル操作を行えます。本アプリケーションを利用するためには、<a href="https://elpis.hpci.nii.ac.jp">https://elpis.hpci.nii.ac.jp</a>でリフレッシュトークンを事前に生成しておく必要があります。</p>
-      <img width="400" alt="HPCI Shared Storage" src="img/hpci.png">
-      <p>「HPCI ID」にはJWT-SERVERでパスフレーズを生成したときに表示される<code>hpcixxxxxx</code>という文字列（<code>xxxxxx</code>は数字）を、「Passphrase」には生成されたパスフレーズを入力した後、「Mount」ボタンをクリックください。</p>
-
-      <h3 id="gakunin">5.3. GakuNin RDM</h3>
-      <p>GakuNin RDMのアイコンをクリックください。国立情報学研究所が提供する研究データ管理基盤である<a href="https://rdm.nii.ac.jp">GakuNin RDM</a>に対するファイル操作を行えます。本アプリケーションを利用するためには、GakuNin RDMのプロジェクトを事前に作成しておく必要があります。</p>
-      <img width="400" alt="GakuNin RDM" src="img/grdm.png">
-      <p>「Node ID」と「Personal Acccess Token」を入力した後、「mount」ボタンをクリックください。</p>
-
-      <h3 id="shell">5.4. シェルアクセス</h3>
-      <p>Fugaku Shell Accessのアイコンをクリックください。WebブラウザからログインノードにSSHアクセスし、コマンドラインインタフェースを用いた操作を行うことができます。</p>
-      <img width="600" alt="Shell Access" src="img/shell_access.png">
-
-      <h3 id="composer">5.5. Open Composer</h3>
-      <p>Open Composerアイコンをクリックください。バッチジョブを実行・管理するためのアプリケーションです。詳細は<a href="batch_ja.html">4. バッチジョブ</a>を参照ください。</p>
-      <img width="600" alt="Open Composer" src="img/opencomposer.png">
-      <p>各アプリケーションがカテゴリ毎に表示されます。アプリケーションのアイコンをクリックすると、そのアプリケーション用のWebフォームが表示されます。</p>
-      <p>ダッシュボードの「Job Script for Fugaku」と「Job Script for Prepost」のアイコンをクリックすると、「富岳」とプリポスト環境で使われているジョブスケジューラであるFujitsu TCSとSlurmの指示文を主に作成するWebフォームが表示されます。</p>
-      <img width="600" alt="Fujitsu TCS" src="img/fujitsu_tcs.png">
-
-      <h3 id="active">5.6. ジョブのモニタリング</h3>
-      <p>Active Jobsのアイコンをクリックください。ジョブの情報を閲覧や削除を行うことができます。「ID」の列の左側のボタンをクリックすると、ジョブ詳細情報を表示できます。「Actions」の列のボタンをクリックすると、ジョブの削除を行えます。</p>
-      <img width="600" alt="Active Jobs" src="img/activejobs.png">
-      
-      <h3 id="budget">5.7. バジェットの情報</h3>
-      <p>Budget Infoのアイコンをクリックください。グループ内の各ユーザのバジェット利用量を表示します。管理者は各ユーザのバジェットに上限値を設定できます。ただし、アプリケーションサービス課題については対応していません。</p>
-      <p></p>
-      <img width="600" alt="Budget Info" src="img/budget_info.png">
-      
-      <h3 id="disk">5.8. ディスクの情報</h3>
-      <p>Disk Infoのアイコンをクリックください。グループ内の各ユーザのディスク利用量を表示します。</p>
-      <img width="600" alt="Disk Info" src="img/disk_info.png">
-      <p>また、Inactive Disk Infoのアイコンをクリックすると、利用されていないファイルがあるディスクの情報を表示することもできます。</p>
+      <h3 id="inactive">5.8. Inactive Disk Info</h3>
+      <p>利用されていないファイルがあるディスクの情報を表示します。</p>
       <img width="600" alt="Inactive Disk Info" src="img/inactivediskinfo.png">
       <p>
        「Select Dataset」で選択されたデータがロードされます。また、「Group」と「User」でフィルタリングを行うことができます。さらに、「Inactive Period」、「Count」、「Size (TiB)」のスライダを使うと、それぞれ「最後にアクセスしてから現在までの期間」、「ファイル数」、「ディスク利用量」でフィルタリングを行えます。
       </p>
+      
+      <h3 id="composer">5.9. Open Composer</h3>
+      <p>バッチジョブを実行・管理するためのアプリケーションです。詳細は<a href="batch_ja.html">4. バッチジョブ</a>を参照ください。</p>
+      <img width="600" alt="Open Composer" src="img/opencomposer.png">
+      <p>各アプリケーションがカテゴリ毎に表示されます。アプリケーションのアイコンをクリックすると、そのアプリケーション用のWebフォームが表示されます。</p>
+      <p>ダッシュボードの「Job Script for Fugaku」と「Job Script for Prepost」のアイコンをクリックすると、「富岳」とプリポスト環境で使われているジョブスケジューラであるFujitsu TCSとSlurmの指示文を主に作成するWebフォームが表示されます。</p>
+      <img width="600" alt="Fujitsu TCS" src="img/fujitsu_tcs.png">
     </main>
   </div>
 
