@@ -14,10 +14,10 @@ cd "$HOME" || exit 7
 echo "TIMING - Starting ttyd at: $(date)"
 
 # launch ttyd
-TTYD_PATH=/home/apps/oss/ttyd/`arch`/ttyd-1.7.7/bin/ttyd
+export TTYD_BASE_PATH="/node/${HOST}/${PORT}/${PASSWORD}"
+TTYD_PATH=/home/apps/oss/ttyd/`arch`/ttyd-1.7.7-ood/bin/ttyd
 $TTYD_PATH \
   -p "${PORT}" \
-  -b "/node/${HOST}/${PORT}/${PASSWORD}" \
   -t "fontSize=${OOD_FONT_SIZE}" \
   -t 'cursorStyle=bar' \
   -t 'cursorBlink=true' \
