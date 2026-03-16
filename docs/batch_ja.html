@@ -55,16 +55,20 @@
       </p>
       <img width="400" alt="Click FDS" src="img/fds_click.png">
       <p>
-        ジョブスクリプトを生成するためのWebフォームが表示されます。右上はアプリケーション共通の入力項目であり、「Script Location」はジョブスクリプトの保存場所、「Script Name」はジョブスクリプトのファイル名、「Job Name」はジョブの名前（省略可能）を指定します。左下はアプリケーション固有の入力項目であり、入力すると右下のジョブスクリプトが自動更新されます。入力後に「Submit」をクリックすると、「富岳」にジョブが投入されます。
-	投入されたジョブスクリプトは、「Script Location」以下に「Script Name」のファイル名で保存されます。
+        ジョブスクリプトを生成するためのWebフォームが表示されます。右上はアプリケーション共通の入力項目であり、「Script Location」はジョブスクリプトの保存場所、「Script Name」はジョブスクリプトのファイル名、「Job Name」はジョブの名前を指定します。左下はアプリケーション固有の入力項目です。Webフォームに入力すると、右下のジョブスクリプトが自動更新されます。
+        </p>
+        <img width="800" alt="Web form of FDS" src="img/fds_webform.png">
+        <p>
+					Webフォームのラベルにアスタリスクがある場合、それは必須項目であることを表します。背景色が<span style="background-color:#FFDB69">黄色</span>のWebフォームはジョブスクリプトを変更しないことを示します。ジョブスクリプトは手動で変更できますが、変更した後に背景が白色のWebフォームを変更すると、下記のような警告が表示されます。"Discard and continue"をクリックすると、ジョブスクリプトに加えられた変更は消去され、新しいスクリプトが生成されます。
+				</p>
+				<img width="400" alt="Warning" src="img/overwrite_warning.png">
+				<p>
+				ジョブスクリプトの完成後に「Submit」をクリックすると、「富岳」にジョブが投入されます。
+				ジョブが正常に投入されると下記の画面が表示されます。ジョブスクリプトの保存場所とHistory pageへのリンクが表示されます。
       </p>
-      <img width="600" alt="Web form of FDS" src="img/fds_webform.png">
+      <img width="800" alt="Link to Histroy Page" src="img/link_to_history.png">
       <p>
-      ジョブが正常に投入されると上の方に表示される「History page」へのリンクをクリックします。
-      </p>
-      <img width="400" alt="Link to Histroy Page" src="img/link_to_history.png">
-      <p>
-      History pageでは、これまでに投入したジョブの履歴を閲覧することができます。表の各行は1つのジョブの情報を示しています。
+				History pageでは、これまでに投入したジョブの履歴を閲覧することができます。表の各行は1つのジョブの情報を示しています。
       </p>
       <p>
       左上にある「Cancel Job」と「Delete Info」のボタンは、それぞれ「実行中のジョブのキャンセル」と「表からジョブの情報を削除する」ことを行います。

@@ -18,7 +18,7 @@
         <li class="nav-item"><a href="interactive.html" class="nav-link">3. Interactive Applications</a></li>
         <li class="nav-item"><a href="batch.html" class="nav-link">4. Batch Jobs</a></li>
         <li class="nav-item"><a href="passenger.html" class="nav-link">5. Passenger Applications</a></li>
-	    <li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.1. Active Jobs</a></li>
+				<li class="nav-item ms-3"><a href="passenger.html#active" class="nav-link">5.1. Active Jobs</a></li>
         <li class="nav-item ms-3"><a href="passenger.html#budget" class="nav-link">5.2. Budget Info</a></li>
         <li class="nav-item ms-3"><a href="passenger.html#disk" class="nav-link">5.3. Disk Info</a></li>
         <li class="nav-item ms-3"><a href="passenger.html#fugaku" class="nav-link">5.4. Fugaku Shell Access</a></li>
@@ -56,14 +56,24 @@
       </p>
       <img width="400" alt="Click FDS" src="img/fds_click.png">
       <p>
-        A web form for generating a job script will appear. The top-right fields are common across applications: "Script Location" specifies where the script will be saved, "Script Name" is the file name, and "Job Name" is an optional job title. The lower-left section contains application-specific inputs, which automatically update the job script preview on the lower right. After filling in the form, click "Submit" to submit the job to Fugaku.
-	The submitted job script will be saved under "Script Location" with the file name "Script Name".
+        A web form for generating a job script will appear.
+				The top-right fields are common across applications: "Script Location" specifies where the script will be saved, "Script Name" is the file name, and "Job Name" is an optional job title.
+				The lower-left section contains application-specific inputs, which automatically update the job script preview on the lower right. 
       </p>
-      <img width="600" alt="Web form of FDS" src="img/fds_webform.png">
+      <img width="800" alt="Web form of FDS" src="img/fds_webform.png">
       <p>
-        If the job is successfully submitted, click the link to the "History page" that appears near the top.
+				If a label in the web form has an asterisk, it indicates that the field is required.
+				Web form fields with a <span style="background-color:#FFDB69">yellow</span> background indicate that they do not modify the job script.
+				The job script can be edited manually; however, if you modify the job script and then change a web form field with a white background, a warning like the one shown below will appear.
+				If you click "Discard and continue", the changes made to the job script will be removed and a new script will be generated.
+			</p>
+      <img width="400" alt="Warning" src="img/overwrite_warning.png">
+      <p>
+				After the job script is completed, click “Submit” to submit the job to Fugaku.
+				If the job is submitted successfully, the screen shown below will appear.
+				It displays the location where the job script is saved and a link to the History page.
       </p>
-      <img width="400" alt="Link to History Page" src="img/link_to_history.png">
+      <img width="800" alt="Link to History Page" src="img/link_to_history.png">
       <p>
         On the History page, you can view past job submissions. Each row in the table represents one job entry.
       </p>
