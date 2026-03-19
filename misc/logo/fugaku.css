@@ -125,7 +125,17 @@ h4.fugaku_info {
 .link td {
     padding: 5px 10px;
     border: 1px solid #AAAAAA;
+    vertical-align: middle;
 }
-.link img {
-    border: 0.2px solid #333333;
+.link td a.badge {
+  font-size: 0.75rem;
+}
+.link td:first-child {
+  white-space: nowrap;
+}
+.link td a {
+  text-decoration: none;
+}
+.link td a:hover {
+  opacity: 0.8;
 }
