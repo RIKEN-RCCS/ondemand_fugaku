@@ -22,7 +22,7 @@ From: redhat/ubi8:8.10
   dnf -y --releasever=8.10 --skip-broken install paraview paraview-devel paraview-openmpi-devel paraview-doc qt5-devel protobuf-devel
   #
   # VSCode
-  dnf -y --releasever=8.10 install https://github.com/coder/code-server/releases/download/v4.100.2/code-server-4.100.2-arm64.rpm
+  #dnf -y --releasever=8.10 install https://github.com/coder/code-server/releases/download/v4.100.2/code-server-4.100.2-arm64.rpm
   #
   # Jupyter
   dnf -y --releasever=8.10 install python3.11-pip python3.11-devel python3.11-numpy python3.11-scipy python3-matplotlib
