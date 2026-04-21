@@ -15,7 +15,8 @@ global_bc_form_items:
 	 data-hide-global-prepost-cores: true,
 	 data-hide-global-prepost-memory: true,
 	 data-hide-global-prepost-gpus: true,
-	 data-hide-global-prepost-vgl: true
+	 data-hide-global-prepost-vgl: true,
+	 data-hide-global-prepost-desktop-gpus: true
         ]
       - ['Prepost', 'Prepost',
          data-hide-global-fugaku-queue: true,
@@ -141,7 +142,8 @@ global_bc_form_items:
 	 data-label-global-prepost-memory: Memory size (10 - 5001 GB),
          data-max-global-prepost-memory: 5001,
 	 data-hide-global-prepost-gpus: true,
-	 data-hide-global-prepost-vgl: true
+	 data-hide-global-prepost-vgl: true,
+	 data-hide-global-prepost-desktop-gpus: true
         ]
       - ['mem2', 'mem2',
          data-label-global-prepost-hours: Maximum run time (1 - 24 hours),
@@ -151,7 +153,8 @@ global_bc_form_items:
 	 data-label-global-prepost-memory: Memory size (10 - 1500 GB),
          data-max-global-prepost-memory: 1500,
 	 data-hide-global-prepost-gpus:	true,
-	 data-hide-global-prepost-vgl: true
+	 data-hide-global-prepost-vgl: true,
+	 data-hide-global-prepost-desktop-gpus: true
         ]
       - ['ondemand-reserved', 'ondemand-reserved',
          data-label-global-prepost-hours: Maximum run time (1 - 720 hours),
@@ -161,7 +164,8 @@ global_bc_form_items:
 	 data-label-global-prepost-memory: Memory size (10 - 32 GB),
          data-max-global-prepost-memory: 32,
 	 data-hide-global-prepost-gpus:	true,
-	 data-hide-global-prepost-vgl: true
+	 data-hide-global-prepost-vgl: true,
+	 data-hide-global-prepost-desktop-gpus: true
         ]
 
   global_prepost_queue_reserved:
@@ -277,6 +281,17 @@ global_bc_form_items:
       - ['1', '1_VGL']
       - ['2', '2_VGL']
     help: When GPU >= 1, X rendering is accelerated using GPU.
+
+  global_prepost_desktop_gpus:
+    widget: select
+    label: Number of GPUs (0 - 2)
+    options:
+      - ['0', '0']
+      - ['1 (VirtualGL enabled)', '1_VGL']
+      - ['1', '1']
+      - ['2 (VirtualGL enabled)', '2_VGL']
+      - ['2', '2']
+    help: Use VirtualGL to enable GPU-accelerated rendering for visualization workloads. May increase GPU resource usage.
 
   global_input_file:
     label: Input file
