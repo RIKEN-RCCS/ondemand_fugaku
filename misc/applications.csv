@@ -53,3 +53,5 @@ FFVHC-ACE,               ood_ffvhc_ace,           Batch Jobs,       Computer Aid
 terminal,                ood_terminal,            Interactive Apps, Development
 PIMD,                    ood_pimd,                Batch Jobs,       Molecular Dynamics
 GrADS,                   ood_grads,               Interactive Apps, Viewer
+MOLDEN,                  ood_molden,              Interactive Apps, Viewer
+RStudio,                 ood_rstdio,              Interactive Apps, Development
