@@ -81,9 +81,16 @@
         The "Cancel Job" and "Delete Info" buttons at the top-left are used to cancel a running job or delete a job entry from the table, respectively. To use these buttons, check the checkbox in the leftmost column of the job row.
       </p>
       <p>
-        The text input and radio buttons at the top-right are used to filter jobs shown in the table. Entering text in the "Filter" field narrows the list to jobs that include that text. The "All", "Running", "Queued", "Completed", and "Failed" radio buttons filter by job status. The "Fugaku" and "Prepost" radio buttons filter jobs by system.
+        The text area and checkboxes in the upper right corner are used to filter the jobs displayed in the table.
+        Entering a string in the text area will display only jobs related to that string.
+        Selecting the "Queued," "Running," "Completed," or "Failed" checkboxes will display only jobs in that state.
+        The "Fugaku" and "Prepost" radio buttons will display only jobs submitted to their respective systems.
       </p>
       <img width="600" alt="History Page" src="img/history.png">
+      <p>
+        Clicking the "Detail" button allows you to perform more detailed searches, such as "AND/OR search," "search limited to specific items," and "specify time range."
+      </p>
+      <img width="600" alt="Histroy Page" src="img/history_detail.png">
       <p>
         Clicking the link in the "Job ID" column shows profiling data retrieved from the job scheduler.
       </p>
