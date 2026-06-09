@@ -6,6 +6,7 @@ form:
   - global_prepost_cores
   - global_prepost_memory
   - key_mode
+  - wheel_version
   - global_email
 
 attributes:
@@ -19,3 +20,10 @@ attributes:
     options:
       - Your own key pair
       - Single-use key pair
+  wheel_version:
+    lebel: version
+    widget: select
+    help: "Choose a version of WHEEL."
+    options:
+      - "latest"
+      - "2024"

@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
-set +x
-SIF=/home/apps/singularity/ondemand/wheel_debian10.13_x86_64.sif
+set +ex
+WHEEL_SIF_VERSION="<%= context.wheel_version%>" 
+source version.env
+echo DEBUG: WHEEL_SIF_VERSION=${WHEEL_SIF_VERSION}
+echo DEBUG: APP_VERSION=${APP_VERSIONS[${WHEEL_SIF_VERSION}]}
+read -r URL SIF<<< "${APP_VERSIONS[$WHEEL_SIF_VERSION]}"
+
+echo "DEBUG: SIF file path = ${SIF}"
 
 # Benchmark info
 echo "TIMING - Starting main script at: $(date)"
