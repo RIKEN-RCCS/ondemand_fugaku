@@ -48,3 +48,7 @@ if [ "<%= context.key_mode %>" == "Single-use key pair" ];then
   export WHEEL_GENERATE_KEYPAIR="YES"
 fi
 
+# Put ssh ControlMaster sockets under the container-private /tmp (see --no-mount tmp in script.sh).
+# The default (~/.ssh) is on a network file system where socket creation can fail, and its
+# path can exceed the unix domain socket path length limit.
+export SSH_CONTROL_PERSIST_DIR=/tmp
