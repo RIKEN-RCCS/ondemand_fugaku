@@ -5,5 +5,6 @@ subcategory: Workflow
 role: batch_connect
 description: |
   [WHEEL](https://github.com/RIKEN-RCCS/OPEN-WHEEL) is a workflow management tool.
+  See the [User guide](https://riken-rccs.github.io/OPEN-WHEEL/) for more details.
 tile:
   sub_caption: |

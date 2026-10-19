@@ -26,9 +26,30 @@ echo "port in main script = ${port}"
 export WHEEL_USE_HTTP=1
 export WHEEL_BASE_URL="/node/${host}/${port}/"
 export WHEEL_TEMPD="${HOME}/.wheel"
+# log level: containers up to 2025 read WHEEL_LOGLEVEL, 2026+ reads WHEEL_LOG_LEVEL.
+# Set both so a single script serves every container version.
 export WHEEL_LOGLEVEL="debug"
+export WHEEL_LOG_LEVEL="debug"
 export WHEEL_PORT=${port}
+
+# Store WHEEL's SQLite DBs and JSON config/migrations under a writable, persistent $HOME dir.
+# The container runs with --writable-tmpfs only, so the in-image default (/usr/src/server/app/db)
+# is not reliably writable and the session store fails at boot with SQLITE_CANTOPEN.
+# Older containers that predate these variables simply ignore them.
+export WHEEL_CONFIG_DIR="${HOME}/.wheel"
+export WHEEL_SESSION_DB_DIR="${HOME}/.wheel/db"
+export WHEEL_USER_DB_DIR="${HOME}/.wheel/db"
 
 #singularity run  -w --pwd /usr/src/server ${SIF}
 #singularity run  --pwd /usr/src/server ${SIF}
-singularity run  --writable-tmpfs --pwd /usr/src/server ${SIF}
+# entrypoint.sh (built to run as Docker root) writes /root/ssh_env and /root/.bashrc.
+# Under Singularity the container runs as the unprivileged user and cannot write the
+# image's /root (mode 0700, uid 0), so entrypoint.sh fails with "Permission denied".
+# --scratch /root overlays /root with a per-instance in-memory tmpfs: writable, never
+# lands on shared $HOME or node-local disk, and is discarded when the container exits.
+# --no-mount tmp: do not share the host's /tmp (and /var/tmp) with the container. Several WHEEL
+# containers on the same node would otherwise fight over fixed paths under /tmp
+# (the ssh-agent socket created by entrypoint.sh, ssh ControlMaster sockets), and /tmp then
+# becomes a per-instance in-memory directory (the image's /tmp on --writable-tmpfs) that is
+# discarded when the container exits.
+singularity run  --writable-tmpfs --no-mount tmp --scratch /root --pwd /usr/src/server ${SIF}

@@ -39,7 +39,16 @@ ls -al ./*
 # create ${HOME}/.wheel to store static file (viewer component and download file functionality)
 mkdir -p ${HOME}/.wheel 2>/dev/null
 
+# create ${HOME}/.wheel/db to hold the SQLite databases (session.db / user.db).
+# WHEEL (connect-sqlite3 / sqlite.open) does not create this directory itself, and the
+# in-container default path is not reliably writable, so it must exist before launch.
+mkdir -p ${HOME}/.wheel/db 2>/dev/null
+
 if [ "<%= context.key_mode %>" == "Single-use key pair" ];then
   export WHEEL_GENERATE_KEYPAIR="YES"
 fi
 
+# Put ssh ControlMaster sockets under the container-private /tmp (see --no-mount tmp in script.sh).
+# The default (~/.ssh) is on a network file system where socket creation can fail, and its
+# path can exceed the unix domain socket path length limit.
+export SSH_CONTROL_PERSIST_DIR=/tmp

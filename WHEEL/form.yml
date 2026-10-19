@@ -23,7 +23,9 @@ attributes:
   wheel_version:
     lebel: version
     widget: select
-    help: "Choose a version of WHEEL."
+    help: |
+      Choose a version of WHEEL.
+      Version 2023 was the default version on Fugaku Open OnDemand until August 2026.
     options:
-      - "latest"
-      - "2024"
+      - "latest-2026"
+      - "2023"
